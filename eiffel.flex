@@ -1,9 +1,10 @@
 %{ 
-#include <iostream> 
-using namespace std; 
+// #include <iostream> 
+// using namespace std; --> we use printf() only
 extern int yylex(); 
 %} 
 %option noyywrap 
+%option neverinteractive
 
 %% 
 
