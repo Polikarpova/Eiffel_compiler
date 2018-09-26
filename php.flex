@@ -59,7 +59,7 @@ EXPONENT	 	(({NUM}|{FLOAT})[eE][+-]?{NUM})
 <SINGLE_QUOTED_STRING>\\n		{ strcat(buf, yytext); }
 <SINGLE_QUOTED_STRING>\\\\		{ strcat(buf, yytext); }
 <SINGLE_QUOTED_STRING>\\\'		{ strcat(buf, yytext); }
-<SINGLE_QUOTED_STRING>[^\'\\n]	{ strcat(buf, yytext); }
+<SINGLE_QUOTED_STRING>[^\']	{ strcat(buf, yytext); }
 <SINGLE_QUOTED_STRING>\'		{ BEGIN(PHP); printf("Founded single quoted literal \"%s\" from line %d to line %d\n", buf, s, yylineno); }
 
 <HTML_COMMENT,MULTILINE_COMMENT><<EOF>>			{ BEGIN(INITIAL); printf("ERROR! Unexpected end of file!"); }
