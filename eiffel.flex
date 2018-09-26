@@ -57,20 +57,27 @@ KEYWORD (agent|alias|all|as|assign|attribute|check|class|convert|create|Current|
 "xor" 					{ printf("Founded operator \"%s\" in line %d\n", yytext, yylineno); }
 "or" 					{ printf("Founded operator \"%s\" in line %d\n", yytext, yylineno); }
 
-";" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"(" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-")" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"{" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"}" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"[" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"]" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-":" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"." 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"," 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"?" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"!" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-\' 						{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-\" 						{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
-"$" 					{ printf("Finded symbol \"%s\" in line %d\n", yytext, yylineno); }
+";" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"(" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+")" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"{" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"}" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"[" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"]" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+":" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"." 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"," 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"?" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"!" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+\' 						{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+\" 						{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+"$" 					{ printf("Founded symbol \"%s\" in line %d\n", yytext, yylineno); }
+
+{ID}					{ printf("Founded identifier \"%s\" in line %d\n", yytext, yylineno); }
+{TRUE}					{ printf("Founded boolean value \"%s\" in line %d\n", yytext, yylineno); }
+{FALSE}					{ printf("Founded boolean value \"%s\" in line %d\n", yytext, yylineno); }
+{VOID}					{ printf("Founded null-value \"%s\" in line %d\n", yytext, yylineno); }
+{INTENGER}				{ printf("Founded int value \"%s\" in line %d\n", yytext, yylineno); }
+{REAL}					{ printf("Founded real value \"%s\" in line %d\n", yytext, yylineno); }
 
 %%
