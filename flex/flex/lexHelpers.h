@@ -1,0 +1,62 @@
+#pragma once
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int yy_parse_int(char* string_num, char char_base=0)
+{
+	int base;
+	switch(char_base)
+	{
+		case 'b':
+		case 'B':
+			base = 2;
+			break;
+		case 'c':
+		case 'C':
+			base = 8;
+			break;
+		case 'x':
+		case 'X':
+			base = 16;
+			break;
+		default:
+			base = 10;
+	}
+
+	if(base != 10)
+	{
+		int index_letter = (string_num[0] == '-')? 2 : 1;
+		string_num[index_letter] = '0';
+	}
+	int x = strtol(string_num,NULL, base);
+	return x;
+} 
+
+double yy_parse_real(char* string_num)
+{
+	return atof (string_num);
+}
+
+char append_special_char_digraph(char* buf, char* escape_seq)
+{
+	char codes[]  = "ABCDFHLNQRSTUV%'\"()<>";
+	char actual[] = "@\b^$\f\\~\n`\r#\t\0|%'\"[]{}";
+	char ch;
+
+	char* index = strchr(codes, toupper(escape_seq[1]));
+	if(!index)
+		//ch = escape_seq[1];
+		return 0;
+	else
+		ch = actual[index-codes];
+
+	int len = strlen(buf);
+	buf[len] = ch;
+	buf[len+1] = 0;
+
+	return ch;
+}
