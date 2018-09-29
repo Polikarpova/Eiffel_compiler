@@ -19,13 +19,28 @@ BOOLEAN			true|false
 VOID 			void
 WHITESPACE		[ \t\n\r]+
 
-INT_16 			-?0x[0-9a-f]+
-INT_10 			-?[0-9]+|0
-INT_8 			-?0c[0-7]+
-INT_2 			-?0b[01]+
+D2          	[01]
+D_2				[_01]
+D8          	[0-7]
+D_8          	[_0-7]
+D10          	[0-9]
+D_10          	[_0-9]
+D16				[0-9a-f]
+D_16			[_0-9a-f]
+
+NAT_16 			[+-]?0x({D16}{D_16}*)?{D16}
+NAT_10 			[+-]?({D10}{D_10}*)?{D10}|0
+NAT_8 			[+-]?0c({D8}{D_8}*)?{D8}
+NAT_2 			[+-]?0b({D2}{D_2}*)?*{D2}
+INT_16 			[+-]?{NAT_16}
+INT_10 			[+-]?{NAT_10}
+INT_8 			[+-]?{NAT_8}
+INT_2 			[+-]?{NAT_2}
 
 NUM          	[0-9]+
-REAL          	([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*)
+REAL_0          	[+-]?(([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
+REAL          	(({INT_10}?[\.]{NAT_10})|({INT_10}[\.]{NAT_10}?))
+EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
 KEYWORD (agent|alias|all|and|and\s+then|as|assign|attribute|check|class|convert|create|Current|debug|deferred|do|else|elseif|end|ensure|expanded|export|external|feature|from|frozen|if|implies|inherit|inspect|invariant|like|local|loop|not|note|obsolete|old|once|only|or|or\s+else|Precursor|redefine|rename|require|rescue|Result|retry|select|separate|then|TUPLE|undefine|until|variant|when|xor)
 
@@ -50,31 +65,33 @@ KEYWORD (agent|alias|all|and|and\s+then|as|assign|attribute|check|class|convert|
 <DOUBLE_QUOTED_STRING>[^%\"]			{ strcat(literal, yytext);}
 <DOUBLE_QUOTED_STRING>\"			{ printf("Found double quoted literal \"%s\". From line %d to line %d\n", literal, startLine, yylineno); BEGIN(INITIAL);}
 
+<SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING>%\/[0-9]{1,3}\/	{ append_special_char_by_code(literal, yytext);}
 <SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING>%.			{ append_special_char_digraph(literal, yytext);}
 
 "--"								{ BEGIN(SINGLE_LINE_COMMENT); }
 <SINGLE_LINE_COMMENT>[^\n]			/* skip */
 <SINGLE_LINE_COMMENT>\n				{ printf("Found a comment\n"); BEGIN(INITIAL);}
 
-":="					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"="						{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"/="					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+":="					{ printf("Found operator \"%s\" in line %d\n", "ASSIGN", yylineno); }
+"="						{ printf("Found operator \"%s\" in line %d\n", "EQUALS", yylineno); }
+"/="					{ printf("Found operator \"%s\" in line %d\n", "NOT_EQUALS", yylineno); }
+"<" 					{ printf("Found operator \"%s\" in line %d\n", "LESS", yylineno); }
+"<=" 					{ printf("Found operator \"%s\" in line %d\n", "LESS_OR_EQUAL", yylineno); }
+">" 					{ printf("Found operator \"%s\" in line %d\n", "GREATER", yylineno); }
+">=" 					{ printf("Found operator \"%s\" in line %d\n", "GREATER_OR_EQUAL", yylineno); }
+"and" 					{ printf("Found operator \"%s\" in line %d\n", "AND", yylineno); }
+"xor" 					{ printf("Found operator \"%s\" in line %d\n", "XOR", yylineno); }
+"or" 					{ printf("Found operator \"%s\" in line %d\n", "OR", yylineno); }
+"not" 					{ printf("Found operator \"%s\" in line %d\n", "NOT", yylineno); }
+and\s+then 				{ printf("Found operator \"%s\" in line %d\n", "AND_THEN", yylineno); }
+or\s+else 				{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", yylineno); }
+"implies" 				{ printf("Found operator \"%s\" in line %d\n", "IMPLIES", yylineno); }
+
 "+" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 "-" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 "*" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 "/"						{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"<" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"<=" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-">" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-">=" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 "^" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"and" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"xor" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"or" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"not" 					{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-and\s+then 				{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-or\s+else 				{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"implies" 				{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 
 ";" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "(" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
@@ -95,6 +112,7 @@ or\s+else 				{ printf("Found operator \"%s\" in line %d\n", yytext, yylineno); 
 {VOID}					{ printf("Found null-value \"%s\" in line %d\n", yytext, yylineno); }
 {ID}					{ printf("Found identifier \"%s\" in line %d\n", yytext, yylineno); }
 
+{EXPONENT}				{ printf("Found exponent value \"%e\" in line %d\n", yy_parse_real(yytext), yylineno); }
 {INT_10}				{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno); /*{NATURAL}	{ printf("Found unsigned int value \"%s\" in line %d\n", yytext, yylineno); }*/ }
 {INT_16}				{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'x'), yylineno);}
 {INT_8}					{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}

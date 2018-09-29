@@ -1,6 +1,10 @@
+-1_234_567e123
++0.066e-13
+2e2
 '%A'
-"%A"
+"%A%/20/%/32/%/65/%/120/%/220/%/255/"
 "%!%B%C%D%F%H%L%N_%Q%R%S%T-%V+%%%'%"%(%)%<%>"
+
 
 -- a simple Hello world
 claSs
@@ -30,8 +34,8 @@ feature
         do
             -- Some code here...
 			x := -0c666
-			x := 00404.505
-			x := 2.6
+			x := 080_404.505
+			x := +2.6
 			x := 0b101 + -0xA2
 			
 			Io.put_string ("double--quoted--multi-

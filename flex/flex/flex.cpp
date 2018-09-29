@@ -19,4 +19,7 @@ void _tmain(int argc, _TCHAR* argv[])
 
 
 /* TODO
+	- underscores in numeric constants
+		-fix!
+
 */
