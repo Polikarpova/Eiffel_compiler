@@ -44,7 +44,7 @@ int yy_parse_int(char* string_num, char char_base=0)
 
 double yy_parse_real(char* string_num)
 {
-	return atof (string_num);
+	return atof ( remove_underscores( string_num ) );
 }
 
 char append_special_char_digraph(char* buf, char* escape_seq)

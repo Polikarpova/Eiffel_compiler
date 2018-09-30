@@ -28,10 +28,10 @@ D_10          	[_0-9]
 D16				[0-9a-f]
 D_16			[_0-9a-f]
 
-NAT_16 			[+-]?0x({D16}{D_16}*)?{D16}
-NAT_10 			[+-]?({D10}{D_10}*)?{D10}|0
-NAT_8 			[+-]?0c({D8}{D_8}*)?{D8}
-NAT_2 			[+-]?0b({D2}{D_2}*)?*{D2}
+NAT_16 			0x({D16}{D_16}*)?{D16}
+NAT_10 			  ({D10}{D_10}*)?{D10}
+NAT_8 			0c({D8}{D_8}*)?{D8}
+NAT_2 			0b({D2}{D_2}*)?{D2}
 INT_16 			[+-]?{NAT_16}
 INT_10 			[+-]?{NAT_10}
 INT_8 			[+-]?{NAT_8}
@@ -39,7 +39,7 @@ INT_2 			[+-]?{NAT_2}
 
 NUM          	[0-9]+
 REAL_0          	[+-]?(([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
-REAL          	(({INT_10}?[\.]{NAT_10})|({INT_10}[\.]{NAT_10}?))
+REAL          	((({INT_10})?[\.]{NAT_10})|({INT_10}[\.]({NAT_10})?))
 EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
 KEYWORD (agent|alias|all|and|and\s+then|as|assign|attribute|check|class|convert|create|Current|debug|deferred|do|else|elseif|end|ensure|expanded|export|external|feature|from|frozen|if|implies|inherit|inspect|invariant|like|local|loop|not|note|obsolete|old|once|only|or|or\s+else|Precursor|redefine|rename|require|rescue|Result|retry|select|separate|then|TUPLE|undefine|until|variant|when|xor)

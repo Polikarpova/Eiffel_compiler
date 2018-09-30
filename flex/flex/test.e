@@ -1,3 +1,5 @@
+3- 5
+3-5
 -1_234_567e123
 +0.066e-13
 2e2
@@ -33,10 +35,10 @@ feature
 		local x  : INTEGER
         do
             -- Some code here...
-			x := -0c666
+			x := -0c666-111_222_333
 			x := 080_404.505
 			x := +2.6
-			x := 0b101 + -0xA2
+			x := 0b101_001 + -0xA_2
 			
 			Io.put_string ("double--quoted--multi-
 -line--string--with--special--%%--char")

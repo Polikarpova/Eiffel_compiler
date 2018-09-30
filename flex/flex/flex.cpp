@@ -19,7 +19,17 @@ void _tmain(int argc, _TCHAR* argv[])
 
 
 /* TODO
-	- underscores in numeric constants
-		-fix!
+	+ underscores in numeric constants
+		+fix!
+	
+	- A PROBLEM:
+	 "3 - 5":
+		> int value 3
+		> operator -
+		> int value 5
+	 "3-5":
+		> int value 3
+		> int value -5
+
 
 */
