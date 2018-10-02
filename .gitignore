@@ -5,6 +5,8 @@
 /flex/flex/output.txt
 /flex/flex/php.flex
 /flex/flex/test.php
+ipch
+*.suo
 *.sdf
 *.opensdf
 Debug
