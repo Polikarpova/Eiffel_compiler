@@ -15,7 +15,8 @@
 
 ID				[a-z][_a-z0-9]*
 
-BOOLEAN			true|false
+TRUE			true
+FALSE			false
 VOID 			void
 WHITESPACE		[ \t\n\r]
 
@@ -111,8 +112,9 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 "$" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 
 {KEYWORD}				{ printf("Found keyword \"%s\" in line %d\n", yytext, yylineno); }
-{BOOLEAN}				{ printf("Found boolean value \"%s\" in line %d\n", yytext, yylineno); }
-{VOID}					{ printf("Found null-value \"%s\" in line %d\n", yytext, yylineno); }
+{TRUE}					{ printf("Found boolean value \"%d\" in line %d\n", true, yylineno); }
+{FALSE}					{ printf("Found boolean value \"%d\" in line %d\n", false, yylineno); }
+{VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }
 {ID}					{ printf("Found identifier \"%s\" in line %d\n", yytext, yylineno); }
 
 {EXPONENT}				{ printf("Found exponent value \"%e\" in line %d\n", yy_parse_real(yytext), yylineno); }
@@ -121,21 +123,7 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 {INT_8}					{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}
 {INT_2}					{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'b'), yylineno);}
 
-{REAL}					{ 
-							register int c = yyinput();	//взяли следующий символ
-							
-							if ( c == '.')
-							{
-								parse_char_interval(yytext, c);
-								printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno);
-								printf("Found operator \"%s\" in line %d\n", "CHAR_INTERVAL", yylineno);
-							}
-							else
-							{
-								parse_char_interval(yytext, c);
-								printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);
-							}
-						}
+{REAL}[^.]				{ printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
 
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
 %%

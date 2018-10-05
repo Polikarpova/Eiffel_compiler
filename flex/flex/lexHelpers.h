@@ -8,6 +8,8 @@
 
 char* remove_underscores(char* str);
 
+// from eiffel.flex.c
+static void yyunput ( int c, char *buf_ptr  );
 
 int yy_parse_int(char* string_num, char char_base=0)
 {
@@ -44,7 +46,14 @@ int yy_parse_int(char* string_num, char char_base=0)
 
 double yy_parse_real(char* string_num)
 {
-	return atof ( remove_underscores( string_num ) );
+	char after_real = string_num[ strlen(string_num) - 1 ];
+	string_num[ strlen(string_num) - 1 ] = 0;
+
+	double result = atof ( remove_underscores( string_num ) );
+
+	unput(after_real);
+
+	return result;
 }
 
 char append_special_char_digraph(char* buf, char* escape_seq)
