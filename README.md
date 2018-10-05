@@ -1,6 +1,8 @@
 # Eiffel_compiler
 University assignment
 
+Возьмём за правило затягивать изменения с опцией --rebase:
+git pull --rebase
 
 Syntax in Eiffell (таблички)
 http://rigaux.org/language-study/syntax-across-languages-per-language/Eiffel.html
