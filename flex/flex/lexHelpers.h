@@ -99,3 +99,10 @@ char* remove_underscores(char* str)
 	
 	return str;
 }
+
+
+void parse_char_interval(char* text, char c) {
+	
+	if (c == '.')
+		text[strlen(text)-1] = 0;
+}

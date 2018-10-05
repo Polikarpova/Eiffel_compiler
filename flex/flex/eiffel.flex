@@ -75,7 +75,7 @@ KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|clas
 "~"						{ printf("Found operator \"%s\" in line %d\n", "BIT_EQUALS", yylineno); }
 "/~"					{ printf("Found operator \"%s\" in line %d\n", "BIT_NOT_EQUALS", yylineno); }
 "|..|"					{ printf("Found operator \"%s\" in line %d\n", "INT_INTERVAL", yylineno); }
-{WHITESPACE}+\.\.		{ printf("Found operator \"%s\" in line %d\n", "CHAR_INTERVAL", yylineno); }
+\.\.					{ printf("Found operator \"%s\" in line %d\n", "CHAR_INTERVAL", yylineno); }
 "<" 					{ printf("Found operator \"%s\" in line %d\n", "LESS", yylineno); }
 "<=" 					{ printf("Found operator \"%s\" in line %d\n", "LESS_OR_EQUAL", yylineno); }
 ">" 					{ printf("Found operator \"%s\" in line %d\n", "GREATER", yylineno); }
@@ -121,7 +121,21 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 {INT_8}					{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}
 {INT_2}					{ printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'b'), yylineno);}
 
-{REAL}					{ printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno); }
+{REAL}					{ 
+							register int c = yyinput();	//взяли следующий символ
+							
+							if ( c == '.')
+							{
+								parse_char_interval(yytext, c);
+								printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno);
+								printf("Found operator \"%s\" in line %d\n", "CHAR_INTERVAL", yylineno);
+							}
+							else
+							{
+								parse_char_interval(yytext, c);
+								printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);
+							}
+						}
 
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
 %%
