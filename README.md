@@ -4,9 +4,9 @@ University assignment
 Возьмём за правило затягивать изменения с опцией --rebase:
 git pull --rebase
 
-Syntax in Eiffell (таблички)
-http://rigaux.org/language-study/syntax-across-languages-per-language/Eiffel.html
-
+Syntax in Eiffell:
+таблички: http://rigaux.org/language-study/syntax-across-languages-per-language/Eiffel.html
+описание различных statement с различными вариантами их использования: https://www.infor.uva.es/~felix/priii/sintaxis.html
 https://www.eiffel.org/doc/eiffel/Quick_reference_to_the_Eiffel_programming_language
 
 Примеры кода uzh-software-construction
