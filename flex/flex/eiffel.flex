@@ -39,7 +39,7 @@ REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
 REAL          	((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
-KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|class|convert|create|Current|debug|deferred|do|else|elseif|end|ensure|expanded|export|external|feature|from|frozen|if|implies|inherit|inspect|invariant|like|local|loop|not|note|obsolete|old|once|only|or|or{WHITESPACE}+else|Precursor|redefine|rename|require|rescue|Result|retry|select|separate|then|TUPLE|undefine|until|variant|when|xor)
+KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|class|convert|create|Current|debug|deferred|do|else|elseif|end|ensure|expanded|export|external|feature|from|frozen|if|implies|inherit|inspect|invariant|is|like|local|loop|not|note|obsolete|old|once|only|or|or{WHITESPACE}+else|Precursor|redefine|rename|require|rescue|Result|retry|select|separate|then|TUPLE|undefine|until|variant|when|xor)
 
 
 %x SPECIAL_CHAR
