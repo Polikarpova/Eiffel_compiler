@@ -11,6 +11,5 @@ ipch
 *.opensdf
 Debug
 *output*
-/win_flex_bison*
-/bison/*
 *.tab.c
+*.dot
