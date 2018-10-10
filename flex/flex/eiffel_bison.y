@@ -20,7 +20,7 @@ struct EXAMPLE* ex;
 %type <prog> stmt_list
 %type <prog> stmt
 %type <prog> expr
-%type <prog> assign_expr
+%type <prog> assign_stmt
 %type <prog> if_stmt
 	
 	*/
@@ -40,6 +40,7 @@ struct EXAMPLE* ex;
 %token ELSEIF
 %token THEN
 %token ELSE
+%token CLASS, FROM, UNTIL, LOOP, CREATE
 
 %left ';'
 %left '[' ']'
@@ -65,16 +66,39 @@ class_list: class
 | class_list class
 ;
 
-class: stmt_list END
+class: CLASS ID class_body END
+;
+
+class_body: creation_list feature_list
+;
+
+creation_list: CREATE ID
+| creation_list ',' ID
+;
+
+feature_list: feature
+| feature_list feature
+;
+
+feature: attribute
+| routine
+;
+
+attribute: declaration
 ;
 
 stmt_list: stmt 
 | stmt_list stmt
 ;
 
-stmt: assign_expr ';'
-| assign_expr
+stmt_list_opt: /*empty*/
+| stmt_list 
+;
+
+stmt: assign_stmt ';'
+| assign_stmt
 | if_stmt
+| from_loop
 ;
 
 expr: INT 
@@ -112,7 +136,11 @@ expr: INT
 | expr '[' expr ']'
 ;
 
-assign_expr: ID ASSIGN expr
+assign_stmt: ID ASSIGN expr
+;
+
+assign_stmt_list: assign_stmt
+| assign_stmt_list assign_stmt
 ;
 
 
@@ -130,12 +158,11 @@ then_part: '(' expr ')' THEN stmt_list
 else_part: ELSE stmt_list
 ;
 
-
-routine: ID params_opt return_value local_opt DO stmt_list END
+from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END
 ;
 
-params_opt: '(' param_list ')'
-| /*empty*/
+routine: ID '(' param_list ')' return_value local_opt DO stmt_list END
+| ID return_value local_opt DO stmt_list END
 ;
 
 param_list: param
