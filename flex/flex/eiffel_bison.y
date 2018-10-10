@@ -40,7 +40,7 @@ struct EXAMPLE* ex;
 %token ELSEIF
 %token THEN
 %token ELSE
-%token CLASS, FROM, UNTIL, LOOP, CREATE
+%token CLASS FROM UNTIL LOOP CREATE FEATURE
 
 %left ';'
 %left '[' ']'
@@ -69,18 +69,27 @@ class_list: class
 class: CLASS ID class_body END
 ;
 
-class_body: creation_list feature_list
+class_body: creation_list feature_clauses
 ;
 
 creation_list: CREATE ID
 | creation_list ',' ID
 ;
 
-feature_list: feature
-| feature_list feature
+
+feature_clauses:  FEATURE clients_opt feature_declaration_list
+| feature_clauses FEATURE clients_opt feature_declaration_list
 ;
 
-feature: attribute
+clients_opt: /*empty*/
+| '{' id_list '}'
+;
+
+feature_declaration_list:  feature_declaration
+| feature_declaration_list feature_declaration
+;
+
+feature_declaration: attribute
 | routine
 ;
 
@@ -95,10 +104,13 @@ stmt_list_opt: /*empty*/
 | stmt_list 
 ;
 
-stmt: assign_stmt ';'
+stmt: stmt ';'
 | assign_stmt
 | if_stmt
 | from_loop
+;
+
+type: ID
 ;
 
 expr: INT 
@@ -139,11 +151,6 @@ expr: INT
 assign_stmt: ID ASSIGN expr
 ;
 
-assign_stmt_list: assign_stmt
-| assign_stmt_list assign_stmt
-;
-
-
 if_stmt: IF then_part_list END
 | IF then_part_list else_part END
 ;
@@ -161,33 +168,39 @@ else_part: ELSE stmt_list
 from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END
 ;
 
-routine: ID '(' param_list ')' return_value local_opt DO stmt_list END
-| ID return_value local_opt DO stmt_list END
+routine: ID param_list_0_or_more return_value local_vars DO stmt_list_opt END
+| ID return_value local_vars DO stmt_list_opt END
+| ID  return_value  DO stmt_list_opt END
+| ID  local_vars DO stmt_list_opt END
+| ID   DO stmt_list_opt END
+;
+
+param_list_0_or_more: '(' param_list ')'
+| '(' ')'
 ;
 
 param_list: param
 | param_list ';' param
 ;
 
-param: ID ':' ID
+param: ID ':' type
 ;
 
-return_value: ':' ID
-| /*empty*/
+return_value: ':' type
 ;
 
-local_opt: LOCAL declaration_list
-| /*empty*/
+local_vars: LOCAL declaration_list
 ;
 
 declaration_list: declaration
 | declaration_list declaration
 ;
 
-declaration: id_list ':' ID
+declaration: ID ':' type
+| id_list ':' type
 ;
 
-id_list: ID
+id_list: ID ',' ID
 | id_list ',' ID
 ;
 
