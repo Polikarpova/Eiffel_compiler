@@ -1,10 +1,58 @@
-class Cat
+note
+	description: "test_project application root class"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	APPLICATION
+
+inherit
+	ARGUMENTS_32
+
+create
+	make
+
+feature {NONE} -- Initialization
+
+	make
+			-- Run application.
+		local
+			var,xstr:STRING -- := "My Text first"
+		do
+			--| Add your code here
+			var := "My Text first"
+			print ("Hello Eiffel World!%N")
+			Io.put_string (var)
+			Io.new_line
+			Io.put_integer (demo(2,1))
+			Io.new_line
+			Io.put_integer (xxx+(-2))
+		end
+
+	demo(diff, diff2 : INTEGER): INTEGER
+	do
+		Result := 999 + diff
+	end
+	xxx,zzz: INTEGER
+
+end
+
+note
+	description: "Summary description for {CAT}."
+	author: ""
+	date: "$Date$"
+	revision: "$Revision$"
+
+-- another file
+class
+	CAT
+
   -- hello. it's me. i'm here
   -- hello. it's me. I`m back
   create
     newCat, make
-  feature {ALL}
-	newCat
+  feature {ANY}
+	newCat(f:INTEGER)
 	do
 		-- body
 		inspect f
@@ -21,23 +69,17 @@ class Cat
 		end
 	end
 
-  feature {NONE} -- Initialization
+feature {NONE} -- Initialization
 
 	make
-			-- Run application.
-		local
-			var:STRING -- := "My Text first"
+			-- Initialization for `Current'.
 		do
-			--| Add your code here
-			var := "My Text first"
-			print ("Hello Eiffel World!%N")
-			Io.put_string (var)
-			Io.put_integer (demo)
+			it_.is_.a_(long).sequence.of_.calls(123)
+			make me
+			call_proc
+			call_func0()
+			call_func1(1)
+			call_func2(1,2)
 		end
-
-	demo(): INTEGER
-	do
-
-	end
 
 end

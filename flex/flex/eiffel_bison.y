@@ -32,15 +32,8 @@ struct EXAMPLE* ex;
 %token STRING
 %token BOOL
 %token ID
-%token ASSIGN
-%token IF
-%token LOCAL
-%token DO
-%token END
-%token ELSEIF
-%token THEN
-%token ELSE
-%token CLASS FROM UNTIL LOOP CREATE FEATURE
+%token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR
+
 
 %left ';'
 %left '[' ']'
@@ -93,7 +86,30 @@ feature_declaration: attribute
 | routine
 ;
 
-attribute: declaration
+attribute: vars_declaration
+;
+
+access: 			 ID
+| qualification_list ID 
+| 					 ID '(' expr_list_opt ')'
+| qualification_list ID '(' expr_list_opt ')'
+;
+
+qualification: ID '.'
+| RESULT '.'
+| CURRENT '.'
+| qualification '(' expr_list_opt ')' '.'
+;
+
+qualification_list: qualification
+| qualification_list qualification
+;
+
+stmt: stmt ';'
+| assign_stmt
+| access
+| if_stmt
+| from_loop
 ;
 
 stmt_list: stmt 
@@ -104,12 +120,6 @@ stmt_list_opt: /*empty*/
 | stmt_list 
 ;
 
-stmt: stmt ';'
-| assign_stmt
-| if_stmt
-| from_loop
-;
-
 type: ID
 ;
 
@@ -117,7 +127,8 @@ expr: INT
 | REAL
 | CHAR
 | STRING
-| ID
+| access { /*
+	| ID	*/ }
 | BOOL
 | '(' expr ')'
 | OLD expr
@@ -145,7 +156,19 @@ expr: INT
 | expr OR_ELSE expr
 | expr XOR expr
 | expr IMPLIES expr
-| expr '[' expr ']'
+| expr '[' expr_list ']'
+| RESULT
+| CURRENT
+| PRECURSOR   {/**/}
+| CREATE '{' type '}' access
+;
+
+expr_list: expr
+| expr_list ',' expr
+;
+
+expr_list_opt: expr_list
+| /*empty*/
 ;
 
 assign_stmt: ID ASSIGN expr
@@ -168,11 +191,14 @@ else_part: ELSE stmt_list
 from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END
 ;
 
-routine: ID param_list_0_or_more return_value local_vars DO stmt_list_opt END
-| ID return_value local_vars DO stmt_list_opt END
-| ID  return_value  DO stmt_list_opt END
-| ID  local_vars DO stmt_list_opt END
-| ID   DO stmt_list_opt END
+routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body
+| ID return_value local_vars routine_body
+| ID  return_value  routine_body
+| ID  local_vars routine_body
+| ID   routine_body
+;
+
+routine_body: DO stmt_list_opt END
 ;
 
 param_list_0_or_more: '(' param_list ')'
@@ -189,14 +215,22 @@ param: ID ':' type
 return_value: ':' type
 ;
 
+return_value_opt: return_value
+| /*empty*/
+;
+
 local_vars: LOCAL declaration_list
 ;
 
-declaration_list: declaration
-| declaration_list declaration
+local_vars_opt: local_vars
+| /*empty*/
 ;
 
-declaration: ID ':' type
+declaration_list: vars_declaration
+| declaration_list vars_declaration
+;
+
+vars_declaration: ID ':' type
 | id_list ':' type
 ;
 
