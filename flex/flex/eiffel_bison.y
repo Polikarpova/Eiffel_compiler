@@ -56,16 +56,18 @@ stmt_list: stmt
 | stmt_list stmt
 ;
 
-stmt: expr ';'
+stmt: ';' {/*?*/}
+| expr ';'
 | expr
+| assign_expr ';'
 | assign_expr
 | if_stmt
 ;
 
 expr: INT 
 | REAL
-| CHAR {?}
-| STRING {?}
+| CHAR
+| STRING
 | ID
 | '(' expr ')'
 | NOT expr
@@ -93,7 +95,7 @@ expr: INT
 | expr OR_ELSE expr
 | expr XOR expr
 | expr IMPLIES expr
-| expr '[' expr ']' {?}
+| expr '[' expr ']'
 ;
 
 assign_expr: ID ASSIGN expr
@@ -116,4 +118,4 @@ else_part: ELSE stmt_list
 
 %%
 
-Секция пользовательского кода
+{/*Секция пользовательского кода*/}
