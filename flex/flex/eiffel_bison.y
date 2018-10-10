@@ -64,7 +64,7 @@ class_list: class
 | class_list class
 ;
 
-class: stmt_list
+class: stmt_list END
 ;
 
 stmt_list: stmt 
