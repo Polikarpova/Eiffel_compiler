@@ -1,14 +1,19 @@
 %{
 
 	//Пролог
-
+	#include "tree_structs.h"
 %}
 
-Секция объявлений
 %union {
 int Int;
 char Char;
 char *String;
+bool Bool;
+struct Program* prog;
+struct Class* cls;
+struct Class_List* cls_list;
+struct Expression* exp;
+struct EXAMPLE* ex;
 }
 
 %start program
@@ -21,9 +26,17 @@ char *String;
 %type if_stmt
 
 %token <Int> INT
-%token <> REAL
+%token <Int> REAL
 %token <Char> CHAR
 %token <String> STRING
+%token <Bool> TRUE
+%token <Bool> FALSE
+%token <String> ID
+%token <String> IF
+%token <String> END
+%token <String> ELSEIF
+%token <String> THEN
+%token <String> ELSE
 
 %right ASSIGN
 %left ';'
@@ -35,22 +48,19 @@ char *String;
 %left CHAR_INTERVAL INT_INTERVAL
 %left '+' '-'
 %left '*' '/' DIV MOD
-%lefy '^'
+%left '^'
 %left OLD NOT UPLUS UMINUS
 %left '.'
 %nonassoc ')'
 
 %%
 
-//может и не так, но зато мы про него не забудем :D
 program : class_list
 ;
 
 class_list: class
 | class_list class
 ;
-
-...
 
 stmt_list: stmt
 | stmt_list stmt
@@ -69,7 +79,10 @@ expr: INT
 | CHAR
 | STRING
 | ID
+| FALSE
+| TRUE
 | '(' expr ')'
+| OLD expr
 | NOT expr
 | '+' expr %prec UPLUS
 | '-' expr %prec UMINUS
@@ -116,6 +129,40 @@ then_part: '(' expr ')' THEN stmt_list
 else_part: ELSE stmt_list
 ;
 
-%%
 
+routine: ID params_opt return_value local_opt DO stmt_list END
+;
+
+params_opt: '(' param_list ')'
+| /*empty*/
+;
+
+param_list: param
+| param_list ';' param
+;
+
+param: ID ':' ID
+;
+
+return_value: ':' ID
+| /*empty*/
+;
+
+local_opt: LOCAL declaration_list
+| /*empty*/
+;
+
+declaration_list: declaration
+| declaration_list declaration
+;
+
+declaration: id_list ':' ID
+;
+
+id_list: ID
+| id_list ',' ID
+;
+
+
+%%
 {/*Секция пользовательского кода*/}
