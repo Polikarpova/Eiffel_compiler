@@ -1,3 +1,7 @@
+name(parameters) is
+  do stmt 
+  end
+
 5.6
 --
 5..6

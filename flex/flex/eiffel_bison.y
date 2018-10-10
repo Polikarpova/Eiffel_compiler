@@ -1,9 +1,7 @@
 %{
-
-	//Пролог
+	/*Пролог*/
 	#include "tree_structs.h"
-%}
-
+	/*
 %union {
 int Int;
 char Char;
@@ -17,28 +15,32 @@ struct EXAMPLE* ex;
 }
 
 %start program
-%type class_list
-%type class
-%type stmt_list
-%type stmt
-%type expr
-%type assign_expr
-%type if_stmt
+%type <prog> class_list
+%type <prog> class
+%type <prog> stmt_list
+%type <prog> stmt
+%type <prog> expr
+%type <prog> assign_expr
+%type <prog> if_stmt
+	
+	*/
+%}
 
-%token <Int> INT
-%token <Int> REAL
-%token <Char> CHAR
-%token <String> STRING
-%token <Bool> TRUE
-%token <Bool> FALSE
-%token <String> ID
-%token <String> IF
-%token <String> END
-%token <String> ELSEIF
-%token <String> THEN
-%token <String> ELSE
+%token INT
+%token REAL
+%token CHAR
+%token STRING
+%token BOOL
+%token ID
+%token ASSIGN
+%token IF
+%token LOCAL
+%token DO
+%token END
+%token ELSEIF
+%token THEN
+%token ELSE
 
-%right ASSIGN
 %left ';'
 %left '[' ']'
 %left IMPLIES
@@ -62,14 +64,14 @@ class_list: class
 | class_list class
 ;
 
-stmt_list: stmt
+class: stmt_list
+;
+
+stmt_list: stmt 
 | stmt_list stmt
 ;
 
-stmt: ';' {/*?*/}
-| expr ';'
-| expr
-| assign_expr ';'
+stmt: assign_expr ';'
 | assign_expr
 | if_stmt
 ;
@@ -79,8 +81,7 @@ expr: INT
 | CHAR
 | STRING
 | ID
-| FALSE
-| TRUE
+| BOOL
 | '(' expr ')'
 | OLD expr
 | NOT expr
@@ -93,7 +94,6 @@ expr: INT
 | expr MOD expr
 | expr '+' expr
 | expr '-' expr
-| expr '+' expr
 | expr EQUALS expr
 | expr NOT_EQUALS expr
 | expr BIT_EQUALS expr
@@ -162,7 +162,6 @@ declaration: id_list ':' ID
 id_list: ID
 | id_list ',' ID
 ;
-
 
 %%
 {/*Секция пользовательского кода*/}
