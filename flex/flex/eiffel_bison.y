@@ -58,6 +58,7 @@ struct EXAMPLE* ex;
 %%
 
 program : class_list
+| error_token
 ;
 
 class_list: class
@@ -162,6 +163,10 @@ declaration: id_list ':' ID
 id_list: ID
 | id_list ',' ID
 ;
+
+error_token: INT_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
+		   | CHAR_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
+		   ;
 
 %%
 {/*Секция пользовательского кода*/}
