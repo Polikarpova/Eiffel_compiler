@@ -13,7 +13,6 @@ struct Class_List* cls_list;
 struct Expression* exp;
 struct EXAMPLE* ex;
 }
-
 %start program
 %type <prog> class_list
 %type <prog> class
@@ -33,6 +32,7 @@ struct EXAMPLE* ex;
 %token BOOL
 %token ID
 %token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR
+
 
 %left ';'
 %left '[' ']'
@@ -68,7 +68,6 @@ creation_list: CREATE ID
 | creation_list ',' ID
 ;
 
-
 feature_clauses:  FEATURE clients_opt feature_declaration_list
 | feature_clauses FEATURE clients_opt feature_declaration_list
 ;
@@ -103,6 +102,7 @@ qualification: ID '.'
 qualification_list: qualification
 | qualification_list qualification
 ;
+
 
 stmt: stmt ';'
 | assign_stmt
@@ -173,6 +173,7 @@ expr_list_opt: expr_list
 assign_stmt: ID ASSIGN expr
 ;
 
+
 if_stmt: IF then_part_list END
 | IF then_part_list else_part END
 ;
@@ -187,8 +188,10 @@ then_part: '(' expr ')' THEN stmt_list
 else_part: ELSE stmt_list
 ;
 
+
 from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END
 ;
+
 
 routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body
 | ID return_value local_vars routine_body
@@ -236,6 +239,7 @@ vars_declaration: ID ':' type
 id_list: ID ',' ID
 | id_list ',' ID
 ;
+
 
 error_token: INT_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
 		   | CHAR_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
