@@ -55,9 +55,10 @@ KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|clas
 %}
 
 \'								{ BEGIN(SINGLE_QUOTED_CHAR); literal[0] = '\0'; startLine = yylineno; }
-<SINGLE_QUOTED_CHAR>\\n			{ strcat(literal, yytext);}
-<SINGLE_QUOTED_CHAR>[^\']		{ strcat(literal, yytext);}
-<SINGLE_QUOTED_CHAR>\'			{ printf("Found single quoted literal \"%s\". From line %d to line %d\n", literal, startLine, yylineno); BEGIN(INITIAL);}
+<SINGLE_QUOTED_CHAR>[^\']		{ strcat(literal, yytext); }
+<SINGLE_QUOTED_CHAR>\'			{ if(strlen(literal) == 1) {printf("Found single quoted literal \'%c\'. From line %d to line %d\n", literal[0], startLine, yylineno); } else {
+ printf("Invalid single quoted literal \'%s\' at line %d\n", literal, yylineno); }
+ BEGIN(INITIAL); }
 
 \"									{ BEGIN(DOUBLE_QUOTED_STRING); literal[0] = '\0'; startLine = yylineno; }
 <DOUBLE_QUOTED_STRING>[^%\"]			{ strcat(literal, yytext);}
@@ -65,6 +66,8 @@ KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|clas
 
 <SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING>%\/[0-9]{1,3}\/	{ append_special_char_by_code(literal, yytext);}
 <SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING>%.			{ append_special_char_digraph(literal, yytext);}
+
+<SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING><<EOF>>	{ printf("Unterminated string or char literal at line %d\n", yylineno);  BEGIN(INITIAL);}
 
 "--"								{ BEGIN(SINGLE_LINE_COMMENT); }
 <SINGLE_LINE_COMMENT>[^\n]			/* skip */
@@ -126,4 +129,6 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 {REAL}[^.]				{ printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
 
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
+
+<*>.					{ printf("Unexpected char \'%c\' encountered at line %d\n", yytext, yylineno);  BEGIN(INITIAL);}
 %%

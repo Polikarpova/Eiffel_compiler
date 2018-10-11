@@ -17,6 +17,8 @@
 5  .. 6
 --
 
+зю
+
 agent_real
 real_inspect
 
@@ -27,6 +29,7 @@ real_inspect
 "%A%/20/%/32/%/65/%/120/%/220/%/255/"
 "%!%B%C%D%F%H%L%N_%Q%R%S%T-%V+%%%'%"%(%)%<%>"
 
+'abc'
 
 -- a simple Hello world
 claSs
@@ -68,3 +71,5 @@ feature
             Result := number_of_cakes > 0  OR  FALSE
         end
 end
+
+'cv
