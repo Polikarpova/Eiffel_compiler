@@ -39,7 +39,7 @@ REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
 REAL          	((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
-KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|class|convert|create|Current|debug|deferred|do|else|elseif|end|ensure|expanded|export|external|feature|from|frozen|if|implies|inherit|inspect|invariant|is|like|local|loop|not|note|obsolete|old|once|only|or|or{WHITESPACE}+else|Precursor|redefine|rename|require|rescue|Result|retry|select|separate|then|TUPLE|undefine|until|variant|when|xor)
+KEYWORD ()
 
 
 %x SPECIAL_CHAR
@@ -76,10 +76,6 @@ KEYWORD (agent|alias|all|and|and{WHITESPACE}+then|as|assign|attribute|check|clas
 ":="					{ printf("Found operator \"%s\" in line %d\n", "ASSIGN", yylineno); }
 "="						{ printf("Found operator \"%s\" in line %d\n", "EQUALS", yylineno); }
 "/="					{ printf("Found operator \"%s\" in line %d\n", "NOT_EQUALS", yylineno); }
-"~"						{ printf("Found operator \"%s\" in line %d\n", "BIT_EQUALS", yylineno); }
-"/~"					{ printf("Found operator \"%s\" in line %d\n", "BIT_NOT_EQUALS", yylineno); }
-"|..|"					{ printf("Found operator \"%s\" in line %d\n", "INT_INTERVAL", yylineno); }
-\.\.					{ printf("Found operator \"%s\" in line %d\n", "CHAR_INTERVAL", yylineno); }
 "<" 					{ printf("Found operator \"%s\" in line %d\n", "LESS", yylineno); }
 "<=" 					{ printf("Found operator \"%s\" in line %d\n", "LESS_OR_EQUAL", yylineno); }
 ">" 					{ printf("Found operator \"%s\" in line %d\n", "GREATER", yylineno); }
@@ -105,16 +101,34 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 ")" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "{" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "}" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"[" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"]" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 ":" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "." 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "," 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"?" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"!" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"$" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 
-{KEYWORD}				{ printf("Found keyword \"%s\" in line %d\n", yytext, yylineno); }
+"all" 					{ printf("Found keyword \"%s\" in line %d\n", "ALL", yylineno); }
+"class" 				{ printf("Found keyword \"%s\" in line %d\n", "CLASS", yylineno); }
+"create" 				{ printf("Found keyword \"%s\" in line %d\n", "CREATE", yylineno); }
+"Current" 				{ printf("Found keyword \"%s\" in line %d\n", "CURRENT", yylineno); }
+"do" 					{ printf("Found keyword \"%s\" in line %d\n", "DO", yylineno); }
+"else" 					{ printf("Found keyword \"%s\" in line %d\n", "ELSE", yylineno); }
+"elseif" 				{ printf("Found keyword \"%s\" in line %d\n", "ELSEIF", yylineno); }
+"end" 					{ printf("Found keyword \"%s\" in line %d\n", "END", yylineno); }
+"feature" 				{ printf("Found keyword \"%s\" in line %d\n", "FEATURE", yylineno); }
+"from" 					{ printf("Found keyword \"%s\" in line %d\n", "FROM", yylineno); }
+"if" 					{ printf("Found keyword \"%s\" in line %d\n", "IF", yylineno); }
+"inherit" 				{ printf("Found keyword \"%s\" in line %d\n", "INHERIT", yylineno); }
+"local" 				{ printf("Found keyword \"%s\" in line %d\n", "LOCAL", yylineno); }
+"loop" 					{ printf("Found keyword \"%s\" in line %d\n", "LOOP", yylineno); }
+"note" 					{ printf("Found keyword \"%s\" in line %d\n", "NOTE", yylineno); }
+"Precursor" 			{ printf("Found keyword \"%s\" in line %d\n", "PRECURSOR", yylineno); }
+"redefine" 				{ printf("Found keyword \"%s\" in line %d\n", "REDEFINE", yylineno); }
+"rename" 				{ printf("Found keyword \"%s\" in line %d\n", "RENAME", yylineno); }
+"Result" 				{ printf("Found keyword \"%s\" in line %d\n", "RESULT", yylineno); }
+"select" 				{ printf("Found keyword \"%s\" in line %d\n", "SELECT", yylineno); }
+"then" 					{ printf("Found keyword \"%s\" in line %d\n", "THEN", yylineno); }
+"undefine" 				{ printf("Found keyword \"%s\" in line %d\n", "UNDEFINE", yylineno); }
+"until" 				{ printf("Found keyword \"%s\" in line %d\n", "UNTIL", yylineno); }
+
 {TRUE}					{ printf("Found boolean value \"%d\" in line %d\n", true, yylineno); }
 {FALSE}					{ printf("Found boolean value \"%d\" in line %d\n", false, yylineno); }
 {VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }

@@ -74,8 +74,9 @@ feature {NONE} -- Initialization
 	make
 			-- Initialization for `Current'.
 		do
+			create me
 			it_.is_.a_(long).sequence.of_.calls(123)
-			make me
+			qulified.by(obj).procedure
 			call_proc
 			call_func0()
 			call_func1(1)

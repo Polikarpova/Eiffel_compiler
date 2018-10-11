@@ -1,25 +1,4 @@
-5.6
---
-5..6
---
-5...6
---
-5.. 6
---
-5..		6
---
-5.. 	 6
---
-5	 .. 6
---
-5	..6
---
-5  .. 6
---
-
-зю
-
-agent_real
+	agent_real
 real_inspect
 
 -1_234_567e123
@@ -32,7 +11,7 @@ real_inspect
 'abc'
 
 -- a simple Hello world
-claSs
+clASs
     HELLO_WORLD
 create
     say_it

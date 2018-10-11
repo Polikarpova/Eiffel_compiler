@@ -35,7 +35,6 @@ struct EXAMPLE* ex;
 
 
 %left ';'
-%left '[' ']'
 %left IMPLIES
 %left OR OR_ELSE XOR
 %left AND AND_THEN
@@ -44,7 +43,7 @@ struct EXAMPLE* ex;
 %left '+' '-'
 %left '*' '/' DIV MOD
 %left '^'
-%left OLD NOT UPLUS UMINUS
+%left NOT UPLUS UMINUS
 %left '.'
 %nonassoc ')'
 
@@ -130,7 +129,6 @@ expr: INT
 	| ID	*/ }
 | BOOL
 | '(' expr ')'
-| OLD expr
 | NOT expr
 | '+' expr %prec UPLUS
 | '-' expr %prec UMINUS
@@ -155,7 +153,6 @@ expr: INT
 | expr OR_ELSE expr
 | expr XOR expr
 | expr IMPLIES expr
-| expr '[' expr_list ']'
 | RESULT
 | CURRENT
 | PRECURSOR   {/**/}
