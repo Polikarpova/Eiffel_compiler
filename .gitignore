@@ -14,3 +14,4 @@ Debug
 *.tab.c
 *.dot
 *.bat
+/bison/*
