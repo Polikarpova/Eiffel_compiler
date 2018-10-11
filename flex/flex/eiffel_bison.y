@@ -72,7 +72,8 @@ feature_clauses:  FEATURE clients_opt feature_declaration_list
 ;
 
 clients_opt: /*empty*/
-| '{' id_list '}'
+| '{' ID '}'
+| '{' id_list_2_or_more '}'
 ;
 
 feature_declaration_list:  feature_declaration
@@ -125,8 +126,7 @@ expr: INT
 | REAL
 | CHAR
 | STRING
-| access { /*
-	| ID	*/ }
+| access
 | BOOL
 | '(' expr ')'
 | NOT expr
@@ -230,11 +230,11 @@ declaration_list: vars_declaration
 ;
 
 vars_declaration: ID ':' type
-| id_list ':' type
+| id_list_2_or_more ':' type
 ;
 
-id_list: ID ',' ID
-| id_list ',' ID
+id_list_2_or_more: ID ',' ID
+| id_list_2_or_more ',' ID
 ;
 
 
