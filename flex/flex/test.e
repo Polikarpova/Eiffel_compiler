@@ -1,6 +1,12 @@
 	agent_real
 real_inspect
 
+integer
+ReAl
+aRRay[ARRAY[character]]
+strInG
+BoolEAN
+
 -1_234_567e123
 +0.066e-13
 2e2
@@ -34,8 +40,11 @@ feature
     price_of_one_cake : REAL
         -- A variable containing a floating point number
     buy_cake (price : REAL; flavour : STRING, fake : Void)   -- A function accepting arguments
-		local x  : INTEGER
+		local
+			x  : INTEGER
+			ar : ARRAY[REAL]
         do
+			ar[1].method(f)[3]
             -- Some code here...
 			x := -0c666-111_222_333
 			x := 080_404.505

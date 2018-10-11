@@ -25,16 +25,18 @@ struct EXAMPLE* ex;
 	*/
 %}
 
-%token INT
-%token REAL
-%token CHAR
-%token STRING
-%token BOOL
+%token INT_VAL
+%token REAL_VAL
+%token CHAR_VAL
+%token STRING_VAL
+%token BOOL_VAL
 %token ID
 %token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR
+%token ARRAY INTEGER REAL CHARACTER STRING BOOLEAN
 
 
-%left ';'
+%left ';' LF
+%left '[' ']'
 %left IMPLIES
 %left OR OR_ELSE XOR
 %left AND AND_THEN
@@ -103,10 +105,20 @@ qualification_list: qualification
 | qualification_list qualification
 ;
 
+lf: LF
+| lf LF
+;
 
-stmt: stmt ';'
-| assign_stmt
-| access
+lf_opt: /*empty*/
+| lf
+;
+
+stmt_sep: ';'
+| lf
+;
+
+stmt: assign_stmt 
+| access stmt_sep
 | if_stmt
 | from_loop
 ;
@@ -120,14 +132,23 @@ stmt_list_opt: /*empty*/
 ;
 
 type: ID
+| ARRAY '[' type ']'
+| INTEGER
+| REAL
+| CHARACTER
+| STRING
+| BOOLEAN
 ;
 
-expr: INT 
-| REAL
-| CHAR
-| STRING
+type_mark: ':' type
+;
+
+expr: INT_VAL
+| REAL_VAL
+| CHAR_VAL
+| STRING_VAL
 | access
-| BOOL
+| BOOL_VAL
 | '(' expr ')'
 | NOT expr
 | '+' expr %prec UPLUS
@@ -153,6 +174,7 @@ expr: INT
 | expr OR_ELSE expr
 | expr XOR expr
 | expr IMPLIES expr
+| expr '[' expr_list ']'
 | RESULT
 | CURRENT
 | PRECURSOR   {/**/}
@@ -167,7 +189,7 @@ expr_list_opt: expr_list
 | /*empty*/
 ;
 
-assign_stmt: ID ASSIGN expr
+assign_stmt: ID ASSIGN expr stmt_sep
 ;
 
 
@@ -208,10 +230,10 @@ param_list: param
 | param_list ';' param
 ;
 
-param: ID ':' type
+param: ID type_mark
 ;
 
-return_value: ':' type
+return_value: type_mark
 ;
 
 return_value_opt: return_value
@@ -229,8 +251,8 @@ declaration_list: vars_declaration
 | declaration_list vars_declaration
 ;
 
-vars_declaration: ID ':' type
-| id_list_2_or_more ':' type
+vars_declaration: ID type_mark
+| id_list type_mark
 ;
 
 id_list_2_or_more: ID ',' ID
