@@ -18,7 +18,8 @@ ID				[a-z][_a-z0-9]*
 TRUE			true
 FALSE			false
 VOID 			void
-WHITESPACE		[ \t\n\r]
+WHITESPACE		[ \t\r]
+LF				[\n]
 
 D2          	[01]
 D_2				[_01]
@@ -38,8 +39,6 @@ NUM          	[0-9]+
 REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
 REAL          	((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
-
-KEYWORD ()
 
 
 %x SPECIAL_CHAR
@@ -101,6 +100,8 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 ")" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "{" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "}" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"[" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"]" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 ":" 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "." 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 "," 					{ printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
@@ -129,6 +130,13 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 "undefine" 				{ printf("Found keyword \"%s\" in line %d\n", "UNDEFINE", yylineno); }
 "until" 				{ printf("Found keyword \"%s\" in line %d\n", "UNTIL", yylineno); }
 
+"ARRAY" 				{ printf("Found keyword \"%s\" in line %d\n", "ARRAY", yylineno); }
+"INTEGER" 				{ printf("Found keyword \"%s\" in line %d\n", "INTEGER", yylineno); }
+"REAL" 					{ printf("Found keyword \"%s\" in line %d\n", "REAL", yylineno); }
+"CHARACTER" 			{ printf("Found keyword \"%s\" in line %d\n", "CHARACTER", yylineno); }
+"STRING" 				{ printf("Found keyword \"%s\" in line %d\n", "STRING", yylineno); }
+"BOOLEAN" 				{ printf("Found keyword \"%s\" in line %d\n", "BOOLEAN", yylineno); }
+
 {TRUE}					{ printf("Found boolean value \"%d\" in line %d\n", true, yylineno); }
 {FALSE}					{ printf("Found boolean value \"%d\" in line %d\n", false, yylineno); }
 {VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }
@@ -142,6 +150,7 @@ or{WHITESPACE}+else 	{ printf("Found operator \"%s\" in line %d\n", "OR_ELSE", y
 
 {REAL}[^.]				{ printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
 
+{LF}					{ printf("Found line feed in line %d\n", yylineno); }
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
 
 <*>.					{ printf("Unexpected char \'%c\' encountered at line %d\n", yytext, yylineno);  BEGIN(INITIAL);}
