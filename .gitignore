@@ -1,7 +1,7 @@
 /flex/flex/*.filters
 /flex/flex/eiffel_bkp.flex
-/flex/flex/flex.vcxproj.filters
-/flex/flex/flex.vcxproj.user
+*.vcxproj.filters
+*.vcxproj.user
 /flex/flex/output.txt
 /flex/flex/php.flex
 /flex/flex/test.php
@@ -12,6 +12,7 @@ ipch
 Debug
 *output*
 *.tab.c
+*flex.c
 *.dot
 *.bat
 /bison/*
