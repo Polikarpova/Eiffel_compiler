@@ -109,10 +109,6 @@ lf: LF
 | lf LF
 ;
 
-lf_opt: /*empty*/
-| lf
-;
-
 stmt_sep: ';'
 | lf
 ;
@@ -252,11 +248,7 @@ declaration_list: vars_declaration
 ;
 
 vars_declaration: ID type_mark
-| id_list type_mark
-;
-
-id_list: ID 
-| id_list_2_or_more
+| id_list_2_or_more type_mark
 ;
 
 id_list_2_or_more: ID ',' ID
