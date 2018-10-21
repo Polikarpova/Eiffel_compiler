@@ -1,32 +1,29 @@
 #ifndef SIMPLE_TREE_STRUCTS
 #define SIMPLE_TREE_STRUCTS
 
-struct Expression
+enum ExprType {Int, Real, Char, String, Bool, Access, Subscript, Prior, Not, UPlus, UMinus, Power, Mul, Div, Plus, Minus, Equal, NotEqual, Less, Greater, LessOrEqual, GreaterOrEqual, And, AndThen, Or, OrElse, XOR, Implies, Result, Current, Precursor, Create};
+
+struct NExpr
 {
-	int type;//0 - int, 1 +, 2-, 3*, 4/
-	int value;
-	struct Expression *left;
-	struct Expression *right;
+	enum ExprType type;
+	union {
+		int Int,
+		double Real,
+		char Char,
+		char* String,
+		bool Bool
+	} value;
+	struct NExpr* left;
+	struct NExpr* right;
+	
+	struct NExpr* next;
 };
 
-struct Class
+struct NExprList
 {
-	struct Expression *to_print;
+	struct NExpr* first;
+	struct NExpr* last;
 };
 
-struct Program
-{
-	struct Class_List *classes;
-};
-
-struct Class_List
-{
-	struct Class *clas;
-	struct Class_List *next;
-};
-
-struct EXAMPLE
-{
-	struct Class *clas;
-};
+//assign_stmt
 #endif

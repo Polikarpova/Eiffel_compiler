@@ -1,8 +1,9 @@
 %{
 	/*Пролог*/
 	#include "tree_structs.h"
-	/*
-%union {
+%}
+
+union {
 int Int;
 char Char;
 char *String;
@@ -10,22 +11,13 @@ bool Bool;
 struct Program* prog;
 struct Class* cls;
 struct Class_List* cls_list;
-struct Expression* exp;
+struct NExpr* Expr;
 struct EXAMPLE* ex;
 }
-%start program
-%type <prog> class_list
-%type <prog> class
-%type <prog> stmt_list
-%type <prog> stmt
-%type <prog> expr
-%type <prog> assign_stmt
-%type <prog> if_stmt
-	
-	*/
-%}
 
-%token INT_VAL
+&type <Expr> expr;
+
+%token <Int> INT_VAL
 %token REAL_VAL
 %token CHAR_VAL
 %token STRING_VAL
@@ -95,6 +87,10 @@ access: 			 ID
 | qualification_list ID '(' expr_list_opt ')'
 ;
 
+subscript: access '[' expr ']'
+| subscript '[' expr ']'
+;
+
 qualification: ID '.'
 | RESULT '.'
 | CURRENT '.'
@@ -143,8 +139,9 @@ expr: INT_VAL
 | REAL_VAL
 | CHAR_VAL
 | STRING_VAL
-| access
 | BOOL_VAL
+| access
+| subscript
 | '(' expr ')'
 | NOT expr
 | '+' expr %prec UPLUS
@@ -152,14 +149,10 @@ expr: INT_VAL
 | expr '^' expr
 | expr '*' expr
 | expr '/' expr
-| expr DIV expr
-| expr MOD expr
 | expr '+' expr
 | expr '-' expr
 | expr EQUALS expr
 | expr NOT_EQUALS expr
-| expr BIT_EQUALS expr
-| expr BIT_NOT_EQUALS expr
 | expr LESS expr
 | expr GREATER expr
 | expr LESS_OR_EQUAL expr
@@ -170,7 +163,6 @@ expr: INT_VAL
 | expr OR_ELSE expr
 | expr XOR expr
 | expr IMPLIES expr
-| expr '[' expr_list ']'
 | RESULT
 | CURRENT
 | PRECURSOR   {/**/}

@@ -3,7 +3,7 @@
 
 struct Expression
 {
-	int type;//0 - int, 1 +, 2-, 3*, 4/
+	enum ExprType type;
 	int value;
 	struct Expression *left;
 	struct Expression *right;
