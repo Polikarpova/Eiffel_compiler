@@ -1,9 +1,8 @@
 %{
 	/*Пролог*/
 	#include "tree_structs.h"
-%}
-
-union {
+	/*
+%union {
 int Int;
 char Char;
 char *String;
@@ -11,11 +10,20 @@ bool Bool;
 struct Program* prog;
 struct Class* cls;
 struct Class_List* cls_list;
-struct NExpr* Expr;
+struct Expression* exp;
 struct EXAMPLE* ex;
 }
-
-&type <Expr> expr;
+%start program
+%type <prog> class_list
+%type <prog> class
+%type <prog> stmt_list
+%type <prog> stmt
+%type <prog> expr
+%type <prog> assign_stmt
+%type <prog> if_stmt
+	
+	*/
+%}
 
 %token <Int> INT_VAL
 %token REAL_VAL
