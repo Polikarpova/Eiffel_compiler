@@ -75,8 +75,8 @@ feature {NONE} -- Initialization
 			-- Initialization for `Current'.
 		do
 			create me
-			it_.is_.a_(long).sequence.of_.calls(123)
-			qulified.by(obj).procedure
+			it_.is_[0].a_(long)[1].sequence.of_.calls(12,'3')
+			qulified[654].by(obj).procedure
 			call_proc
 			call_func0()
 			call_func1(1)

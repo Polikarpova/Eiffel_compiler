@@ -101,24 +101,20 @@ feature_declaration: attribute
 attribute: vars_declaration
 ;
 
-access: 			 ID
-| qualification_list ID 
-| 					 ID '(' expr_list_opt ')'
-| qualification_list ID '(' expr_list_opt ')'
+access: ID
+| 		RESULT
+| 		CURRENT
+| 		ID '(' expr_list_opt ')'
 ;
 
-subscript: access '[' expr ']'
+ref: access
+| access '[' expr ']'
 ;
 
-qualification: ID '.'
-| RESULT '.'
-| CURRENT '.'
-| qualification '(' expr_list_opt ')' '.'
+ref_chain: ref
+| ref_chain '.' ref
 ;
 
-qualification_list: qualification
-| qualification_list qualification
-;
 
 lf: LF
 | lf LF
@@ -272,4 +268,4 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   ;
 
 %%
-{/*Секция пользовательского кода*/}
+/*Секция пользовательского кода*/

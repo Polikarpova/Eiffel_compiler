@@ -31,32 +31,91 @@ struct NLoopStmt;
 
 /* Структуры */
 
-struct NAccess
+/* ID - идентификатор */
+struct NId
 {
-	
-};
-
-struct NSubscript
+	char* id;
+	struct NId* next;
+};	
+struct NIdList
 {
-	
+	struct NId* first;
+	struct NId* last;
 };	
 
-enum StmtType {ASSIGN, ACCESS, IF, LOOP};
+/* Expr - выражение */
+struct NExpr
+{
+	enum ExprType type;
+	union {
+		int Int,
+		double Real,
+		char Char,
+		char* String,
+		bool Bool,
+		
+		struct NAccess* access,
+		struct NSubscript* subscript,
+	} value;
+	
+	struct NExpr* left;
+	struct NExpr* right;
+	
+	struct NExpr* next;
+};
+struct NExprList
+{
+	struct NExpr* first;
+	struct NExpr* last;
+};
 
+/* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
+struct NAccess
+{
+	enum yytokentype type; /* допустимо ID, RESULT, CURRENT (см. объявления bison) */
+	struct NId* id;	 /* идентификатор */
+	struct NExprList* params; /* NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
+};
+
+/* Ref - обращение к атрибуту или элементу массива */
+struct NRef
+{
+	struct NAccess* access;
+	/* Subscript - доступ к элементу массива на чтение/запись */
+	struct NExpr* index; /* выражение для индекса (uint). NULL если отсутствует */
+	
+	struct NRef* next;
+};	
+
+/* цепочка обращений через точку */
+struct NRefChain
+{
+	struct NRef* first;
+	struct NRef* last;
+};
+
+/* Типы операторов */
+enum StmtType {MAKE, ASSIGN, ACCESS, IF, LOOP};
+
+/* Statement - оператор языка */
 struct NStmt
 {
 	enum StmtType type;
 	
-	struct NAssignStmt* assign;
-	
-	struct NAccess* access;
-	
-	struct NIfStmt* ifStmt;
-	struct NLoopStmt* loopStmt;
+	union
+	{
+		// make?
+		struct NAssignStmt* assign;
+		
+		struct NAccess* access;
+		
+		struct NIfStmt* ifStmt;
+		struct NLoopStmt* loopStmt;
+	} 
+	 body; /* тело (содержимое) оператора */
 	
 	struct NStmt* next;
 };
-
 struct NStmtList
 {
 	struct NStmt* first;
@@ -71,13 +130,8 @@ struct NType
 	struct NType* arrayType;
 };
 
-struct NTypeMark
-{
-	struct NType* type;
-};
-
 enum ExprType {Int, Real, Char, String, Bool, Access, Subscript, Prior, Not, UPlus, UMinus, Power, Mul, Div, Plus, Minus, Equal, NotEqual, Less, Greater, LessOrEqual, GreaterOrEqual, And, AndThen, Or, OrElse, XOR, Implies, Result, Current, Precursor, Create};
-
+ 
 struct NExpr
 {
 	enum ExprType type;

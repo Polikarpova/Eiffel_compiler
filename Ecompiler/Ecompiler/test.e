@@ -1,4 +1,3 @@
-	agent_real
 real_inspect
 
 integer
