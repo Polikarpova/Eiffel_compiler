@@ -10,17 +10,6 @@
 	  fprintf (stderr, "%s\n", s);
 	}	
 	/*
-%union {
-int Int;
-char Char;
-char *String;
-bool Bool;
-struct Program* prog;
-struct Class* cls;
-struct Class_List* cls_list;
-struct Expression* exp;
-struct EXAMPLE* ex;
-}
 %start program
 %type <prog> class_list
 %type <prog> class
@@ -33,6 +22,17 @@ struct EXAMPLE* ex;
 	*/
 %}
 
+%union {
+int Int;
+char Char;
+char *String;
+bool Bool;
+/*struct Program* prog;
+struct Class* cls;
+struct Class_List* cls_list;
+struct Expression* exp;
+struct EXAMPLE* ex;*/
+}
 /* более подробные собщения об ошибках */
 %define parse.error verbose
 
