@@ -1,6 +1,14 @@
 %{
 	/*Пролог*/
 	#include "tree_structs.h"
+	
+	/* более подробные собщения об ошибках */
+#define YYERROR_VERBOSE 1
+	
+	void yyerror (char const *s)
+	{
+	  fprintf (stderr, "%s\n", s);
+	}	
 	/*
 %union {
 int Int;
@@ -25,6 +33,9 @@ struct EXAMPLE* ex;
 	*/
 %}
 
+/* более подробные собщения об ошибках */
+%define parse.error verbose
+
 %token <Int> INT_VAL
 %token REAL_VAL
 %token CHAR_VAL
@@ -40,10 +51,10 @@ struct EXAMPLE* ex;
 %left IMPLIES
 %left OR OR_ELSE XOR
 %left AND AND_THEN
-%left EQUALS NOT_EQUALS BIT_EQUALS BIT_NOT_EQUALS LESS GREATER LESS_OR_EQUAL GREATER_OR_EQUAL
+%left EQUALS NOT_EQUALS LESS GREATER LESS_OR_EQUAL GREATER_OR_EQUAL
 %left CHAR_INTERVAL INT_INTERVAL
 %left '+' '-'
-%left '*' '/' DIV MOD
+%left '*' '/'
 %left '^'
 %left NOT UPLUS UMINUS
 %left '.'
@@ -256,8 +267,8 @@ id_list_2_or_more: ID ',' ID
 ;
 
 
-error_token: INT_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
-		   | CHAR_INTERVAL	{ printf("Forbidden token: %s", $1); return 1;}
+error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
+		   | CHAR_INTERVAL	{ yyerror("Forbidden token: CHAR_INTERVAL");YYERROR;}
 		   ;
 
 %%

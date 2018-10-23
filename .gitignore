@@ -12,6 +12,7 @@ ipch
 Debug
 *output*
 *.tab.c
+*.tab.h
 *flex.c
 *.dot
 *.bat
