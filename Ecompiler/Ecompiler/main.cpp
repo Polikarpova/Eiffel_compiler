@@ -1,9 +1,24 @@
 
-#include <QtCore/QCoreApplication>
+#include <locale.h>
+#include <string>
+
+#include "eiffel_flex.c"
+
 
 int main(int argc, char *argv[])
 {
-	QCoreApplication a(argc, argv);
 
-	return a.exec();
+	//setlocale(LC_ALL, "russian");
+	freopen("output.txt", "w", stdout);
+	yyin = fopen("test.e", "r");
+	int parse_result = yyparse();
+
+	printf("yyparse() returned %i\n", parse_result);
 }
+
+
+
+
+/* TODO
+
+*/
