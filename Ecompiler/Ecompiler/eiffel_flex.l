@@ -97,22 +97,22 @@ and{WHITESPACE}+then 	{ return AND_THEN; printf("Found operator \"%s\" in line %
 or{WHITESPACE}+else 	{ return OR_ELSE; printf("Found operator \"%s\" in line %d\n", "OR_ELSE", yylineno); }
 "implies" 				{ return IMPLIES; printf("Found operator \"%s\" in line %d\n", "IMPLIES", yylineno); }
 
-"+" 					{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"-" 					{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"*" 					{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"/"						{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-"^" 					{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
-";" 					{ return yytext; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+"+" 					{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+"-" 					{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+"*" 					{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+"/"						{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+"^" 					{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
+";" 					{ return yytext[0]; printf("Found operator \"%s\" in line %d\n", yytext, yylineno); }
 
-"(" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-")" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"{" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"}" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"[" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"]" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-":" 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"." 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
-"," 					{ return yytext; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"(" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+")" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"{" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"}" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"[" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"]" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+":" 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"." 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
+"," 					{ return yytext[0]; printf("Found symbol \"%s\" in line %d\n", yytext, yylineno); }
 
 "if" 					{ return IF; printf("Found keyword \"%s\" in line %d\n", "IF", yylineno); }
 "local" 				{ return LOCAL; printf("Found keyword \"%s\" in line %d\n", "LOCAL", yylineno); }
