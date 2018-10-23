@@ -24,6 +24,7 @@
 
 %union {
 int Int;
+double Real;
 char Char;
 char *String;
 bool Bool;
