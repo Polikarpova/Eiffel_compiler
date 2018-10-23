@@ -107,7 +107,6 @@ access: 			 ID
 ;
 
 subscript: access '[' expr ']'
-| subscript '[' expr ']'
 ;
 
 qualification: ID '.'
