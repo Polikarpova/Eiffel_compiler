@@ -39,25 +39,7 @@ struct NAccess
 struct NSubscript
 {
 	
-};
-
-/*????*/
-struct NLf
-{
-	struct NLf* first;
-	struct NLf* last;
-	
-	struct NLf* lf;
-	struct NLf* next;
-};
-
-enum Separator {SEMICOLON, LF};
-
-struct NStmtSep
-{
-	enum Separator sep;
-	struct NLf* lf;
-};
+};	
 
 enum StmtType {ASSIGN, ACCESS, IF, LOOP};
 
@@ -68,7 +50,6 @@ struct NStmt
 	struct NAssignStmt* assign;
 	
 	struct NAccess* access;
-	struct NStmtSep* sep;
 	
 	struct NIfStmt* ifStmt;
 	struct NLoopStmt* loopStmt;
