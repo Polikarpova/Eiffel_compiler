@@ -95,9 +95,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="eiffel_bison.tab.c" />
+    <ClCompile Include="eiffel_flex.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
