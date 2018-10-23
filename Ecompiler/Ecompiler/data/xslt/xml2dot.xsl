@@ -3,7 +3,7 @@
 <!--
     xml2dot.xsl - transform Bison XML Report into DOT.
 
-    Copyright (C) 2007-2012 Free Software Foundation, Inc.
+    Copyright (C) 2007-2015, 2018 Free Software Foundation, Inc.
 
     This file is part of Bison, the GNU Compiler Compiler.
 
@@ -201,6 +201,8 @@
   <xsl:if test="$point = 0">
     <xsl:text> .</xsl:text>
   </xsl:if>
+
+  <!-- RHS -->
   <xsl:for-each select="rhs/symbol|rhs/empty">
     <xsl:apply-templates select="."/>
     <xsl:if test="$point = position()">
@@ -214,7 +216,9 @@
   <xsl:value-of select="."/>
 </xsl:template>
 
-<xsl:template match="empty"/>
+<xsl:template match="empty">
+  <xsl:text> %empty</xsl:text>
+</xsl:template>
 
 <xsl:template match="lookaheads">
   <xsl:text>  [</xsl:text>
@@ -279,20 +283,20 @@
     <xsl:with-param name="dst" select="@state"/>
     <xsl:with-param name="style">
       <xsl:choose>
-	<xsl:when test="@symbol = 'error'">
-	  <xsl:text>dotted</xsl:text>
-	</xsl:when>
-	<xsl:when test="@type = 'shift'">
-	  <xsl:text>solid</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>dashed</xsl:text>
-	</xsl:otherwise>
+        <xsl:when test="@symbol = 'error'">
+          <xsl:text>dotted</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type = 'shift'">
+          <xsl:text>solid</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>dashed</xsl:text>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:with-param>
     <xsl:with-param name="label">
       <xsl:if test="not(@symbol = 'error')">
-	<xsl:value-of select="@symbol"/>
+        <xsl:value-of select="@symbol"/>
       </xsl:if>
     </xsl:with-param>
   </xsl:call-template>
