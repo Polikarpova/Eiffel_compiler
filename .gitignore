@@ -16,3 +16,5 @@ Debug
 *.dot
 *.bat
 /bison/*
+*~m4_in_temp_file*
+*~m4_out_temp_file*
