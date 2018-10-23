@@ -6,6 +6,7 @@
 	#include <locale.h> 
 
 	#include "lexHelpers.h"
+	#include "eiffel_bison.tab.h"
 
 %}
 
@@ -142,13 +143,13 @@ or{WHITESPACE}+else 	{ return OR_ELSE; printf("Found operator \"%s\" in line %d\
 {VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }
 {ID}					{ strcat(yylval.String, yytext); return ID; printf("Found identifier \"%s\" in line %d\n", yytext, yylineno); }
 
-{EXPONENT}				{ yylval.Real = yy_parse_real(yytext); return REAL_VAL; printf("Found exponent value \"%e\" in line %d\n", yy_parse_real(yytext), yylineno); }
-{INT_10}				{ yylval.Int = yy_parse_int(yytext); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno); /*{NATURAL}	{ printf("Found unsigned int value \"%s\" in line %d\n", yytext, yylineno); }*/ }
-{INT_16}				{ yylval.Int = yy_parse_int(yytext, 'x'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'x'), yylineno);}
-{INT_8}					{ yylval.Int = yy_parse_int(yytext, 'c'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}
-{INT_2}					{ yylval.Int = yy_parse_int(yytext, 'b'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'b'), yylineno);}
+{EXPONENT}				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found exponent value \"%e\" in line %d\n", yy_parse_real(yytext), yylineno); }
+{INT_10}				{ yylval.Int = parse_int(yytext); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno); /*{NATURAL}	{ printf("Found unsigned int value \"%s\" in line %d\n", yytext, yylineno); }*/ }
+{INT_16}				{ yylval.Int = parse_int(yytext, 'x'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'x'), yylineno);}
+{INT_8}					{ yylval.Int = parse_int(yytext, 'c'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}
+{INT_2}					{ yylval.Int = parse_int(yytext, 'b'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'b'), yylineno);}
 
-{REAL}[^.]				{ yylval.Real = yy_parse_real(yytext); return REAL_VAL; printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
+{REAL}[^.]				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
 
 {LF}					{ return LF; printf("Found line feed in line %d\n", yylineno); }
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }

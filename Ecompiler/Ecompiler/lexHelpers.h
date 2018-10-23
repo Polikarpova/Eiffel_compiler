@@ -11,7 +11,7 @@ char* remove_underscores(char* str);
 // from eiffel.flex.c
 static void yyunput ( int c, char *buf_ptr  );
 
-int yy_parse_int(char* string_num, char char_base=0)
+int parse_int(char* string_num, char char_base=0)
 {
 	int base;
 	switch(char_base)
@@ -44,7 +44,7 @@ int yy_parse_int(char* string_num, char char_base=0)
 	return x;
 } 
 
-double yy_parse_real(char* string_num)
+double parse_real(char* string_num)
 {
 	char after_real = string_num[ strlen(string_num) - 1 ];
 	string_num[ strlen(string_num) - 1 ] = 0;
