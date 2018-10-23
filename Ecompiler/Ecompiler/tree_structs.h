@@ -1,5 +1,5 @@
-#ifndef SIMPLE_TREE_STRUCTS
-#define SIMPLE_TREE_STRUCTS
+#ifndef TREE_STRUCTS_H
+#define TREE_STRUCTS_H
 
 /* Прототипы */
 
@@ -145,4 +145,4 @@ struct NLoopStmt
 	struct NStmtList* stmtList;
 };
 
-#endif
+#endif /* TREE_STRUCTS_H */
