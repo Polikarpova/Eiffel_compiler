@@ -8,6 +8,7 @@
 	#include "lexHelpers.h"
 	#include "eiffel_bison.tab.h"
 
+extern int global_LF_enabled = false;
 %}
 
 %option noyywrap
@@ -151,7 +152,7 @@ or{WHITESPACE}+else 	{ return OR_ELSE; printf("Found operator \"%s\" in line %d\
 
 {REAL}[^.]				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
 
-{LF}					{ if (1) return LF; printf("Found line feed in line %d\n", yylineno); }
+{LF}					{ if (global_LF_enabled) return LF; printf("Found line feed in line %d\n", yylineno); }
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
 
 <*>.					{ printf("Unexpected char \'%c\' encountered at line %d\n", yytext, yylineno);  BEGIN(INITIAL);}

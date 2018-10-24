@@ -1,14 +1,12 @@
 %{
-	/*Пролог*/
-	#include "tree_structs.h"
+/*Пролог*/
+#include "tree_structs.h"
 	
-	/* более подробные собщения об ошибках */
+/* более подробные собщения об ошибках */
 #define YYERROR_VERBOSE 1
 	
-	void yyerror (char const *s)
-	{
-	  fprintf (stderr, "%s\n", s);
-	}	
+// Флаг для управления контекстом Flex`а
+int global_LF_enabled = false
 %}
 
 %union {
@@ -58,7 +56,6 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %type <access_struct> access
 %type <ref_struct> ref
 %type <ref_chain_struct> ref_chain
-%type <Int> lf
 %type <Int> stmt_sep
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
@@ -169,18 +166,20 @@ ref_chain: ref	{$$=createRefChain($1);}
 | ref_chain '.' ref {$$=addToRefChain($1, $3);}
 ;
 
-
-lf: LF
-| lf LF
+/* actions only */
+_LF_ON_:  { global_LF_enabled = true; }
+;
+_LF_OFF_: { global_LF_enabled = false;}
 ;
 
 stmt_sep: ';'
-| lf
+| LF
+| stmt_sep LF
 ;
 
-stmt: CREATE ref_chain stmt_sep
-| assign_stmt 
-| ref_chain stmt_sep
+stmt: _LF_ON_ CREATE ref_chain stmt_sep _LF_OFF_
+| _LF_ON_ assign_stmt _LF_OFF_
+| _LF_ON_ ref_chain stmt_sep _LF_OFF_
 | if_stmt
 | from_loop
 ;
@@ -324,6 +323,10 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 /*Секция пользовательского кода*/
 #include "bisonFunctions.c"
 
+void yyerror (char const *s)
+{
+  // fprintf (stderr, "%s\n", s);
+}	
 
 // переменные, глобальные для анализатора
 struct NClass* currentNClass = NULL;

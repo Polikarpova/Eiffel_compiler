@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bisonFunctions.c" />
     <ClCompile Include="eiffel_bison.tab.c" />
     <ClCompile Include="eiffel_flex.c" />
     <ClCompile Include="main.cpp" />
