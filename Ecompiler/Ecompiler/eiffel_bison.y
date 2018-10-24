@@ -16,7 +16,7 @@ int Int;
 double Real;
 char Char;
 char* String;
-bool Bool;
+boolean Bool;
 
 /*структуры для узлов*/
 struct NId* id_struct;
@@ -35,24 +35,31 @@ struct NThenPart* then_part_struct;
 struct NThenPartList* then_part_list_struct;
 struct NElsePart* else_part_struct;
 struct NLoopStmt* loop_stmt_struct;
+struct NClass* class_struct;
+struct NClassList* class_list_struct;
+struct NFeature* feature_struct;
+struct NFeatureList* feature_list_struct;
+struct NNameAndType* name_and_type_struct;
+struct NNameAndTypeList* name_and_type_list_struct;
+
+struct * _struct;
 }
 
 /*нетерминалы*/
 %start program
-%type <> class_list
-%type <> class
-%type <> class_body
-%type <> creation_list
-%type <> feature_clauses
-%type <> clients_opt
-%type <> feature_declaration_list
-%type <> feature_declaration
-%type <> attribute
+%type <class_list_struct> class_list
+%type <class_struct> class
+%type <Int> class_body
+%type <id_list_struct> creation_list
+%type <NIdList> feature_clauses
+%type <NIdList> clients_opt
+%type <feature_list_struct> feature_declaration_list
+%type <feature_struct> feature_declaration
 %type <access_struct> access
 %type <ref_struct> ref
 %type <ref_chain_struct> ref_chain
-%type <> lf
-%type <> stmt_sep
+%type <Int> lf
+%type <Int> stmt_sep
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
 %type <stmt_list_struct> stmt_list_opt
@@ -67,19 +74,19 @@ struct NLoopStmt* loop_stmt_struct;
 %type <then_part_struct> then_part
 %type <else_part_struct> else_part
 %type <loop_stmt_struct> from_loop
-%type <> routine
-%type <> routine_body
-%type <> param_list_0_or_more
-%type <> param_list
-%type <> param
-%type <> return_value
-%type <> return_value_opt
-%type <> local_vars
-%type <> local_vars_opt
-%type <> declaration_list
-%type <> vars_declaration
+%type <feature_struct> routine
+%type <stmt_list_struct> routine_body
+%type <name_and_type_list_struct> param_list_0_or_more
+%type <name_and_type_list_struct> param_list
+%type <name_and_type_struct> param
+%type <type_struct> return_value
+%type <type_struct> return_value_opt
+%type <name_and_type_list_struct> local_vars
+%type <name_and_type_list_struct> local_vars_opt
+%type <name_and_type_list_struct> declaration_list
+%type <name_and_type_list_struct> vars_declaration
 %type <id_list_struct> id_list_2_or_more
-%type <> error_token
+/* %type <> error_token */
 
 
 /* более подробные собщения об ошибках */
@@ -307,10 +314,16 @@ id_list_2_or_more: ID ',' ID
 | id_list_2_or_more ',' ID
 ;
 
-
+/*
 error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   | CHAR_INTERVAL	{ yyerror("Forbidden token: CHAR_INTERVAL");YYERROR;}
 		   ;
-
+*/
 %%
 /*Секция пользовательского кода*/
+
+// переменные, глобальные для анализатора
+struct NClass* currentNClass = NULL;
+struct NIdList* currentFeatureClients;
+struct NType* currentType;
+
