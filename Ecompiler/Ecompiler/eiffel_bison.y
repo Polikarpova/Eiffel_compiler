@@ -123,6 +123,7 @@ class: CLASS ID class_body END
 ;
 
 class_body: creation_list feature_clauses
+| feature_clauses
 ;
 
 creation_list: CREATE ID
@@ -142,11 +143,8 @@ feature_declaration_list:  feature_declaration
 | feature_declaration_list feature_declaration
 ;
 
-feature_declaration: attribute
+feature_declaration: vars_declaration /*attribute*/
 | routine
-;
-
-attribute: vars_declaration
 ;
 
 access: ID
