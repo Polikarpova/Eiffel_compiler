@@ -9,40 +9,88 @@
 	{
 	  fprintf (stderr, "%s\n", s);
 	}	
-	/*
-%start program
-%type <prog> class_list
-%type <prog> class
-%type <prog> stmt_list
-%type <prog> stmt
-%type <prog> expr
-%type <prog> assign_stmt
-%type <prog> if_stmt
-	
-	*/
 %}
 
 %union {
 int Int;
 double Real;
 char Char;
-char *String;
+char* String;
 bool Bool;
-/*struct Program* prog;
-struct Class* cls;
-struct Class_List* cls_list;
-struct Expression* exp;
-struct EXAMPLE* ex;*/
+
+/*структуры для узлов*/
+struct NId* id_struct;
+struct NIdList* id_list_struct;
+struct NExpr* expr_struct;
+struct NExprList* expr_list_struct;
+struct NAccess* access_struct;
+struct NRef* ref_struct;
+struct NRefChain* ref_chain_struct;
+struct NStmt* stmt_struct;
+struct NStmtList* stmt_list_struct;
+struct NType* type_struct;
+struct NAssignStmt* assign_stmt_struct;
+struct NIfStmt* if_stmt_struct;
+struct NThenPart* then_part_struct;
+struct NThenPartList* then_part_list_struct;
+struct NElsePart* else_part_struct;
+struct NLoopStmt* loop_stmt_struct;
 }
+
+/*нетерминалы*/
+%start program
+%type <> class_list
+%type <> class
+%type <> class_body
+%type <> creation_list
+%type <> feature_clauses
+%type <> clients_opt
+%type <> feature_declaration_list
+%type <> feature_declaration
+%type <> attribute
+%type <access_struct> access
+%type <ref_struct> ref
+%type <ref_chain_struct> ref_chain
+%type <> lf
+%type <> stmt_sep
+%type <stmt_struct> stmt
+%type <stmt_list_struct> stmt_list
+%type <stmt_list_struct> stmt_list_opt
+%type <type_struct> type
+%type <type_struct> type_mark
+%type <expr_struct> expr
+%type <expr_list_struct> expr_list
+%type <expr_list_struct> expr_list_opt
+%type <assign_stmt_struct> assign_stmt
+%type <if_stmt_struct> if_stmt
+%type <then_part_list_struct> then_part_list
+%type <then_part_struct> then_part
+%type <else_part_struct> else_part
+%type <loop_stmt_struct> from_loop
+%type <> routine
+%type <> routine_body
+%type <> param_list_0_or_more
+%type <> param_list
+%type <> param
+%type <> return_value
+%type <> return_value_opt
+%type <> local_vars
+%type <> local_vars_opt
+%type <> declaration_list
+%type <> vars_declaration
+%type <id_list_struct> id_list_2_or_more
+%type <> error_token
+
+
 /* более подробные собщения об ошибках */
 %define parse.error verbose
 
 %token <Int> INT_VAL
-%token REAL_VAL
-%token CHAR_VAL
-%token STRING_VAL
-%token BOOL_VAL
-%token ID
+%token <Real> REAL_VAL
+%token <Char> CHAR_VAL
+%token <String> STRING_VAL
+%token <Bool> BOOL_VAL
+%token <String> ID
 %token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR
 %token ARRAY INTEGER REAL CHARACTER STRING BOOLEAN
 
