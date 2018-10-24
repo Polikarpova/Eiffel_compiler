@@ -42,7 +42,7 @@ struct NFeatureList* feature_list_struct;
 struct NNameAndType* name_and_type_struct;
 struct NNameAndTypeList* name_and_type_list_struct;
 
-struct * _struct;
+// struct * _struct;
 }
 
 /*нетерминалы*/
@@ -321,6 +321,8 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 */
 %%
 /*Секция пользовательского кода*/
+#include "bisonFunctions.c"
+
 
 // переменные, глобальные для анализатора
 struct NClass* currentNClass = NULL;
