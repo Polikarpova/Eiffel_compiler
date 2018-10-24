@@ -155,8 +155,8 @@ access: ID
 | 		ID '(' expr_list_opt ')'
 ;
 
-ref: access
-| access '[' expr ']'
+ref: access	{$$=createRef($1,0);}
+| access '[' expr ']' {$$=createRef($1,$3);}
 ;
 
 ref_chain: ref
@@ -231,15 +231,15 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | PRECURSOR	{/*???*/}
 ;
 
-expr_list: expr
-| expr_list ',' expr
+expr_list: expr	{$$=createExprList($1);}
+| expr_list ',' expr {$$=addToExprList($1, $3);}
 ;
 
-expr_list_opt: expr_list
-| /*empty*/
+expr_list_opt: expr_list	{$$=createExprList($1);}
+| /*empty*/	{$$=createExprList(0);}
 ;
 
-assign_stmt: ID ASSIGN expr stmt_sep
+assign_stmt: ID ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
 ;
 
 
