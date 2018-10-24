@@ -199,36 +199,36 @@ type: ID
 type_mark: ':' type
 ;
 
-expr: INT_VAL
-| REAL_VAL
-| CHAR_VAL
-| STRING_VAL
-| BOOL_VAL
-| ref_chain
-| '(' expr ')'
-| NOT expr
-| '+' expr %prec UPLUS
-| '-' expr %prec UMINUS
-| expr '^' expr
-| expr '*' expr
-| expr '/' expr
-| expr '+' expr
-| expr '-' expr
-| expr EQUALS expr
-| expr NOT_EQUALS expr
-| expr LESS expr
-| expr GREATER expr
-| expr LESS_OR_EQUAL expr
-| expr GREATER_OR_EQUAL expr
-| expr AND expr
-| expr AND_THEN expr
-| expr OR expr
-| expr OR_ELSE expr
-| expr XOR expr
-| expr IMPLIES expr
-| RESULT
-| CURRENT
-| PRECURSOR   {/**/}
+expr: INT_VAL	{$$=createIntConstExpr($1);}
+| REAL_VAL		{$$=createRealConstExpr($1);}
+| CHAR_VAL		{$$=createCharConstExpr($1);}
+| STRING_VAL	{$$=createStringConstExpr($1);}
+| BOOL_VAL		{$$=createBoolConstExpr($1);}
+| ref_chain		{/*???*/}
+| '(' expr ')'	{$$=$2;}
+| NOT expr		{$$=createExpr(NotE,$2,0);}
+| '+' expr %prec UPLUS	{$$=createExpr(UPlusE,$2,0);}
+| '-' expr %prec UMINUS	{$$=createExpr(UMinusE,$2,0);}
+| expr '^' expr	{$$=createExpr(PowerE,$1,$3);}
+| expr '*' expr	{$$=createExpr(MulE,$1,$3);}	
+| expr '/' expr	{$$=createExpr(DivE,$1,$3);}
+| expr '+' expr	{$$=createExpr(PlusE,$1,$3);}
+| expr '-' expr	{$$=createExpr(MinusE,$1,$3);}
+| expr EQUALS expr	{$$=createExpr(EqualsE,$1,$3);}
+| expr NOT_EQUALS expr	{$$=createExpr(NotEqualE,$1,$3);}
+| expr LESS expr	{$$=createExpr(LessE,$1,$3);}
+| expr GREATER expr	{$$=createExpr(GreaterE,$1,$3);}
+| expr LESS_OR_EQUAL expr	{$$=createExpr(LessOrEqualE,$1,$3);}
+| expr GREATER_OR_EQUAL expr	{$$=createExpr(GreaterOrEqualE,$1,$3);}
+| expr AND expr	{$$=createExpr(AndE,$1,$3);}
+| expr AND_THEN expr	{$$=createExpr(AndThenE,$1,$3);}
+| expr OR expr	{$$=createExpr(OrE,$1,$3);}
+| expr OR_ELSE expr	{$$=createExpr(OrElseE,$1,$3);}
+| expr XOR expr	{$$=createExpr(XORE,$1,$3);}
+| expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
+| RESULT	{/*???*/}
+| CURRENT	{/*???*/}
+| PRECURSOR	{/*???*/}
 ;
 
 expr_list: expr

@@ -40,6 +40,8 @@ struct NIdList
 	struct NId* last;
 };	
 
+enum ExprType {IntE, RealE, CharE, StringE, BoolE, AccessE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE, ResultE, CurrentE, PrecursorE, CreateE};
+
 /* Expr - выражение */
 struct NExpr
 {
@@ -123,8 +125,6 @@ struct NType
 	char* className;
 	struct NType* itemType;
 };
-
-enum ExprType {IntE, RealE, CharE, StringE, BoolE, AccessE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE, ResultE, CurrentE, PrecursorE, CreateE};
  
 struct NAssignStmt
 {
@@ -141,7 +141,7 @@ struct NIfStmt
 
 struct NThenPart
 {
-	struct NExpr* expr;
+	struct NExpr* cond;
 	struct NStmtList* stmtList;
 	
 	struct NThenPart* next;
