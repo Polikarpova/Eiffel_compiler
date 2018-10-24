@@ -153,8 +153,8 @@ feature_declaration: vars_declaration /*attribute*/
 
 access: ID	{$$=createAccess(IdA, $1, 0);}
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-| 		CURRENT	{$$=createAccess(IdA, 0, 0);}
-|		PRECURSOR	{$$=createAccess(IdA, 0, 0);}
+| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);}
+|		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
 | 		ID '(' expr_list_opt ')'	{$$=createAccess(IdA, $1, $3);}
 ;
 
