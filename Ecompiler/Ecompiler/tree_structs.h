@@ -1,21 +1,24 @@
 #ifndef TREE_STRUCTS_H
 #define TREE_STRUCTS_H
 
+// typedef char bool
+typedef enum { false, true } boolean;
+
 /* Прототипы */
 
-struct NClassList;
-struct NClass;
-struct NClassBody;
-//и далее
+struct NId;
+struct NIdList;
+// enum ExprType;
+struct NExpr;
+struct NExprList;
 struct NAccess;
-struct NSubscript;
-//и далее
+struct NClassList;
+struct NRef;
+struct NRefChain;
+// enum StmtType;
 struct NStmt;
 struct NStmtList;
 struct NType;
-struct NTypeMark;
-struct NExpr;
-struct NExprList;
 struct NAssignStmt;
 /*условное ветвление*/
 struct NIfStmt;
@@ -24,6 +27,17 @@ struct NThenPartList;
 struct NElsePart;
 /*цикл*/
 struct NLoopStmt;
+/*класс*/
+struct NClass;
+struct NClassList;
+// struct NCreationList;
+struct NFeature;
+struct NFeatureList;
+struct NNameAndType;
+struct NNameAndTypeList;
+
+// struct NClassBody;
+// struct NTypeMark;
 
 
 /* Структуры */
@@ -51,7 +65,7 @@ struct NExpr
 		double Real;
 		char Char;
 		char* String;
-		bool Bool;
+		boolean Bool; // boolean
 		
 		struct NRef* ref;
 	} value;
@@ -119,6 +133,7 @@ struct NStmtList
 
 enum ValType {ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 
+/*  Тип объявлений */
 struct NType
 {
 	enum Type type;
@@ -126,13 +141,15 @@ struct NType
 	struct NType* itemType;
 };
  
+
+/* Оператор присваивания */
 struct NAssignStmt
 {
 	struct NRef* left;
 	struct NExpr* expr;
 };
 
-/*условное втевление*/
+/* Условное ветвление */
 struct NIfStmt
 {
 	struct NThenPartList* thenPart;
@@ -165,5 +182,57 @@ struct NLoopStmt
 	struct NExpr* cond;
 	struct NStmtList* stmtList;
 };
+
+struct NLoopStmt
+{
+	struct NStmtList* stmtListOpt;
+	struct NExpr* cond;
+	struct NStmtList* stmtList;
+};
+
+/*класс*/
+struct NClass
+{
+	char* className;
+	struct NIdList* creationList; // NULL если отсутствует
+	// // struct NStmtList* clientsList;
+	struct NFeatureList* featureList; // NULL если отсутствует
+	
+};
+struct NClassList
+{
+	struct NClass* first;
+	struct NClass* last;
+};
+
+struct NFeature
+{
+	// признак поля: routineBody == NULL
+	struct NIdList* clients; // видимость для: указанных классов / ANY (или пусто?) / NONE
+	
+	char* name;
+	struct NType* type; // attribute type or return type (can be NULL for return type)
+	struct NNameAndTypeList* params; // NULL если отсутствует
+	struct NNameAndTypeList* localVars; // NULL если отсутствует
+	struct NStmtList* routineBody; // NULL если не метод
+};
+struct NFeatureList
+{
+	struct NFeature* first;
+	struct NFeature* last;
+};
+
+/* Имя и тип: формальные параметры и объявления локальных переменных */
+struct NNameAndType
+{
+	char* name;
+	struct NType* type;
+};
+struct NNameAndTypeList
+{
+	struct NNameAndType* first;
+	struct NNameAndType* last;
+};
+
 
 #endif /* TREE_STRUCTS_H */
