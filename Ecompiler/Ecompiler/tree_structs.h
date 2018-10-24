@@ -147,7 +147,7 @@ struct NType
 /* Оператор присваивания */
 struct NAssignStmt
 {
-	struct NRef* left;
+	struct NRefChain* left; // last partition of ref_chain must not be call
 	struct NExpr* expr;
 };
 

@@ -244,7 +244,7 @@ expr_list_opt: expr_list	{$$=createExprList($1);}
 | /*empty*/	{$$=createExprList(0);}
 ;
 
-assign_stmt: ID ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
+assign_stmt: ref_chain ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
 ;
 
 

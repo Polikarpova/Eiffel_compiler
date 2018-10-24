@@ -80,14 +80,11 @@ struct NExprList* addToExprList (struct NExprList* list, struct NExpr* expr)
 	return list;
 }
 
-struct NAssignStmt* createAssignStmt(char* id, struct NExpr* expr)
+struct NAssignStmt* createAssignStmt(struct NRefChain* left, struct NExpr* expr)
 {
 	struct NAssignStmt* Result = (struct NAssignStmt*) malloc(sizeof (struct NAssignStmt));
 
-	//создаем Access, чтобы передать в Ref
-	struct NAccess* access = createAccess(IdA, id, 0);
-
-	Result->left = createRef(access, 0); //создаем и инициализирем NRef
+	Result->left = left;
 	Result->expr = expr;
 
 	return Result;
