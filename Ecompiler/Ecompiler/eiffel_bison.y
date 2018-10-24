@@ -124,8 +124,9 @@ stmt_sep: ';'
 | lf
 ;
 
-stmt: assign_stmt 
-| access stmt_sep
+stmt: CREATE ref_chain stmt_sep
+| assign_stmt 
+| ref_chain stmt_sep
 | if_stmt
 | from_loop
 ;
@@ -155,8 +156,7 @@ expr: INT_VAL
 | CHAR_VAL
 | STRING_VAL
 | BOOL_VAL
-| access
-| subscript
+| ref_chain
 | '(' expr ')'
 | NOT expr
 | '+' expr %prec UPLUS
@@ -181,7 +181,6 @@ expr: INT_VAL
 | RESULT
 | CURRENT
 | PRECURSOR   {/**/}
-| CREATE '{' type '}' access
 ;
 
 expr_list: expr

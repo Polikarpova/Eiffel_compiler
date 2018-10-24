@@ -97,7 +97,7 @@ char* remove_underscores(char* str)
 	while(p = strchr(str, '_'))
 	{
 		// shift remainig part left
-		for(char* i = p+1; i < str+strlen(str); i++)
+		for(char* i = p+1 ; i < (str+strlen(str)) ; i++)
 		{
 			*(i-1) = *i;
 		}

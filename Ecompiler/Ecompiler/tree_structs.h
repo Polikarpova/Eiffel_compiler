@@ -45,14 +45,13 @@ struct NExpr
 {
 	enum ExprType type;
 	union {
-		int Int,
-		double Real,
-		char Char,
-		char* String,
-		bool Bool,
+		int Int;
+		double Real;
+		char Char;
+		char* String;
+		bool Bool;
 		
-		struct NAccess* access,
-		struct NSubscript* subscript,
+		struct NRef* ref;
 	} value;
 	
 	struct NExpr* left;
@@ -92,7 +91,7 @@ struct NRefChain
 };
 
 /* Типы операторов */
-enum StmtType {MAKE, ASSIGN, ACCESS, IF, LOOP};
+enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
 
 /* Statement - оператор языка */
 struct NStmt
@@ -101,11 +100,8 @@ struct NStmt
 	
 	union
 	{
-		// make?
+		struct NRefChain* ref; // для CreateSt и RefSt
 		struct NAssignStmt* assign;
-		
-		struct NAccess* access;
-		
 		struct NIfStmt* ifStmt;
 		struct NLoopStmt* loopStmt;
 	} 
@@ -119,47 +115,21 @@ struct NStmtList
 	struct NStmt* last;
 };
 
-enum Type {Array, Integer, Real, Character, String, Boolean};
+enum ValType {ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 
 struct NType
 {
 	enum Type type;
-	struct NType* arrayType;
+	char* className;
+	struct NType* itemType;
 };
 
-enum ExprType {Int, Real, Char, String, Bool, Access, Subscript, Prior, Not, UPlus, UMinus, Power, Mul, Div, Plus, Minus, Equal, NotEqual, Less, Greater, LessOrEqual, GreaterOrEqual, And, AndThen, Or, OrElse, XOR, Implies, Result, Current, Precursor, Create};
+enum ExprType {IntE, RealE, CharE, StringE, BoolE, AccessE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE, ResultE, CurrentE, PrecursorE, CreateE};
  
-struct NExpr
-{
-	enum ExprType type;
-	union {
-		int Int,
-		double Real,
-		char Char,
-		char* String,
-		bool Bool
-	} value;
-	
-	struct NAccess* access;
-	struct NSubscript* subscript;
-	
-	struct NExpr* left;
-	struct NExpr* right;
-	
-	struct NExpr* next;
-};
-
-struct NExprList
-{
-	struct NExpr* first;
-	struct NExpr* last;
-};
-
 struct NAssignStmt
 {
-	char* id;
+	struct NRef* left;
 	struct NExpr* expr;
-	struct NStmtSep* sep;
 };
 
 /*условное втевление*/
@@ -192,7 +162,7 @@ struct NElsePart
 struct NLoopStmt
 {
 	struct NStmtList* stmtListOpt;
-	struct NExpr* expr;
+	struct NExpr* cond;
 	struct NStmtList* stmtList;
 };
 
