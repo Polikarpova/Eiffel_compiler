@@ -10,9 +10,6 @@ struct NClassBody;
 struct NAccess;
 struct NSubscript;
 //и далее
-struct NLf;
-struct NStmtSep;
-//и далее
 struct NStmt;
 struct NStmtList;
 struct NType;

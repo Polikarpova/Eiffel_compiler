@@ -1,8 +1,3 @@
-note
-	description: "test_project application root class"
-	date: "$Date$"
-	revision: "$Revision$"
-
 class
 	APPLICATION
 
@@ -17,7 +12,8 @@ feature {NONE} -- Initialization
 	make
 			-- Run application.
 		local
-			var,xstr:STRING -- := "My Text first"
+			var,xstr:STRING -- "My Text first"
+			Caty:CAT
 		do
 			--| Add your code here
 			var := "My Text first"
@@ -27,6 +23,7 @@ feature {NONE} -- Initialization
 			Io.put_integer (demo(2,1))
 			Io.new_line
 			Io.put_integer (xxx+(-2))
+			create Caty.newCat
 		end
 
 	demo(diff, diff2 : INTEGER): INTEGER
@@ -37,11 +34,6 @@ feature {NONE} -- Initialization
 
 end
 
-note
-	description: "Summary description for {CAT}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
 
 -- another file
 class
@@ -55,18 +47,6 @@ class
 	newCat(f:INTEGER)
 	do
 		-- body
-		inspect f
-			when 1 then
-				-- Code when input_integer equals 2
-			when 3, 5 then
-				-- Code when input_integer equals 3 or 5
-			when 7.. 9 then
-				-- Code when input_integer equals 7 or 8 or 9
-			when 10..13 then
-				-- Code when input_integer equals 7 or 8 or 9
-			else
-				-- Code when input_integer does not equal 2, 3, 5, 7, 8 nor 9
-		end
 	end
 
 feature {NONE} -- Initialization
@@ -74,7 +54,7 @@ feature {NONE} -- Initialization
 	make
 			-- Initialization for `Current'.
 		do
-			create me
+			create me.make
 			it_.is_[0].a_(long)[1].sequence.of_.calls(12,'3')
 			qulified[654].by(obj).procedure
 			call_proc
@@ -82,5 +62,4 @@ feature {NONE} -- Initialization
 			call_func1(1)
 			call_func2(1,2)
 		end
-
 end

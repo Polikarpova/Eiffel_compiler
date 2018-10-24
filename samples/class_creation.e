@@ -3,7 +3,7 @@ class TESTCLASS
 create
 	make
 
-feature
+feature {APPLICATION}
 	make
 		do
 			print("I'm born")
@@ -17,7 +17,7 @@ inherit ARGUMENTS_32
 create
 	make
 
-feature {NONE} -- Initialization
+feature -- Initialization
 
 	make
 			-- Run application.
