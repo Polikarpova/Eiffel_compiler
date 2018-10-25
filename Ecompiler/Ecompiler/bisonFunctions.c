@@ -147,3 +147,21 @@ struct NId* createId(char* id)
 
 	return Result;
 }
+
+struct NIdList* createIdList(struct NId* id)
+{
+	struct NIdList* Result = (struct NIdList*) malloc(sizeof (struct NIdList));
+
+	Result->first = id;
+	Result->last = id;
+
+	return Result;
+}
+
+struct NIdList* addToIdList(struct NIdList* list, struct NId* id)
+{
+	list->first->next = id;
+	list->last = id;
+
+	return list;
+}
