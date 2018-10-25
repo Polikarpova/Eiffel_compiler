@@ -2,17 +2,28 @@
 #include <string>
 
 extern FILE *yyin;
-int yyparse();
+extern int yyparse();
+extern struct NClassList* root;
+
+
 
 int main(int argc, char *argv[])
 {
 
 	//setlocale(LC_ALL, "russian");
-	freopen("output.txt", "w", stdout);
-	yyin = fopen("test.e", "r");
+
+	//freopen("output.txt", "w", stdout);
+
+	//char[] infile = "test.e";
+	//char infile[] = "../../samples/sample.e";
+	char infile[] = "../../samples/class_creation.e";
+	yyin = fopen(infile, "r");
+
 	int parse_result = yyparse();
 
 	printf("yyparse() returned %i\n", parse_result);
+
+	printf("ROOT: %p\n", root);
 }
 
 

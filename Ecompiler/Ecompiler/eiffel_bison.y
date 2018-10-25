@@ -12,6 +12,8 @@ void yyerror (char const *s);
 
 extern int yylex();
 
+struct NClassList* root;
+
 %}
 
 %union {
@@ -52,9 +54,8 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %start program
 %type <class_list_struct> class_list
 %type <class_struct> class
-%type <Int> class_body
 %type <id_list_struct> creation_list
-%type <id_list_struct> feature_clauses
+%type <feature_list_struct> feature_clauses
 %type <id_list_struct> clients_opt
 %type <feature_list_struct> feature_declaration_list
 %type <feature_list_struct> attributes
@@ -119,30 +120,27 @@ struct NNameAndTypeList* name_and_type_list_struct;
 
 %%
 
-program : class_list
+program : class_list	{root = $1;}
 ;
 
-class_list: class
-| class_list class
+class_list: class	{$$=createClassList($1);}
+| class_list class	{$$=addToClassList($1,$2);}
 ;
 
-class: CLASS ID class_body END
+class: CLASS ID creation_list feature_clauses END	{$$=createClass($2,$3,$4);}
+| CLASS ID feature_clauses END	{$$=createClass($2,0,$3);}
 ;
 
-class_body: creation_list feature_clauses
-| feature_clauses
+creation_list: CREATE ID	{$$=createIdList(createId($2));}
+| creation_list ',' ID		{$$=addToIdList($1,createId($3));}
 ;
 
-creation_list: CREATE ID
-| creation_list ',' ID
-;
-
-feature_clauses:  FEATURE clients_opt feature_declaration_list
-| feature_clauses FEATURE clients_opt feature_declaration_list
+feature_clauses:  FEATURE clients_opt feature_declaration_list  {$$=$3;}
+| feature_clauses FEATURE clients_opt feature_declaration_list {$$=joinFeatureLists($1,$4);}
 ;
 
 clients_opt: /*empty*/	{$$=registerClients(createIdList(createId("ANY")));}
-| '{' ID '}'			{$$=registerClients(createIdList(createId($2.String)));}
+| '{' ID '}'			{$$=registerClients(createIdList(createId($2)));}
 | '{' id_list_2_or_more '}'	{$$=registerClients($2);}
 ;
 
@@ -288,7 +286,7 @@ param_list: param		{$$=createNameAndTypeList($1);}
 | param_list ';' param	{$$=addToNameAndTypeList($1,$3);}
 ;
 
-param: ID type_mark		{$$=createNameAndType($1.String,$2);}
+param: ID type_mark		{$$=createNameAndType($1,$2);}
 ;
 
 return_value: type_mark	{$$=$1;}
@@ -298,7 +296,7 @@ return_value_opt: return_value	{$$=$1;}
 | /*empty*/						{$$=0; }
 ;
 
-local_vars: LOCAL declaration_list	{$$=$1;}
+local_vars: LOCAL declaration_list	{$$=$2;}
 ;
 
 local_vars_opt: local_vars		{$$=$1;}
@@ -309,12 +307,12 @@ declaration_list: vars_declaration	{$$=$1;}
 | declaration_list vars_declaration	{$$=joinNameAndTypeLists($1,$2);}
 ;
 
-vars_declaration: ID type_mark	{$$=createNameAndTypeList(createNameAndType($1.String,$2));}
+vars_declaration: ID type_mark	{$$=createNameAndTypeList(createNameAndType($1,$2));}
 | id_list_2_or_more type_mark	{$$=convertIdListToNameAndTypeList($1,$2);}
 ;
 
-id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1.String)),createId($3.String));}
-| id_list_2_or_more ',' ID		{$$=addToIdList($1,createId($3.String));}
+id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1)),createId($3));}
+| id_list_2_or_more ',' ID		{$$=addToIdList($1,createId($3));}
 ;
 
 /*

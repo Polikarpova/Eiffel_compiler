@@ -45,10 +45,14 @@ struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem);
 struct NFeature* createFeature(char* name, struct NNameAndTypeList* params, struct NType* type, struct NNameAndTypeList* localVars =0, struct NStmtList* routineBody =0);
 struct NFeatureList* createFeatureList(struct NFeature* elem);
 struct NFeatureList* addToFeatureList(struct NFeatureList* list, struct NFeature* elem);
-struct NFeature* createAttributesFrom(char* name, struct NType* type);
+struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList);
 struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatureList* list2);
 // ======== clients ======== //
 struct NIdList* registerClients(struct NIdList* clients);
+// ======== classes ======== //
+struct NClass* createClass(char* className, struct NIdList* creationList, struct NFeatureList* featureList);
+struct NClassList* createClassList(struct NClass* elem);
+struct NClassList* addToClassList(struct NClassList* list, struct NClass* elem);
 
 
 

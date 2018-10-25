@@ -1,6 +1,6 @@
 #include "bisonFunctions.h"
 
-extern struct NClass* currentClass = NULL;
+// extern struct NClass* currentClass = NULL;
 extern struct NIdList* currentFeatureClients;
 
 
@@ -403,4 +403,35 @@ struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatur
 }
 
 // ======== clients ======== //
+struct NIdList* registerClients(struct NIdList* clients)
+{
+	return clients;
+}
+// ======== classes ======== //
+struct NClass* createClass(char* className, struct NIdList* creationList, struct NFeatureList* featureList)
+{
+	ALLOCATE_POINTER_AS(Result, struct NClass)
+	
+	Result->className = className;
+	Result->creationList = creationList;
+	Result->featureList = featureList;
+
+	return Result;
+}
+struct NClassList* createClassList(struct NClass* elem)
+{
+	ALLOCATE_POINTER_AS(Result, struct NClassList)
+
+	Result->first = elem;
+	Result->last = elem;
+
+	return Result;
+}
+struct NClassList* addToClassList(struct NClassList* list, struct NClass* elem)
+{
+	list->last->next = elem;
+	list->last = elem;
+
+	return list;
+}
 

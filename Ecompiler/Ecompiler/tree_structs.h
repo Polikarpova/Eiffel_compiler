@@ -190,6 +190,7 @@ struct NClass
 	// // struct NStmtList* clientsList;
 	struct NFeatureList* featureList; // NULL если отсутствует
 	
+	struct NClass* next;
 };
 struct NClassList
 {
