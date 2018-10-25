@@ -110,7 +110,6 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %left OR OR_ELSE XOR
 %left AND AND_THEN
 %left EQUALS NOT_EQUALS LESS GREATER LESS_OR_EQUAL GREATER_OR_EQUAL
-%left CHAR_INTERVAL INT_INTERVAL
 %left '+' '-'
 %left '*' '/'
 %left '^'
