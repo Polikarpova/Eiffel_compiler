@@ -130,7 +130,7 @@ struct NStmtList
 	struct NStmt* last;
 };
 
-enum ValType {ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
+enum ValType {VoidV, ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 
 /*  Тип объявлений */
 struct NType

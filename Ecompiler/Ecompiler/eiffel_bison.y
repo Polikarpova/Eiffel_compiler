@@ -271,8 +271,8 @@ from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END	{$$=createFromLoop($
 routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body	{$$=createFeature($1,$2,$3,$4,$5);}
 | ID return_value local_vars routine_body	{$$=createFeature($1,0,$2,$3,$4);}
 | ID  return_value  routine_body	{$$=createFeature($1,0,$2,0,$3);}
-| ID  local_vars routine_body	{$$=createFeature($1,0,0,$2,$3);}
-| ID   routine_body				{$$=createFeature($1,0,0,0,$2);}
+| ID  local_vars routine_body	{$$=createFeature($1,0,createType(VoidV),$2,$3);}
+| ID   routine_body				{$$=createFeature($1,0,createType(VoidV),0,$2);}
 ;
 
 routine_body: DO stmt_list_opt END	{$$=$2;}

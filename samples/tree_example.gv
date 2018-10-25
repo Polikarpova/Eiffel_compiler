@@ -6,7 +6,7 @@ class_list[shape=doublecircle]
 class_list -> 1
 
 //----Конструктор
-2[label="[cst]make"]
+2[label="<create>"]
 1->2
 
 //----Область видимости

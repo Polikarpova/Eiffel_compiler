@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include "tree_structs.h"
-
-FILE * class2dot(FILE *f, int *min_id, struct NClass* N, struct NClass* LastN);
-FILE * feature2dot(FILE *f, int *min_id, struct NFeature* N, struct NFeature* LastN);
-char* NType2string(struct NType* type);
-FILE * id2dot(FILE *f, int *min_id, struct NId* N, struct NId* LastN);
-
+#include "print2dot.h"
 
 void print2dot(char* filename, struct NClassList* root)
 {
@@ -13,14 +6,31 @@ void print2dot(char* filename, struct NClassList* root)
 	int id = 1;
 
 	fprintf(f, "digraph Eiffel {\n");
-
-	class2dot(f,&id, root->first, root->last);
+	classList2dot(f,&id, root->first, root->last);
 
 	fprintf(f, "}\n");
 	fclose(f);
 }
 
-FILE * class2dot(FILE *f, int *min_id, struct NClass* N, struct NClass* LastN)
+FILE * classList2dot(FILE *f, int *min_id, struct NClass* List)
+{
+	int self_id = *min_id;
+	// node
+	fprintf(f, "%d [label=\"%s\"]; \n", (*min_id)++, "<ROOT>" );
+
+	// iterate features
+	for(struct NClass* i = List->first ;  ; i = i->next )
+	{
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), i->type->className );
+		feature2dot(f, min_id, i); // !!!  доделать
+		if(i == List->last) break;
+	}
+	class2dot(f,min_id, root->first, root->last);
+
+
+
+}
+FILE * class2dot(FILE *f, int *min_id, struct NClass* N)
 {
 	int self_id = *min_id;
 	// node
@@ -44,13 +54,32 @@ FILE * class2dot(FILE *f, int *min_id, struct NClass* N, struct NClass* LastN)
 	}
 	return f;
 }
-char* NType2string(struct NType* type)
+FILE * NType2dot(FILE *f, struct NType* type);
 {
-	// switch(type->type)
-	// {
-		// case ClassV:
-			// return 
-	// }
+	
+	switch(type->type)
+	{
+		case VoidV:
+			fprintf(f, "VOID"); return;
+		case ClassV:
+			fprintf(f, type->className); return;
+		case VoidV:
+			fprintf(f, "VOID"); return;
+		case ArrayV:
+			fprintf(f, "ARRAY[");
+			NType2dot(f, type->itemType);
+			fprintf(f, "]"); return;
+		case IntegerV:
+			fprintf(f, "INTEGER"); return;
+		case RealV:
+			fprintf(f, "REAL"); return;
+		case CharacterV:
+			fprintf(f, "CHARACTER"); return;
+		case StringV:
+			fprintf(f, "STRING"); return;
+		case BooleanV:
+			fprintf(f, "BOOLEAN"); return;
+	}
 }
 FILE * feature2dot(FILE *f, int *min_id, struct NFeature* N, struct NFeature* LastN)
 {
