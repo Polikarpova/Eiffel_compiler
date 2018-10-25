@@ -38,7 +38,7 @@ struct NExpr* createStringConstExpr (char* token)
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
 	Result->type = IntE;
-	strcpy(Result->value.String, token);
+	Result->value.String = token;
 
 	return Result;
 }

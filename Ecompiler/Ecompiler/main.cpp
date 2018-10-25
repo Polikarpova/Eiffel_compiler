@@ -16,10 +16,13 @@ int main(int argc, char *argv[])
 
 	//char[] infile = "test.e";
 	//char infile[] = "../../samples/sample.e";
-	char infile[] = "../../samples/class_creation.e";
+	//char infile[] = "../../samples/class_creation.e";
+	char infile[] = "../../samples/testclass.e";
 	yyin = fopen(infile, "r");
 
 	int parse_result = yyparse();
+
+	fclose(yyin);
 
 	printf("yyparse() returned %i\n", parse_result);
 
