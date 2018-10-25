@@ -81,10 +81,12 @@ struct NExprList
 	struct NExpr* last;
 };
 
+enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
+
 /* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
 struct NAccess
 {
-	enum yytokentype type; /* допустимо ID, RESULT, CURRENT (см. объявления bison) */
+	enum AccessType type; /* допустимо ID, RESULT, CURRENT (см. объявления bison) */
 	struct NId* id;	 /* идентификатор */
 	struct NExprList* params; /* NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
 };

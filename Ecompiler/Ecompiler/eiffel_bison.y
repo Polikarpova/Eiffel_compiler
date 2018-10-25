@@ -154,18 +154,19 @@ feature_declaration: vars_declaration /*attribute*/
 | routine
 ;
 
-access: ID
-| 		RESULT
-| 		CURRENT
-| 		ID '(' expr_list_opt ')'
+access: ID	{$$=createAccess(IdA, $1, 0);}
+| 		RESULT	{$$=createAccess(ResultA, 0, 0);}
+| 		CURRENT	{$$=createAccess(IdA, 0, 0);}
+|		PRECURSOR	{$$=createAccess(IdA, 0, 0);}
+| 		ID '(' expr_list_opt ')'	{$$=createAccess(IdA, $1, $3);}
 ;
 
 ref: access	{$$=createRef($1,0);}
 | access '[' expr ']' {$$=createRef($1,$3);}
 ;
 
-ref_chain: ref
-| ref_chain '.' ref
+ref_chain: ref	{$$=createRefChain($1);}
+| ref_chain '.' ref {$$=addToRefChain($1, $3);}
 ;
 
 

@@ -85,7 +85,7 @@ struct NAssignStmt* createAssignStmt(char* id, struct NExpr* expr)
 	struct NAssignStmt* Result = (struct NAssignStmt*) malloc(sizeof (struct NAssignStmt));
 
 	//создаем Access, чтобы передать в Ref
-	struct NAccess* access = createAccess(ID, id, 0);
+	struct NAccess* access = createAccess(IdA, id, 0);
 
 	Result->left = createRef(access, 0); //создаем и инициализирем NRef
 	Result->expr = expr;
@@ -103,11 +103,40 @@ struct NRef* createRef(struct NAccess* access, struct NExpr* index)
 	return Result;
 }
 
-struct NAccess* createAccess(enum yytokentype type, char* id, struct NExprList* params)
+struct NRefChain* createRefChain(struct NRef* ref)
+{
+	struct NRefChain* Result = (struct NRefChain*) malloc(sizeof (struct NRefChain));
+
+	Result->first = ref;
+	Result->last = ref;
+
+	return Result;
+}
+
+struct NRefChain* addToRefChain(struct NRefChain* chain, struct NRef* ref)
+{
+	chain->first->next = ref;
+	chain->last = ref;
+
+	return chain;
+}
+
+struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params)
 {
 	struct NAccess* Result = (struct NAccess*) malloc(sizeof (struct NAccess));
 
-	/**/
+	Result->type = type;
+	Result->id = createId(id);
+	Result->params = params;
+
+	return Result;
+}
+
+struct NId* createId(char* id)
+{
+	struct NId* Result = (struct NId*) malloc(sizeof (struct NId));
+
+	strcpy(Result->id, id);
 
 	return Result;
 }
