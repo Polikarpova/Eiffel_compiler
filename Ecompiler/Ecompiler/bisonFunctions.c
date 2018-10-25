@@ -213,3 +213,15 @@ struct NElsePart* createElsePart(struct NStmtList* stmtList)
 
 	return Result;
 }
+
+/*цикл*/
+struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* cond, struct NStmtList* stmtList)
+{
+	struct NLoopStmt* Result = (struct NLoopStmt*) malloc(sizeof (struct NLoopStmt));
+
+	Result->stmtListOpt = stmtListOpt;
+	Result->cond = cond;
+	Result->stmtList = stmtList;
+
+	return Result;
+}

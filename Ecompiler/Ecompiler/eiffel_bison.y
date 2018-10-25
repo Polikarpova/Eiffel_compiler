@@ -260,7 +260,7 @@ else_part: ELSE stmt_list	{$$=createElsePart($2);}
 ;
 
 
-from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END
+from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END	{$$=createFromLoop($2, $4, $6);}
 ;
 
 
