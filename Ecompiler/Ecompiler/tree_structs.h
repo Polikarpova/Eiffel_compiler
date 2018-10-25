@@ -155,7 +155,7 @@ struct NAssignStmt
 struct NIfStmt
 {
 	struct NThenPartList* thenPart;
-	struct NElsePartPart* elsePart;
+	struct NElsePart* elsePart;
 };
 
 struct NThenPart
@@ -178,13 +178,6 @@ struct NElsePart
 };
 
 /*цикл*/
-struct NLoopStmt
-{
-	struct NStmtList* stmtListOpt;
-	struct NExpr* cond;
-	struct NStmtList* stmtList;
-};
-
 struct NLoopStmt
 {
 	struct NStmtList* stmtListOpt;

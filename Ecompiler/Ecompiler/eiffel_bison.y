@@ -245,18 +245,18 @@ assign_stmt: ref_chain ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
 ;
 
 
-if_stmt: IF then_part_list END
-| IF then_part_list else_part END
+if_stmt: IF then_part_list END	{$$=createIfStmt($2, 0);}
+| IF then_part_list else_part END 	{$$=createIfStmt($2, $3);}
 ;
 
-then_part_list: then_part
-| then_part_list ELSEIF then_part 
+then_part_list: then_part	{$$=createThenPartList($1);}
+| then_part_list ELSEIF then_part	{$$=addToThenPartList($1, $3);} 
 ;
 
-then_part: '(' expr ')' THEN stmt_list
+then_part: '(' expr ')' THEN stmt_list	{$$=createThenPart($2, $5);}
 ;
 
-else_part: ELSE stmt_list
+else_part: ELSE stmt_list	{$$=createElsePart($2);}
 ;
 
 

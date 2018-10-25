@@ -165,3 +165,51 @@ struct NIdList* addToIdList(struct NIdList* list, struct NId* id)
 
 	return list;
 }
+
+/*ветвление*/
+struct NIfStmt* createIfStmt (struct NThenPartList* thenPartList, struct NElsePart* elsePart)
+{
+	struct NIfStmt* Result = (struct NIfStmt*) malloc(sizeof (struct NIfStmt));
+
+	Result->thenPart = thenPartList;
+	Result->elsePart = elsePart;
+
+	return Result;
+}
+
+struct NThenPartList* createThenPartList(struct NThenPart* thenPart)
+{
+	struct NThenPartList* Result = (struct NThenPartList*) malloc(sizeof (struct NThenPartList));
+
+	Result->first = thenPart;
+	Result->last = thenPart;
+
+	return Result;
+}
+
+struct NThenPartList* addToThenPartList(struct NThenPartList* list, struct NThenPart* thenPart)
+{
+	list->first->next = thenPart;
+	list->last = thenPart;
+
+	return list;
+}
+
+struct NThenPart* createThenPart(struct NExpr* cond, struct NStmtList* stmtList)
+{
+	struct NThenPart* Result = (struct NThenPart*) malloc(sizeof (struct NThenPart));
+
+	Result->cond = cond;
+	Result->stmtList = stmtList;
+
+	return Result;
+}
+
+struct NElsePart* createElsePart(struct NStmtList* stmtList)
+{
+	struct NElsePart* Result = (struct NElsePart*) malloc(sizeof (struct NElsePart));
+
+	Result->stmtList = stmtList;
+
+	return Result;
+}
