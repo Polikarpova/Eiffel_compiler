@@ -57,7 +57,7 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %type <NIdList> feature_clauses
 %type <NIdList> clients_opt
 %type <feature_list_struct> feature_declaration_list
-%type <feature_struct> feature_declaration
+%type <feature_list_struct> attributes
 %type <access_struct> access
 %type <ref_struct> ref
 %type <ref_chain_struct> ref_chain
@@ -146,12 +146,13 @@ clients_opt: /*empty*/
 | '{' id_list_2_or_more '}'
 ;
 
-feature_declaration_list:  feature_declaration
-| feature_declaration_list feature_declaration
+feature_declaration_list: attributes  {$$=$1;}
+| routine						{$$=createFeatureList($1);}
+| feature_declaration_list attributes {$$=joinFeatureLists($1,$2);}
+| feature_declaration_list routine {$$=addToFeatureList($1,$2);}
 ;
 
-feature_declaration: vars_declaration /*attribute*/
-| routine
+attributes: vars_declaration {$$=createAttributesFrom($1);}
 ;
 
 
@@ -269,14 +270,14 @@ from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END	{$$=createFromLoop($
 ;
 
 
-routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body
-| ID return_value local_vars routine_body
-| ID  return_value  routine_body
-| ID  local_vars routine_body
-| ID   routine_body
+routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body	{$$=createFeature($1,$2,$3,$4,$5);}
+| ID return_value local_vars routine_body	{$$=createFeature($1,0,$2,$3,$4);}
+| ID  return_value  routine_body	{$$=createFeature($1,0,$2,0,$3);}
+| ID  local_vars routine_body	{$$=createFeature($1,0,0,$2,$3);}
+| ID   routine_body				{$$=createFeature($1,0,0,0,$2);}
 ;
 
-routine_body: DO stmt_list_opt END
+routine_body: DO stmt_list_opt END	{$$=$2;}
 ;
 
 param_list_0_or_more: '(' param_list ')'	{$$=$2;}
