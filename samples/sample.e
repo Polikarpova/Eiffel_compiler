@@ -27,10 +27,11 @@ feature {NONE} -- Initialization
 		end
 
 	demo(diff, diff2 : INTEGER): INTEGER
+	local
+		xxx,zzz: INTEGER
 	do
 		Result := 999 + diff
 	end
-	xxx,zzz: INTEGER
 
 end
 
