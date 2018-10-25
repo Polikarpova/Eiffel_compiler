@@ -99,6 +99,7 @@
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="print2dot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />

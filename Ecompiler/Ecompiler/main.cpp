@@ -5,6 +5,7 @@ extern FILE *yyin;
 extern int yyparse();
 extern struct NClassList* root;
 
+void print2dot(char* filename, struct NClassList* root);
 
 
 int main(int argc, char *argv[])
@@ -27,6 +28,9 @@ int main(int argc, char *argv[])
 	printf("yyparse() returned %i\n", parse_result);
 
 	printf("ROOT: %p\n", root);
+
+	if(root)
+		print2dot("tree.dot", root);
 }
 
 
