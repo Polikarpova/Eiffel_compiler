@@ -154,18 +154,20 @@ feature_declaration: vars_declaration /*attribute*/
 | routine
 ;
 
-access: ID	{$$=createAccess(IdA, $1, 0);}
+
+
+access: ID		{$$=createAccess(IdA, $1, 0);}
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
 | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);}
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
 | 		ID '(' expr_list_opt ')'	{$$=createAccess(IdA, $1, $3);}
 ;
 
-ref: access	{$$=createRef($1,0);}
-| access '[' expr ']' {$$=createRef($1,$3);}
+ref: access				{$$=createRef($1,0);}
+| access '[' expr ']' 	{$$=createRef($1,$3);}
 ;
 
-ref_chain: ref	{$$=createRefChain($1);}
+ref_chain: ref		{$$=createRefChain($1);}
 | ref_chain '.' ref {$$=addToRefChain($1, $3);}
 ;
 
@@ -180,31 +182,31 @@ stmt_sep: ';'
 | stmt_sep LF
 ;
 
-stmt: _LF_ON_ CREATE ref_chain stmt_sep _LF_OFF_
-| _LF_ON_ assign_stmt _LF_OFF_
-| _LF_ON_ ref_chain stmt_sep _LF_OFF_
-| if_stmt
-| from_loop
+stmt: _LF_ON_ CREATE ref_chain stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
+| _LF_ON_ assign_stmt _LF_OFF_		{$$=createStmt(AssignSt,$2);}
+| _LF_ON_ ref_chain stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
+| if_stmt			{$$=createStmt(IfSt,$2);}
+| from_loop			{$$=createStmt(LoopSt,$2);}
 ;
 
-stmt_list: stmt 
-| stmt_list stmt
+stmt_list: stmt 	{$$=createStmtList($1);}
+| stmt_list stmt 	{$$=addToStmtList($1, $2);}
 ;
 
-stmt_list_opt: /*empty*/
-| stmt_list 
+stmt_list_opt: /*empty*/	{$$=createStmtList(0);}
+| stmt_list 		{$$=$1;}
 ;
 
-type: ID
-| ARRAY '[' type ']'
-| INTEGER
-| REAL
-| CHARACTER
-| STRING
-| BOOLEAN
+type: ID		{$$=createType(ClassV,$1);}
+| ARRAY '[' type ']' {$$=createType(ArrayV,0,$3);}
+| INTEGER		{$$=createType(IntegerV);}
+| REAL			{$$=createType(RealV);}
+| CHARACTER		{$$=createType(CharacterV);}
+| STRING		{$$=createType(StringV);}
+| BOOLEAN		{$$=createType(BooleanV);}
 ;
 
-type_mark: ':' type
+type_mark: ':' type	{$$=$2;}
 ;
 
 expr: INT_VAL	{$$=createIntConstExpr($1);}
@@ -236,12 +238,12 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
 ;
 
-expr_list: expr	{$$=createExprList($1);}
-| expr_list ',' expr {$$=addToExprList($1, $3);}
+expr_list: expr			{$$=createExprList($1);}
+| expr_list ',' expr 	{$$=addToExprList($1, $3);}
 ;
 
 expr_list_opt: expr_list	{$$=($1);}
-| /*empty*/	{$$=createExprList(0);}
+| /*empty*/				{$$=createExprList(0);}
 ;
 
 assign_stmt: ref_chain ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
@@ -277,41 +279,41 @@ routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body
 routine_body: DO stmt_list_opt END
 ;
 
-param_list_0_or_more: '(' param_list ')'
-| '(' ')'
+param_list_0_or_more: '(' param_list ')'	{$$=$2;}
+| '(' ')'				{$$=createNameAndTypeList(0);}
 ;
 
-param_list: param
-| param_list ';' param
+param_list: param		{$$=createNameAndTypeList($1);}
+| param_list ';' param	{$$=addToNameAndTypeList($1,$3);}
 ;
 
-param: ID type_mark
+param: ID type_mark		{$$=createNameAndType($1.String,$2);}
 ;
 
-return_value: type_mark
+return_value: type_mark	{$$=$1;}
 ;
 
-return_value_opt: return_value
-| /*empty*/
+return_value_opt: return_value	{$$=$1;}
+| /*empty*/						{$$=0; }
 ;
 
-local_vars: LOCAL declaration_list
+local_vars: LOCAL declaration_list	{$$=$1;}
 ;
 
-local_vars_opt: local_vars
-| /*empty*/
+local_vars_opt: local_vars		{$$=$1;}
+| /*empty*/						{$$=0; }
 ;
 
-declaration_list: vars_declaration
-| declaration_list vars_declaration
+declaration_list: vars_declaration	{$$=$1;}
+| declaration_list vars_declaration	{$$=joinNameAndTypeLists($1,$2);}
 ;
 
-vars_declaration: ID type_mark
-| id_list_2_or_more type_mark
+vars_declaration: ID type_mark	{$$=createNameAndTypeList(createNameAndType($1.String,$2));}
+| id_list_2_or_more type_mark	{$$=convertIdListToNameAndTypeList($1,$2);}
 ;
 
-id_list_2_or_more: ID ',' ID
-| id_list_2_or_more ',' ID
+id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1.String)),createId($3.String));}
+| id_list_2_or_more ',' ID		{$$=addToIdList($1,createId($3.String));}
 ;
 
 /*
@@ -328,7 +330,7 @@ void yyerror (char const *s)
 }	
 
 // переменные, глобальные для анализатора
-struct NClass* currentNClass = NULL;
+struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
-struct NType* currentType;
+// struct NType* currentType;
 
