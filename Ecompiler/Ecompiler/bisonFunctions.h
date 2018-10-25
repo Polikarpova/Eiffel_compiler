@@ -41,6 +41,14 @@ struct NType* createType(enum ValType type, char* className =0 , struct NType* i
 struct NStmt* createStmt(enum StmtType type, void* body);
 struct NStmtList* createStmtList(struct NStmt* elem);
 struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem);
+// ======== features ======== //
+struct NFeature* createFeature(char* name, struct NNameAndTypeList* params, struct NType* type, struct NNameAndTypeList* localVars =0, struct NStmtList* routineBody =0);
+struct NFeatureList* createFeatureList(struct NFeature* elem);
+struct NFeatureList* addToFeatureList(struct NFeatureList* list, struct NFeature* elem);
+struct NFeature* createAttributesFrom(char* name, struct NType* type);
+struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatureList* list2);
+// ======== clients ======== //
+
 
 
 

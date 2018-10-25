@@ -334,3 +334,68 @@ struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem)
 
 	return list;
 }
+
+// ======== features ======== //
+struct NFeature* createFeature(char* name, struct NNameAndTypeList* params, struct NType* type, struct NNameAndTypeList* localVars/* =0 */, struct NStmtList* routineBody/* =0 */)
+{
+	ALLOCATE_POINTER_AS(Result, struct NFeature)
+
+	Result->clients = currentFeatureClients; /*use global var*/
+	
+	Result->name = name;
+	Result->params = params;
+	Result->type = type;
+	Result->localVars = localVars;
+	Result->routineBody = routineBody;
+
+	return Result;
+}
+struct NFeatureList* createFeatureList(struct NFeature* elem)
+{
+	ALLOCATE_POINTER_AS(Result, struct NFeatureList)
+
+	Result->first = elem;
+	Result->last = elem;
+
+	return Result;
+}
+struct NFeatureList* addToFeatureList(struct NFeatureList* list, struct NFeature* elem)
+{
+	list->last->next = elem;
+	list->last = elem;
+
+	return list;
+}
+// like convert for NameAndTypeList
+struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
+{
+	// assume natList contains at least 1 element
+	struct NNameAndType* prevNat, curNat = natList->first;
+	// create attribute & place it into list
+	Result = createFeatureList(createFeature(curNat->name,0,type,0,0));
+	while(curNat != natList->last) // curNat - последний обработанный элемент
+	{
+		prevNat = curNat;
+		curNat = prevNat->next;
+		delete prevNat;
+		addToNameAndTypeList(Result, createFeature(curNat->name,0,type,0,0));
+	}
+	
+	delete curNat;
+	delete natList;
+
+	return Result;
+}
+struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatureList* list2)
+{
+	list1->last->next = list2.first;
+	list1->last = list2.last;
+
+	list2.first = list2.last = 0;
+	delete list2;
+	
+	return list1;
+}
+
+// ======== clients ======== //
+
