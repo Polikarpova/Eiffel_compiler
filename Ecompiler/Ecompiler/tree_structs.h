@@ -1,9 +1,6 @@
 #ifndef TREE_STRUCTS_H
 #define TREE_STRUCTS_H
 
-// typedef char bool
-typedef enum { false, true } boolean;
-
 /* Прототипы */
 
 struct NId;
@@ -65,7 +62,7 @@ struct NExpr
 		double Real;
 		char Char;
 		char* String;
-		boolean Bool; // boolean
+		bool Bool; // boolean
 		
 		struct NRefChain* ref;
 	} value;

@@ -2,7 +2,7 @@
 #include <locale.h>
 #include <string>
 
-#include "eiffel_flex.c"
+#include "eiffel_flex.cpp"
 
 
 int main(int argc, char *argv[])

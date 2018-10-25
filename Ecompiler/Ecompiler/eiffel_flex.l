@@ -69,7 +69,7 @@ EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
 \"									{ BEGIN(DOUBLE_QUOTED_STRING); literal[0] = '\0'; startLine = yylineno; }
 <DOUBLE_QUOTED_STRING>[^%\"]			{ strcat(literal, yytext);}
-<DOUBLE_QUOTED_STRING>\"			{ printf("Found double quoted literal \"%s\". From line %d to line %d\n", literal, startLine, yylineno)
+<DOUBLE_QUOTED_STRING>\"			{ printf("Found double quoted literal \"%s\". From line %d to line %d\n", literal, startLine, yylineno);
 									  strcat(yylval.String, literal);
 									  return STRING_VAL;
 									  BEGIN(INITIAL);}
@@ -144,13 +144,13 @@ or{WHITESPACE}+else 	{ return OR_ELSE; printf("Found operator \"%s\" in line %d\
 {VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }
 {ID}					{ strcat(yylval.String, yytext); return ID; printf("Found identifier \"%s\" in line %d\n", yytext, yylineno); }
 
-{EXPONENT}				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found exponent value \"%e\" in line %d\n", yy_parse_real(yytext), yylineno); }
-{INT_10}				{ yylval.Int = parse_int(yytext); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext), yylineno); /*{NATURAL}	{ printf("Found unsigned int value \"%s\" in line %d\n", yytext, yylineno); }*/ }
-{INT_16}				{ yylval.Int = parse_int(yytext, 'x'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'x'), yylineno);}
-{INT_8}					{ yylval.Int = parse_int(yytext, 'c'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'c'), yylineno);}
-{INT_2}					{ yylval.Int = parse_int(yytext, 'b'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", yy_parse_int(yytext, 'b'), yylineno);}
+{EXPONENT}				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found exponent value \"%e\" in line %d\n", parse_real(yytext), yylineno); }
+{INT_10}				{ yylval.Int = parse_int(yytext, 'd'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", parse_int(yytext), yylineno); /*{NATURAL}	{ printf("Found unsigned int value \"%s\" in line %d\n", yytext, yylineno); }*/ }
+{INT_16}				{ yylval.Int = parse_int(yytext, 'x'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", parse_int(yytext, 'x'), yylineno);}
+{INT_8}					{ yylval.Int = parse_int(yytext, 'c'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", parse_int(yytext, 'c'), yylineno);}
+{INT_2}					{ yylval.Int = parse_int(yytext, 'b'); return INT_VAL; printf("Found int value \"%d\" in line %d\n", parse_int(yytext, 'b'), yylineno);}
 
-{REAL}[^.]				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found real value \"%f\" in line %d\n", yy_parse_real(yytext), yylineno);}
+{REAL}[^.]				{ yylval.Real = parse_real(yytext); return REAL_VAL; printf("Found real value \"%f\" in line %d\n", parse_real(yytext), yylineno);}
 
 {LF}					{ if (global_LF_enabled) return LF; printf("Found line feed in line %d\n", yylineno); }
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }

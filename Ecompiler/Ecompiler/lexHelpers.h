@@ -2,9 +2,12 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+typedef enum { false, true } boolean;
+
 
 char* remove_underscores(char* str);
 

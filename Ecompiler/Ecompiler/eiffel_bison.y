@@ -14,7 +14,7 @@ int Int;
 double Real;
 char Char;
 char* String;
-boolean Bool;
+bool Bool;
 
 /*структуры для узлов*/
 struct NId* id_struct;
@@ -116,7 +116,6 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %%
 
 program : class_list
-| error_token
 ;
 
 class_list: class

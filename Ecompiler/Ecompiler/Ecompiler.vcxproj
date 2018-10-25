@@ -95,9 +95,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bisonFunctions.c" />
-    <ClCompile Include="eiffel_bison.tab.c" />
-    <ClCompile Include="eiffel_flex.c" />
+    <ClCompile Include="bisonFunctions.cpp" />
+    <ClCompile Include="eiffel_bison.tab.cpp" />
+    <ClCompile Include="eiffel_flex.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,13 +108,13 @@
   <ItemGroup>
     <Flex Include="eiffel_flex.l">
       <CaseInsensitive Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CaseInsensitive>
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).c</OutputFile>
+      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cpp</OutputFile>
     </Flex>
   </ItemGroup>
   <ItemGroup>
     <Bison Include="eiffel_bison.y">
       <Verbose Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</Verbose>
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).tab.c</OutputFile>
+      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).tab.cpp</OutputFile>
       <Warnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </Warnings>
     </Bison>
