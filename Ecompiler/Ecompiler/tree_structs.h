@@ -138,7 +138,7 @@ enum ValType {ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 /*  Тип объявлений */
 struct NType
 {
-	enum Type type;
+	enum ValType type;
 	char* className;
 	struct NType* itemType;
 };
