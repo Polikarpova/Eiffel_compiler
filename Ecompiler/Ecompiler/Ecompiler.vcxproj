@@ -101,6 +101,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bisonFunctions.h" />
     <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="tree_structs.h" />

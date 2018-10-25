@@ -20,5 +20,6 @@ int main(int argc, char *argv[])
 
 
 /* TODO
-
+	- copy prototypes from bisonFunctions.cpp to bisonFunctions.h
+	- fix *addToList*() mistakes
 */

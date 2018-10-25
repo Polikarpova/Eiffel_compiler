@@ -1,6 +1,4 @@
-#include <tree_structs.h>
-#include <stdlib.h>
-#include <string>
+#include "bisonFunctions.h"
 
 struct NExpr* createIntConstExpr (int token)
 {

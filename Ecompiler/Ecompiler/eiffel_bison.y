@@ -1,12 +1,15 @@
 %{
 /*Пролог*/
-#include "tree_structs.h"
+#include "bisonFunctions.h"
 	
 /* более подробные собщения об ошибках */
 #define YYERROR_VERBOSE 1
 	
 // Флаг для управления контекстом Flex`а
 int global_LF_enabled = false
+
+void yyerror (char const *s);
+
 %}
 
 %union {
@@ -317,7 +320,7 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 */
 %%
 /*Секция пользовательского кода*/
-#include "bisonFunctions.c"
+#include "bisonFunctions.cpp"
 
 void yyerror (char const *s)
 {
