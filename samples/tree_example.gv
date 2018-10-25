@@ -1,0 +1,40 @@
+digraph a{
+
+//----Корень
+class_list[shape=doublecircle]
+1[label="class1"]
+class_list -> 1
+
+//----Конструктор
+2[label="[cst]make"]
+1->2
+
+//----Область видимости
+3[label="{NONE}" shape=box]
+6[label="{class2}" shape=box]
+
+//----Функции
+4[label="func1"]
+5[label="func2(str:STRING; len:INTEGER)"]
+
+1->4[label="REAL"]
+4->3[style=dashed]
+
+1->5[label=""]
+5->6[style=dashed]
+
+//локалки
+7[label="x"]
+
+4->7[label=":INTEGER"]
+
+//тело func1
+8[label="stmt1{type:CreateE}"]
+9[label="stmt2{type:AssignSt}"]
+4->8->9
+
+//----Атрибут
+10[label="attr1"]
+1->10[label="attribute"]
+10->3[style=dashed]
+}
