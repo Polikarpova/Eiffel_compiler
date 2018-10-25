@@ -48,7 +48,7 @@ struct NFeatureList* addToFeatureList(struct NFeatureList* list, struct NFeature
 struct NFeature* createAttributesFrom(char* name, struct NType* type);
 struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatureList* list2);
 // ======== clients ======== //
-
+struct NIdList* registerClients(struct NIdList* clients);
 
 
 

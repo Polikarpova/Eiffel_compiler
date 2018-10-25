@@ -1,5 +1,9 @@
 #include "bisonFunctions.h"
 
+extern struct NClass* currentClass = NULL;
+extern struct NIdList* currentFeatureClients;
+
+
 struct NExpr* createIntConstExpr (int token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
@@ -258,10 +262,10 @@ struct NNameAndTypeList* addToNameAndTypeList(struct NNameAndTypeList* list, str
 
 struct NNameAndTypeList* joinNameAndTypeLists(struct NNameAndTypeList* list1, struct NNameAndTypeList* list2)
 {
-	list1->last->next = list2.first;
-	list1->last = list2.last;
+	list1->last->next = list2->first;
+	list1->last = list2->last;
 
-	list2.first = list2.last = 0;
+	list2->first = list2->last = 0;
 	delete list2;
 	
 	return list1;
@@ -269,8 +273,9 @@ struct NNameAndTypeList* joinNameAndTypeLists(struct NNameAndTypeList* list1, st
 
 struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, struct NType* type)
 {
+	struct NNameAndTypeList* Result;
 	// assume idList contains at least 1 element
-	struct NId* prevId, curId = idList->first;
+	struct NId* prevId, *curId = idList->first;
 	Result = createNameAndTypeList(createNameAndType(curId->id,type));
 	while(curId != idList->last) // curId - последний обработанный элемент
 	{
@@ -307,7 +312,7 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 	{
 	case CreateSt:
 	case RefSt:
-		Result->body.ref    = (struct NRefCh) body; break;
+		Result->body.ref    = (struct NRefChain*) body; break;
 	case AssignSt:
 		Result->body.assign = (struct NAssignStmt*) body; break;
 	case IfSt:
@@ -369,16 +374,17 @@ struct NFeatureList* addToFeatureList(struct NFeatureList* list, struct NFeature
 // like convert for NameAndTypeList
 struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
 {
+	struct NFeatureList* Result;
 	// assume natList contains at least 1 element
-	struct NNameAndType* prevNat, curNat = natList->first;
+	struct NNameAndType* prevNat, *curNat = natList->first;
 	// create attribute & place it into list
-	Result = createFeatureList(createFeature(curNat->name,0,type,0,0));
+	Result = createFeatureList(createFeature(curNat->name,0,curNat->type,0,0));
 	while(curNat != natList->last) // curNat - последний обработанный элемент
 	{
 		prevNat = curNat;
 		curNat = prevNat->next;
 		delete prevNat;
-		addToNameAndTypeList(Result, createFeature(curNat->name,0,type,0,0));
+		addToFeatureList(Result, createFeature(curNat->name,0,curNat->type,0,0));
 	}
 	
 	delete curNat;
@@ -388,10 +394,10 @@ struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
 }
 struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatureList* list2)
 {
-	list1->last->next = list2.first;
-	list1->last = list2.last;
+	list1->last->next = list2->first;
+	list1->last = list2->last;
 
-	list2.first = list2.last = 0;
+	list2->first = list2->last = 0;
 	delete list2;
 	
 	return list1;

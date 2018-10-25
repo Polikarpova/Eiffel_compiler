@@ -19,6 +19,6 @@ int main(int argc, char *argv[])
 
 
 /* TODO
-	- fix *addToList*() mistakes
+	+ fix *addToList*() mistakes
 	- fix working with strcat() & strcpy(), literal & yylval
 */

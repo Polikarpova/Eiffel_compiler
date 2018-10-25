@@ -54,14 +54,14 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %type <class_struct> class
 %type <Int> class_body
 %type <id_list_struct> creation_list
-%type <NIdList> feature_clauses
-%type <NIdList> clients_opt
+%type <id_list_struct> feature_clauses
+%type <id_list_struct> clients_opt
 %type <feature_list_struct> feature_declaration_list
 %type <feature_list_struct> attributes
 %type <access_struct> access
 %type <ref_struct> ref
 %type <ref_chain_struct> ref_chain
-%type <Int> stmt_sep
+/* %type <Int> stmt_sep */
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
 %type <stmt_list_struct> stmt_list_opt
@@ -141,9 +141,9 @@ feature_clauses:  FEATURE clients_opt feature_declaration_list
 | feature_clauses FEATURE clients_opt feature_declaration_list
 ;
 
-clients_opt: /*empty*/
-| '{' ID '}'
-| '{' id_list_2_or_more '}'
+clients_opt: /*empty*/	{$$=registerClients(createIdList(createId("ANY")));}
+| '{' ID '}'			{$$=registerClients(createIdList(createId($2.String)));}
+| '{' id_list_2_or_more '}'	{$$=registerClients($2);}
 ;
 
 feature_declaration_list: attributes  {$$=$1;}
@@ -186,8 +186,8 @@ stmt_sep: ';'
 stmt: _LF_ON_ CREATE ref_chain stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
 | _LF_ON_ assign_stmt _LF_OFF_		{$$=createStmt(AssignSt,$2);}
 | _LF_ON_ ref_chain stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
-| if_stmt			{$$=createStmt(IfSt,$2);}
-| from_loop			{$$=createStmt(LoopSt,$2);}
+| if_stmt			{$$=createStmt(IfSt,$1);}
+| from_loop			{$$=createStmt(LoopSt,$1);}
 ;
 
 stmt_list: stmt 	{$$=createStmtList($1);}
