@@ -1,7 +1,7 @@
 class TESTCLASS
 
 create
-	make
+	construct2_me, make
 
 feature {APPLICATION}
 	make

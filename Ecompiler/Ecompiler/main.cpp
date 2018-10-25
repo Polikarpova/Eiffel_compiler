@@ -1,6 +1,8 @@
 #include <locale.h>
 #include <string>
 
+#include <process.h>
+
 extern FILE *yyin;
 extern int yyparse();
 extern struct NClassList* root;
@@ -30,7 +32,11 @@ int main(int argc, char *argv[])
 	printf("ROOT: %p\n", root);
 
 	if(root)
+	{
 		print2dot("tree.dot", root);
+		execlpe("cmd", "/c", "run_dot.bat", "", 0,0,0);
+		printf("see picture\n");
+	}
 }
 
 

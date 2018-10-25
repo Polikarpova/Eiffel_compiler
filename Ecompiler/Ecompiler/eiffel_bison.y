@@ -329,7 +329,7 @@ void yyerror (char const *s)
 }	
 
 // переменные, глобальные для анализатора
-struct NClass* currentClass = NULL;
+// struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
 // struct NType* currentType;
 

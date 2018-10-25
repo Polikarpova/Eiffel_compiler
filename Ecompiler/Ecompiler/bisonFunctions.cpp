@@ -405,6 +405,7 @@ struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatur
 // ======== clients ======== //
 struct NIdList* registerClients(struct NIdList* clients)
 {
+	currentFeatureClients = clients;
 	return clients;
 }
 // ======== classes ======== //
