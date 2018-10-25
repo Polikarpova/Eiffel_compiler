@@ -120,7 +120,7 @@ struct NRefChain* createRefChain(struct NRef* ref)
 
 struct NRefChain* addToRefChain(struct NRefChain* chain, struct NRef* ref)
 {
-	chain->first->next = ref;
+	chain->last->next = ref;
 	chain->last = ref;
 
 	return chain;
@@ -140,7 +140,7 @@ struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* p
 struct NId* createId(char* id)
 {
 	struct NId* Result = (struct NId*) malloc(sizeof (struct NId));
-
+// !!!?
 	strcpy(Result->id, id);
 
 	return Result;
@@ -158,7 +158,7 @@ struct NIdList* createIdList(struct NId* id)
 
 struct NIdList* addToIdList(struct NIdList* list, struct NId* id)
 {
-	list->first->next = id;
+	list->last->next = id;
 	list->last = id;
 
 	return list;
@@ -187,7 +187,7 @@ struct NThenPartList* createThenPartList(struct NThenPart* thenPart)
 
 struct NThenPartList* addToThenPartList(struct NThenPartList* list, struct NThenPart* thenPart)
 {
-	list->first->next = thenPart;
+	list->last->next = thenPart;
 	list->last = thenPart;
 
 	return list;
@@ -222,4 +222,115 @@ struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* co
 	Result->stmtList = stmtList;
 
 	return Result;
+}
+
+		// =================== //
+		
+#define ALLOCATE_POINTER_AS(varname,type) type * varname = (type *) malloc(sizeof (type));
+		
+struct NNameAndType* createNameAndType(char* name, struct NType* type)
+{
+	// struct NNameAndType* Result = (struct NNameAndType*) malloc(sizeof (struct NNameAndType));
+	ALLOCATE_POINTER_AS(Result, struct NNameAndType)
+
+	// !! strcpy(Result->name, name);
+	Result->name = name;
+	Result->type = type;
+
+	return Result;
+}
+struct NNameAndTypeList* createNameAndTypeList(struct NNameAndType* elem)
+{
+	ALLOCATE_POINTER_AS(Result, struct NNameAndTypeList)
+
+	Result->first = elem;
+	Result->last = elem;
+
+	return Result;
+}
+struct NNameAndTypeList* addToNameAndTypeList(struct NNameAndTypeList* list, struct NNameAndType* elem)
+{
+	list->last->next = elem;
+	list->last = elem;
+
+	return list;
+}
+
+struct NNameAndTypeList* joinNameAndTypeLists(struct NNameAndTypeList* list1, struct NNameAndTypeList* list2)
+{
+	list1->last->next = list2.first;
+	list1->last = list2.last;
+
+	list2.first = list2.last = 0;
+	delete list2;
+	
+	return list1;
+}
+
+struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, struct NType* type)
+{
+	// assume idList contains at least 1 element
+	struct NId* prevId, curId = idList->first;
+	Result = createNameAndTypeList(createNameAndType(curId->id,type));
+	while(curId != idList->last) // curId - последний обработанный элемент
+	{
+		prevId = curId;
+		curId = prevId->next;
+		delete prevId;
+		addToNameAndTypeList(Result, createNameAndType(curId->id,type));
+	}
+	
+	delete curId;
+	delete idList;
+
+	return Result;
+}
+
+struct NType* createType(enum ValType type, char* className/* =0 */, struct NType* itemType/* =0 */)
+{
+	// struct NNameAndType* Result = (struct NNameAndType*) malloc(sizeof (struct NNameAndType));
+	ALLOCATE_POINTER_AS(Result, struct NType)
+
+	Result->type = type;
+	Result->className = className;
+	Result->itemType = itemType;
+
+	return Result;
+}
+
+struct NStmt* createStmt(enum StmtType type, void* body)
+{
+	ALLOCATE_POINTER_AS(Result, struct NStmt)
+
+	Result->type = type;
+	switch(type)
+	{
+	case CreateSt:
+	case RefSt:
+		Result->body.ref    = (struct NRefCh) body; break;
+	case AssignSt:
+		Result->body.assign = (struct NAssignStmt*) body; break;
+	case IfSt:
+		Result->body.ifStmt = (struct NIfStmt* ) body; break;
+	case LoopSt:
+		Result->body.loopStmt=(struct NLoopStmt*) body; break;
+	}
+
+	return Result;
+}
+struct NStmtList* createStmtList(struct NStmt* elem)
+{
+	ALLOCATE_POINTER_AS(Result, struct NStmtList)
+
+	Result->first = elem;
+	Result->last = elem;
+
+	return Result;
+}
+struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem)
+{
+	list->last->next = elem;
+	list->last = elem;
+
+	return list;
 }

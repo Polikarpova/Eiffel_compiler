@@ -136,8 +136,8 @@ enum ValType {ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 struct NType
 {
 	enum ValType type;
-	char* className;
-	struct NType* itemType;
+	char* className;	// not NULL for ClassV only
+	struct NType* itemType; // not NULL for ArrayV only
 };
  
 
@@ -219,6 +219,7 @@ struct NNameAndType
 {
 	char* name;
 	struct NType* type;
+	struct NNameAndType* next;
 };
 struct NNameAndTypeList
 {

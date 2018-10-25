@@ -31,6 +31,30 @@ struct NThenPart* createThenPart(struct NExpr* cond, struct NStmtList* stmtList)
 struct NElsePart* createElsePart(struct NStmtList* stmtList);
 /*цикл*/
 struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* cond, struct NStmtList* stmtList);
+// =================== //
+struct NNameAndType* createNameAndType(char* name, struct NType* type);
+struct NNameAndTypeList* createNameAndTypeList(struct NNameAndType* elem);
+struct NNameAndTypeList* addToNameAndTypeList(struct NNameAndTypeList* list, struct NNameAndType* elem);
+struct NNameAndTypeList* joinNameAndTypeLists(struct NNameAndTypeList* list1, struct NNameAndTypeList* list2);
+struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, struct NType* type);
+struct NType* createType(enum ValType type, char* className =0 , struct NType* itemType =0 );
+struct NStmt* createStmt(enum StmtType type, void* body);
+struct NStmtList* createStmtList(struct NStmt* elem);
+struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif /* BISON_FUNCTIONS_H */
