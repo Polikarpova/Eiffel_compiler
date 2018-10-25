@@ -203,10 +203,12 @@ struct NFeature
 	struct NIdList* clients; // видимость для: указанных классов / ANY (или пусто?) / NONE
 	
 	char* name;
-	struct NType* type; // attribute type or return type (can be NULL for return type)
 	struct NNameAndTypeList* params; // NULL если отсутствует
+	struct NType* type; // attribute type or return type (can be NULL for return type)
 	struct NNameAndTypeList* localVars; // NULL если отсутствует
 	struct NStmtList* routineBody; // NULL если не метод
+	
+	struct NFeature* next;
 };
 struct NFeatureList
 {
