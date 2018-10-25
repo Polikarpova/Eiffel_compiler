@@ -6,9 +6,11 @@
 #define YYERROR_VERBOSE 1
 	
 // Флаг для управления контекстом Flex`а
-int global_LF_enabled = false
+int global_LF_enabled = false;
 
 void yyerror (char const *s);
+
+extern int yylex();
 
 %}
 
@@ -239,7 +241,7 @@ expr_list: expr	{$$=createExprList($1);}
 | expr_list ',' expr {$$=addToExprList($1, $3);}
 ;
 
-expr_list_opt: expr_list	{$$=createExprList($1);}
+expr_list_opt: expr_list	{$$=($1);}
 | /*empty*/	{$$=createExprList(0);}
 ;
 
@@ -320,7 +322,6 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 */
 %%
 /*Секция пользовательского кода*/
-#include "bisonFunctions.cpp"
 
 void yyerror (char const *s)
 {

@@ -1,9 +1,8 @@
-
 #include <locale.h>
 #include <string>
 
-#include "eiffel_flex.cpp"
-
+extern FILE *yyin;
+int yyparse();
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +19,6 @@ int main(int argc, char *argv[])
 
 
 /* TODO
-	- copy prototypes from bisonFunctions.cpp to bisonFunctions.h
 	- fix *addToList*() mistakes
+	- fix working with strcat() & strcpy(), literal & yylval
 */

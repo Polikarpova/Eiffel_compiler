@@ -8,7 +8,7 @@
 	#include "lexHelpers.h"
 	#include "eiffel_bison.tab.h"
 
-extern int global_LF_enabled = false;
+extern int global_LF_enabled;
 %}
 
 %option noyywrap
