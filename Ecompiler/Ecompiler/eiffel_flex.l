@@ -74,7 +74,7 @@ EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
 ":="					{ return ASSIGN;}
 "="						{ return EQUALS;}
-"/="					{ return NOT_EQUALS;ineno);}
+"/="					{ return NOT_EQUALS;}
 "<" 					{ return LESS;}
 "<=" 					{ return LESS_OR_EQUAL;}
 ">" 					{ return GREATER;}

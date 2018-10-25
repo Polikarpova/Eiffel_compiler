@@ -144,9 +144,9 @@ struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* p
 struct NId* createId(char* id)
 {
 	struct NId* Result = (struct NId*) malloc(sizeof (struct NId));
-// !!!?
-	strcpy(Result->id, id);
 
+	Result->id = id;
+	
 	return Result;
 }
 
@@ -237,7 +237,6 @@ struct NNameAndType* createNameAndType(char* name, struct NType* type)
 	// struct NNameAndType* Result = (struct NNameAndType*) malloc(sizeof (struct NNameAndType));
 	ALLOCATE_POINTER_AS(Result, struct NNameAndType)
 
-	// !! strcpy(Result->name, name);
 	Result->name = name;
 	Result->type = type;
 
