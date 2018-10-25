@@ -51,6 +51,16 @@ struct NExpr* createBoolConstExpr (bool token)
 	return Result;
 }
 
+struct NExpr* createRefExpr (struct NRefChain* ref)
+{
+	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+		
+	Result->type = RefE;
+	Result->value.ref = ref;
+
+	return Result;
+}
+
 struct NExpr* createExpr (enum ExprType type, struct NExpr* left, struct NExpr* right)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));

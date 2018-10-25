@@ -54,7 +54,7 @@ struct NIdList
 	struct NId* last;
 };	
 
-enum ExprType {IntE, RealE, CharE, StringE, BoolE, AccessE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE, ResultE, CurrentE, PrecursorE, CreateE};
+enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE};
 
 /* Expr - выражение */
 struct NExpr
@@ -67,7 +67,7 @@ struct NExpr
 		char* String;
 		boolean Bool; // boolean
 		
-		struct NRef* ref;
+		struct NRefChain* ref;
 	} value;
 	
 	struct NExpr* left;

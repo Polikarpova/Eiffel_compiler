@@ -209,7 +209,7 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | CHAR_VAL		{$$=createCharConstExpr($1);}
 | STRING_VAL	{$$=createStringConstExpr($1);}
 | BOOL_VAL		{$$=createBoolConstExpr($1);}
-| ref_chain		{/*???*/}
+| ref_chain		{$$=createRefExpr($1); }
 | '(' expr ')'	{$$=$2;}
 | NOT expr		{$$=createExpr(NotE,$2,0);}
 | '+' expr %prec UPLUS	{$$=createExpr(UPlusE,$2,0);}
@@ -231,9 +231,6 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | expr OR_ELSE expr	{$$=createExpr(OrElseE,$1,$3);}
 | expr XOR expr	{$$=createExpr(XORE,$1,$3);}
 | expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
-| RESULT	{/*???*/}
-| CURRENT	{/*???*/}
-| PRECURSOR	{/*???*/}
 ;
 
 expr_list: expr	{$$=createExprList($1);}
