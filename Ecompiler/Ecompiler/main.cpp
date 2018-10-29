@@ -44,5 +44,8 @@ int main(int argc, char *argv[])
 
 /* TODO
 	+ fix *addToList*() mistakes
-	- fix working with strcat() & strcpy(), literal & yylval
+	+ fix working with strcat() & strcpy(), literal & yylval
+	- export tree to DOT
+	- capture INHERIT clauses in classes (add to bison rules & structures)
+	- refactor NRef as hierarchy of '.' operations not as RefList (as is now)
 */

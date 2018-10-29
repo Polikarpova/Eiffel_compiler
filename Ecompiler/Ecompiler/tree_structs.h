@@ -56,7 +56,8 @@ enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, 
 /* Expr - выражение */
 struct NExpr
 {
-	enum ExprType type;
+	enum ExprType type; // RefE если ref не NULL
+	)
 	union {
 		int Int;
 		double Real;
@@ -64,7 +65,7 @@ struct NExpr
 		char* String;
 		bool Bool; // boolean
 		
-		struct NRefChain* ref;
+		struct NRefChain* ref; // NULL если не обращение к feature (type не RefE)
 	} value;
 	
 	struct NExpr* left;
@@ -83,9 +84,9 @@ enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
 /* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
 struct NAccess
 {
-	enum AccessType type; /* допустимо ID, RESULT, CURRENT (см. объявления bison) */
+	enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объявления bison) */
 	struct NId* id;	 /* идентификатор */
-	struct NExprList* params; /* NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
+	struct NExprList* params; /* обязательно с PRECURSOR. NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
 };
 
 /* Ref - обращение к атрибуту или элементу массива */
