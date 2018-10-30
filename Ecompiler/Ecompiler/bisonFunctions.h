@@ -21,13 +21,13 @@ struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* p
 struct NId* createId(char* id);
 struct NIdList* createIdList(struct NId* id);
 struct NIdList* addToIdList(struct NIdList* list, struct NId* id);
-/*РІРµС‚РІР»РµРЅРёРµ*/
+/*ветвление*/
 struct NIfStmt* createIfStmt (struct NThenPartList* thenPartList, struct NElsePart* elsePart);
 struct NThenPartList* createThenPartList(struct NThenPart* thenPart);
 struct NThenPartList* addToThenPartList(struct NThenPartList* list, struct NThenPart* thenPart);
 struct NThenPart* createThenPart(struct NExpr* cond, struct NStmtList* stmtList);
 struct NElsePart* createElsePart(struct NStmtList* stmtList);
-/*С†РёРєР»*/
+/*цикл*/
 struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* cond, struct NStmtList* stmtList);
 // =================== //
 struct NNameAndType* createNameAndType(char* name, struct NType* type);
