@@ -116,7 +116,7 @@ void feature2dot(FILE *f, int *min_id, struct NFeature* N)
 {
 	int self_id = *min_id;
 	// node
-	fprintf(f, "%d [label=\"%s:", (*min_id)++, N->name );
+	fprintf(f, "%d [label=\"%s:", (*min_id), N->name );
 	NType2dot(f, N->type);
 	fprintf(f, "\"]; \n" );
 
