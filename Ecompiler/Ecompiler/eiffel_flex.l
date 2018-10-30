@@ -120,6 +120,8 @@ or{WHITESPACE}+else 	{ return OR_ELSE;}
 "Result" 				{ return RESULT;}
 "Current" 				{ return CURRENT;}
 "Precursor" 			{ return PRECURSOR;}
+"inherit" 				{ return INHERIT;}
+"redefine" 				{ return REDEFINE;}
 
 "ARRAY" 				{ return ARRAY;}
 "INTEGER" 				{ return INTEGER;}

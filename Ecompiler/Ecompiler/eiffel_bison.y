@@ -101,7 +101,7 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %token <String> STRING_VAL
 %token <Bool> BOOL_VAL
 %token <String> ID
-%token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR
+%token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR INHERIT REDEFINE
 %token ARRAY INTEGER REAL CHARACTER STRING BOOLEAN
 
 
@@ -129,6 +129,13 @@ class_list: class	{$$=createClassList($1);}
 
 class: CLASS ID creation_list feature_clauses END	{$$=createClass($2,$3,$4);}
 | CLASS ID feature_clauses END	{$$=createClass($2,0,$3);}
+;
+
+inheritance_opt: INHERIT inherit_class
+| inheritance_opt inherit_class
+;
+
+inherit_class: ID /* !доделать*/
 ;
 
 creation_list: CREATE ID	{$$=createIdList(createId($2));}
