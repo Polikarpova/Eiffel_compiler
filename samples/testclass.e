@@ -1,4 +1,11 @@
 class TESTCLASS
+inherit
+    A
+		redefine x, y , mtdZZZ
+        end
+
+    B
+        end
 
 create
 	construct2_me, make

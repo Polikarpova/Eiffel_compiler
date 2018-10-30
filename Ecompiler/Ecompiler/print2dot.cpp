@@ -32,29 +32,54 @@ void class2dot(FILE *f, int *min_id, struct NClass* N)
 {
 	int self_id = *min_id;
 	// node
-	fprintf(f, "%d [label=\"%s\"]; \n", (*min_id)++, N->className );
+	fprintf(f, "%d [label=\"%s\"]; \n", (*min_id), N->className );
 
-	// constructors
-	fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "CREATE" );
-	int ctors_id = *min_id;
-	fprintf(f, "%d [label=\"%s\"]; \n", ctors_id, "constructors" );
 	int count = 0;
-	// iterate constructors
-	for(struct NId* i = N->creationList->first  ;  ; i = i->next, ++count )
+
+	// inheritance
+	if(N->inheritance)
 	{
-		// counting edges
-		fprintf(f, "%d -> %d [label=%d style=solid]; \n", ctors_id, ++(*min_id), count );
-		id2dot(f, min_id, i);
-		if(i == N->creationList->last) break;
+		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "INHERIT" );
+		int heir_id = *min_id;
+		fprintf(f, "%d [label=\"%s\"]; \n", heir_id, "parents" );
+		count = 0;
+		// iterate nodes
+		for(struct NInheritFromClass* i = N->inheritance->first  ;  ; i = i->next, ++count )
+		{
+			// counting edges
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", heir_id, ++(*min_id), count );
+			inheritFromClass2dot(f, min_id, i);
+			if(i == N->inheritance->last) break;
+		}
 	}
 	
-	count = 0;
-	// iterate features
-	for(struct NFeature* i = N->featureList->first ;  ; i = i->next, ++count )
+	// constructors
+	if(N->creationList)
 	{
-		fprintf(f, "%d -> %d [label=\"%d\" style=solid]; \n", self_id, ++(*min_id), count );
-		feature2dot(f, min_id, i);
-		if(i == N->featureList->last) break;
+		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "CREATE" );
+		int ctors_id = *min_id;
+		fprintf(f, "%d [label=\"%s\"]; \n", ctors_id, "constructors" );
+		count = 0;
+		// iterate constructors
+		for(struct NId* i = N->creationList->first  ;  ; i = i->next, ++count )
+		{
+			// counting edges
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", ctors_id, ++(*min_id), count );
+			id2dot(f, min_id, i);
+			if(i == N->creationList->last) break;
+		}
+	}
+	
+	if(N->featureList)
+	{
+		// iterate features
+		count = 0;
+		for(struct NFeature* i = N->featureList->first ;  ; i = i->next, ++count )
+		{
+			fprintf(f, "%d -> %d [label=\"%d\" style=solid]; \n", self_id, ++(*min_id), count );
+			feature2dot(f, min_id, i);
+			if(i == N->featureList->last) break;
+		}
 	}
 }
 
@@ -201,6 +226,30 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 	}
 	
 }
+void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N)
+{
+	int self_id = *min_id;
+	// node
+	fprintf(f, "%d [label=\"`%s`\"]; \n", self_id, N->className );
+	
+	// redefines
+	if(N->redefineList)
+	{
+		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "redefine" );
+		int child_id = *min_id;
+		fprintf(f, "%d [label=\"%s\"]; \n", child_id, "redefine" );
+		int count = 0;
+		// iterate nodes
+		for(struct NId* i = N->redefineList->first  ;  ; i = i->next, ++count )
+		{
+			// counting edges
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", child_id, ++(*min_id), count );
+			id2dot(f, min_id, i);
+			if(i == N->redefineList->last) break;
+		}
+	}
+}
+
 void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 {	
 	switch(N->type) // enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
