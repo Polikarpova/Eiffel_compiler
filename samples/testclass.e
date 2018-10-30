@@ -29,3 +29,14 @@ feature {CLASS2, CLIENT5}
 		do
 		end
 end
+
+Class TRIVIAL 
+end
+
+Class INHERIT_only 
+inherit
+    A
+		end
+    TRIVIAL
+		end
+end
