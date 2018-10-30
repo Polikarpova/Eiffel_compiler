@@ -50,10 +50,13 @@ struct NFeatureList* joinFeatureLists(struct NFeatureList* list1, struct NFeatur
 // ======== clients ======== //
 struct NIdList* registerClients(struct NIdList* clients);
 // ======== classes ======== //
-struct NClass* createClass(char* className, struct NIdList* creationList, struct NFeatureList* featureList);
+struct NClass* createClass(char* className, struct NInheritFromClassList* inheritance, struct NIdList* creationList, struct NFeatureList* featureList);
 struct NClassList* createClassList(struct NClass* elem);
 struct NClassList* addToClassList(struct NClassList* list, struct NClass* elem);
-
+// ======== inheritance ======== //
+struct NInheritFromClass* createInheritFromClass(char* className, /*struct NIdList* renameList,	struct NIdList* undefineList,*/	struct NIdList* redefineList);
+struct NInheritFromClassList* createInheritFromClassList(struct NInheritFromClass* elem);
+struct NInheritFromClassList* addInheritFromClassList(struct NInheritFromClassList* list, struct NInheritFromClass* elem);
 
 
 

@@ -46,6 +46,8 @@ struct NFeature* feature_struct;
 struct NFeatureList* feature_list_struct;
 struct NNameAndType* name_and_type_struct;
 struct NNameAndTypeList* name_and_type_list_struct;
+struct NInheritFromClass* inherit_class_struct;
+struct NInheritFromClassList* inherit_class_list_struct;
 
 // struct * _struct;
 }
@@ -54,9 +56,16 @@ struct NNameAndTypeList* name_and_type_list_struct;
 %start program
 %type <class_list_struct> class_list
 %type <class_struct> class
-%type <id_list_struct> creation_list
-%type <feature_list_struct> feature_clauses
+%type <inherit_class_list_struct> inheritance_opt
+%type <inherit_class_list_struct> inheritance_list
+%type <inherit_class_struct> inherit_from_class
 %type <id_list_struct> clients_opt
+%type <id_list_struct> redefine
+%type <id_list_struct> redefine_opt
+%type <id_list_struct> creation_list
+%type <id_list_struct> creation_list_opt
+%type <feature_list_struct> feature_clauses
+%type <feature_list_struct> feature_clauses_opt
 %type <feature_list_struct> feature_declaration_list
 %type <feature_list_struct> attributes
 %type <access_struct> access
@@ -127,21 +136,34 @@ class_list: class	{$$=createClassList($1);}
 | class_list class	{$$=addToClassList($1,$2);}
 ;
 
-class: CLASS ID creation_list feature_clauses END	{$$=createClass($2,$3,$4);}
-| CLASS ID feature_clauses END	{$$=createClass($2,0,$3);}
+class: CLASS ID inheritance_opt creation_list_opt feature_clauses_opt END	{$$=createClass($2,$3,$4,$5);}
 ;
 
-inheritance_opt: INHERIT inherit_class
-| inheritance_opt inherit_class
+inheritance_opt: /*empty*/	{$$=0;}
+| inheritance_list			{$$=$1;}
+;
+inheritance_list: INHERIT inherit_from_class {$$=createInheritFromClassList($2);}
+| inheritance_list inherit_from_class		{$$=addInheritFromClassList($1,$2);}
+;
+inherit_from_class: ID /*rename_opt*/ /*undefine_opt*/ redefine_opt END	{$$=createInheritFromClass($1,$2);}
+
+redefine_opt: /*empty*/	{$$=0;}
+| redefine				{$$=$1;}
+;
+redefine: REDEFINE ID		{$$=createIdList(createId($2));}
+| REDEFINE id_list_2_or_more	{$$=$2;}
 ;
 
-inherit_class: ID /* !доделать*/
+creation_list_opt: /*empty*/	{$$=0;}
+| creation_list					{$$=$1;}
 ;
-
 creation_list: CREATE ID	{$$=createIdList(createId($2));}
 | creation_list ',' ID		{$$=addToIdList($1,createId($3));}
 ;
 
+feature_clauses_opt: /*empty*/	{$$=0;}
+| feature_clauses				{$$=$1;}
+;
 feature_clauses:  FEATURE clients_opt feature_declaration_list  {$$=$3;}
 | feature_clauses FEATURE clients_opt feature_declaration_list {$$=joinFeatureLists($1,$4);}
 ;

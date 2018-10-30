@@ -232,5 +232,19 @@ struct NNameAndTypeList
 	struct NNameAndType* last;
 };
 
+struct NInheritFromClass
+{
+	char* className;
+	/*struct NIdList* renameList; // NULL если отсутствует
+	struct NIdList* undefineList; // NULL если отсутствует */
+	struct NIdList* redefineList; // NULL если отсутствует
+	
+	struct NInheritFromClass* next;
+};
+struct NInheritFromClassList
+{
+	struct NInheritFromClass* first;
+	struct NInheritFromClass* last;
+};
 
 #endif /* TREE_STRUCTS_H */

@@ -11,6 +11,7 @@ struct NExpr* createIntConstExpr (int token)
 	Result->type = IntE;
 	Result->value.Int = token;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -20,6 +21,7 @@ struct NExpr* createRealConstExpr (double token)
 	Result->type = RealE;
 	Result->value.Real = token;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -30,6 +32,7 @@ struct NExpr* createCharConstExpr (char token)
 	Result->type = CharE;
 	Result->value.Char = token;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -40,6 +43,7 @@ struct NExpr* createStringConstExpr (char* token)
 	Result->type = IntE;
 	Result->value.String = token;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -50,6 +54,7 @@ struct NExpr* createBoolConstExpr (bool token)
 	Result->type = BoolE;
 	Result->value.Bool = token;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -60,6 +65,7 @@ struct NExpr* createRefExpr (struct NRefChain* ref)
 	Result->type = RefE;
 	Result->value.ref = ref;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -71,6 +77,7 @@ struct NExpr* createExpr (enum ExprType type, struct NExpr* left, struct NExpr* 
 	Result->left = left;
 	Result->right = right;
 
+	Result->next = NULL;
 	return Result;
 }
 
@@ -147,6 +154,7 @@ struct NId* createId(char* id)
 
 	Result->id = id;
 	
+	Result->next = NULL;
 	return Result;
 }
 
@@ -240,6 +248,7 @@ struct NNameAndType* createNameAndType(char* name, struct NType* type)
 	Result->name = name;
 	Result->type = type;
 
+	Result->next = NULL;
 	return Result;
 }
 struct NNameAndTypeList* createNameAndTypeList(struct NNameAndType* elem)
@@ -292,7 +301,6 @@ struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, 
 
 struct NType* createType(enum ValType type, char* className/* =0 */, struct NType* itemType/* =0 */)
 {
-	// struct NNameAndType* Result = (struct NNameAndType*) malloc(sizeof (struct NNameAndType));
 	ALLOCATE_POINTER_AS(Result, struct NType)
 
 	Result->type = type;
@@ -320,6 +328,7 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 		Result->body.loopStmt=(struct NLoopStmt*) body; break;
 	}
 
+	Result->next = NULL;
 	return Result;
 }
 struct NStmtList* createStmtList(struct NStmt* elem)
@@ -352,6 +361,7 @@ struct NFeature* createFeature(char* name, struct NNameAndTypeList* params, stru
 	Result->localVars = localVars;
 	Result->routineBody = routineBody;
 
+	Result->next = NULL;
 	return Result;
 }
 struct NFeatureList* createFeatureList(struct NFeature* elem)
@@ -409,14 +419,16 @@ struct NIdList* registerClients(struct NIdList* clients)
 	return clients;
 }
 // ======== classes ======== //
-struct NClass* createClass(char* className, struct NIdList* creationList, struct NFeatureList* featureList)
+struct NClass* createClass(char* className, struct NInheritFromClassList* inheritance, struct NIdList* creationList, struct NFeatureList* featureList)
 {
 	ALLOCATE_POINTER_AS(Result, struct NClass)
 	
 	Result->className = className;
+	Result->inheritance = inheritance;
 	Result->creationList = creationList;
 	Result->featureList = featureList;
 
+	Result->next = NULL;
 	return Result;
 }
 struct NClassList* createClassList(struct NClass* elem)
@@ -429,6 +441,36 @@ struct NClassList* createClassList(struct NClass* elem)
 	return Result;
 }
 struct NClassList* addToClassList(struct NClassList* list, struct NClass* elem)
+{
+	list->last->next = elem;
+	list->last = elem;
+
+	return list;
+}
+
+// ======== inheritance ======== //
+struct NInheritFromClass* createInheritFromClass(char* className, /*struct NIdList* renameList,	struct NIdList* undefineList,*/	struct NIdList* redefineList)
+{
+	ALLOCATE_POINTER_AS(Result, struct NInheritFromClass)
+	
+	Result->className = className;
+	/*Result->renameList = renameList;
+	Result->undefineList = undefineList; */
+	Result->redefineList = redefineList;
+
+	Result->next = NULL;
+	return Result;
+}
+struct NInheritFromClassList* createInheritFromClassList(struct NInheritFromClass* elem)
+{
+	ALLOCATE_POINTER_AS(Result, struct NInheritFromClassList)
+
+	Result->first = elem;
+	Result->last = elem;
+
+	return Result;
+}
+struct NInheritFromClassList* addInheritFromClassList(struct NInheritFromClassList* list, struct NInheritFromClass* elem)
 {
 	list->last->next = elem;
 	list->last = elem;
