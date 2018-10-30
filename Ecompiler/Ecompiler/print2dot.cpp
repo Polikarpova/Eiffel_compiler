@@ -106,7 +106,7 @@ void feature2dot(FILE *f, int *min_id, struct NFeature* N)
 	{
 		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "" );
 		int child_id = *min_id;
-		fprintf(f, "%d [label=\"%s\"]; \n", child_id, "params" );
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", child_id, "params" );
 		
 		if ( N->params->first && N->params->last)
 		{
@@ -134,7 +134,7 @@ void feature2dot(FILE *f, int *min_id, struct NFeature* N)
 	{
 		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "" );
 		int child_id = *min_id;
-		fprintf(f, "%d [label=\"%s\"]; \n", child_id, "locals" );
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", child_id, "locals" );
 		int count = 0;
 		// iterate locals
 		for(struct NNameAndType* i = N->localVars->first  ;  ; i = i->next, ++count )
@@ -145,15 +145,6 @@ void feature2dot(FILE *f, int *min_id, struct NFeature* N)
 			if(i == N->localVars->last) break;
 		}
 	}
-
-	// fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, *min_id, "creates" );
-	// id2dot(f, min_id, N->creationList->first, N->creationList->last);
-	
-	// if(N != LastN)
-	// {
-		// fprintf(f, "%d -> %d [label=\"%s\" style=dotted]; \n", self_id, ++*min_id, "next>" );
-		// feature2dot(f, min_id, N->next, LastN);
-	// }
 }
 
 void id2dot(FILE *f, int *min_id, struct NId* N)
@@ -177,7 +168,7 @@ void clients2dot(FILE *f, struct NIdList* List)
 	fprintf(f, "\"{");
 	// iterate ids
 	bool isFirst = true;
-	for(struct NId* i = List->first  ;  ; i = i->next )
+	for(struct NId* i = List->first ;  ; i = i->next )
 	{
 		if(!isFirst)
 		{
@@ -194,7 +185,7 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 	int self_id = *min_id;
 	// node
 
-	fprintf(f, "%d [label=\"%s\"]; \n", self_id, "DO..END" );
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "DO..END" );
 		
 	if ( List->first && List->last)
 	{
