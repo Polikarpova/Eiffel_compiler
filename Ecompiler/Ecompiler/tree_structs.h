@@ -57,7 +57,6 @@ enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, 
 struct NExpr
 {
 	enum ExprType type; // RefE если ref не NULL
-	)
 	union {
 		int Int;
 		double Real;
@@ -206,7 +205,7 @@ struct NFeature
 	
 	char* name;
 	struct NNameAndTypeList* params; // NULL если отсутствует
-	struct NType* type; // attribute type or return type (can be NULL for return type)
+	struct NType* type; // attribute type or return type (can be VoidV for return type)
 	struct NNameAndTypeList* localVars; // NULL если отсутствует
 	struct NStmtList* routineBody; // NULL если не метод
 	

@@ -1,13 +1,12 @@
 #include <locale.h>
 #include <string>
+#include "print2dot.h"
 
 #include <process.h>
 
 extern FILE *yyin;
 extern int yyparse();
 extern struct NClassList* root;
-
-void print2dot(char* filename, struct NClassList* root);
 
 
 int main(int argc, char *argv[])

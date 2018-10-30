@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include "tree_structs.h"
 
-FILE * class2dot(FILE *f, int *min_id, struct NClass* N, struct NClass* LastN);
-FILE * feature2dot(FILE *f, int *min_id, struct NFeature* N, struct NFeature* LastN);
-FILE * NType2dot(FILE *f, struct NType* type);
-FILE * id2dot(FILE *f, int *min_id, struct NId* N, struct NId* LastN);
+void print2dot(char* filename, struct NClassList* root);
+void classList2dot(FILE *f, int *min_id, struct NClassList* List);
+void class2dot(FILE *f, int *min_id, struct NClass* N);
+void feature2dot(FILE *f, int *min_id, struct NFeature* N);
+void NType2dot(FILE *f, struct NType* type);
+void id2dot(FILE *f, int *min_id, struct NId* N);
+void nameAndType2dot(FILE *f, int *min_id, struct NNameAndType* N);
+void clients2dot(FILE *f, struct NIdList* List);
+void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List);
+void NStmt2dot(FILE *f, int *min_id, struct NStmt* N);
+
