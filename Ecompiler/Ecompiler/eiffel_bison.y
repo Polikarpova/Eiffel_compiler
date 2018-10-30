@@ -1,11 +1,11 @@
 %{
-/*РџСЂРѕР»РѕРі*/
+/*Пролог*/
 #include "bisonFunctions.h"
 	
-/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
+/* более подробные собщения об ошибках */
 #define YYERROR_VERBOSE 1
 	
-// Р¤Р»Р°Рі РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРј Flex`Р°
+// Флаг для управления контекстом Flex`а
 int global_LF_enabled = false;
 
 void yyerror (char const *s);
@@ -23,7 +23,7 @@ char Char;
 char* String;
 bool Bool;
 
-/*СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ СѓР·Р»РѕРІ*/
+/*структуры для узлов*/
 struct NId* id_struct;
 struct NIdList* id_list_struct;
 struct NExpr* expr_struct;
@@ -50,7 +50,7 @@ struct NNameAndTypeList* name_and_type_list_struct;
 // struct * _struct;
 }
 
-/*РЅРµС‚РµСЂРјРёРЅР°Р»С‹*/
+/*нетерминалы*/
 %start program
 %type <class_list_struct> class_list
 %type <class_struct> class
@@ -92,7 +92,7 @@ struct NNameAndTypeList* name_and_type_list_struct;
 /* %type <> error_token */
 
 
-/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
+/* более подробные собщения об ошибках */
 %define parse.error verbose
 
 %token <Int> INT_VAL
@@ -328,14 +328,14 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   ;
 */
 %%
-/*РЎРµРєС†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРґР°*/
+/*Секция пользовательского кода*/
 
 void yyerror (char const *s)
 {
   // fprintf (stderr, "%s\n", s);
 }	
 
-// РїРµСЂРµРјРµРЅРЅС‹Рµ, РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР»СЏ Р°РЅР°Р»РёР·Р°С‚РѕСЂР°
+// переменные, глобальные для анализатора
 // struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
 // struct NType* currentType;

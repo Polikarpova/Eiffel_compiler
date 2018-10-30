@@ -1,7 +1,7 @@
 #ifndef TREE_STRUCTS_H
 #define TREE_STRUCTS_H
 
-/* РџСЂРѕС‚РѕС‚РёРїС‹ */
+/* Прототипы */
 
 struct NId;
 struct NIdList;
@@ -17,14 +17,14 @@ struct NStmt;
 struct NStmtList;
 struct NType;
 struct NAssignStmt;
-/*СѓСЃР»РѕРІРЅРѕРµ РІРµС‚РІР»РµРЅРёРµ*/
+/*условное ветвление*/
 struct NIfStmt;
 struct NThenPart;
 struct NThenPartList;
 struct NElsePart;
-/*С†РёРєР»*/
+/*цикл*/
 struct NLoopStmt;
-/*РєР»Р°СЃСЃ*/
+/*класс*/
 struct NClass;
 struct NClassList;
 // struct NCreationList;
@@ -32,14 +32,16 @@ struct NFeature;
 struct NFeatureList;
 struct NNameAndType;
 struct NNameAndTypeList;
+struct NInheritFromClass;
+struct NInheritFromClassList;
 
 // struct NClassBody;
 // struct NTypeMark;
 
 
-/* РЎС‚СЂСѓРєС‚СѓСЂС‹ */
+/* Структуры */
 
-/* ID - РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ */
+/* ID - идентификатор */
 struct NId
 {
 	char* id;
@@ -53,10 +55,10 @@ struct NIdList
 
 enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE};
 
-/* Expr - РІС‹СЂР°Р¶РµРЅРёРµ */
+/* Expr - выражение */
 struct NExpr
 {
-	enum ExprType type; // RefE РµСЃР»Рё ref РЅРµ NULL
+	enum ExprType type; // RefE если ref не NULL
 	union {
 		int Int;
 		double Real;
@@ -64,7 +66,7 @@ struct NExpr
 		char* String;
 		bool Bool; // boolean
 		
-		struct NRefChain* ref; // NULL РµСЃР»Рё РЅРµ РѕР±СЂР°С‰РµРЅРёРµ Рє feature (type РЅРµ RefE)
+		struct NRefChain* ref; // NULL если не обращение к feature (type не RefE)
 	} value;
 	
 	struct NExpr* left;
@@ -80,47 +82,47 @@ struct NExprList
 
 enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
 
-/* Access - РґРѕСЃС‚СѓРї РЅР° С‡С‚РµРЅРёРµ/Р·Р°РїРёСЃСЊ/РІС‹Р·РѕРІ Рє РїРµСЂРµРјРµРЅРЅРѕР№/Р°С‚СЂРёР±СѓС‚Сѓ(РїРѕР»СЋ Р»РёР±Рѕ РјРµС‚РѕРґСѓ) */
+/* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
 struct NAccess
 {
-	enum AccessType type; /* РґРѕРїСѓСЃС‚РёРјРѕ ID, RESULT, CURRENT, PRECURSOR (СЃРј. РѕР±СЉСЏРІР»РµРЅРёСЏ bison) */
-	struct NId* id;	 /* РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ */
-	struct NExprList* params; /* РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ СЃ PRECURSOR. NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ (NULL РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ СЃ RESULT, CURRENT) */
+	enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объявления bison) */
+	struct NId* id;	 /* идентификатор */
+	struct NExprList* params; /* обязательно с PRECURSOR. NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
 };
 
-/* Ref - РѕР±СЂР°С‰РµРЅРёРµ Рє Р°С‚СЂРёР±СѓС‚Сѓ РёР»Рё СЌР»РµРјРµРЅС‚Сѓ РјР°СЃСЃРёРІР° */
+/* Ref - обращение к атрибуту или элементу массива */
 struct NRef
 {
 	struct NAccess* access;
-	/* Subscript - РґРѕСЃС‚СѓРї Рє СЌР»РµРјРµРЅС‚Сѓ РјР°СЃСЃРёРІР° РЅР° С‡С‚РµРЅРёРµ/Р·Р°РїРёСЃСЊ */
-	struct NExpr* index; /* РІС‹СЂР°Р¶РµРЅРёРµ РґР»СЏ РёРЅРґРµРєСЃР° (uint). NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ */
+	/* Subscript - доступ к элементу массива на чтение/запись */
+	struct NExpr* index; /* выражение для индекса (uint). NULL если отсутствует */
 	
 	struct NRef* next;
 };	
 
-/* С†РµРїРѕС‡РєР° РѕР±СЂР°С‰РµРЅРёР№ С‡РµСЂРµР· С‚РѕС‡РєСѓ */
+/* цепочка обращений через точку */
 struct NRefChain
 {
 	struct NRef* first;
 	struct NRef* last;
 };
 
-/* РўРёРїС‹ РѕРїРµСЂР°С‚РѕСЂРѕРІ */
+/* Типы операторов */
 enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
 
-/* Statement - РѕРїРµСЂР°С‚РѕСЂ СЏР·С‹РєР° */
+/* Statement - оператор языка */
 struct NStmt
 {
 	enum StmtType type;
 	
 	union
 	{
-		struct NRefChain* ref; // РґР»СЏ CreateSt Рё RefSt
+		struct NRefChain* ref; // для CreateSt и RefSt
 		struct NAssignStmt* assign;
 		struct NIfStmt* ifStmt;
 		struct NLoopStmt* loopStmt;
 	} 
-	 body; /* С‚РµР»Рѕ (СЃРѕРґРµСЂР¶РёРјРѕРµ) РѕРїРµСЂР°С‚РѕСЂР° */
+	 body; /* тело (содержимое) оператора */
 	
 	struct NStmt* next;
 };
@@ -132,7 +134,7 @@ struct NStmtList
 
 enum ValType {VoidV, ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
 
-/*  РўРёРї РѕР±СЉСЏРІР»РµРЅРёР№ */
+/*  Тип объявлений */
 struct NType
 {
 	enum ValType type;
@@ -141,14 +143,14 @@ struct NType
 };
  
 
-/* РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ */
+/* Оператор присваивания */
 struct NAssignStmt
 {
 	struct NRefChain* left; // last partition of ref_chain must not be call
 	struct NExpr* expr;
 };
 
-/* РЈСЃР»РѕРІРЅРѕРµ РІРµС‚РІР»РµРЅРёРµ */
+/* Условное ветвление */
 struct NIfStmt
 {
 	struct NThenPartList* thenPart;
@@ -174,7 +176,7 @@ struct NElsePart
 	struct NStmtList* stmtList;
 };
 
-/*С†РёРєР»*/
+/*цикл*/
 struct NLoopStmt
 {
 	struct NStmtList* stmtListOpt;
@@ -182,13 +184,13 @@ struct NLoopStmt
 	struct NStmtList* stmtList;
 };
 
-/*РєР»Р°СЃСЃ*/
+/*класс*/
 struct NClass
 {
 	char* className;
-	struct NIdList* creationList; // NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
-	// // struct NStmtList* clientsList;
-	struct NFeatureList* featureList; // NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
+	struct NInheritFromClassList* inheritance; // NULL если отсутствует
+	struct NIdList* creationList; // NULL если отсутствует
+	struct NFeatureList* featureList; // NULL если отсутствует
 	
 	struct NClass* next;
 };
@@ -200,14 +202,14 @@ struct NClassList
 
 struct NFeature
 {
-	// РїСЂРёР·РЅР°Рє РїРѕР»СЏ: routineBody == NULL
-	struct NIdList* clients; // РІРёРґРёРјРѕСЃС‚СЊ РґР»СЏ: СѓРєР°Р·Р°РЅРЅС‹С… РєР»Р°СЃСЃРѕРІ / ANY (РёР»Рё РїСѓСЃС‚Рѕ?) / NONE
+	// признак поля: routineBody == NULL
+	struct NIdList* clients; // видимость для: указанных классов / ANY (или пусто?) / NONE
 	
 	char* name;
-	struct NNameAndTypeList* params; // NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
+	struct NNameAndTypeList* params; // NULL если отсутствует
 	struct NType* type; // attribute type or return type (can be VoidV for return type)
-	struct NNameAndTypeList* localVars; // NULL РµСЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
-	struct NStmtList* routineBody; // NULL РµСЃР»Рё РЅРµ РјРµС‚РѕРґ
+	struct NNameAndTypeList* localVars; // NULL если отсутствует
+	struct NStmtList* routineBody; // NULL если не метод
 	
 	struct NFeature* next;
 };
@@ -217,7 +219,7 @@ struct NFeatureList
 	struct NFeature* last;
 };
 
-/* РРјСЏ Рё С‚РёРї: С„РѕСЂРјР°Р»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Рё РѕР±СЉСЏРІР»РµРЅРёСЏ Р»РѕРєР°Р»СЊРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С… */
+/* Имя и тип: формальные параметры и объявления локальных переменных */
 struct NNameAndType
 {
 	char* name;
