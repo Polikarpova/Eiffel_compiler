@@ -1,4 +1,4 @@
-#include <locale.h>
+<locale.h>
 #include <string>
 #include "print2dot.h"
 
@@ -39,10 +39,8 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	+ fix *addToList*() mistakes
-	+ fix working with strcat() & strcpy(), literal & yylval
 	- export tree to DOT
 	+ capture INHERIT clauses in classes (add to bison rules & structures)
-	- refactor NRef as hierarchy of '.' operations not as RefList (as is now)
-	- test parsing empty class, empty features, etc
+	+ refactor NRef as hierarchy of '.' operations not as RefList (as is now)
+	-~ test parsing empty class, empty features, etc
 */
