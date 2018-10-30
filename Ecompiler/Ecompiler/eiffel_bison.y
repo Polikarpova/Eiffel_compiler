@@ -30,7 +30,6 @@ struct NExpr* expr_struct;
 struct NExprList* expr_list_struct;
 struct NAccess* access_struct;
 struct NRef* ref_struct;
-struct NRefChain* ref_chain_struct;
 struct NStmt* stmt_struct;
 struct NStmtList* stmt_list_struct;
 struct NType* type_struct;
@@ -70,8 +69,6 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %type <feature_list_struct> attributes
 %type <access_struct> access
 %type <ref_struct> ref
-%type <ref_chain_struct> ref_chain
-/* %type <Int> stmt_sep */
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
 %type <stmt_list_struct> stmt_list_opt
@@ -185,18 +182,20 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 
 
 access: ID		{$$=createAccess(IdA, $1, 0);}
+| 		ID '(' expr_list_opt ')' {$$=createAccess(IdA, $1, $3);}
+		/* следующие нельзя вызывать через точку: */
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);}
+| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
-| 		ID '(' expr_list_opt ')'	{$$=createAccess(IdA, $1, $3);}
+|		PRECURSOR '(' expr_list_opt ')' {$$=createAccess(PrecursorA, 0, $3);}
+|		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
+|		PRECURSOR '{' ID '}' '(' expr_list_opt ')' {$$=createAccess(PrecursorA, $3, $6);}
+
 ;
 
-ref: access				{$$=createRef($1,0);}
-| access '[' expr ']' 	{$$=createRef($1,$3);}
-;
-
-ref_chain: ref		{$$=createRefChain($1);}
-| ref_chain '.' ref {$$=addToRefChain($1, $3);}
+ref: access				{$$=createRef(0,$1,0);}
+| ref '.' access		{$$=createRef($1,$3,0);}
+| ref '[' expr ']' 		{$$=createRef($1,0,$3);}
 ;
 
 /* actions only */
@@ -210,9 +209,9 @@ stmt_sep: ';'
 | stmt_sep LF
 ;
 
-stmt: _LF_ON_ CREATE ref_chain stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
+stmt: _LF_ON_ CREATE ref stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
 | _LF_ON_ assign_stmt _LF_OFF_		{$$=createStmt(AssignSt,$2);}
-| _LF_ON_ ref_chain stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
+| _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
 | if_stmt			{$$=createStmt(IfSt,$1);}
 | from_loop			{$$=createStmt(LoopSt,$1);}
 ;
@@ -242,7 +241,7 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | CHAR_VAL		{$$=createCharConstExpr($1);}
 | STRING_VAL	{$$=createStringConstExpr($1);}
 | BOOL_VAL		{$$=createBoolConstExpr($1);}
-| ref_chain		{$$=createRefExpr($1); }
+| ref			{$$=createRefExpr($1); }
 | '(' expr ')'	{$$=$2;}
 | NOT expr		{$$=createExpr(NotE,$2,0);}
 | '+' expr %prec UPLUS	{$$=createExpr(UPlusE,$2,0);}
@@ -274,7 +273,7 @@ expr_list_opt: expr_list	{$$=($1);}
 | /*empty*/				{$$=createExprList(0);}
 ;
 
-assign_stmt: ref_chain ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
+assign_stmt: ref ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
 ;
 
 

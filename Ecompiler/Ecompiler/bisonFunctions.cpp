@@ -58,7 +58,7 @@ struct NExpr* createBoolConstExpr (bool token)
 	return Result;
 }
 
-struct NExpr* createRefExpr (struct NRefChain* ref)
+struct NExpr* createRefExpr (struct NRef* ref)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
@@ -99,7 +99,7 @@ struct NExprList* addToExprList (struct NExprList* list, struct NExpr* expr)
 	return list;
 }
 
-struct NAssignStmt* createAssignStmt(struct NRefChain* left, struct NExpr* expr)
+struct NAssignStmt* createAssignStmt(struct NRef* left, struct NExpr* expr)
 {
 	struct NAssignStmt* Result = (struct NAssignStmt*) malloc(sizeof (struct NAssignStmt));
 
@@ -109,33 +109,34 @@ struct NAssignStmt* createAssignStmt(struct NRefChain* left, struct NExpr* expr)
 	return Result;
 }
 
-struct NRef* createRef(struct NAccess* access, struct NExpr* index)
+struct NRef* createRef(struct NRef* qualification, struct NAccess* access, struct NExpr* index)
 {
 	struct NRef* Result = (struct NRef*) malloc(sizeof (struct NRef));
 
+	Result->qualification = qualification;
 	Result->access = access;
 	Result->index = index;
 
 	return Result;
 }
 
-struct NRefChain* createRefChain(struct NRef* ref)
-{
-	struct NRefChain* Result = (struct NRefChain*) malloc(sizeof (struct NRefChain));
+// struct NRefChain* createRefChain(struct NRef* ref)
+// {
+	// struct NRefChain* Result = (struct NRefChain*) malloc(sizeof (struct NRefChain));
 
-	Result->first = ref;
-	Result->last = ref;
+	// Result->first = ref;
+	// Result->last = ref;
 
-	return Result;
-}
+	// return Result;
+// }
 
-struct NRefChain* addToRefChain(struct NRefChain* chain, struct NRef* ref)
-{
-	chain->last->next = ref;
-	chain->last = ref;
+// struct NRefChain* addToRefChain(struct NRefChain* chain, struct NRef* ref)
+// {
+	// chain->last->next = ref;
+	// chain->last = ref;
 
-	return chain;
-}
+	// return chain;
+// }
 
 struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params)
 {
@@ -319,7 +320,7 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 	{
 	case CreateSt:
 	case RefSt:
-		Result->body.ref    = (struct NRefChain*) body; break;
+		Result->body.ref    = (struct NRef*) body; break;
 	case AssignSt:
 		Result->body.assign = (struct NAssignStmt*) body; break;
 	case IfSt:

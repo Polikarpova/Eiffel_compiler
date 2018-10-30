@@ -11,8 +11,6 @@ struct NExprList;
 struct NAccess;
 struct NClassList;
 struct NRef;
-struct NRefChain;
-// enum StmtType;
 struct NStmt;
 struct NStmtList;
 struct NType;
@@ -34,9 +32,6 @@ struct NNameAndType;
 struct NNameAndTypeList;
 struct NInheritFromClass;
 struct NInheritFromClassList;
-
-// struct NClassBody;
-// struct NTypeMark;
 
 
 /* Структуры */
@@ -66,7 +61,7 @@ struct NExpr
 		char* String;
 		bool Bool; // boolean
 		
-		struct NRefChain* ref; // NULL если не обращение к feature (type не RefE)
+		struct NRef* ref; // NULL если не обращение к feature (type не RefE)
 	} value;
 	
 	struct NExpr* left;
@@ -86,26 +81,23 @@ enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
 struct NAccess
 {
 	enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объявления bison) */
-	struct NId* id;	 /* идентификатор */
-	struct NExprList* params; /* обязательно с PRECURSOR. NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
+	struct NId* id;	 /* идентификатор или класс в конструкции PRECURSOR{ <base> } */
+	struct NExprList* params; /* обязательно с PRECURSOR, разрешено с ID. NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
 };
 
 /* Ref - обращение к атрибуту или элементу массива */
+/* Допустимые варианты (полный список):
+	- просто доступ [0,access,0]
+	- квалифицированный доступ [qual,access,0]
+	- доступ к элементу массива [qual,0,index]
+*/
 struct NRef
 {
-	struct NAccess* access;
+	struct NRef* qualification; /* выражение слева от точки. NULL если отсутствует */
+	struct NAccess* access; /* выражение справа от точки. NULL если index не NULL */
 	/* Subscript - доступ к элементу массива на чтение/запись */
-	struct NExpr* index; /* выражение для индекса (uint). NULL если отсутствует */
-	
-	struct NRef* next;
+	struct NExpr* index; /* выражение для индекса (uint). Требует qualification не NULL. NULL если access не NULL */
 };	
-
-/* цепочка обращений через точку */
-struct NRefChain
-{
-	struct NRef* first;
-	struct NRef* last;
-};
 
 /* Типы операторов */
 enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
@@ -117,7 +109,7 @@ struct NStmt
 	
 	union
 	{
-		struct NRefChain* ref; // для CreateSt и RefSt
+		struct NRef* ref; // для CreateSt и RefSt
 		struct NAssignStmt* assign;
 		struct NIfStmt* ifStmt;
 		struct NLoopStmt* loopStmt;
@@ -146,7 +138,7 @@ struct NType
 /* Оператор присваивания */
 struct NAssignStmt
 {
-	struct NRefChain* left; // last partition of ref_chain must not be call
+	struct NRef* left; // the ref chain must not end with call
 	struct NExpr* expr;
 };
 
