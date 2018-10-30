@@ -41,7 +41,7 @@ void class2dot(FILE *f, int *min_id, struct NClass* N)
 	{
 		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "INHERIT" );
 		int heir_id = *min_id;
-		fprintf(f, "%d [label=\"%s\"]; \n", heir_id, "parents" );
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", heir_id, "parents" );
 		count = 0;
 		// iterate nodes
 		for(struct NInheritFromClass* i = N->inheritance->first  ;  ; i = i->next, ++count )
@@ -58,7 +58,7 @@ void class2dot(FILE *f, int *min_id, struct NClass* N)
 	{
 		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "CREATE" );
 		int ctors_id = *min_id;
-		fprintf(f, "%d [label=\"%s\"]; \n", ctors_id, "constructors" );
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", ctors_id, "constructors" );
 		count = 0;
 		// iterate constructors
 		for(struct NId* i = N->creationList->first  ;  ; i = i->next, ++count )
@@ -230,14 +230,14 @@ void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N)
 {
 	int self_id = *min_id;
 	// node
-	fprintf(f, "%d [label=\"`%s`\"]; \n", self_id, N->className );
+	fprintf(f, "%d [label=\"`%s`\" shape=box]; \n", self_id, N->className );
 	
 	// redefines
 	if(N->redefineList)
 	{
-		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "redefine" );
+		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "custom" );
 		int child_id = *min_id;
-		fprintf(f, "%d [label=\"%s\"]; \n", child_id, "redefine" );
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", child_id, "redefine" );
 		int count = 0;
 		// iterate nodes
 		for(struct NId* i = N->redefineList->first  ;  ; i = i->next, ++count )
