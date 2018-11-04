@@ -177,7 +177,7 @@ struct NIdList* addToIdList(struct NIdList* list, struct NId* id)
 	return list;
 }
 
-/*âåòâëåíèå*/
+/*Ð²ÐµÑ‚Ð²Ð»ÐµÐ½Ð¸Ðµ*/
 struct NIfStmt* createIfStmt (struct NThenPartList* thenPartList, struct NElsePart* elsePart)
 {
 	struct NIfStmt* Result = (struct NIfStmt*) malloc(sizeof (struct NIfStmt));
@@ -225,7 +225,7 @@ struct NElsePart* createElsePart(struct NStmtList* stmtList)
 	return Result;
 }
 
-/*öèêë*/
+/*Ñ†Ð¸ÐºÐ»*/
 struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* cond, struct NStmtList* stmtList)
 {
 	struct NLoopStmt* Result = (struct NLoopStmt*) malloc(sizeof (struct NLoopStmt));
@@ -286,7 +286,7 @@ struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, 
 	// assume idList contains at least 1 element
 	struct NId* prevId, *curId = idList->first;
 	Result = createNameAndTypeList(createNameAndType(curId->id,type));
-	while(curId != idList->last) // curId - ïîñëåäíèé îáðàáîòàííûé ýëåìåíò
+	while(curId != idList->last) // curId - Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ð¹ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð½Ð½Ñ‹Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚
 	{
 		prevId = curId;
 		curId = prevId->next;
@@ -389,7 +389,7 @@ struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
 	struct NNameAndType* prevNat, *curNat = natList->first;
 	// create attribute & place it into list
 	Result = createFeatureList(createFeature(curNat->name,0,curNat->type,0,0));
-	while(curNat != natList->last) // curNat - ïîñëåäíèé îáðàáîòàííûé ýëåìåíò
+	while(curNat != natList->last) // curNat - Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ð¹ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð½Ð½Ñ‹Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚
 	{
 		prevNat = curNat;
 		curNat = prevNat->next;

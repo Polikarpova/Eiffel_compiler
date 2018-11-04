@@ -1,20 +1,21 @@
 %{
-/*Пролог*/
+/*РџСЂРѕР»РѕРі*/
 #include "bisonFunctions.h"
 	
-/* более подробные собщения об ошибках */
+/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
 #define YYERROR_VERBOSE 1
 	
-// Флаг для управления контекстом Flex`а
+// Р¤Р»Р°Рі РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРј Flex`Р°
 int global_LF_enabled = false;
-
-void yyerror (char const *s);
 
 extern int yylex();
 
 struct NClassList* root;
 
 %}
+
+// save .h file with `extern` defines
+%defines
 
 %union {
 int Int;
@@ -23,7 +24,7 @@ char Char;
 char* String;
 bool Bool;
 
-/*структуры для узлов*/
+/*СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ СѓР·Р»РѕРІ*/
 struct NId* id_struct;
 struct NIdList* id_list_struct;
 struct NExpr* expr_struct;
@@ -51,7 +52,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 // struct * _struct;
 }
 
-/*нетерминалы*/
+/*РЅРµС‚РµСЂРјРёРЅР°Р»С‹*/
 %start program
 %type <class_list_struct> class_list
 %type <class_struct> class
@@ -98,7 +99,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 /* %type <> error_token */
 
 
-/* более подробные собщения об ошибках */
+/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
 %define parse.error verbose
 
 %token <Int> INT_VAL
@@ -183,9 +184,9 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 
 access: ID		{$$=createAccess(IdA, $1, 0);}
 | 		ID '(' expr_list_opt ')' {$$=createAccess(IdA, $1, $3);}
-		/* следующие нельзя вызывать через точку: */
+		/* СЃР»РµРґСѓСЋС‰РёРµ РЅРµР»СЊР·СЏ РІС‹Р·С‹РІР°С‚СЊ С‡РµСЂРµР· С‚РѕС‡РєСѓ (Obj.CURRENT РЅРµРїСЂР°РІРёР»СЊРЅРѕ): */
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
+| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // РЅРµР»СЊР·СЏ СЃРѕС‡РµС‚Р°С‚СЊ: CURRENT '[' <i> ']'
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
 |		PRECURSOR '(' expr_list_opt ')' {$$=createAccess(PrecursorA, 0, $3);}
 |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
@@ -349,14 +350,14 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   ;
 */
 %%
-/*Секция пользовательского кода*/
+/*РЎРµРєС†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРґР°*/
 
 void yyerror (char const *s)
 {
   // fprintf (stderr, "%s\n", s);
 }	
 
-// переменные, глобальные для анализатора
+// РїРµСЂРµРјРµРЅРЅС‹Рµ, РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР»СЏ Р°РЅР°Р»РёР·Р°С‚РѕСЂР°
 // struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
 // struct NType* currentType;
