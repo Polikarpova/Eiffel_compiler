@@ -288,7 +288,7 @@ then_part_list: then_part	{$$=createThenPartList($1);}
 | then_part_list ELSEIF then_part	{$$=addToThenPartList($1, $3);} 
 ;
 
-then_part: '(' expr ')' THEN stmt_list	{$$=createThenPart($2, $5);}
+then_part: expr THEN stmt_list	{$$=createThenPart($1, $3);}
 ;
 
 else_part: ELSE stmt_list	{$$=createElsePart($2);}

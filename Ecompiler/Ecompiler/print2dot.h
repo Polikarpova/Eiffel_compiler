@@ -17,4 +17,8 @@ void NExpr2dot(FILE *f, int *min_id, struct NExpr* N);
 void constantExpr2dot(FILE *f, int id, struct NExpr* N, char* shape);
 void unaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape);
 void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape);
+void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N);
+void NThenPartList2dot(FILE *f, int *min_id, struct NThenPartList* N);
+void NElsePart2dot(FILE *f, int *min_id, struct NElsePart* N);
+
 

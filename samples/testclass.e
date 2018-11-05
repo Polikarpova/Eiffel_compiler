@@ -20,7 +20,15 @@ feature {APPLICATION}
 		AmI_OK, cat_exists: BOOLEAN
 		i: INTEGER
 		do
-			REsult := 2*(2+2)
+			--REsult := 2*(2+2)
+			
+			if NOT 2 then
+				Result := false
+			elseif 2 = 4^2 then
+				Result := "hmm"
+			else
+				Resul := true
+			end
 		end
 feature
 	attr2 : REAL

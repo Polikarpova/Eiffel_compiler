@@ -225,7 +225,6 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 			if(i == List->last) break;
 		}
 	}
-	
 }
 
 void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N)
@@ -266,7 +265,7 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "RefSt" );
 			return;
 		case IfSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "IfSt" );
+			NIfStmt2dot(f, min_id, N->body.ifStmt);
 			return;
 		case LoopSt:
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "LoopSt" );
@@ -278,7 +277,7 @@ void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
 {
 	int self_id = *min_id;
 
-	fprintf(f, "%d [label=\"`%s`\"];", self_id, "AssignSt" );
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "AssignStmt" );
 
 	//NRef
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
@@ -451,4 +450,67 @@ void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* 
 
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "right" );
 	NExpr2dot(f, min_id, N->right);
+}
+
+void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "IfStmt" );
+		
+	//then_part
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	NThenPartList2dot(f, min_id, N->thenPart);
+	//fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );
+
+	//else_part
+	if (N->elsePart) {
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );	//присоединяемый узел описывается внутри функции NExpr2dot
+		NElsePart2dot(f, min_id, N->elsePart);
+		//NExpr2dot(f, min_id, N->expr);
+	}
+}
+
+void NThenPartList2dot(FILE *f, int *min_id, struct NThenPartList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "THEN_LIST" );
+		
+	if ( N->first && N->last)
+	{
+		int count = 0;
+		int then_id = 0;
+		// iterate nodes
+		for(struct NThenPart* i = N->first  ;  ; i = i->next, ++count )
+		{
+			// then_block
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", self_id, ++(*min_id), count );
+			then_id = *min_id;
+			fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", then_id, "THEN_BLOCK" );
+
+			//cond
+			fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", then_id, ++(*min_id), "cond" );
+			NExpr2dot(f, min_id, i->cond);
+
+			//body
+			fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", then_id, ++(*min_id), "body" );
+			NStmtList2dot(f, min_id, i->stmtList);
+			if(i == N->last) 
+				break;
+		}
+	}
+}
+
+void NElsePart2dot(FILE *f, int *min_id, struct NElsePart* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "ELSE" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "body" );
+	NStmtList2dot(f, min_id, N->stmtList);
 }
