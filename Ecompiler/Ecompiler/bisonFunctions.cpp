@@ -11,6 +11,8 @@ struct NExpr* createIntConstExpr (int token)
 	Result->type = IntE;
 	Result->value.Int = token;
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }
@@ -21,6 +23,8 @@ struct NExpr* createRealConstExpr (double token)
 	Result->type = RealE;
 	Result->value.Real = token;
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }
@@ -32,6 +36,8 @@ struct NExpr* createCharConstExpr (char token)
 	Result->type = CharE;
 	Result->value.Char = token;
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }
@@ -40,9 +46,12 @@ struct NExpr* createStringConstExpr (char* token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
-	Result->type = IntE;
-	Result->value.String = token;
+	Result->type = StringE;
+	Result->value.String=(char *)malloc(strlen(token)+1);
+	strcpy(Result->value.String, token);
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }
@@ -54,6 +63,8 @@ struct NExpr* createBoolConstExpr (bool token)
 	Result->type = BoolE;
 	Result->value.Bool = token;
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }
@@ -65,6 +76,8 @@ struct NExpr* createRefExpr (struct NRef* ref)
 	Result->type = RefE;
 	Result->value.ref = ref;
 
+	Result->left = NULL;
+	Result->right = NULL;
 	Result->next = NULL;
 	return Result;
 }

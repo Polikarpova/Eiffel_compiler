@@ -187,6 +187,7 @@ void nameAndType2dot(FILE *f, int *min_id, struct NNameAndType* N)
 	NType2dot(f, N->type);
 	fprintf(f, "\"]; \n" );
 }
+
 void clients2dot(FILE *f, struct NIdList* List)
 {
 	// print `"id,id,id, ... ,id"`
@@ -205,6 +206,7 @@ void clients2dot(FILE *f, struct NIdList* List)
 	}
 	fprintf(f, "}\"");
 }
+
 void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 {
 	int self_id = *min_id;
@@ -224,8 +226,8 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 			if(i == List->last) break;
 		}
 	}
-	
 }
+
 void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N)
 {
 	int self_id = *min_id;
@@ -258,17 +260,315 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "CreateSt" );
 			return;
 		case AssignSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "AssignSt" );
+			NAssignStmt2dot(f, min_id, N->body.assign);
 			return;
 		case RefSt:
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "RefSt" );
 			return;
 		case IfSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "IfSt" );
+			NIfStmt2dot(f, min_id, N->body.ifStmt);
 			return;
 		case LoopSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "LoopSt" );
+			NLoopStmt2dot(f, min_id, N->body.loopStmt);
 			return;
 	}
 }
 
+void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
+{
+	int self_id = *min_id;
+
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "AssignStmt" );
+
+	//NRef
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
+	//----------------------- NRef
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "NRef :D" );	//затычка
+
+	//NExpr
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
+	NExpr2dot(f, min_id, N->expr);
+}
+
+void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
+{
+	int self_id = *min_id;
+
+	char* shape = "egg";
+
+	switch(N->type)
+	{
+		case IntE:
+		case RealE:
+		case CharE:
+		case StringE:
+		case BoolE:
+			constantExpr2dot(f, self_id, N, shape);
+			return;
+		case RefE:
+			//затычка
+			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "NRef :D", shape );
+			//функция обработки NRef
+			return;
+		case NotE:
+		case UPlusE:
+		case UMinusE:
+			unaryExpr2dot(f, self_id, min_id, N, shape);
+			return;
+		case PowerE:
+		case MulE:
+		case DivE:
+		case PlusE:
+		case MinusE:
+		case EqualsE:
+		case NotEqualE:
+		case LessE:
+		case GreaterE:
+		case LessOrEqualE:
+		case GreaterOrEqualE:
+		case AndE:
+		case AndThenE:
+		case OrE:
+		case OrElseE:
+		case XORE:
+		case ImpliesE:
+			binaryExpr2dot(f, self_id, min_id, N, shape);
+			return;
+	}
+}
+
+void constantExpr2dot(FILE *f, int id, struct NExpr* N, char* shape)
+{
+	switch(N->type)
+	{
+		case IntE:
+			fprintf(f, "%d [label=\"%d\" shape=%s];", id, N->value.Int, shape );
+			return;
+		case RealE:
+			fprintf(f, "%d [label=\"%f5\" shape=%s];", id, N->value.Real, shape );
+			return;
+		case CharE:
+			fprintf(f, "%d [label=\"`%c`\" shape=%s];", id, N->value.Char, shape );
+			return;
+		case StringE:
+			fprintf(f, "%d [label=\"''%s''\" shape=%s];", id, N->value.String, shape );
+			return;
+		case BoolE:
+			if ( N->value.Bool )
+			{
+				fprintf(f, "%d [label=\"%s\" shape=%s];", id, "true", shape );
+			}
+			else
+			{
+				fprintf(f, "%d [label=\"%s\" shape=%s];", id, "false", shape );
+			}
+			return;
+		case RefE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", id, "напишите функцию NRef :D", shape );
+			//функция обработки NRef
+			return;
+	}
+}
+
+void unaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape)
+{
+	//min_id при передаче не инкрементируется, т.е. по сути он равен parent_id
+
+	switch(N->type)
+	{
+		case NotE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "NOT", shape );
+			break;
+		case UPlusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "+", shape );
+			break;
+		case UMinusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "-", shape );
+			break;
+	}
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "left" );
+	NExpr2dot(f, min_id, N->left);
+}
+
+void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape)
+{
+	switch(N->type)
+	{
+		case PowerE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "^", shape );
+			break;
+		case MulE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "*", shape );
+			break;
+		case DivE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "/", shape );
+			break;
+		case PlusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "+", shape );
+			break;
+		case MinusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "-", shape );
+			break;
+		case EqualsE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "=", shape );
+			break;
+		case NotEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "/=", shape );
+			break;
+		case LessE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<", shape );
+			break;
+		case GreaterE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, ">", shape );
+			break;
+		case LessOrEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<=", shape );
+			break;
+		case GreaterOrEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, ">=", shape );
+			break;
+		case AndE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "AND", shape );
+			break;
+		case AndThenE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "AND THEN", shape );
+			break;
+		case OrE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "OR", shape );
+			break;
+		case OrElseE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "OR ELSE", shape );
+			break;
+		case XORE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "XOR", shape );
+			break;		
+		case ImpliesE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "IMPLIES", shape );
+			break;
+	}
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "left" );
+	NExpr2dot(f, min_id, N->left);
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "right" );
+	NExpr2dot(f, min_id, N->right);
+}
+
+void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "IfStmt" );
+		
+	//then_part
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	NThenPartList2dot(f, min_id, N->thenPart);
+	//fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );
+
+	//else_part
+	if (N->elsePart) {
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+		NElsePart2dot(f, min_id, N->elsePart);
+	}
+}
+
+void NThenPartList2dot(FILE *f, int *min_id, struct NThenPartList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "THEN_LIST" );
+		
+	if ( N->first && N->last)
+	{
+		int count = 0;
+		int then_id = 0;
+		// iterate nodes
+		for(struct NThenPart* i = N->first  ;  ; i = i->next, ++count )
+		{
+			// then_block
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", self_id, ++(*min_id), count );
+			then_id = *min_id;
+			fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", then_id, "THEN_BLOCK" );
+
+			//cond
+			fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", then_id, ++(*min_id), "cond" );
+			NExpr2dot(f, min_id, i->cond);
+
+			//body
+			fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", then_id, ++(*min_id), "body" );
+			NStmtList2dot(f, min_id, i->stmtList);
+			if(i == N->last) 
+				break;
+		}
+	}
+}
+
+void NElsePart2dot(FILE *f, int *min_id, struct NElsePart* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "ELSE" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "body" );
+	NStmtList2dot(f, min_id, N->stmtList);
+}
+
+void NLoopStmt2dot(FILE *f, int *min_id, struct NLoopStmt* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "LoopStmt" );
+
+	//from
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopFrom2dot(f, min_id, N->stmtListOpt);
+
+	//untill
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopUntil2dot(f, min_id, N->cond);
+
+	//body
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopBody2dot(f, min_id, N->stmtList);
+}
+
+void loopFrom2dot(FILE *f, int *min_id, struct NStmtList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "FROM" );
+
+	if (N->first && N->last) {
+		
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "start cond" );
+		NStmtList2dot(f, min_id, N);
+	}
+}
+
+void loopUntil2dot(FILE *f, int *min_id, struct NExpr* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "UNTIL" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "until cond" );
+	NExpr2dot(f, min_id, N);
+}
+
+void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "LOOP" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	NStmtList2dot(f, min_id, N);
+}

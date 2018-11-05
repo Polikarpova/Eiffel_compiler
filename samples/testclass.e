@@ -18,8 +18,40 @@ feature {APPLICATION}
 	meth1(): REAL
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
+		i: INTEGER
+		arr: ARRAY[INTEGER]
 		do
-			REsult := 3.14159
+			--REsult := 2*(2+2)
+			
+			create arr.make_filled(4);
+			
+			from
+				i := 1
+			until
+				i != 5
+			loop
+			
+				Io.put_integer(arr[i]);
+				i := i + 1;
+			end
+			
+			
+			if NOT i then
+				Result := false
+			elseif i = 4^2 then
+				Result := "hmm"
+			else
+				Resul := true
+			end
+			
+			from
+			until
+				Result >= 10
+			loop
+				Result := (8^Result) XOR 7
+			end
+			
+			
 		end
 feature
 	attr2 : REAL
