@@ -16,11 +16,10 @@ public:
 private:
 
 private slots:
-	void init();
-	void cleanup();
+	//void init();
+	//void cleanup();
 
 	void emptyClass();
-
 	
 };
 

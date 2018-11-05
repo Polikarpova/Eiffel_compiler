@@ -44,7 +44,8 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <BisonAfterTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">FlexTarget</BisonAfterTargets>
     <FlexBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BisonTarget</FlexBeforeTargets>
-    <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
