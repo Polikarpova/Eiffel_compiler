@@ -1,0 +1,3 @@
+class TESTCLASS
+-- no end
+

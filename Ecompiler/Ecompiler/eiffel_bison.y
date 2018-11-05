@@ -12,7 +12,19 @@ extern int yylex();
 
 struct NClassList* root;
 
+/* < Error handling > */
+#define MAX_SYNTAX_ERRORS 20
+
+const char* syntax_errors[MAX_SYNTAX_ERRORS];
+int syntax_errors_logged = 0;
+void yyerror (char const *s); //  см. ниже: Секция пользовательского кода
+
+/* </ Error handling > */
+
 %}
+
+// enable locations
+%locations
 
 // save .h file with `extern` defines
 %defines
@@ -350,12 +362,26 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   ;
 */
 %%
-/*Секция пользовательского кода*/
+/* Секция пользовательского кода */
 
 void yyerror (char const *s)
 {
   // fprintf (stderr, "%s\n", s);
-}	
+	if(syntax_errors_logged < MAX_SYNTAX_ERRORS-1)
+	{
+		syntax_errors[syntax_errors_logged++] = s;
+	}
+	else if(syntax_errors_logged >= MAX_SYNTAX_ERRORS)
+	{
+		return;
+	}
+	else
+	{
+		char too_namy_errors [] = "Cannot recover from errors, abort compilation";
+		syntax_errors[syntax_errors_logged++] = strcpy((char*)malloc(strlen(too_namy_errors)+1), too_namy_errors);
+		// YYABORT;
+	}
+}
 
 // переменные, глобальные для анализатора
 // struct NClass* currentClass = NULL;

@@ -1,4 +1,4 @@
-<locale.h>
+#include <locale.h>
 #include <string>
 #include "print2dot.h"
 
@@ -8,9 +8,19 @@ extern FILE *yyin;
 extern int yyparse();
 extern struct NClassList* root;
 
+// test
+#include "bisontest.h"
+
 
 int main(int argc, char *argv[])
 {
+	if(true)
+	{
+		BisonTest testClass(0);
+		QTest::qExec(&testClass);
+		return 0;
+	}
+
 
 	//setlocale(LC_ALL, "russian");
 
@@ -35,6 +45,10 @@ int main(int argc, char *argv[])
 		print2dot("tree.dot", root);
 		execlpe("cmd", "/c", "run_dot.bat", "", 0,0,0);
 		printf("see picture\n");
+	}
+	else
+	{
+		printf("tree was not created.\n");
 	}
 }
 
