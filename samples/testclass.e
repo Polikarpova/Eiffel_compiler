@@ -18,8 +18,9 @@ feature {APPLICATION}
 	meth1(): REAL
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
+		i: INTEGER
 		do
-			REsult := "meow"
+			REsult := 2*(2+2)
 		end
 feature
 	attr2 : REAL

@@ -14,4 +14,7 @@ void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N);
 void NStmt2dot(FILE *f, int *min_id, struct NStmt* N);
 void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N);
 void NExpr2dot(FILE *f, int *min_id, struct NExpr* N);
+void constantExpr2dot(FILE *f, int id, struct NExpr* N, char* shape);
+void unaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape);
+void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape);
 

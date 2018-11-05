@@ -282,13 +282,12 @@ void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
 
 	//NRef
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );
 
 	//NExpr
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
 	NExpr2dot(f, min_id, N->expr);
 }
-
-
 
 void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
 {
@@ -296,76 +295,160 @@ void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
 
 	char* shape = "egg";
 
-	//fprintf(f, "%d [label=\"%s\" shape=Mcircle];", self_id, "???" );
-	//fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "someExpr" );
-
-//enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, 
-//	LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE};
 	switch(N->type)
 	{
 		case IntE:
-			fprintf(f, "%d [label=\"%d\" shape=%s];", self_id, N->value.Int, shape );
+		case RealE:
+		case CharE:
+		case StringE:
+		case BoolE:
+			constantExpr2dot(f, self_id, N, shape);
+			return;
+		case RefE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "напишите функцию NRef :D", shape );
+			//функция обработки NRef
+			return;
+		case NotE:
+		case UPlusE:
+		case UMinusE:
+			unaryExpr2dot(f, self_id, min_id, N, shape);
+			return;
+		case PowerE:
+		case MulE:
+		case DivE:
+		case PlusE:
+		case MinusE:
+		case EqualsE:
+		case NotEqualE:
+		case LessE:
+		case GreaterE:
+		case LessOrEqualE:
+		case GreaterOrEqualE:
+		case AndE:
+		case AndThenE:
+		case OrE:
+		case OrElseE:
+		case XORE:
+		case ImpliesE:
+			binaryExpr2dot(f, self_id, min_id, N, shape);
+			return;
+	}
+}
+
+void constantExpr2dot(FILE *f, int id, struct NExpr* N, char* shape)
+{
+	switch(N->type)
+	{
+		case IntE:
+			fprintf(f, "%d [label=\"%d\" shape=%s];", id, N->value.Int, shape );
 			return;
 		case RealE:
-			fprintf(f, "%d [label=\"%f5\" shape=%s];", self_id, N->value.Real, shape );
+			fprintf(f, "%d [label=\"%f5\" shape=%s];", id, N->value.Real, shape );
 			return;
 		case CharE:
-			fprintf(f, "%d [label=\"%c\" shape=%s];", self_id, N->value.Char, shape );
+			fprintf(f, "%d [label=\"`%c`\" shape=%s];", id, N->value.Char, shape );
 			return;
 		case StringE:
-			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, N->value.String, shape );
+			fprintf(f, "%d [label=\"''%s''\" shape=%s];", id, N->value.String, shape );
 			return;
 		case BoolE:
 			if ( N->value.Bool )
 			{
-				fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "true", shape );
+				fprintf(f, "%d [label=\"%s\" shape=%s];", id, "true", shape );
 			}
 			else
 			{
-				fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "false", shape );
+				fprintf(f, "%d [label=\"%s\" shape=%s];", id, "false", shape );
 			}
 			return;
 		case RefE:
-			return;
-		case NotE:
-			return;
-		case UPlusE:
-			return;
-		case UMinusE:
-			return;
-		case PowerE:
-			return;
-		case MulE:
-			return;
-		case DivE:
-			return;
-		case PlusE:
-			return;
-		case MinusE:
-			return;
-		case EqualsE:
-			return;
-		case NotEqualE:
-			return;
-		case LessE:
-			return;
-		case GreaterE:
-			return;
-		case LessOrEqualE:
-			return;
-		case GreaterOrEqualE:
-			return;
-		case AndE:
-			return;
-		case AndThenE:
-			return;
-		case OrE:
-			return;
-		case OrElseE:
-			return;
-		case XORE:
-			return;
-		case ImpliesE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", id, "напишите функцию NRef :D", shape );
+			//функция обработки NRef
 			return;
 	}
+}
+
+void unaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape)
+{
+	//min_id при передаче не инкрементируется, т.е. по сути он равен parent_id
+
+	switch(N->type)
+	{
+		case NotE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "NOT", shape );
+			break;
+		case UPlusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "+", shape );
+			break;
+		case UMinusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "-", shape );
+			break;
+	}
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "left" );
+	NExpr2dot(f, min_id, N->left);
+}
+
+void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* shape)
+{
+	switch(N->type)
+	{
+		case PowerE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "^", shape );
+			break;
+		case MulE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "*", shape );
+			break;
+		case DivE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "/", shape );
+			break;
+		case PlusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "+", shape );
+			break;
+		case MinusE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "-", shape );
+			break;
+		case EqualsE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "=", shape );
+			break;
+		case NotEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "/=", shape );
+			break;
+		case LessE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<", shape );
+			break;
+		case GreaterE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, ">", shape );
+			break;
+		case LessOrEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<=", shape );
+			break;
+		case GreaterOrEqualE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, ">=", shape );
+			break;
+		case AndE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "AND", shape );
+			break;
+		case AndThenE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "AND THEN", shape );
+			break;
+		case OrE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "OR", shape );
+			break;
+		case OrElseE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "OR ELSE", shape );
+			break;
+		case XORE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "XOR", shape );
+			break;		
+		case ImpliesE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "IMPLIES", shape );
+			break;
+	}
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "left" );
+	NExpr2dot(f, min_id, N->left);
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", parent_id, ++(*min_id), "right" );
+	NExpr2dot(f, min_id, N->right);
 }
