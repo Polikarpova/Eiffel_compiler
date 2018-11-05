@@ -19,8 +19,22 @@ feature {APPLICATION}
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
 		i: INTEGER
+		arr: ARRAY[INTEGER]
 		do
 			--REsult := 2*(2+2)
+			
+			create arr.make_filled(4);
+			
+			from
+				i := 1
+			until
+				i != 5
+			loop
+			
+				Io.put_integer(arr[i]);
+				i := i + 1;
+			end
+			
 			
 			if NOT i then
 				Result := false
@@ -32,18 +46,11 @@ feature {APPLICATION}
 			
 			from
 			until
-				1 >= 10
+				Result >= 10
 			loop
-				Result := 1 + 1
+				Result := (8^Result) XOR 7
 			end
 			
-			from
-				Result := 666
-			until
-				666 implies 9.7
-			loop
-				Result := (8^0) XOR 7
-			end
 			
 		end
 feature

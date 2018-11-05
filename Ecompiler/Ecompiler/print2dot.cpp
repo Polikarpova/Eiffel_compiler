@@ -283,7 +283,7 @@ void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
 	//NRef
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
 	//----------------------- NRef
-	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );	//затычка
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "NRef :D" );	//затычка
 
 	//NExpr
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
