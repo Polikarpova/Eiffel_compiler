@@ -22,13 +22,29 @@ feature {APPLICATION}
 		do
 			--REsult := 2*(2+2)
 			
-			if NOT 2 then
+			if NOT i then
 				Result := false
-			elseif 2 = 4^2 then
+			elseif i = 4^2 then
 				Result := "hmm"
 			else
 				Resul := true
 			end
+			
+			from
+			until
+				1 >= 10
+			loop
+				Result := 1 + 1
+			end
+			
+			from
+				Result := 666
+			until
+				666 implies 9.7
+			loop
+				Result := (8^0) XOR 7
+			end
+			
 		end
 feature
 	attr2 : REAL

@@ -20,5 +20,8 @@ void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* 
 void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N);
 void NThenPartList2dot(FILE *f, int *min_id, struct NThenPartList* N);
 void NElsePart2dot(FILE *f, int *min_id, struct NElsePart* N);
-
+void NLoopStmt2dot(FILE *f, int *min_id, struct NLoopStmt* N);
+void loopFrom2dot(FILE *f, int *min_id, struct NStmtList* N);
+void loopUntil2dot(FILE *f, int *min_id, struct NExpr* N);
+void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N);
 

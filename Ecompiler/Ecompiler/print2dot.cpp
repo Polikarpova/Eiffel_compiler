@@ -187,6 +187,7 @@ void nameAndType2dot(FILE *f, int *min_id, struct NNameAndType* N)
 	NType2dot(f, N->type);
 	fprintf(f, "\"]; \n" );
 }
+
 void clients2dot(FILE *f, struct NIdList* List)
 {
 	// print `"id,id,id, ... ,id"`
@@ -268,7 +269,7 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 			NIfStmt2dot(f, min_id, N->body.ifStmt);
 			return;
 		case LoopSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "LoopSt" );
+			NLoopStmt2dot(f, min_id, N->body.loopStmt);
 			return;
 	}
 }
@@ -281,7 +282,8 @@ void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
 
 	//NRef
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
-	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );
+	//----------------------- NRef
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );	//затычка
 
 	//NExpr
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
@@ -304,7 +306,8 @@ void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
 			constantExpr2dot(f, self_id, N, shape);
 			return;
 		case RefE:
-			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "напишите функцию NRef :D", shape );
+			//затычка
+			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "NRef :D", shape );
 			//функция обработки NRef
 			return;
 		case NotE:
@@ -466,9 +469,8 @@ void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N)
 
 	//else_part
 	if (N->elsePart) {
-		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );	//присоединяемый узел описывается внутри функции NExpr2dot
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
 		NElsePart2dot(f, min_id, N->elsePart);
-		//NExpr2dot(f, min_id, N->expr);
 	}
 }
 
@@ -513,4 +515,60 @@ void NElsePart2dot(FILE *f, int *min_id, struct NElsePart* N)
 
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "body" );
 	NStmtList2dot(f, min_id, N->stmtList);
+}
+
+void NLoopStmt2dot(FILE *f, int *min_id, struct NLoopStmt* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "LoopStmt" );
+
+	//from
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopFrom2dot(f, min_id, N->stmtListOpt);
+
+	//untill
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopUntil2dot(f, min_id, N->cond);
+
+	//body
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	loopBody2dot(f, min_id, N->stmtList);
+}
+
+void loopFrom2dot(FILE *f, int *min_id, struct NStmtList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "FROM" );
+
+	if (N->first && N->last) {
+		
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "start cond" );
+		NStmtList2dot(f, min_id, N);
+	}
+}
+
+void loopUntil2dot(FILE *f, int *min_id, struct NExpr* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "UNTIL" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "until cond" );
+	NExpr2dot(f, min_id, N);
+}
+
+void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N)
+{
+	int self_id = *min_id;
+	// node
+
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "LOOP" );
+
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
+	NStmtList2dot(f, min_id, N);
 }
