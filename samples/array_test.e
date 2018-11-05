@@ -5,25 +5,48 @@ create
 
 feature
 	make
+	do
+		arr_test
+	end
+arr_test
 	LOCAL
 		i: INTEGER
 		arr: ARRAY[INTEGER]
 	do
 
-		--СЃРѕР·РґР°РµРј Р·Р°РїРѕР»РЅРµРЅРЅС‹Р№ РјР°СЃСЃРёРІ РЅР° 4 СЌР»РµРјРµРЅС‚Р°
-		--РЅРѕ СЏ РЅРµ РїРѕРЅСЏР»Р°, С‡РµРј РѕРЅ РµРіРѕ Р·Р°РїРѕР»РЅСЏРµС‚...
-		--РґСѓРјР°СЋ, РјРѕР¶РЅРѕ РїСЂРѕСЃС‚Рѕ make(int) СЃРґРµР»Р°С‚СЊ Рё РЅРѕСЂРјР°Р»СЊРЅРѕ Р±СѓРґРµС‚
-		create arr.make_filled(4);
+		--создаем незаполненный массив на 4 элемента
+		-- [obsolete] make(min_index, max_index)
+		create arr.make(0,4);
 		
 		from
-			--СЏ С‚Р°Рє РїРѕРЅСЏР»Р°, С‡С‚Рѕ РІ eiffel РЅСѓРјРµСЂР°С†РёСЏ СЃ 1 РёРґРµС‚
-			i := 1
+			-- нумерация идет по индексам как задано в конструкторе
+			i := 0
 		until
-			i != 5
+			i = 5
 		loop
+			Io.put_integer(i);
+			Io.put_string(" : ");
+			arr[i] :=  i+20
 			Io.put_integer(arr[i]);
+			Io.new_line
 			i := i + 1;
 		end
-		
+
+		Io.new_line
+		arr[2] := 10;
+
+		-- view
+		from
+			i := 0
+		until
+			i = 5
+		loop
+			Io.put_integer(i);
+			Io.put_string(" : ");
+			Io.put_integer(arr[i]);
+			Io.new_line
+			i := i + 1;
+		end
+
 	end
 end
