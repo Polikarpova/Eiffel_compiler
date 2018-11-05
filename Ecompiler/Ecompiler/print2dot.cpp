@@ -205,6 +205,7 @@ void clients2dot(FILE *f, struct NIdList* List)
 	}
 	fprintf(f, "}\"");
 }
+
 void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 {
 	int self_id = *min_id;
@@ -226,6 +227,7 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 	}
 	
 }
+
 void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N)
 {
 	int self_id = *min_id;
@@ -258,7 +260,7 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "CreateSt" );
 			return;
 		case AssignSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "AssignSt" );
+			NAssignStmt2dot(f, min_id, N->body.assign);
 			return;
 		case RefSt:
 			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "RefSt" );
@@ -272,3 +274,98 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 	}
 }
 
+void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
+{
+	int self_id = *min_id;
+
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "AssignSt" );
+
+	//NRef
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
+
+	//NExpr
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
+	NExpr2dot(f, min_id, N->expr);
+}
+
+
+
+void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
+{
+	int self_id = *min_id;
+
+	char* shape = "egg";
+
+	//fprintf(f, "%d [label=\"%s\" shape=Mcircle];", self_id, "???" );
+	//fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "someExpr" );
+
+//enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, 
+//	LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE};
+	switch(N->type)
+	{
+		case IntE:
+			fprintf(f, "%d [label=\"%d\" shape=%s];", self_id, N->value.Int, shape );
+			return;
+		case RealE:
+			fprintf(f, "%d [label=\"%f5\" shape=%s];", self_id, N->value.Real, shape );
+			return;
+		case CharE:
+			fprintf(f, "%d [label=\"%c\" shape=%s];", self_id, N->value.Char, shape );
+			return;
+		case StringE:
+			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, N->value.String, shape );
+			return;
+		case BoolE:
+			if ( N->value.Bool )
+			{
+				fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "true", shape );
+			}
+			else
+			{
+				fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "false", shape );
+			}
+			return;
+		case RefE:
+			return;
+		case NotE:
+			return;
+		case UPlusE:
+			return;
+		case UMinusE:
+			return;
+		case PowerE:
+			return;
+		case MulE:
+			return;
+		case DivE:
+			return;
+		case PlusE:
+			return;
+		case MinusE:
+			return;
+		case EqualsE:
+			return;
+		case NotEqualE:
+			return;
+		case LessE:
+			return;
+		case GreaterE:
+			return;
+		case LessOrEqualE:
+			return;
+		case GreaterOrEqualE:
+			return;
+		case AndE:
+			return;
+		case AndThenE:
+			return;
+		case OrE:
+			return;
+		case OrElseE:
+			return;
+		case XORE:
+			return;
+		case ImpliesE:
+			return;
+	}
+}

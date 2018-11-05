@@ -4,7 +4,9 @@
 	
 /* более подробные собщения об ошибках */
 #define YYERROR_VERBOSE 1
-	
+
+void yyerror (char const *s);	
+
 // Флаг для управления контекстом Flex`а
 int global_LF_enabled = false;
 

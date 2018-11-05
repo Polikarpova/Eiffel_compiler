@@ -1,4 +1,4 @@
-<locale.h>
+#include <locale.h>
 #include <string>
 #include "print2dot.h"
 

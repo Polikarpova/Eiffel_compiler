@@ -19,7 +19,7 @@ feature {APPLICATION}
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
 		do
-			REsult := 3.14159
+			REsult := "meow"
 		end
 feature
 	attr2 : REAL

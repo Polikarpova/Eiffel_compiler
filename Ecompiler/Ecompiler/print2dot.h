@@ -12,4 +12,6 @@ void clients2dot(FILE *f, struct NIdList* List);
 void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List);
 void inheritFromClass2dot(FILE *f, int *min_id, struct NInheritFromClass* N);
 void NStmt2dot(FILE *f, int *min_id, struct NStmt* N);
+void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N);
+void NExpr2dot(FILE *f, int *min_id, struct NExpr* N);
 
