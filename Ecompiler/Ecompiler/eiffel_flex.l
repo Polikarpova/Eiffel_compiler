@@ -19,7 +19,6 @@ ID				[a-z][_a-z0-9]*
 
 TRUE			true
 FALSE			false
-VOID 			void
 WHITESPACE		[ \t\r]
 LF				[\n]
 
@@ -70,7 +69,7 @@ EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 
 "--"								{ BEGIN(SINGLE_LINE_COMMENT); }
 <SINGLE_LINE_COMMENT>[^\n]			/* skip */
-<SINGLE_LINE_COMMENT>\n				{ printf("Found a comment\n"); BEGIN(INITIAL);}
+<SINGLE_LINE_COMMENT>\n				{ printf("Found a comment at line %d\n",yylineno); BEGIN(INITIAL);}
 
 ":="					{ return ASSIGN;}
 "="						{ return EQUALS;}
@@ -132,7 +131,6 @@ or{WHITESPACE}+else 	{ return OR_ELSE;}
 
 {TRUE}					{ yylval.Bool = true; return BOOL_VAL;}
 {FALSE}					{ yylval.Bool = false; return BOOL_VAL;}
-{VOID}					{ printf("Found null-value \"%s\" in line %d\n", "<void>", yylineno); }
 {ID}					{ yylval.String=(char *)malloc(strlen(yytext)+1); strcpy(yylval.String, yytext); return ID;}
 
 {EXPONENT}				{ yylval.Real = parse_real(yytext); return REAL_VAL;}
