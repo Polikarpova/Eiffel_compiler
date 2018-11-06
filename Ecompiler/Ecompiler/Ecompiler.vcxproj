@@ -136,7 +136,8 @@
     <Bison Include="eiffel_bison.y">
       <Verbose Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</Verbose>
       <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).tab.cpp</OutputFile>
-      <Warnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">error</Warnings>
+      <Warnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Warnings>
     </Bison>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
