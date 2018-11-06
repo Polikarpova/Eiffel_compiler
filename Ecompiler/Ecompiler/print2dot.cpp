@@ -212,7 +212,7 @@ void NStmtList2dot(FILE *f, int *min_id, struct NStmtList* List)
 	int self_id = *min_id;
 	// node
 
-	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "DO..END" );
+	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "<Block>" );
 		
 	if ( List->first && List->last)
 	{
@@ -257,13 +257,15 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 	switch(N->type) // enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
 	{
 		case CreateSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "CreateSt" );
+			fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", (*min_id), "Create" );
+			fprintf(f, "%d -> %d [label=\"%s\"]; \n", (*min_id), ++(*min_id), "" );
+			ref2dot(f, min_id, N->body.ref);
 			return;
 		case AssignSt:
 			NAssignStmt2dot(f, min_id, N->body.assign);
 			return;
 		case RefSt:
-			fprintf(f, "%d [label=\"`%s`\"];", *min_id, "RefSt" );
+			ref2dot(f, min_id, N->body.ref);
 			return;
 		case IfSt:
 			NIfStmt2dot(f, min_id, N->body.ifStmt);
@@ -278,12 +280,11 @@ void NAssignStmt2dot(FILE *f, int *min_id, struct NAssignStmt* N)
 {
 	int self_id = *min_id;
 
-	fprintf(f, "%d [label=\"`%s`\"];", self_id, "AssignStmt" );
+	fprintf(f, "%d [label=\"`%s`\"];", self_id, "L := R" );
 
 	//NRef
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
-	//----------------------- NRef
-	fprintf(f, "%d [label=\"`%s`\"];", *min_id, "NRef :D" );	//затычка
+	ref2dot(f, min_id, N->left);
 
 	//NExpr
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );	//присоединяемый узел описывается внутри функции NExpr2dot
@@ -306,9 +307,7 @@ void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
 			constantExpr2dot(f, self_id, N, shape);
 			return;
 		case RefE:
-			//затычка
-			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "NRef :D", shape );
-			//функция обработки NRef
+			ref2dot(f, min_id, N->value.ref);
 			return;
 		case NotE:
 		case UPlusE:
@@ -544,7 +543,7 @@ void loopFrom2dot(FILE *f, int *min_id, struct NStmtList* N)
 
 	fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", self_id, "FROM" );
 
-	if (N->first && N->last) {
+	if (N && N->first && N->last) {
 		
 		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "start cond" );
 		NStmtList2dot(f, min_id, N);
@@ -572,3 +571,81 @@ void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N)
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
 	NStmtList2dot(f, min_id, N);
 }
+
+void access2dot(FILE *f, int *min_id, struct NAccess* N)
+{
+	int self_id = *min_id;
+	char * caption;
+	
+	switch(N->type)
+	{
+		case IdA:
+			caption = "Access:ID";
+			break;
+		case ResultA:
+			caption = "A.:Result";
+			break;
+		case CurrentA:
+			caption = "A.:Current";
+			break;
+		case PrecursorA:
+			caption = "A.:Precursor";
+			break;
+	}
+
+	fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, caption, "oval" );
+	
+	if(N->id)
+	{
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "id" );
+		id2dot(f,min_id,N->id);
+	}
+	if(N->params && N->params->first && N->params->last)
+	{
+		fprintf(f, "%d -> %d [label=\"%s\"]; \n", self_id, ++(*min_id), "" );
+		int child_id = *min_id;
+		fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", child_id, "params" );
+		int count = 0;
+		// iterate params
+		for(struct NExpr* i = N->params->first ;  ; i = i->next, ++count )
+		{
+			// counting edges
+			fprintf(f, "%d -> %d [label=%d style=solid]; \n", child_id, ++(*min_id), count );
+			NExpr2dot(f, min_id, i);
+			if(i == N->params->last) break;
+		}
+	}
+}
+
+void ref2dot(FILE *f, int *min_id, struct NRef* N)
+{
+	int self_id = *min_id;
+	
+	if( ! N->qualification && N->access && ! N->index )
+	{
+		fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "<Ref.>", "oval" );
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "access" );
+		access2dot(f,min_id,N->access);
+	}
+	else if( N->qualification && N->access && ! N->index )
+	{
+		fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "left.right", "oval" );
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
+		ref2dot(f,min_id,N->qualification);
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );
+		access2dot(f,min_id,N->access);
+	}
+	else if( N->qualification && ! N->access && N->index )
+	{
+		fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "A[i]", "oval" );
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "A" );
+		ref2dot(f,min_id,N->qualification);
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "i" );
+		NExpr2dot(f,min_id,N->index);
+	}
+	else
+	{
+	fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "}Invalid Ref{", "oval" );
+	}
+}
+
