@@ -91,7 +91,6 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %type <type_struct> type_mark
 %type <expr_struct> expr
 %type <expr_list_struct> expr_list
-%type <expr_list_struct> expr_list_opt
 %type <assign_stmt_struct> assign_stmt
 %type <if_stmt_struct> if_stmt
 %type <then_part_list_struct> then_part_list
@@ -197,14 +196,14 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 
 
 access: ID		{$$=createAccess(IdA, $1, 0);}
-| 		ID '(' expr_list_opt ')' {$$=createAccess(IdA, $1, $3);}
+| 		ID '(' expr_list ')' {$$=createAccess(IdA, $1, $3);}
 		/* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
 | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
-|		PRECURSOR '(' expr_list_opt ')' {$$=createAccess(PrecursorA, 0, $3);}
+|		PRECURSOR '(' expr_list ')' {$$=createAccess(PrecursorA, 0, $3);}
 |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
-|		PRECURSOR '{' ID '}' '(' expr_list_opt ')' {$$=createAccess(PrecursorA, $3, $6);}
+|		PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createAccess(PrecursorA, $3, $6);}
 
 ;
 
@@ -283,10 +282,6 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 
 expr_list: expr			{$$=createExprList($1);}
 | expr_list ',' expr 	{$$=addToExprList($1, $3);}
-;
-
-expr_list_opt: expr_list	{$$=($1);}
-| /*empty*/				{$$=createExprList(0);}
 ;
 
 assign_stmt: ref ASSIGN expr {$$=createAssignStmt($1, $3);}
