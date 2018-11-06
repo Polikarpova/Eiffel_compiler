@@ -15,7 +15,7 @@ feature {APPLICATION}
 		do
 			print("I'm born")
 		end
-	meth1(): REAL
+	meth1(): REAL -- possibly wrong (TODO: check)
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
 		i: INTEGER
@@ -23,16 +23,16 @@ feature {APPLICATION}
 		do
 			--REsult := 2*(2+2)
 			
-			create arr.make_filled(4);
+			create arr.make(0,4);
 			
 			from
 				i := 1
 			until
-				i != 5
+				i /= 5
 			loop
 			
-				Io.put_integer(arr[i]);
-				i := i + 1;
+				Io.put_integer(arr[i]);	i := i + 1
+				--meth1 -- must cause an error
 			end
 			
 			
