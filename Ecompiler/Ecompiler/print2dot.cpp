@@ -258,7 +258,8 @@ void NStmt2dot(FILE *f, int *min_id, struct NStmt* N)
 	{
 		case CreateSt:
 			fprintf(f, "%d [label=\"%s\" shape=invhouse]; \n", (*min_id), "Create" );
-			fprintf(f, "%d -> %d [label=\"%s\"]; \n", (*min_id), ++(*min_id), "" );
+			fprintf(f, "%d -> %d [label=\"%s\"]; \n", (*min_id), (*min_id)+1, "" );
+			++(*min_id);
 			ref2dot(f, min_id, N->body.ref);
 			return;
 		case AssignSt:
