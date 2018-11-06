@@ -14,6 +14,7 @@ feature {APPLICATION}
 	make(age:INTEGER;weight:Real)
 		do
 			print("I'm born")
+			Precursor{B}
 		end
 	meth1(): REAL -- possibly wrong (TODO: check)
 		LOCAL myLoc:STRING
