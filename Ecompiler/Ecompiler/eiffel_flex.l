@@ -73,8 +73,7 @@ EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
 <SINGLE_QUOTED_CHAR,DOUBLE_QUOTED_STRING><<EOF>>	{ printf("Unterminated string or char literal at line %d\n", yylineno);  BEGIN(INITIAL);}
 
 "--"								{ BEGIN(SINGLE_LINE_COMMENT); }
-<SINGLE_LINE_COMMENT>[^\n]			/* skip */
-<SINGLE_LINE_COMMENT>\n				{ printf("Found a comment at line %d\n",yylineno); BEGIN(INITIAL);}
+<SINGLE_LINE_COMMENT>[^\n]*$		{ printf("Found a comment at line %d\n",yylineno); BEGIN(INITIAL);}
 
 ":="					{ return ASSIGN;}
 "="						{ return EQUALS;}

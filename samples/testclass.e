@@ -31,7 +31,7 @@ feature {APPLICATION}
 				i /= 5
 			loop
 			
-				Io.put_integer(arr[i]);	i := i + 1
+				Io.put_integer(arr[i]);	i := i + 1;;;
 				meth1() -- must cause an error
 			end
 			

@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		printf("tree was not created.\n");
+		printf("tree was not viewed.\n");
 
 		printf("Error log:\n");
 		for( int i=0 ; i<syntax_errors_logged ; ++i )
