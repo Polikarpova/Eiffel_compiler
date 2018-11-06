@@ -367,23 +367,25 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 %%
 /* —екци€ пользовательского кода */
 
-void yyerror (char const *s)
+void yyerror (const char *s)
 {
-  // fprintf (stderr, "%s\n", s);
-	if(syntax_errors_logged < MAX_SYNTAX_ERRORS-1)
-	{
-		syntax_errors[syntax_errors_logged++] = s;
-	}
-	else if(syntax_errors_logged >= MAX_SYNTAX_ERRORS)
+	printf ("BISON near line %d: %s\n", yylloc.first_line, s);
+	if(syntax_errors_logged >= MAX_SYNTAX_ERRORS)
 	{
 		return;
 	}
-	else
+	else if(syntax_errors_logged >= MAX_SYNTAX_ERRORS-1)
 	{
 		char too_namy_errors [] = "Cannot recover from errors, abort compilation";
-		syntax_errors[syntax_errors_logged++] = strcpy((char*)malloc(strlen(too_namy_errors)+1), too_namy_errors);
-		// YYABORT;
+		s = too_namy_errors;
+		printf ("BISON: %s\n", s);
 	}
+	// append allocated string to array
+	syntax_errors[syntax_errors_logged] = (char*)malloc(strlen(s)+1);
+	strcpy(syntax_errors[syntax_errors_logged], s);
+	++syntax_errors_logged;
+
+	// YYABORT;
 }
 
 // переменные, глобальные дл€ анализатора

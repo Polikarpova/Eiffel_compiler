@@ -8,6 +8,11 @@
 	#include "lexHelpers.h"
 	#include "eiffel_bison.tab.h"
 
+/* write line numbers to bison`s yylloc */ 
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; 
+/* \ yylloc.first_column = yylloc.last_column = yylineno; */
+	
+extern YYLTYPE yylloc;
 extern int global_LF_enabled;
 %}
 

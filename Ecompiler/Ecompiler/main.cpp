@@ -8,6 +8,12 @@ extern FILE *yyin;
 extern int yyparse();
 extern struct NClassList* root;
 
+/* < Error handling > */
+extern char** syntax_errors;
+extern int syntax_errors_logged;
+/* </ Error handling > */
+
+
 // test
 #include "bisontest.h"
 
@@ -40,7 +46,7 @@ int main(int argc, char *argv[])
 
 	printf("ROOT: %p\n", root);
 
-	if(root)
+	if(root && syntax_errors_logged == 0)
 	{
 		print2dot("tree.dot", root);
 		printf("see picture\n");
@@ -50,6 +56,14 @@ int main(int argc, char *argv[])
 	else
 	{
 		printf("tree was not created.\n");
+
+		printf("Error log:\n");
+		for( int i=0 ; i<syntax_errors_logged ; ++i )
+		{
+			//printf("%d: %s\n",i,syntax_errors[i]);
+			printf("%2d: ",i);
+			printf("%s\n", "[error in printf()]");  // syntax_errors[i]);
+		}
 	}
 
 	// `hit any key ...`
@@ -59,6 +73,5 @@ int main(int argc, char *argv[])
 /* TODO
 	- export tree to DOT
 	+ capture INHERIT clauses in classes (add to bison rules & structures)
-	+ refactor NRef as hierarchy of '.' operations not as RefList (as is now)
 	-~ test parsing empty class, empty features, etc
 */
