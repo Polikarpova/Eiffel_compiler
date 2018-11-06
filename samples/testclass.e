@@ -34,6 +34,7 @@ feature {APPLICATION}
 			
 				Io.put_integer(arr[i]);	i := i + 1;
 				--meth1() -- must cause an error
+				arr[i][n(x)][4].call(arr[y],125)
 			end
 			
 			
