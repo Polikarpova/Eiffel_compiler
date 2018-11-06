@@ -138,7 +138,7 @@ struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* p
 	struct NAccess* Result = (struct NAccess*) malloc(sizeof (struct NAccess));
 
 	Result->type = type;
-	Result->id = createId(id);
+	Result->id = (id)? createId(id) : NULL;
 	Result->params = params;
 
 	return Result;
