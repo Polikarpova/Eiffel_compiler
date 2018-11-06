@@ -21,6 +21,7 @@ feature {APPLICATION}
 		i: INTEGER
 		arr: ARRAY[INTEGER]
 		do
+			--make
 			--REsult := 2*(2+2)
 			
 			create arr.make(0,4);
@@ -31,8 +32,8 @@ feature {APPLICATION}
 				i /= 5
 			loop
 			
-				Io.put_integer(arr[i]);	i := i + 1;;;
-				meth1() -- must cause an error
+				Io.put_integer(arr[i]);	i := i + 1;
+				--meth1() -- must cause an error
 			end
 			
 			
