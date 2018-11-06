@@ -14,7 +14,7 @@ extern struct NClassList* root;
 
 int main(int argc, char *argv[])
 {
-	if(true)
+	if(false)
 	{
 		BisonTest testClass(0);
 		QTest::qExec(&testClass);
@@ -43,13 +43,17 @@ int main(int argc, char *argv[])
 	if(root)
 	{
 		print2dot("tree.dot", root);
-		execlpe("cmd", "/c", "run_dot.bat", "", 0,0,0);
 		printf("see picture\n");
+		// run dot & kill current process
+		execlpe("cmd", "/c", "run_dot.bat", "", 0,0,0);
 	}
 	else
 	{
 		printf("tree was not created.\n");
 	}
+
+	// `hit any key ...`
+	system("pause");
 }
 
 /* TODO
