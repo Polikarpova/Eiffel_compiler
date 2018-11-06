@@ -133,24 +133,6 @@ struct NRef* createRef(struct NRef* qualification, struct NAccess* access, struc
 	return Result;
 }
 
-// struct NRefChain* createRefChain(struct NRef* ref)
-// {
-	// struct NRefChain* Result = (struct NRefChain*) malloc(sizeof (struct NRefChain));
-
-	// Result->first = ref;
-	// Result->last = ref;
-
-	// return Result;
-// }
-
-// struct NRefChain* addToRefChain(struct NRefChain* chain, struct NRef* ref)
-// {
-	// chain->last->next = ref;
-	// chain->last = ref;
-
-	// return chain;
-// }
-
 struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params)
 {
 	struct NAccess* Result = (struct NAccess*) malloc(sizeof (struct NAccess));
@@ -347,6 +329,9 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 }
 struct NStmtList* createStmtList(struct NStmt* elem)
 {
+	if(!elem) // drop error stmt
+		return NULL;
+	
 	ALLOCATE_POINTER_AS(Result, struct NStmtList)
 
 	Result->first = elem;
@@ -356,9 +341,13 @@ struct NStmtList* createStmtList(struct NStmt* elem)
 }
 struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem)
 {
-	list->last->next = elem;
-	list->last = elem;
-
+	if(!list) // recover list
+		return createStmtList(elem);
+	if(elem) // drop error stmt
+	{
+		list->last->next = elem;
+		list->last = elem;
+	}
 	return list;
 }
 

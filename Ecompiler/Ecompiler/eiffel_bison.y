@@ -228,11 +228,12 @@ stmt: CREATE _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
 | _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
 | if_stmt			{$$=createStmt(IfSt,$1);}
 | from_loop			{$$=createStmt(LoopSt,$1);}
-| error				{}
+| error				{$$=0;}
 ;
 
 stmt_list: stmt 	{$$=createStmtList($1);}
 | stmt_list stmt 	{$$=addToStmtList($1, $2);}
+| stmt_list error 	{$$=$1;}
 ;
 
 stmt_list_opt: /*empty*/	{$$=createStmtList(0);}
