@@ -224,9 +224,9 @@ stmt_sep: ';'
 | stmt_sep LF
 ;
 
-stmt: CREATE ref _LF_ON_ stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$2);}
-| assign_stmt _LF_ON_ stmt_sep _LF_OFF_		{$$=createStmt(AssignSt,$1);}
-| ref _LF_ON_ stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$1);}
+stmt: CREATE _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
+| _LF_ON_ assign_stmt stmt_sep _LF_OFF_		{$$=createStmt(AssignSt,$2);}
+| _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
 | if_stmt			{$$=createStmt(IfSt,$1);}
 | from_loop			{$$=createStmt(LoopSt,$1);}
 | error				{}

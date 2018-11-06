@@ -32,7 +32,7 @@ feature {APPLICATION}
 			loop
 			
 				Io.put_integer(arr[i]);	i := i + 1
-				--meth1 -- must cause an error
+				meth1() -- must cause an error
 			end
 			
 			
@@ -41,7 +41,7 @@ feature {APPLICATION}
 			elseif i = 4^2 then
 				Result := "hmm"
 			else
-				Resul := true
+				Result := true
 			end
 			
 			from
