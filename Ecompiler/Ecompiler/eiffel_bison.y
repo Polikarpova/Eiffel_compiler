@@ -1,13 +1,13 @@
 %{
-/*РџСЂРѕР»РѕРі*/
+/*Пролог*/
 #include "bisonFunctions.h"
 	
-/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
+/* более подробные собщения об ошибках */
 #define YYERROR_VERBOSE 1
 
 void yyerror (char const *s);	
 
-// Р¤Р»Р°Рі РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРј Flex`Р°
+// Флаг для управления контекстом Flex`а
 int global_LF_enabled = false;
 
 extern int yylex();
@@ -17,9 +17,9 @@ struct NClassList* root;
 /* < Error handling > */
 #define MAX_SYNTAX_ERRORS 20
 
-const char* syntax_errors[MAX_SYNTAX_ERRORS];
+char* syntax_errors[MAX_SYNTAX_ERRORS];
 int syntax_errors_logged = 0;
-void yyerror (char const *s); //  СЃРј. РЅРёР¶Рµ: РЎРµРєС†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРґР°
+void yyerror (const char *s); //  см. ниже: Секция пользовательского кода
 
 /* </ Error handling > */
 
@@ -38,7 +38,7 @@ char Char;
 char* String;
 bool Bool;
 
-/*СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ СѓР·Р»РѕРІ*/
+/*структуры для узлов*/
 struct NId* id_struct;
 struct NIdList* id_list_struct;
 struct NExpr* expr_struct;
@@ -66,7 +66,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 // struct * _struct;
 }
 
-/*РЅРµС‚РµСЂРјРёРЅР°Р»С‹*/
+/*нетерминалы*/
 %start program
 %type <class_list_struct> class_list
 %type <class_struct> class
@@ -113,7 +113,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 /* %type <> error_token */
 
 
-/* Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Рµ СЃРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєР°С… */
+/* более подробные собщения об ошибках */
 %define parse.error verbose
 
 %token <Int> INT_VAL
@@ -198,9 +198,9 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 
 access: ID		{$$=createAccess(IdA, $1, 0);}
 | 		ID '(' expr_list_opt ')' {$$=createAccess(IdA, $1, $3);}
-		/* СЃР»РµРґСѓСЋС‰РёРµ РЅРµР»СЊР·СЏ РІС‹Р·С‹РІР°С‚СЊ С‡РµСЂРµР· С‚РѕС‡РєСѓ (Obj.CURRENT РЅРµРїСЂР°РІРёР»СЊРЅРѕ): */
+		/* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
 | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // РЅРµР»СЊР·СЏ СЃРѕС‡РµС‚Р°С‚СЊ: CURRENT '[' <i> ']'
+| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
 |		PRECURSOR '(' expr_list_opt ')' {$$=createAccess(PrecursorA, 0, $3);}
 |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
@@ -224,11 +224,12 @@ stmt_sep: ';'
 | stmt_sep LF
 ;
 
-stmt: _LF_ON_ CREATE ref stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
-| _LF_ON_ assign_stmt _LF_OFF_		{$$=createStmt(AssignSt,$2);}
-| _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
+stmt: CREATE ref _LF_ON_ stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$2);}
+| assign_stmt _LF_ON_ stmt_sep _LF_OFF_		{$$=createStmt(AssignSt,$1);}
+| ref _LF_ON_ stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$1);}
 | if_stmt			{$$=createStmt(IfSt,$1);}
 | from_loop			{$$=createStmt(LoopSt,$1);}
+| error				{}
 ;
 
 stmt_list: stmt 	{$$=createStmtList($1);}
@@ -288,7 +289,7 @@ expr_list_opt: expr_list	{$$=($1);}
 | /*empty*/				{$$=createExprList(0);}
 ;
 
-assign_stmt: ref ASSIGN expr stmt_sep {$$=createAssignStmt($1, $3);}
+assign_stmt: ref ASSIGN expr {$$=createAssignStmt($1, $3);}
 ;
 
 
@@ -364,7 +365,7 @@ error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
 		   ;
 */
 %%
-/* РЎРµРєС†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРґР° */
+/* Секция пользовательского кода */
 
 void yyerror (char const *s)
 {
@@ -385,7 +386,7 @@ void yyerror (char const *s)
 	}
 }
 
-// РїРµСЂРµРјРµРЅРЅС‹Рµ, РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР»СЏ Р°РЅР°Р»РёР·Р°С‚РѕСЂР°
+// переменные, глобальные для анализатора
 // struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
 // struct NType* currentType;
