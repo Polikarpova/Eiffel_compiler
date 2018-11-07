@@ -120,8 +120,6 @@ or{WHITESPACE}+else 	{ return OR_ELSE;}
 "loop" 					{ return LOOP;}
 "create" 				{ return CREATE;}
 "feature" 				{ return FEATURE;}
-"Result" 				{ return RESULT;}
-"Current" 				{ return CURRENT;}
 "Precursor" 			{ return PRECURSOR;}
 "inherit" 				{ return INHERIT;}
 "redefine" 				{ return REDEFINE;}

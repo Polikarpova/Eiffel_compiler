@@ -197,8 +197,8 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 access: ID		{$$=createAccess(IdA, $1, 0);}
 | 		ID '(' expr_list ')' {$$=createAccess(IdA, $1, $3);}
 		/* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
-| 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-| 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
+// | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
+// | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
 |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
 |		PRECURSOR '(' expr_list ')' {$$=createAccess(PrecursorA, 0, $3);}
 |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
