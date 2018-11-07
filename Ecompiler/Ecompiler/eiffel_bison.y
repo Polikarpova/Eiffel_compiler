@@ -126,7 +126,6 @@ struct NInheritFromClassList* inherit_class_list_struct;
 
 
 %left ';' LF
-%left '[' ']'
 %left IMPLIES
 %left OR OR_ELSE XOR
 %left AND AND_THEN
@@ -135,7 +134,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %left '*' '/'
 %left '^'
 %left NOT UPLUS UMINUS
-%left '.'
+%left '.' '[' ']'
 %nonassoc ')'
 
 %%

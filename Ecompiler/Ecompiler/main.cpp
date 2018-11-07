@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
 	//char[] infile = "test.e";
 	//char infile[] = "../../samples/sample.e";
 	//char infile[] = "../../samples/class_creation.e";
-	char infile[] = "../../samples/testclass.e";
+	////char infile[] = "../../samples/testclass.e";
+	char infile[] = "../../samples/chain.e";
 	yyin = fopen(infile, "r");
 
 	int parse_result = yyparse();
@@ -71,7 +72,24 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	- export tree to DOT
-	+ capture INHERIT clauses in classes (add to bison rules & structures)
+	+~ export tree to DOT
 	-~ test parsing empty class, empty features, etc
 */
+
+/* Statements:
+
+	CREATE <create_call>
+	<left_value> := <expr>
+	<method_call>
+	
+	Rules:
+	
+	expr : method_call
+	...
+	method_call : expr '.' ID
+	method_call : expr '.' ID '(' expr_list ')'
+	
+	create_call : ID '.' ID
+	create_call : ID '.' ID '(' expr_list ')'
+*/
+
