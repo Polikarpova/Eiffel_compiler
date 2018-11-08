@@ -47,8 +47,9 @@ struct NExpr* createStringConstExpr (char* token)
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
 	Result->type = StringE;
-	Result->value.String=(char *)malloc(strlen(token)+1);
-	strcpy(Result->value.String, token);
+	// Result->value.String=(char *)malloc(strlen(token)+1);
+	// strcpy(Result->value.String, token);
+	Result->value.String=token; // allocated already
 
 	Result->left = NULL;
 	Result->right = NULL;
@@ -69,12 +70,38 @@ struct NExpr* createBoolConstExpr (bool token)
 	return Result;
 }
 
-struct NExpr* createRefExpr (struct NRef* ref)
+struct NExpr* createIdExpr (struct NId* Id)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
-	Result->type = RefE;
-	Result->value.ref = ref;
+	Result->type = IdE;
+	Result->value.Id = Id;
+
+	Result->left = NULL;
+	Result->right = NULL;
+	Result->next = NULL;
+	return Result;
+}
+
+struct NExpr* createCallExpr (struct NExpr* left, struct NExprList* ExprList)
+{
+	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+		
+	Result->type = CallE;
+	Result->value.ExprList = ExprList;
+
+	Result->left = left;
+	Result->right = NULL;
+	Result->next = NULL;
+	return Result;
+}
+
+struct NExpr* createPrecursorExpr (struct NId* Id_opt)
+{
+	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+		
+	Result->type = PrecursorE;
+	Result->value.Id = Id_opt;
 
 	Result->left = NULL;
 	Result->right = NULL;
@@ -112,7 +139,7 @@ struct NExprList* addToExprList (struct NExprList* list, struct NExpr* expr)
 	return list;
 }
 
-struct NAssignStmt* createAssignStmt(struct NRef* left, struct NExpr* expr)
+struct NAssignStmt* createAssignStmt(struct NExpr* left, struct NExpr* expr)
 {
 	struct NAssignStmt* Result = (struct NAssignStmt*) malloc(sizeof (struct NAssignStmt));
 
@@ -122,27 +149,27 @@ struct NAssignStmt* createAssignStmt(struct NRef* left, struct NExpr* expr)
 	return Result;
 }
 
-struct NRef* createRef(struct NRef* qualification, struct NAccess* access, struct NExpr* index)
-{
-	struct NRef* Result = (struct NRef*) malloc(sizeof (struct NRef));
+// struct NRef* createRef(struct NRef* qualification, struct NAccess* access, struct NExpr* index)
+// {
+	// struct NRef* Result = (struct NRef*) malloc(sizeof (struct NRef));
 
-	Result->qualification = qualification;
-	Result->access = access;
-	Result->index = index;
+	// Result->qualification = qualification;
+	// Result->access = access;
+	// Result->index = index;
 
-	return Result;
-}
+	// return Result;
+// }
 
-struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params)
-{
-	struct NAccess* Result = (struct NAccess*) malloc(sizeof (struct NAccess));
+// struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params)
+// {
+	// struct NAccess* Result = (struct NAccess*) malloc(sizeof (struct NAccess));
 
-	Result->type = type;
-	Result->id = (id)? createId(id) : NULL;
-	Result->params = params;
+	// Result->type = type;
+	// Result->id = (id)? createId(id) : NULL;
+	// Result->params = params;
 
-	return Result;
-}
+	// return Result;
+// }
 
 struct NId* createId(char* id)
 {
@@ -314,8 +341,8 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 	switch(type)
 	{
 	case CreateSt:
-	case RefSt:
-		Result->body.ref    = (struct NRef*) body; break;
+	case ExprSt:
+		Result->body.expr    = (struct NExpr*) body; break;
 	case AssignSt:
 		Result->body.assign = (struct NAssignStmt*) body; break;
 	case IfSt:

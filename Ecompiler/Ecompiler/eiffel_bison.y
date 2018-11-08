@@ -43,8 +43,8 @@ struct NId* id_struct;
 struct NIdList* id_list_struct;
 struct NExpr* expr_struct;
 struct NExprList* expr_list_struct;
-struct NAccess* access_struct;
-struct NRef* ref_struct;
+// struct NAccess* access_struct;
+// struct NRef* ref_struct;
 struct NStmt* stmt_struct;
 struct NStmtList* stmt_list_struct;
 struct NType* type_struct;
@@ -82,8 +82,8 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %type <feature_list_struct> feature_clauses_opt
 %type <feature_list_struct> feature_declaration_list
 %type <feature_list_struct> attributes
-%type <access_struct> access
-%type <ref_struct> ref
+// %type <access_struct> access
+// %type <ref_struct> ref
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
 %type <stmt_list_struct> stmt_list_opt
@@ -121,7 +121,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %token <String> STRING_VAL
 %token <Bool> BOOL_VAL
 %token <String> ID
-%token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE RESULT CURRENT PRECURSOR INHERIT REDEFINE
+%token ASSIGN IF LOCAL DO END ELSEIF THEN ELSE CLASS FROM UNTIL LOOP CREATE FEATURE PRECURSOR INHERIT REDEFINE
 %token ARRAY INTEGER REAL CHARACTER STRING BOOLEAN
 
 
@@ -194,22 +194,22 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 
 
 
-access: ID		{$$=createAccess(IdA, $1, 0);}
-| 		ID '(' expr_list ')' {$$=createAccess(IdA, $1, $3);}
-		/* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
-// | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-// | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
-|		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
-|		PRECURSOR '(' expr_list ')' {$$=createAccess(PrecursorA, 0, $3);}
-|		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
-|		PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createAccess(PrecursorA, $3, $6);}
+// access: ID		{$$=createAccess(IdA, $1, 0);}
+// | 		ID '(' expr_list ')' {$$=createAccess(IdA, $1, $3);}
+		// /* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
+// // | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
+// // | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
+// |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
+// |		PRECURSOR '(' expr_list ')' {$$=createAccess(PrecursorA, 0, $3);}
+// |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
+// |		PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createAccess(PrecursorA, $3, $6);}
 
-;
+// ;
 
-ref: access				{$$=createRef(0,$1,0);}
-| ref '.' access		{$$=createRef($1,$3,0);}
-| ref '[' expr ']' 		{$$=createRef($1,0,$3);}
-;
+// ref: access				{$$=createRef(0,$1,0);}
+// | ref '.' access		{$$=createRef($1,$3,0);}
+// | ref '[' expr ']' 		{$$=createRef($1,0,$3);}
+// ;
 
 /* actions only */
 _LF_ON_:  { global_LF_enabled = true; }
@@ -222,15 +222,15 @@ stmt_sep: ';'
 | stmt_sep LF
 ;
 
-stmt: CREATE _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
+stmt: CREATE _LF_ON_ expr stmt_sep _LF_OFF_	{$$=createStmt(CreateSt,$3);}
 | _LF_ON_ assign_stmt stmt_sep _LF_OFF_		{$$=createStmt(AssignSt,$2);}
-| _LF_ON_ ref stmt_sep _LF_OFF_	{$$=createStmt(RefSt,$2);}
+| _LF_ON_ expr stmt_sep _LF_OFF_	{$$=createStmt(ExprSt,$2);}
 | if_stmt			{$$=createStmt(IfSt,$1);}
 | from_loop			{$$=createStmt(LoopSt,$1);}
-| error				{$$=0;}
 ;
 
-stmt_list: stmt 	{$$=createStmtList($1);}
+stmt_list: error 	{$$=createStmtList(0);}
+| stmt				{$$=createStmtList($1);}
 | stmt_list stmt 	{$$=addToStmtList($1, $2);}
 | stmt_list error 	{$$=$1;}
 ;
@@ -251,16 +251,20 @@ type: ID		{$$=createType(ClassV,$1);}
 type_mark: ':' type	{$$=$2;}
 ;
 
-expr: INT_VAL	{$$=createIntConstExpr($1);}
+expr:
+	/* Terminals */
+  INT_VAL	{$$=createIntConstExpr($1);}
 | REAL_VAL		{$$=createRealConstExpr($1);}
 | CHAR_VAL		{$$=createCharConstExpr($1);}
 | STRING_VAL	{$$=createStringConstExpr($1);}
 | BOOL_VAL		{$$=createBoolConstExpr($1);}
-| ref			{$$=createRefExpr($1); }
-| '(' expr ')'	{$$=$2;}
+	/* Grouping */
+| '(' expr ')' %prec CALL_BRACE	{$$=$2;}
+	/* Unary */
 | NOT expr		{$$=createExpr(NotE,$2,0);}
 | '+' expr %prec UPLUS	{$$=createExpr(UPlusE,$2,0);}
 | '-' expr %prec UMINUS	{$$=createExpr(UMinusE,$2,0);}
+	/* Binary */
 | expr '^' expr	{$$=createExpr(PowerE,$1,$3);}
 | expr '*' expr	{$$=createExpr(MulE,$1,$3);}	
 | expr '/' expr	{$$=createExpr(DivE,$1,$3);}
@@ -278,13 +282,25 @@ expr: INT_VAL	{$$=createIntConstExpr($1);}
 | expr OR_ELSE expr	{$$=createExpr(OrElseE,$1,$3);}
 | expr XOR expr	{$$=createExpr(XORE,$1,$3);}
 | expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
+	/* Chains */
+| expr '.' expr 	{$$=createExpr(QualificationE,$1,$3);}
+| expr '[' expr ']' 	{$$=createExpr(SubscriptE,$1,$3);}
+	/* IDs (locals, features) & calls */
+| ID			{$$=createIdExpr(createId($1));}
+| expr '(' expr_list ')' {$$=createCallExpr($1, $3);}
+
+| PRECURSOR		{$$=createPrecursorExpr(0);}
+// | PRECURSOR '(' expr_list ')' {$$=createCallExpr(createPrecursorExpr(0), $3);}
+| PRECURSOR '{' ID '}'{$$=createPrecursorExpr(createId($3));}
+// | PRECURSOR '{' ID '}' '(' expr_list ')' %prec CALL_BRACE {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
+
 ;
 
 expr_list: expr			{$$=createExprList($1);}
 | expr_list ',' expr 	{$$=addToExprList($1, $3);}
 ;
 
-assign_stmt: ref ASSIGN expr {$$=createAssignStmt($1, $3);}
+assign_stmt: expr ASSIGN expr {$$=createAssignStmt($1, $3);}
 ;
 
 

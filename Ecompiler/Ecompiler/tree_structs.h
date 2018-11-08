@@ -8,9 +8,9 @@ struct NIdList;
 // enum ExprType;
 struct NExpr;
 struct NExprList;
-struct NAccess;
+// struct NAccess;
+// struct NRef;
 struct NClassList;
-struct NRef;
 struct NStmt;
 struct NStmtList;
 struct NType;
@@ -48,12 +48,25 @@ struct NIdList
 	struct NId* last;
 };	
 
-enum ExprType {IntE, RealE, CharE, StringE, BoolE, RefE, NotE, UPlusE, UMinusE, PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE};
+enum ExprType
+{
+	/* Terminals */
+	IntE, RealE, CharE, StringE, BoolE,
+	/* Unary */
+	NotE, UPlusE, UMinusE,
+	/* Binary */
+	PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE,
+	/* IDs & calls */
+	IdE,  		// uses {value.Id}
+	CallE, 		// uses {left,value.ExprList}
+	PrecursorE, // uses {value.Id | NULL}
+	/* Chains */
+	QualificationE, SubscriptE};
 
 /* Expr - выражение */
 struct NExpr
 {
-	enum ExprType type; // RefE если ref не NULL
+	enum ExprType type;
 	union {
 		int Int;
 		double Real;
@@ -61,7 +74,9 @@ struct NExpr
 		char* String;
 		bool Bool; // boolean
 		
-		struct NRef* ref; // NULL если не обращение к feature (type не RefE)
+		struct NId* Id; 
+		struct NExprList* ExprList;  // дл€ CallE
+
 	} value;
 	
 	struct NExpr* left;
@@ -75,32 +90,32 @@ struct NExprList
 	struct NExpr* last;
 };
 
-enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
+// enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
 
-/* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
-struct NAccess
-{
-	enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объ€влени€ bison) */
-	struct NId* id;	 /* идентификатор или класс в конструкции PRECURSOR{ <base> } */
-	struct NExprList* params; /* об€зательно с PRECURSOR, разрешено с ID. NULL если отсутствуют (NULL об€зательно с RESULT, CURRENT) */
-};
+// /* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
+// struct NAccess
+// {
+	// enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объ€влени€ bison) */
+	// struct NId* id;	 /* идентификатор или класс в конструкции PRECURSOR{ <base> } */
+	// struct NExprList* params; /* Ќ≈об€зательно с PRECURSOR, разрешено с ID. NULL если отсутствуют (NULL об€зательно с RESULT, CURRENT) */
+// };
 
-/* Ref - обращение к атрибуту или элементу массива */
-/* ƒопустимые варианты (полный список):
-	- просто доступ [0,access,0]
-	- квалифицированный доступ [qual,access,0]
-	- доступ к элементу массива [qual,0,index]
-*/
-struct NRef
-{
-	struct NRef* qualification; /* выражение слева от точки. NULL если отсутствует */
-	struct NAccess* access; /* выражение справа от точки. NULL если index не NULL */
-	/* Subscript - доступ к элементу массива на чтение/запись */
-	struct NExpr* index; /* выражение дл€ индекса (uint). “ребует qualification не NULL. NULL если access не NULL */
-};	
+// /* Ref - обращение к атрибуту или элементу массива */
+// /* ƒопустимые варианты (полный список):
+	// - просто доступ [0,access,0]
+	// - квалифицированный доступ [qual,access,0]
+	// - доступ к элементу массива [qual,0,index]
+// */
+// struct NRef
+// {
+	// struct NRef* qualification; /* выражение слева от точки. NULL если отсутствует */
+	// struct NAccess* access; /* выражение справа от точки. NULL если index не NULL */
+	// /* Subscript - доступ к элементу массива на чтение/запись */
+	// struct NExpr* index; /* выражение дл€ индекса (uint). “ребует qualification не NULL. NULL если access не NULL */
+// };	
 
 /* “ипы операторов */
-enum StmtType {CreateSt, AssignSt, RefSt, IfSt, LoopSt};
+enum StmtType {CreateSt, AssignSt, ExprSt, IfSt, LoopSt};
 
 /* Statement - оператор €зыка */
 struct NStmt
@@ -109,7 +124,7 @@ struct NStmt
 	
 	union
 	{
-		struct NRef* ref; // дл€ CreateSt и RefSt
+		struct NExpr* expr; // дл€ CreateSt и ExprSt
 		struct NAssignStmt* assign;
 		struct NIfStmt* ifStmt;
 		struct NLoopStmt* loopStmt;
@@ -124,7 +139,11 @@ struct NStmtList
 	struct NStmt* last;
 };
 
-enum ValType {VoidV, ClassV, ArrayV, IntegerV, RealV, CharacterV, StringV, BooleanV};
+enum ValType
+{
+	VoidV, ClassV, ArrayV,
+	IntegerV, RealV, CharacterV, StringV, BooleanV
+};
 
 /*  “ип объ€влений */
 struct NType
@@ -138,7 +157,7 @@ struct NType
 /* ќператор присваивани€ */
 struct NAssignStmt
 {
-	struct NRef* left; // the ref chain must not end with call
+	struct NExpr* left; // the ref chain must not end with call
 	struct NExpr* expr;
 };
 
