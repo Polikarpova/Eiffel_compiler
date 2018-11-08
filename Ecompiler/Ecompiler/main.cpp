@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 	//char[] infile = "test.e";
 	//char infile[] = "../../samples/sample.e";
 	//char infile[] = "../../samples/class_creation.e";
+	//char infile[] = "../../samples/array_test.e";
 	////char infile[] = "../../samples/testclass.e";
 	char infile[] = "../../samples/chain.e";
 	yyin = fopen(infile, "r");
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
 
 	printf("ROOT: %p\n", root);
 
-	if(root && syntax_errors_logged == 0)
+	if(root)
 	{
 		print2dot("tree.dot", root);
 		printf("see picture\n");

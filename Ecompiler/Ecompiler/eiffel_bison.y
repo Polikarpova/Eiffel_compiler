@@ -94,7 +94,7 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %type <loop_stmt_struct> from_loop
 %type <feature_struct> routine
 %type <stmt_list_struct> routine_body
-%type <name_and_type_list_struct> param_list_0_or_more
+%type <name_and_type_list_struct> param_list_1_or_more
 %type <name_and_type_list_struct> param_list
 %type <name_and_type_struct> param
 %type <type_struct> return_value
@@ -137,10 +137,12 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %%
 
 program : class_list	{root = $1;}
+| error	{root=0;}
 ;
 
 class_list: class	{$$=createClassList($1);}
 | class_list class	{$$=addToClassList($1,$2);}
+| class_list error	{$$=$1;}
 ;
 
 class: CLASS ID inheritance_opt creation_list_opt feature_clauses_opt END	{$$=createClass($2,$3,$4,$5);}
@@ -151,7 +153,9 @@ inheritance_opt: /*empty*/	{$$=0;}
 ;
 inheritance_list: INHERIT inherit_from_class {$$=createInheritFromClassList($2);}
 | inheritance_list inherit_from_class		{$$=addInheritFromClassList($1,$2);}
+| inheritance_list error					{$$=$1;}
 ;
+
 inherit_from_class: ID /*rename_opt*/ /*undefine_opt*/ redefine_opt END	{$$=createInheritFromClass($1,$2);}
 
 redefine_opt: /*empty*/	{$$=0;}
@@ -166,6 +170,7 @@ creation_list_opt: /*empty*/	{$$=0;}
 ;
 creation_list: CREATE ID	{$$=createIdList(createId($2));}
 | creation_list ',' ID		{$$=addToIdList($1,createId($3));}
+| creation_list ',' error	{$$=$1;}
 ;
 
 feature_clauses_opt: /*empty*/	{$$=0;}
@@ -184,6 +189,7 @@ feature_declaration_list: attributes  {$$=$1;}
 | routine						{$$=createFeatureList($1);}
 | feature_declaration_list attributes {$$=joinFeatureLists($1,$2);}
 | feature_declaration_list routine {$$=addToFeatureList($1,$2);}
+| feature_declaration_list error {$$=$1;}
 ;
 
 attributes: vars_declaration {$$=createAttributesFrom($1);}
@@ -274,6 +280,7 @@ expr:
 
 expr_list: expr			{$$=createExprList($1);}
 | expr_list ',' expr 	{$$=addToExprList($1, $3);}
+| expr_list ',' error 	{$$=$1;}
 ;
 
 assign_stmt: expr ASSIGN expr {$$=createAssignStmt($1, $3);}
@@ -299,7 +306,7 @@ from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END	{$$=createFromLoop($
 ;
 
 
-routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body	{$$=createFeature($1,$2,$3,$4,$5);}
+routine: ID param_list_1_or_more return_value_opt local_vars_opt routine_body	{$$=createFeature($1,$2,$3,$4,$5);}
 | ID return_value local_vars routine_body	{$$=createFeature($1,0,$2,$3,$4);}
 | ID  return_value  routine_body	{$$=createFeature($1,0,$2,0,$3);}
 | ID  local_vars routine_body	{$$=createFeature($1,0,createType(VoidV),$2,$3);}
@@ -309,12 +316,12 @@ routine: ID param_list_0_or_more return_value_opt local_vars_opt routine_body	{$
 routine_body: DO stmt_list_opt END	{$$=$2;}
 ;
 
-param_list_0_or_more: '(' param_list ')'	{$$=$2;}
-| '(' ')'				{$$=createNameAndTypeList(0);}
+param_list_1_or_more: '(' param_list ')'	{$$=$2;}
 ;
 
 param_list: param		{$$=createNameAndTypeList($1);}
 | param_list ';' param	{$$=addToNameAndTypeList($1,$3);}
+| param_list ';' error	{$$=$1;}
 ;
 
 param: ID type_mark		{$$=createNameAndType($1,$2);}
@@ -336,6 +343,7 @@ local_vars_opt: local_vars		{$$=$1;}
 
 declaration_list: vars_declaration	{$$=$1;}
 | declaration_list vars_declaration	{$$=joinNameAndTypeLists($1,$2);}
+| declaration_list error			{$$=$1;}
 ;
 
 vars_declaration: ID type_mark	{$$=createNameAndTypeList(createNameAndType($1,$2));}
@@ -344,6 +352,7 @@ vars_declaration: ID type_mark	{$$=createNameAndTypeList(createNameAndType($1,$2
 
 id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1)),createId($3));}
 | id_list_2_or_more ',' ID		{$$=addToIdList($1,createId($3));}
+| id_list_2_or_more ',' error	{$$=$1;}
 ;
 
 %%

@@ -16,7 +16,7 @@ feature {APPLICATION}
 			print("I'm born")
 			Precursor{B}
 		end
-	meth1(): REAL -- possibly wrong (TODO: check)
+	meth1: REAL -- meth1() -> wrong 
 		LOCAL myLoc:STRING
 		AmI_OK, cat_exists: BOOLEAN
 		i: INTEGER
@@ -33,7 +33,7 @@ feature {APPLICATION}
 				i /= 5
 			loop
 			
-				Io.put_integer(arr[i]);	i := i + 1;
+				Io.put_integer(arr[i]);	i := (i + 1);
 				--meth1() -- must cause an error
 				arr[i][n(x)][4].call(arr[y],125)
 			end
@@ -41,10 +41,10 @@ feature {APPLICATION}
 			
 			if NOT i then
 				Result := false
-			elseif i = 4^2 then
-				Result := "hmm"
 			else
-				Result := true
+				if i = 4^2 then
+					Result := "hmm"
+				end
 			end
 			
 			from
