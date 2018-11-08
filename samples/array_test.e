@@ -1,5 +1,5 @@
 class APPLICATION
-
+ 
 create
 	make
 

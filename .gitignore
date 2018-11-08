@@ -18,7 +18,6 @@ Debug
 *flex.cpp
 *.dot
 *.png
-*.bat
 *.bak
 /bison/*
 *~m4_in_temp_file*

@@ -268,13 +268,16 @@ expr:
 | expr XOR expr	{$$=createExpr(XORE,$1,$3);}
 | expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
 	/* Chains */
-| expr '.' expr 	{$$=createExpr(QualificationE,$1,$3);}
+| expr '.' ID 	{$$=createExpr(QualificationE,$1,createIdExpr(createId($3)));}
+| expr '.' ID '(' expr_list ')' {$$=createCallExpr(createExpr(QualificationE,$1,createIdExpr(createId($3))), $5);}
 | expr '[' expr ']' 	{$$=createExpr(SubscriptE,$1,$3);}
 	/* IDs (locals, features) & calls */
 | ID			{$$=createIdExpr(createId($1));}
-| expr '(' expr_list ')' {$$=createCallExpr($1, $3);}
+| ID '(' expr_list ')' {$$=createCallExpr(createIdExpr(createId($1)), $3);}
 | PRECURSOR		{$$=createPrecursorExpr(0);}
 | PRECURSOR '{' ID '}'{$$=createPrecursorExpr(createId($3));}
+| PRECURSOR '(' expr_list ')'		{$$=createCallExpr(createPrecursorExpr(0), $3);}
+| PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
 
 ;
 

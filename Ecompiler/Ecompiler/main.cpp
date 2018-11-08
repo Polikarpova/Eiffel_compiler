@@ -17,9 +17,19 @@ extern int syntax_errors_logged;
 // test
 #include "bisontest.h"
 
+/*
+arg[0]: -
+arg[1]: input file name (no extension): fnm
+	fnm.e
+	fnm.dot
+	fnm.png
 
+*/
 int main(int argc, char *argv[])
 {
+	//setlocale(LC_ALL, "russian");
+	//freopen("output.txt", "w", stdout);
+
 	if(false)
 	{
 		BisonTest testClass(0);
@@ -27,18 +37,30 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
+	char in_fnm[100];
+	char file_name[100];
 
-	//setlocale(LC_ALL, "russian");
+	if(argc > 1)
+	{
+		strcpy(in_fnm, argv[1]);
+	}
+	else
+	{
+		//char[] infile = "test.e";
+		//char infile[] = "../../samples/sample.e";
+		//char infile[] = "../../samples/class_creation.e";
+		//char infile[] = "../../samples/array_test.e";
+		////char infile[] = "../../samples/testclass.e";
+		char infile[] = "../../samples/chain.e";
+		strcpy(in_fnm, infile);
+	}
+		
+	strcpy(file_name, in_fnm);
+	strcat(file_name, ".e");
+	
+	printf("Processing file %s...\n", file_name);
 
-	//freopen("output.txt", "w", stdout);
-
-	//char[] infile = "test.e";
-	//char infile[] = "../../samples/sample.e";
-	//char infile[] = "../../samples/class_creation.e";
-	//char infile[] = "../../samples/array_test.e";
-	////char infile[] = "../../samples/testclass.e";
-	char infile[] = "../../samples/chain.e";
-	yyin = fopen(infile, "r");
+	yyin = fopen(file_name, "r");
 
 	int parse_result = yyparse();
 
@@ -50,10 +72,13 @@ int main(int argc, char *argv[])
 
 	if(root)
 	{
-		print2dot("tree.dot", root);
-		printf("see picture\n");
+		strcpy(file_name, in_fnm);
+		strcat(file_name, ".dot");
+	
+		print2dot(file_name, root);
+		printf("see picture %s\n",file_name);
 		// run dot & kill current process
-		execlpe("cmd", "/c", "run_dot.bat", "", 0,0,0);
+		execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
 	}
 	else
 	{
@@ -68,8 +93,11 @@ int main(int argc, char *argv[])
 		//}
 	}
 
-	// `hit any key ...`
-	system("pause");
+	if(argc <= 1) // debug mode
+	{
+		// `hit any key ...`
+		system("pause");
+	}
 }
 
 /* TODO

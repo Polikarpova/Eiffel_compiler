@@ -33,14 +33,14 @@ class
 
 inherit
     A
-        rename
-            f as A_f    -- The feature f inherited from A is now called A_f within C
+        --rename
+          --  f as A_f    -- The feature f inherited from A is now called A_f within C
 		redefine x
         end
 
     B
-        undefine
-            g           -- The feature g inherited from B is no longer part of C
+        --undefine
+        --    g           -- The feature g inherited from B is no longer part of C
         end
 
 -- feature

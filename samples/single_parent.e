@@ -21,8 +21,8 @@ class
 inherit
  B
 		-- другие последовательности невалидны
-        rename f as f_B
-        undefine g
+        --rename f as f_B
+        --undefine g
 		redefine x
 		end
 
