@@ -480,7 +480,6 @@ void NIfStmt2dot(FILE *f, int *min_id, struct NIfStmt* N)
 	//then_part
 	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "" );
 	NThenPartList2dot(f, min_id, N->thenPart);
-	//fprintf(f, "%d [label=\"`%s`\"];", *min_id, "leftNode" );
 
 	//else_part
 	if (N->elsePart) {
@@ -610,36 +609,3 @@ void call2dot(FILE *f, int *min_id, struct NExpr* N)
 		}
 	}
 }
-
-// void ref2dot(FILE *f, int *min_id, struct NRef* N)
-// {
-	// int self_id = *min_id;
-	
-	// if( ! N->qualification && N->access && ! N->index )
-	// {
-		// fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "<Ref.>", "oval" );
-		// fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "access" );
-		// access2dot(f,min_id,N->access);
-	// }
-	// else if( N->qualification && N->access && ! N->index )
-	// {
-		// fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "left.right", "oval" );
-		// fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
-		// NExpr2dot(f,min_id,N->qualification);
-		// fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "right" );
-		// access2dot(f,min_id,N->access);
-	// }
-	// else if( N->qualification && ! N->access && N->index )
-	// {
-		// fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "A[i]", "oval" );
-		// fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "A" );
-		// NExpr2dot(f,min_id,N->qualification);
-		// fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "i" );
-		// NExpr2dot(f,min_id,N->index);
-	// }
-	// else
-	// {
-	// fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "}Invalid Ref{", "oval" );
-	// }
-// }
-

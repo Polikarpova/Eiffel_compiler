@@ -43,8 +43,6 @@ struct NId* id_struct;
 struct NIdList* id_list_struct;
 struct NExpr* expr_struct;
 struct NExprList* expr_list_struct;
-// struct NAccess* access_struct;
-// struct NRef* ref_struct;
 struct NStmt* stmt_struct;
 struct NStmtList* stmt_list_struct;
 struct NType* type_struct;
@@ -63,7 +61,6 @@ struct NNameAndTypeList* name_and_type_list_struct;
 struct NInheritFromClass* inherit_class_struct;
 struct NInheritFromClassList* inherit_class_list_struct;
 
-// struct * _struct;
 }
 
 /*нетерминалы*/
@@ -82,8 +79,6 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %type <feature_list_struct> feature_clauses_opt
 %type <feature_list_struct> feature_declaration_list
 %type <feature_list_struct> attributes
-// %type <access_struct> access
-// %type <ref_struct> ref
 %type <stmt_struct> stmt
 %type <stmt_list_struct> stmt_list
 %type <stmt_list_struct> stmt_list_opt
@@ -195,24 +190,6 @@ attributes: vars_declaration {$$=createAttributesFrom($1);}
 ;
 
 
-
-// access: ID		{$$=createAccess(IdA, $1, 0);}
-// | 		ID '(' expr_list ')' {$$=createAccess(IdA, $1, $3);}
-		// /* следующие нельзя вызывать через точку (Obj.CURRENT неправильно): */
-// // | 		RESULT	{$$=createAccess(ResultA, 0, 0);}
-// // | 		CURRENT	{$$=createAccess(CurrentA, 0, 0);} // нельзя сочетать: CURRENT '[' <i> ']'
-// |		PRECURSOR	{$$=createAccess(PrecursorA, 0, 0);}
-// |		PRECURSOR '(' expr_list ')' {$$=createAccess(PrecursorA, 0, $3);}
-// |		PRECURSOR '{' ID '}' {$$=createAccess(PrecursorA, $3, 0);}
-// |		PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createAccess(PrecursorA, $3, $6);}
-
-// ;
-
-// ref: access				{$$=createRef(0,$1,0);}
-// | ref '.' access		{$$=createRef($1,$3,0);}
-// | ref '[' expr ']' 		{$$=createRef($1,0,$3);}
-// ;
-
 /* actions only */
 _LF_ON_:  { global_LF_enabled = true; }
 ;
@@ -290,11 +267,8 @@ expr:
 	/* IDs (locals, features) & calls */
 | ID			{$$=createIdExpr(createId($1));}
 | expr '(' expr_list ')' {$$=createCallExpr($1, $3);}
-
 | PRECURSOR		{$$=createPrecursorExpr(0);}
-// | PRECURSOR '(' expr_list ')' {$$=createCallExpr(createPrecursorExpr(0), $3);}
 | PRECURSOR '{' ID '}'{$$=createPrecursorExpr(createId($3));}
-// | PRECURSOR '{' ID '}' '(' expr_list ')' %prec GROUP_BRACE {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
 
 ;
 
@@ -372,11 +346,6 @@ id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1)),createId
 | id_list_2_or_more ',' ID		{$$=addToIdList($1,createId($3));}
 ;
 
-/*
-error_token: INT_INTERVAL	{ yyerror("Forbidden token: INT_INTERVAL"); YYERROR;}
-		   | CHAR_INTERVAL	{ yyerror("Forbidden token: CHAR_INTERVAL");YYERROR;}
-		   ;
-*/
 %%
 /* Секция пользовательского кода */
 
@@ -402,7 +371,5 @@ void yyerror (const char *s)
 }
 
 // переменные, глобальные для анализатора
-// struct NClass* currentClass = NULL;
 struct NIdList* currentFeatureClients;
-// struct NType* currentType;
 

@@ -18,8 +18,6 @@ struct NExpr* createExpr (enum ExprType type, struct NExpr* left, struct NExpr* 
 struct NExprList* createExprList (struct NExpr* expr);
 struct NExprList* addToExprList (struct NExprList* list, struct NExpr* expr);
 struct NAssignStmt* createAssignStmt(struct NExpr* left, struct NExpr* expr);
-// struct NRef* createRef(struct NRef* qualification, struct NAccess* access, struct NExpr* index);
-// struct NAccess* createAccess(enum AccessType type, char* id, struct NExprList* params);
 struct NId* createId(char* id);
 struct NIdList* createIdList(struct NId* id);
 struct NIdList* addToIdList(struct NIdList* list, struct NId* id);
@@ -57,18 +55,6 @@ struct NClassList* addToClassList(struct NClassList* list, struct NClass* elem);
 struct NInheritFromClass* createInheritFromClass(char* className, /*struct NIdList* renameList,	struct NIdList* undefineList,*/	struct NIdList* redefineList);
 struct NInheritFromClassList* createInheritFromClassList(struct NInheritFromClass* elem);
 struct NInheritFromClassList* addInheritFromClassList(struct NInheritFromClassList* list, struct NInheritFromClass* elem);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

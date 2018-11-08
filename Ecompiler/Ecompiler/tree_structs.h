@@ -8,8 +8,6 @@ struct NIdList;
 // enum ExprType;
 struct NExpr;
 struct NExprList;
-// struct NAccess;
-// struct NRef;
 struct NClassList;
 struct NStmt;
 struct NStmtList;
@@ -25,7 +23,6 @@ struct NLoopStmt;
 /*класс*/
 struct NClass;
 struct NClassList;
-// struct NCreationList;
 struct NFeature;
 struct NFeatureList;
 struct NNameAndType;
@@ -89,30 +86,6 @@ struct NExprList
 	struct NExpr* first;
 	struct NExpr* last;
 };
-
-// enum AccessType {IdA, ResultA, CurrentA, PrecursorA};
-
-// /* Access - доступ на чтение/запись/вызов к переменной/атрибуту(полю либо методу) */
-// struct NAccess
-// {
-	// enum AccessType type; /* допустимо ID, RESULT, CURRENT, PRECURSOR (см. объявления bison) */
-	// struct NId* id;	 /* идентификатор или класс в конструкции PRECURSOR{ <base> } */
-	// struct NExprList* params; /* НЕобязательно с PRECURSOR, разрешено с ID. NULL если отсутствуют (NULL обязательно с RESULT, CURRENT) */
-// };
-
-// /* Ref - обращение к атрибуту или элементу массива */
-// /* Допустимые варианты (полный список):
-	// - просто доступ [0,access,0]
-	// - квалифицированный доступ [qual,access,0]
-	// - доступ к элементу массива [qual,0,index]
-// */
-// struct NRef
-// {
-	// struct NRef* qualification; /* выражение слева от точки. NULL если отсутствует */
-	// struct NAccess* access; /* выражение справа от точки. NULL если index не NULL */
-	// /* Subscript - доступ к элементу массива на чтение/запись */
-	// struct NExpr* index; /* выражение для индекса (uint). Требует qualification не NULL. NULL если access не NULL */
-// };	
 
 /* Типы операторов */
 enum StmtType {CreateSt, AssignSt, ExprSt, IfSt, LoopSt};

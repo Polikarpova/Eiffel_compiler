@@ -58,13 +58,13 @@ int main(int argc, char *argv[])
 	{
 		printf("tree was not viewed.\n");
 
-		printf("Error log:\n");
-		for( int i=0 ; i<syntax_errors_logged ; ++i )
-		{
-			//printf("%d: %s\n",i,syntax_errors[i]);
-			printf("%2d: ",i);
-			printf("%s\n", "[error in printf()]");  // syntax_errors[i]);
-		}
+		//printf("Error log:\n");
+		//for( int i=0 ; i<syntax_errors_logged ; ++i )
+		//{
+		//	//printf("%d: %s\n",i,syntax_errors[i]);
+		//	printf("%2d: ",i);
+		//	printf("%s\n", "[error in printf()]");  // syntax_errors[i]);
+		//}
 	}
 
 	// `hit any key ...`

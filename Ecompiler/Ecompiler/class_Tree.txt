@@ -1,0 +1,21 @@
+NClass
+ |- className
+ |- creationList
+ `- featureList
+ 
+NFeature
+ |- clients
+ |- name
+ |- type
+ |- params
+ |- localVars
+ `- routineBody
+ 
+ProgramNode
+ `- NClass
+ 
+EiffelType
+ |- NClass
+ |- TVoid
+ `- PrimitiveType<T>
+
