@@ -268,16 +268,16 @@ expr:
 | expr XOR expr	{$$=createExpr(XORE,$1,$3);}
 | expr IMPLIES expr	{$$=createExpr(ImpliesE,$1,$3);}
 	/* Chains */
-| expr '.' ID 	{$$=createExpr(QualificationE,$1,createIdExpr(createId($3)));}
-| expr '.' ID '(' expr_list ')' {$$=createCallExpr(createExpr(QualificationE,$1,createIdExpr(createId($3))), $5);}
+| expr '.' ID 	{$$=createRefnCallExpr($1,$3,0);}
+| expr '.' ID '(' expr_list ')' {$$=createRefnCallExpr($1,$3,$5);}
 | expr '[' expr ']' 	{$$=createExpr(SubscriptE,$1,$3);}
 	/* IDs (locals, features) & calls */
-| ID			{$$=createIdExpr(createId($1));}
-| ID '(' expr_list ')' {$$=createCallExpr(createIdExpr(createId($1)), $3);}
-| PRECURSOR		{$$=createPrecursorExpr(0);}
-| PRECURSOR '{' ID '}'{$$=createPrecursorExpr(createId($3));}
-| PRECURSOR '(' expr_list ')'		{$$=createCallExpr(createPrecursorExpr(0), $3);}
-| PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
+| ID			{$$=createRefnCallExpr(0,$1,0);}
+| ID '(' expr_list ')' {$$=createRefnCallExpr(0,$1,$3);}
+| PRECURSOR		{$$=createPrecursorExpr(0,0);}
+| PRECURSOR '{' ID '}'{$$=createPrecursorExpr($3,0);}
+| PRECURSOR '(' expr_list ')'		{$$=createPrecursorExpr(0, $3);}
+| PRECURSOR '{' ID '}' '(' expr_list ')' {$$=createPrecursorExpr($3, $6);}
 
 ;
 

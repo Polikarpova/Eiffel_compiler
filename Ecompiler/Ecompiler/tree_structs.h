@@ -54,11 +54,13 @@ enum ExprType
 	/* Binary */
 	PowerE, MulE, DivE, PlusE, MinusE, EqualsE, NotEqualE, LessE, GreaterE, LessOrEqualE, GreaterOrEqualE, AndE, AndThenE, OrE, OrElseE, XORE, ImpliesE,
 	/* IDs & calls */
-	IdE,  		// uses {value.Id}
-	CallE, 		// uses {left,value.ExprList}
+	RefnCallE,
+	// IdE,  		// uses {value.Id}
+	// CallE, 		// uses {left,value.ExprList}
 	PrecursorE, // uses {value.Id | NULL}
 	/* Chains */
-	QualificationE, SubscriptE};
+	// QualificationE, 
+	SubscriptE};
 
 /* Expr - выражение */
 struct NExpr
@@ -71,10 +73,12 @@ struct NExpr
 		char* String;
 		bool Bool; // boolean
 		
-		struct NId* Id; 
-		struct NExprList* ExprList;  // для CallE
+		// struct NId* Id; 
+		char* id;
 
 	} value;
+	
+	struct NExprList* ExprList;  // для CallE
 	
 	struct NExpr* left;
 	struct NExpr* right;

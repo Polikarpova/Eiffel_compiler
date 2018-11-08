@@ -329,22 +329,22 @@ void NExpr2dot(FILE *f, int *min_id, struct NExpr* N)
 		case OrElseE:
 		case XORE:
 		case ImpliesE:
-		case QualificationE:
 		case SubscriptE:
 			binaryExpr2dot(f, self_id, min_id, N, shape);
 			return;
-		case IdE:
-			id2dot(f, min_id, N->value.Id);
-			return;
-		case CallE:
-			call2dot(f, min_id, N);
+		// case IdE:
+			// // id2dot(f, min_id, N->value.Id);
+			// fprintf(f, "%d [label=\"%s\" shape=box style=bold]; \n", *min_id, N->value.id );
+			// return;
+		case RefnCallE:
+			refnCall2dot(f, min_id, N);
 			return;
 		case PrecursorE:
 			fprintf(f, "%d [label=\"%s\" shape=%s];", self_id, "Precursor", "oval" );
-			if(N->value.Id)
+			if(N->value.id)
 			{
 				fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "{Class}" );
-				id2dot(f,min_id,N->value.Id);
+				fprintf(f, "%d [label=\"%s\" shape=box style=bold]; \n", *min_id, N->value.id );
 			}
 			return;
 	}
@@ -455,9 +455,9 @@ void binaryExpr2dot(FILE *f, int parent_id, int *min_id, struct NExpr* N, char* 
 		case ImpliesE:
 			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "IMPLIES", shape );
 			break;
-		case QualificationE:
-			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<•>", shape );
-			break;		
+		// case QualificationE:
+			// fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "<•>", shape );
+			// break;		
 		case SubscriptE:
 			fprintf(f, "%d [label=\"%s\" shape=%s];", parent_id, "L[R]", shape );
 			break;
@@ -587,25 +587,31 @@ void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N)
 	NStmtList2dot(f, min_id, N);
 }
 
-void call2dot(FILE *f, int *min_id, struct NExpr* N)
+void refnCall2dot(FILE *f, int *min_id, struct NExpr* N)
 {
 	int self_id = *min_id;
 
-	fprintf(f, "%d [label=\"%s\" shape=circle]; \n", self_id, "L(actuals)" );
+	fprintf(f, "%d [label=\"%s\" shape=circle]; \n", self_id, "Q.ID(actuals)" );
 
-	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "left" );
-	NExpr2dot(f, min_id, N->left);
+	if (N->left)
+	{
+		fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "Q" );
+		NExpr2dot(f, min_id, N->left);
+	}
 
-	if(N->value.ExprList && N->value.ExprList->first && N->value.ExprList->last)
+	fprintf(f, "%d -> %d [label=\"%s\" style=solid]; \n", self_id, ++(*min_id), "ID" );
+	fprintf(f, "%d [label=\"%s\" shape=box style=bold]; \n", *min_id, N->value.id );
+
+	if(N->ExprList && N->ExprList->first && N->ExprList->last)
 	{
 		int count = 0;
 		// iterate actuals
-		for(struct NExpr* i = N->value.ExprList->first ;  ; i = i->next, ++count )
+		for(struct NExpr* i = N->ExprList->first ;  ; i = i->next, ++count )
 		{
 			// counting edges
 			fprintf(f, "%d -> %d [label=%d style=solid]; \n", self_id, ++(*min_id), count );
 			NExpr2dot(f, min_id, i);
-			if(i == N->value.ExprList->last) break;
+			if(i == N->ExprList->last) break;
 		}
 	}
 }

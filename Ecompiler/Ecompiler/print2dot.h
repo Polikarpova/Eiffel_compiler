@@ -24,5 +24,5 @@ void NLoopStmt2dot(FILE *f, int *min_id, struct NLoopStmt* N);
 void loopFrom2dot(FILE *f, int *min_id, struct NStmtList* N);
 void loopUntil2dot(FILE *f, int *min_id, struct NExpr* N);
 void loopBody2dot(FILE *f, int *min_id, struct NStmtList* N);
-void call2dot(FILE *f, int *min_id, struct NExpr* N);
+void refnCall2dot(FILE *f, int *min_id, struct NExpr* N);
 

@@ -70,38 +70,54 @@ struct NExpr* createBoolConstExpr (bool token)
 	return Result;
 }
 
-struct NExpr* createIdExpr (struct NId* Id)
+struct NExpr* createRefnCallExpr (struct NExpr* left_opt, char* id, struct NExprList* ExprList)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
-	Result->type = IdE;
-	Result->value.Id = Id;
+	Result->type = RefnCallE;
+	Result->value.id = id;
 
-	Result->left = NULL;
+	Result->left = left_opt;
 	Result->right = NULL;
 	Result->next = NULL;
+
+	Result->ExprList = ExprList;
 	return Result;
 }
 
-struct NExpr* createCallExpr (struct NExpr* left, struct NExprList* ExprList)
-{
-	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+// struct NExpr* createIdExpr (struct NId* Id)
+// {
+	// struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
-	Result->type = CallE;
-	Result->value.ExprList = ExprList;
+	// Result->type = IdE;
+	// Result->value.Id = Id;
 
-	Result->left = left;
-	Result->right = NULL;
-	Result->next = NULL;
-	return Result;
-}
+	// Result->left = NULL;
+	// Result->right = NULL;
+	// Result->next = NULL;
+	// return Result;
+// }
 
-struct NExpr* createPrecursorExpr (struct NId* Id_opt)
+// struct NExpr* createCallExpr (struct NExpr* left_opt, struct NExprList* ExprList_opt)
+// {
+	// struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+		
+	// Result->type = CallE;
+	// Result->ExprList = ExprList_opt;
+
+	// Result->left = left_opt;
+	// Result->right = NULL;
+	// Result->next = NULL;
+	// return Result;
+// }
+
+struct NExpr* createPrecursorExpr (char* id_opt, struct NExprList* ExprList_opt)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
 	Result->type = PrecursorE;
-	Result->value.Id = Id_opt;
+	Result->value.id = id_opt;
+	Result->ExprList = ExprList_opt;
 
 	Result->left = NULL;
 	Result->right = NULL;
