@@ -134,8 +134,10 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %left '*' '/'
 %left '^'
 %left NOT UPLUS UMINUS
-%left '.' '[' ']'
-%nonassoc ')'
+%nonassoc '(' ')'
+%left '[' ']'
+%left '.'
+%nonassoc GROUP_BRACE
 
 %%
 
@@ -259,7 +261,7 @@ expr:
 | STRING_VAL	{$$=createStringConstExpr($1);}
 | BOOL_VAL		{$$=createBoolConstExpr($1);}
 	/* Grouping */
-| '(' expr ')' %prec CALL_BRACE	{$$=$2;}
+| '(' expr ')' %prec GROUP_BRACE	{$$=$2;}
 	/* Unary */
 | NOT expr		{$$=createExpr(NotE,$2,0);}
 | '+' expr %prec UPLUS	{$$=createExpr(UPlusE,$2,0);}
@@ -292,7 +294,7 @@ expr:
 | PRECURSOR		{$$=createPrecursorExpr(0);}
 // | PRECURSOR '(' expr_list ')' {$$=createCallExpr(createPrecursorExpr(0), $3);}
 | PRECURSOR '{' ID '}'{$$=createPrecursorExpr(createId($3));}
-// | PRECURSOR '{' ID '}' '(' expr_list ')' %prec CALL_BRACE {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
+// | PRECURSOR '{' ID '}' '(' expr_list ')' %prec GROUP_BRACE {$$=createCallExpr(createPrecursorExpr(createId($3)), $6);}
 
 ;
 
