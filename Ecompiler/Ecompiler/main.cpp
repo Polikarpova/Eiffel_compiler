@@ -72,24 +72,7 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	+~ export tree to DOT
-	-~ test parsing empty class, empty features, etc
-*/
-
-/* Statements:
-
-	CREATE <create_call>
-	<left_value> := <expr>
-	<method_call>
-	
-	Rules:
-	
-	expr : method_call
-	...
-	method_call : expr '.' ID
-	method_call : expr '.' ID '(' expr_list ')'
-	
-	create_call : ID '.' ID
-	create_call : ID '.' ID '(' expr_list ')'
+	+ export tree to DOT
+	+ test parsing empty class, empty features, etc
 */
 
