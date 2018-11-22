@@ -9,6 +9,8 @@ Syntax in Eiffel:
 - Описание различных statement с различными вариантами их использования [старый синтаксис?]: https://www.infor.uva.es/~felix/priii/sintaxis.html
 - https://www.eiffel.org/doc/eiffel/Quick_reference_to_the_Eiffel_programming_language
 - Полезная статейка о классах: https://www.eiffel.org/doc/solutions/Eiffel_Classes
+- PDF со старым синтаксисом, но полезной информацией: http://www.lirmm.fr/~ducour/Doc-objets/eiffel-tutorial.pdf
+- [PDF] Стандарт ECMA-ST-WITHDRAWN/ECMA-367 https://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-367,%201st%20edition,%20June%202005.pdf
 
 Примеры кода uzh-software-construction
 This repository holds various snippets of Eiffel in order to illustrate particular concepts I explained in the UZH course Software Construction.
