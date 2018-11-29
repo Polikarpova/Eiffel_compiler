@@ -156,13 +156,13 @@ inheritance_list: INHERIT inherit_from_class {$$=createInheritFromClassList($2);
 | inheritance_list error					{$$=$1;}
 ;
 
-inherit_from_class: ID /*rename_opt*/ /*undefine_opt*/ redefine_opt END	{$$=createInheritFromClass($1,$2);}
+inherit_from_class: ID /*rename_opt*/ /*undefine_opt*/ redefine_opt	{$$=createInheritFromClass($1,$2);}
 
 redefine_opt: /*empty*/	{$$=0;}
 | redefine				{$$=$1;}
 ;
-redefine: REDEFINE ID		{$$=createIdList(createId($2));}
-| REDEFINE id_list_2_or_more	{$$=$2;}
+redefine: REDEFINE ID END		{$$=createIdList(createId($2));}
+| REDEFINE id_list_2_or_more END	{$$=$2;}
 ;
 
 creation_list_opt: /*empty*/	{$$=0;}
@@ -298,14 +298,14 @@ then_part_list: then_part	{$$=createThenPartList($1);}
 | then_part_list ELSEIF then_part	{$$=addToThenPartList($1, $3);} 
 ;
 
-then_part: expr THEN stmt_list	{$$=createThenPart($1, $3);}
+then_part: expr THEN stmt_list_opt	{$$=createThenPart($1, $3);}
 ;
 
-else_part: ELSE stmt_list	{$$=createElsePart($2);}
+else_part: ELSE stmt_list_opt	{$$=createElsePart($2);}
 ;
 
 
-from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list END	{$$=createFromLoop($2, $4, $6);}
+from_loop: FROM stmt_list_opt UNTIL expr LOOP stmt_list_opt END	{$$=createFromLoop($2, $4, $6);}
 ;
 
 
