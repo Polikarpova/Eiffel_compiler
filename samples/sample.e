@@ -59,7 +59,7 @@ feature {NONE} -- Initialization
 			it_.is_[0].a_(long)[1].sequence.of_.calls(12,'3')
 			qulified[654].by(obj).procedure
 			call_proc
-			call_func0()
+			call_func0() -- should cause an error
 			call_func1(1)
 			call_func2(1,2)
 		end

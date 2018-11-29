@@ -41,7 +41,7 @@ inherit
     B
         --undefine
         --    g           -- The feature g inherited from B is no longer part of C
-        end
+        --end
 
 -- feature
 

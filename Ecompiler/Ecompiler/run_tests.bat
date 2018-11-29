@@ -9,6 +9,10 @@ echo positive tests
 echo =======================
 
 %PROG% "../../samples/chain"
+
+REM pause
+REM exit
+
 %PROG% "../../samples/nest"
 %PROG% "../../samples/array_test"
 %PROG% "../../samples/single_parent"
@@ -24,4 +28,7 @@ echo =======================
 %PROG% "../../samples/syntax/class_empty_err_name"
 %PROG% "../../samples/nest_error"
 
+echo =======================
+echo running tests finished
+echo =======================
 pause
