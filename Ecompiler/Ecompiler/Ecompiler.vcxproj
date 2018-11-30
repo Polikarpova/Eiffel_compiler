@@ -100,6 +100,7 @@
     <ClCompile Include="bisontest.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -122,8 +123,10 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_TESTLIB_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtTest"</Command>
     </CustomBuild>
     <ClInclude Include="eiffel_bison.tab.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="print2dot.h" />
+    <ClInclude Include="TreeNode.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
   <ItemGroup>

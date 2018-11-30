@@ -14,7 +14,7 @@ extern int syntax_errors_logged;
 /* </ Error handling > */
 
 
-// test
+// tests
 #include "bisontest.h"
 
 /*
@@ -25,10 +25,15 @@ arg[1]: input file name (no extension): fnm
 	fnm.png
 
 */
+
+#include "Expression.h"
+
 int main(int argc, char *argv[])
 {
 	//setlocale(LC_ALL, "russian");
 	//freopen("output.txt", "w", stdout);
+
+	Expression expr;
 
 	if(false)
 	{
