@@ -60,7 +60,8 @@ enum ExprType
 	PrecursorE, // uses {value.Id | NULL}
 	/* Chains */
 	// QualificationE, 
-	SubscriptE};
+	SubscriptE
+};
 
 /* Expr - выражение */
 struct NExpr
