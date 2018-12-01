@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
+    <ClCompile Include="ConstantTable.cpp" />
     <ClCompile Include="EiffelProgram.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="EiffelProgram.h" />
     <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="enums.h" />
+    <ClInclude Include="FeatureClients.h" />
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="MetaClass.h" />
