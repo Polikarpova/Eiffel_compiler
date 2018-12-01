@@ -26,14 +26,14 @@ arg[1]: input file name (no extension): fnm
 
 */
 
-#include "Expression.h"
+//#include "Expression.h"
 
 int main(int argc, char *argv[])
 {
 	//setlocale(LC_ALL, "russian");
 	//freopen("output.txt", "w", stdout);
 
-	Expression expr;
+	//Expression expr;
 
 	if(false)
 	{

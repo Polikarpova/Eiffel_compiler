@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
+    <ClCompile Include="EiffelProgram.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
     <ClCompile Include="Expression.cpp" />
@@ -122,9 +123,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_TESTLIB_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtTest"</Command>
     </CustomBuild>
+    <ClInclude Include="EiffelProgram.h" />
     <ClInclude Include="eiffel_bison.tab.h" />
+    <ClInclude Include="enums.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
+    <ClInclude Include="MetaClass.h" />
     <ClInclude Include="print2dot.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="tree_structs.h" />
