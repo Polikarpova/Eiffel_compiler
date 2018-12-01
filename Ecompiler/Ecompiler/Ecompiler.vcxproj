@@ -101,7 +101,6 @@
     <ClCompile Include="EiffelProgram.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
-    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -126,12 +125,10 @@
     <ClInclude Include="EiffelProgram.h" />
     <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="enums.h" />
-    <ClInclude Include="Expression.h" />
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="MetaClass.h" />
     <ClInclude Include="print2dot.h" />
-    <ClInclude Include="TreeNode.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
   <ItemGroup>
