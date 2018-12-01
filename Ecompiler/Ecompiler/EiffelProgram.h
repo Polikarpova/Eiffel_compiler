@@ -1,6 +1,7 @@
 #pragma once
 #include "MetaClass.h"
 #include <qset.h>
+#include "FeatureClients.h"
 
 class EiffelProgram {
 
@@ -8,7 +9,7 @@ public:
 	EiffelProgram(void);
 	~EiffelProgram(void);
 
-	QMap<QString, MetaClass*> clients;
+	QMap<QString, MetaClass*> classes;
 
-	//QSet<FeatureClients*> clients; //список классов - клиентов члена класса (feature)
+	QSet<FeatureClients*> clients; //список классов - клиентов члена класса (feature)
 };

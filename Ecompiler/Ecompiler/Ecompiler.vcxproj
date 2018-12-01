@@ -99,17 +99,24 @@
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
+    <ClCompile Include="EiffelClass.cpp" />
     <ClCompile Include="EiffelProgram.cpp" />
+    <ClCompile Include="EiffelType.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
+    <ClCompile Include="Feature.cpp" />
+    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="LocalVariable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Method.cpp" />
     <ClCompile Include="print2dot.cpp" />
+    <ClCompile Include="Statement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
@@ -123,14 +130,21 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_TESTLIB_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtTest"</Command>
     </CustomBuild>
+    <ClInclude Include="EiffelClass.h" />
     <ClInclude Include="EiffelProgram.h" />
+    <ClInclude Include="EiffelType.h" />
     <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="enums.h" />
+    <ClInclude Include="Feature.h" />
     <ClInclude Include="FeatureClients.h" />
+    <ClInclude Include="Field.h" />
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
+    <ClInclude Include="LocalVariable.h" />
     <ClInclude Include="MetaClass.h" />
+    <ClInclude Include="Method.h" />
     <ClInclude Include="print2dot.h" />
+    <ClInclude Include="Statement.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
   <ItemGroup>

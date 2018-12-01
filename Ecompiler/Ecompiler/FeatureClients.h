@@ -1,5 +1,6 @@
 #pragma once
 #include <qset.h>
+#include "EiffelClass.h"
 
 class FeatureClients {
 
@@ -10,5 +11,5 @@ public:
 			CLASSES
 		 } mode;
 
-	//QSet<EiffelClass*> clients; //список классов - клиентов члена класса (feature)
+	QSet<EiffelClass*> clients; //список классов - клиентов члена класса (feature)
 };
