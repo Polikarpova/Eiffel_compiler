@@ -4,6 +4,7 @@
 #include "JvmConstant.h"
 #include "Field.h"
 #include "Method.h"
+#include "tree_structs.h"
 
 typedef char byte;
 
@@ -14,7 +15,10 @@ public:
 	MetaClass() {};
 	~MetaClass() {};
 
+	/*methods*/
+	void doSemantic();
 	byte* toByteCode();
+	static MetaClass create(struct NClass* s);
 
 	/*fields*/
 	short int name, classConstantNumber;

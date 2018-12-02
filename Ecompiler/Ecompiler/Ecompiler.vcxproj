@@ -98,6 +98,8 @@
   <ItemGroup>
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
+    <ClCompile Include="BOOLEAN.cpp" />
+    <ClCompile Include="CHARACTER.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
     <ClCompile Include="EiffelClass.cpp" />
     <ClCompile Include="EiffelProgram.cpp" />
@@ -112,11 +114,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="INTEGER.cpp" />
     <ClCompile Include="LocalVariable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Method.cpp" />
     <ClCompile Include="print2dot.cpp" />
+    <ClCompile Include="REAL.cpp" />
+    <ClCompile Include="RTLMetaClass.cpp" />
     <ClCompile Include="Statement.cpp" />
+    <ClCompile Include="StringType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
@@ -130,6 +136,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_TESTLIB_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtTest"</Command>
     </CustomBuild>
+    <ClInclude Include="BOOLEAN.h" />
+    <ClInclude Include="CHARACTER.h" />
     <ClInclude Include="EiffelClass.h" />
     <ClInclude Include="EiffelProgram.h" />
     <ClInclude Include="EiffelType.h" />
@@ -138,13 +146,17 @@
     <ClInclude Include="Feature.h" />
     <ClInclude Include="FeatureClients.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="INTEGER.h" />
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="LocalVariable.h" />
     <ClInclude Include="MetaClass.h" />
     <ClInclude Include="Method.h" />
     <ClInclude Include="print2dot.h" />
+    <ClInclude Include="REAL.h" />
+    <ClInclude Include="RTLMetaClass.h" />
     <ClInclude Include="Statement.h" />
+    <ClInclude Include="StringType.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
   <ItemGroup>
