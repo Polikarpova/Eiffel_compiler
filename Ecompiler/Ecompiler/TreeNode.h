@@ -5,6 +5,7 @@ typedef char byte;
 
 class TreeNode {
 
+public:
 	TreeNode() {};
 	~TreeNode() {};
 

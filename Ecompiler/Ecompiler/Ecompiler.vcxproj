@@ -106,6 +106,7 @@
     <ClCompile Include="EiffelType.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
     <ClCompile Include="eiffel_flex.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Feature.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
@@ -123,11 +124,12 @@
     <ClCompile Include="REAL.cpp" />
     <ClCompile Include="RTLMetaClass.cpp" />
     <ClCompile Include="Statement.cpp" />
-    <ClCompile Include="StringType.cpp" />
+    <ClCompile Include="EiffelSTRING.cpp" />
     <ClCompile Include="VoidType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="VoidType.h" />
     <CustomBuild Include="bisontest.h">
@@ -161,7 +163,7 @@
     <ClInclude Include="REAL.h" />
     <ClInclude Include="RTLMetaClass.h" />
     <ClInclude Include="Statement.h" />
-    <ClInclude Include="StringType.h" />
+    <ClInclude Include="EiffelSTRING.h" />
     <ClInclude Include="tree_structs.h" />
   </ItemGroup>
   <ItemGroup>
