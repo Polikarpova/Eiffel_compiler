@@ -117,15 +117,19 @@
     <ClCompile Include="INTEGER.cpp" />
     <ClCompile Include="LocalVariable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MetaArray.cpp" />
     <ClCompile Include="Method.cpp" />
     <ClCompile Include="print2dot.cpp" />
     <ClCompile Include="REAL.cpp" />
     <ClCompile Include="RTLMetaClass.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="StringType.cpp" />
+    <ClCompile Include="VoidType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
+    <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="VoidType.h" />
     <CustomBuild Include="bisontest.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing bisontest.h...</Message>
@@ -150,6 +154,7 @@
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="LocalVariable.h" />
+    <ClInclude Include="MetaArray.h" />
     <ClInclude Include="MetaClass.h" />
     <ClInclude Include="Method.h" />
     <ClInclude Include="print2dot.h" />
