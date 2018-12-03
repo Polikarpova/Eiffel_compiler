@@ -1,9 +1,12 @@
 #pragma once
-#include "MetaClass.h"
 #include <qset.h>
+#include <qmap.h>
 
 #include <tree_structs.h>
 #include "FeatureClients.h"
+
+//#include "MetaClass.h"
+class MetaClass;
 
 struct CompilerError
 {
@@ -24,5 +27,13 @@ public:
 	
 	QList<CompilerError> errors;
 
+	int logError(QString type, QString message,	int line)
+	{
+		CompilerError ce = {type,message,line};
+		errors.push_back(ce);
+		return errors.size();
+	}
+
 	static EiffelProgram* create(struct NClassList* root, char** syntaxErrors = 0, int syntaxErrorsN = 0);
+	static EiffelProgram* currentProgram;
 };
