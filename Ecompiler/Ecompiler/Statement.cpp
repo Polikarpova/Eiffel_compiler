@@ -10,7 +10,7 @@ Statement::~Statement(void)
 {
 }
 
-Statement Statement::create(struct NStmt* s) {
+Statement* Statement::create(struct NStmt* s) {
 
-	return Statement();
+	return new Statement();
 }

@@ -18,7 +18,7 @@ public:
 	/*methods*/
 	void doSemantic();
 	byte* toByteCode();
-	static MetaClass create(struct NClass* s);
+	static MetaClass* create(struct NClass* s);
 
 	/*fields*/
 	short int name, classConstantNumber;

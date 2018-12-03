@@ -1,6 +1,8 @@
 #pragma once
 #include "MetaClass.h"
 #include <qset.h>
+
+#include <tree_structs.h>
 #include "FeatureClients.h"
 
 class EiffelProgram {
@@ -12,4 +14,6 @@ public:
 	QMap<QString, MetaClass*> classes;
 
 	QSet<FeatureClients*> clients; //список классов - клиентов члена класса (feature)
+
+	static EiffelProgram* create(struct NClassList* root);
 };

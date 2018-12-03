@@ -9,6 +9,6 @@ public:
 	Statement(void);
 	~Statement(void);
 
-	static Statement create(struct NStmt* s);
+	static Statement* create(struct NStmt* s);
 };
 

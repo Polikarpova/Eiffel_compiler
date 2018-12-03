@@ -10,7 +10,7 @@ public:
 	~Expression(void);
 
 	/*methods*/
-	static Expression create(struct NExpr* s);
+	static Expression* create(struct NExpr* s);
 
 	/*fields*/
 	bool isLeftValue;

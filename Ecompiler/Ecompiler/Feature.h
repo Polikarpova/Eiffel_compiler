@@ -7,6 +7,6 @@ public:
 	Feature(void);
 	~Feature(void);
 
-	static Feature create(struct NFeature* s);
+	static Feature* create(struct NFeature* s);
 };
 

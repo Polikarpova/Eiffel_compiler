@@ -10,7 +10,7 @@ Feature::~Feature(void)
 {
 }
 
-Feature Feature::create(struct NFeature* s) {
+Feature* Feature::create(struct NFeature* s) {
 
-	return Feature();
+	return new Feature();
 }
