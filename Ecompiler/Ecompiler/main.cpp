@@ -57,7 +57,10 @@ int main(int argc, char *argv[])
 		//char infile[] = "../../samples/class_creation.e";
 		//char infile[] = "../../samples/array_test.e";
 		////char infile[] = "../../samples/testclass.e";
-		char infile[] = "../../samples/chain.e";
+		//char infile[] = "../../samples/chain.e";
+
+		//char infile[] = "../../samples/bytecode/hello_world";
+		char infile[] = "../../samples/syntax/class_copy";
 		strcpy(in_fnm, infile);
 	}
 		
@@ -82,10 +85,23 @@ int main(int argc, char *argv[])
 		printf("see picture %s\n",file_name);
 		// run dot & kill current process
 // TODO! replace `execlpe` with `spawn**` for this .exe be able to continue
-		execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
+		//execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
 
 		// make semantic classes
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
+		
+		printf("\n ====== Error List: ======\n");
+		foreach(CompilerError ce, EiffelProgram::currentProgram->errors)
+		{
+			QString print_str = QString("%1 error%3: %2.")
+				.arg(ce.type,ce.message)
+				.arg(ce.line<0 ?
+					("") :
+					(QString(" at line %1").arg(ce.line))
+					);
+			wprintf(L"%s\n",print_str.data());
+
+		}
 	}
 	else
 	{
