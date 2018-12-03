@@ -119,6 +119,7 @@
     <ClCompile Include="LocalVariable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MetaArray.cpp" />
+    <ClCompile Include="MetaClass.cpp" />
     <ClCompile Include="Method.cpp" />
     <ClCompile Include="print2dot.cpp" />
     <ClCompile Include="REAL.cpp" />
