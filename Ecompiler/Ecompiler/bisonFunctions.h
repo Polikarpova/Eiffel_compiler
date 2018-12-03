@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 
+// #include "eiffel_bison.tab.h"
 
 struct NExpr* createIntConstExpr (int token);
 struct NExpr* createRealConstExpr (double token);

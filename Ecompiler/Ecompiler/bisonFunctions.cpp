@@ -3,11 +3,15 @@
 // extern struct NClass* currentClass = NULL;
 extern struct NIdList* currentFeatureClients;
 
+// запоминание текущего положения
+extern YYLTYPE global_loc;
+
+#define SAVELOC { Result->loc = global_loc; }
 
 struct NExpr* createIntConstExpr (int token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
-		
+	SAVELOC
 	Result->type = IntE;
 	Result->value.Int = token;
 
@@ -20,6 +24,7 @@ struct NExpr* createIntConstExpr (int token)
 struct NExpr* createRealConstExpr (double token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
+	SAVELOC // продолжить
 	Result->type = RealE;
 	Result->value.Real = token;
 

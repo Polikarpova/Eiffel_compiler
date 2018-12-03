@@ -20,8 +20,35 @@ struct NClassList* root;
 char* syntax_errors[MAX_SYNTAX_ERRORS];
 int syntax_errors_logged = 0;
 void yyerror (const char *s); //  см. ниже: —екци€ пользовательского кода
-
 /* </ Error handling > */
+
+
+// запоминание текущего положени€
+struct YYLTYPE global_loc;
+
+/* eiffel_bison.tab.cpp: line 919
+   YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
+   If N is 0, then set CURRENT to the empty location which ends
+   the previous symbol: RHS[0] (always defined).  */
+
+# define YYLLOC_DEFAULT(Current, Rhs, N)                                \
+    do {                                                                \
+      if (N)                                                            \
+        {                                                               \
+          (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
+          (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
+          (Current).last_line    = YYRHSLOC (Rhs, N).last_line;         \
+          (Current).last_column  = YYRHSLOC (Rhs, N).last_column;       \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).first_line   = (Current).last_line   =              \
+            YYRHSLOC (Rhs, 0).last_line;                                \
+          (Current).first_column = (Current).last_column =              \
+            YYRHSLOC (Rhs, 0).last_column;                              \
+        }                                                               \
+        global_loc = (Current);                                         \
+    } while (0)
 
 %}
 

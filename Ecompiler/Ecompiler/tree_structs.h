@@ -31,16 +31,24 @@ struct NInheritFromClass;
 struct NInheritFromClassList;
 
 
+struct YYLTYPE;
+// #include "bisonFunctions.h"
+#include "eiffel_bison.tab.h"
+
+#define DECLLOC struct YYLTYPE loc;
+
 /* Структуры */
 
 /* ID - идентификатор */
 struct NId
 {
+	DECLLOC
 	char* id;
 	struct NId* next;
 };	
 struct NIdList
 {
+	DECLLOC
 	struct NId* first;
 	struct NId* last;
 };	
@@ -66,6 +74,7 @@ enum ExprType
 /* Expr - выражение */
 struct NExpr
 {
+	DECLLOC
 	enum ExprType type;
 	union {
 		int Int;
@@ -88,6 +97,7 @@ struct NExpr
 };
 struct NExprList
 {
+	DECLLOC
 	struct NExpr* first;
 	struct NExpr* last;
 };
@@ -98,6 +108,7 @@ enum StmtType {CreateSt, AssignSt, ExprSt, IfSt, LoopSt};
 /* Statement - оператор языка */
 struct NStmt
 {
+	DECLLOC
 	enum StmtType type;
 	
 	union
@@ -113,6 +124,7 @@ struct NStmt
 };
 struct NStmtList
 {
+	DECLLOC
 	struct NStmt* first;
 	struct NStmt* last;
 };
@@ -126,6 +138,7 @@ enum ValType
 /*  Тип объявлений */
 struct NType
 {
+	DECLLOC
 	enum ValType type;
 	char* className;	// not NULL for ClassV only
 	struct NType* itemType; // not NULL for ArrayV only
@@ -135,6 +148,7 @@ struct NType
 /* Оператор присваивания */
 struct NAssignStmt
 {
+	DECLLOC
 	struct NExpr* left; // the ref chain must not end with call
 	struct NExpr* expr;
 };
@@ -142,12 +156,14 @@ struct NAssignStmt
 /* Условное ветвление */
 struct NIfStmt
 {
+	DECLLOC
 	struct NThenPartList* thenPart;
 	struct NElsePart* elsePart;
 };
 
 struct NThenPart
 {
+	DECLLOC
 	struct NExpr* cond;
 	struct NStmtList* stmtList;
 	
@@ -156,18 +172,21 @@ struct NThenPart
 
 struct NThenPartList
 {
+	DECLLOC
 	struct NThenPart* first;
 	struct NThenPart* last;
 };
 
 struct NElsePart
 {
+	DECLLOC
 	struct NStmtList* stmtList;
 };
 
 /*цикл*/
 struct NLoopStmt
 {
+	DECLLOC
 	struct NStmtList* stmtListOpt;
 	struct NExpr* cond;
 	struct NStmtList* stmtList;
@@ -176,6 +195,7 @@ struct NLoopStmt
 /*класс*/
 struct NClass
 {
+	DECLLOC
 	char* className;
 	struct NInheritFromClassList* inheritance; // NULL если отсутствует
 	struct NIdList* creationList; // NULL если отсутствует
@@ -185,12 +205,14 @@ struct NClass
 };
 struct NClassList
 {
+	DECLLOC
 	struct NClass* first;
 	struct NClass* last;
 };
 
 struct NFeature
 {
+	DECLLOC
 	// признак поля: routineBody == NULL
 	struct NIdList* clients; // видимость для: указанных классов / ANY (или пусто?) / NONE
 	
@@ -204,6 +226,7 @@ struct NFeature
 };
 struct NFeatureList
 {
+	DECLLOC
 	struct NFeature* first;
 	struct NFeature* last;
 };
@@ -211,18 +234,21 @@ struct NFeatureList
 /* Имя и тип: формальные параметры и объявления локальных переменных */
 struct NNameAndType
 {
+	DECLLOC
 	char* name;
 	struct NType* type;
 	struct NNameAndType* next;
 };
 struct NNameAndTypeList
 {
+	DECLLOC
 	struct NNameAndType* first;
 	struct NNameAndType* last;
 };
 
 struct NInheritFromClass
 {
+	DECLLOC
 	char* className;
 	/*struct NIdList* renameList; // NULL если отсутствует
 	struct NIdList* undefineList; // NULL если отсутствует */
@@ -232,6 +258,7 @@ struct NInheritFromClass
 };
 struct NInheritFromClassList
 {
+	DECLLOC
 	struct NInheritFromClass* first;
 	struct NInheritFromClass* last;
 };

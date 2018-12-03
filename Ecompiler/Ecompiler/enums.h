@@ -20,11 +20,11 @@ union JvmConstantValue {
 };
 
 enum JvmConstantType {
-	INT4,
-	REAL,
-	UTF8,
-	STRING,
-	CLASS,
+	INT4_VALUE,
+	REAL_VALUE,
+	UTF8_VALUE,
+	STRING_N,
+	CLASS_N,
 	NAME_AND_TYPE,
 	METHOD_REF,
 	FIELD_REF
