@@ -13,6 +13,7 @@ extern char** syntax_errors;
 extern int syntax_errors_logged;
 /* </ Error handling > */
 
+#include "EiffelProgram.h"
 
 // tests
 #include "bisontest.h"
@@ -66,13 +67,10 @@ int main(int argc, char *argv[])
 	printf("Processing file %s...\n", file_name);
 
 	yyin = fopen(file_name, "r");
-
 	int parse_result = yyparse();
-
 	fclose(yyin);
 
 	printf("yyparse() returned %i\n", parse_result);
-
 	printf("ROOT: %p\n", root);
 
 	if(root)
@@ -83,7 +81,11 @@ int main(int argc, char *argv[])
 		print2dot(file_name, root);
 		printf("see picture %s\n",file_name);
 		// run dot & kill current process
+// TODO! replace `execlpe` with `spawn**` for this .exe be able to continue
 		execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
+
+		// make semantic classes
+		EiffelProgram* program = EiffelProgram::create(root);
 	}
 	else
 	{

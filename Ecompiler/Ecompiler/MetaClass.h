@@ -25,14 +25,18 @@ public:
 	static MetaClass* create(struct NClass* s);
 
 	/*fields*/
+	MetaClass* parent;
+
 	short int name_constN, class_constN;
 	ConstantTable constantTable;
-
-	MetaClass* parent;
 
 	QMap<short int, Field*> fields;		//таблица полей {имя-константа UTF8 -> поле}
 	QMap<short int, Method*> methods;	//таблица методов {имя-константа UTF8 -> метод}
 
+	/*getters*/
+	QString name() { return * constantTable.get(name_constN).value.utf8; };
+
+	/*functions*/
 	static MetaClass* create(EiffelProgram* program, struct NClass* class_node);
 
 };
