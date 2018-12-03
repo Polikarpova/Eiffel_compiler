@@ -21,7 +21,7 @@ public:
 	* Возврашает константу по номеру n: [1...N] - номер по таблице констант
 	* А если такого номера нет, то isInvalid = true
 	*/
-	JvmConstant get(int n); 
+	JvmConstant get(int n) {return constants[n-1];}; 
 	
 	/**
 	* Добавляет константу если её нет
@@ -31,5 +31,5 @@ public:
 	int put(JvmConstant cnst);
 
 	/*fields*/
-	QList<JvmConstant> constants;
+	QList<JvmConstant> constants; // номер константы = индекс + 1
 };

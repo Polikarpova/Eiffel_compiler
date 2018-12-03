@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 		execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
 
 		// make semantic classes
-		EiffelProgram* program = EiffelProgram::create(root);
+		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 	}
 	else
 	{

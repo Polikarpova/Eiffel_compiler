@@ -13,9 +13,20 @@ EiffelProgram::~EiffelProgram(void)
 }
 
 
-/*static*/ EiffelProgram* EiffelProgram::create(struct NClassList* List)
+/*static*/ EiffelProgram* EiffelProgram::create(struct NClassList* List, char** syntaxErrors/* = 0*/, int syntaxErrorsN/* = 0*/)
 {
 	EiffelProgram* program = new EiffelProgram();
+
+	// iterate errors
+	if(syntaxErrors && syntaxErrorsN)
+	{
+		for(int i=0 ; i<syntaxErrorsN ; ++i)
+		{
+			CompilerError ce = {QString::fromUtf8("syntax"), QString::fromUtf8(syntaxErrors[i]), -1};
+			program->errors.push_back(ce);
+		}
+	}
+
 
 	// iterate classes
 	for(struct NClass* i = List->first ;  ; i = i->next )

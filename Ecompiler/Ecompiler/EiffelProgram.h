@@ -5,6 +5,12 @@
 #include <tree_structs.h>
 #include "FeatureClients.h"
 
+struct CompilerError
+{
+	QString type, message;
+	int line; // -1 : unknown line
+};
+
 class EiffelProgram {
 
 public:
@@ -13,7 +19,10 @@ public:
 
 	QMap<QString, MetaClass*> classes;
 
-	QSet<FeatureClients*> clients; //список классов - клиентов члена класса (feature)
+	//! список классов - клиентов члена класса (feature)
+	QSet<FeatureClients*> clients;
+	
+	QList<CompilerError> errors;
 
-	static EiffelProgram* create(struct NClassList* root);
+	static EiffelProgram* create(struct NClassList* root, char** syntaxErrors = 0, int syntaxErrorsN = 0);
 };
