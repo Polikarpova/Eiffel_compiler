@@ -19,9 +19,9 @@ public:
 	byte* toByteCode();
 
 	/*fields*/
-	short int	name,
-				nameAndTypeConstantNumber,
-				methodrefConstantNumber;
+	short int	name_constN,
+				nameAndType_constN,
+				methodref_constN;
 	bool isCreator;
 	FeatureClients* clients;
 	

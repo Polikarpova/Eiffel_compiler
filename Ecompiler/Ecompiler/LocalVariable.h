@@ -10,7 +10,7 @@ public:
 	~LocalVariable(void);
 
 	/*fields*/
-	short int name;
+	short int name_constN;
 	int n;
 	EiffelType* type;
 };

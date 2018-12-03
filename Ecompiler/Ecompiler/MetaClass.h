@@ -8,6 +8,8 @@
 
 typedef char byte;
 
+class EiffelProgram;
+
 class MetaClass {
 
 public:
@@ -15,17 +17,22 @@ public:
 	MetaClass() {};
 	~MetaClass() {};
 
+	EiffelProgram* program;
+
 	/*methods*/
-	void doSemantic();
+	//void doSemantic();
 	byte* toByteCode();
 	static MetaClass* create(struct NClass* s);
 
 	/*fields*/
-	short int name, classConstantNumber;
+	short int name_constN, class_constN;
 	ConstantTable constantTable;
 
 	MetaClass* parent;
 
 	QMap<short int, Field*> fields;		//таблица полей {имя-константа UTF8 -> поле}
 	QMap<short int, Method*> methods;	//таблица методов {имя-константа UTF8 -> метод}
+
+	static MetaClass* create(EiffelProgram* program, struct NClass* class_node);
+
 };

@@ -11,9 +11,9 @@ public:
 	Field(void);
 	~Field(void);
 
-	short int	name,
-				nameAndTypeConstantNumber,
-				fieldrefConstantNumber;
+	short int	name_constN,
+				nameAndType_constN,
+				fieldref_constN;
 	FeatureClients* clients;
 	EiffelType* type;
 };
