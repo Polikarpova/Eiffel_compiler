@@ -24,7 +24,7 @@ struct NExpr* createIntConstExpr (int token)
 struct NExpr* createRealConstExpr (double token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
-	SAVELOC // продолжить
+	SAVELOC
 	Result->type = RealE;
 	Result->value.Real = token;
 
@@ -38,6 +38,7 @@ struct NExpr* createCharConstExpr (char token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = CharE;
 	Result->value.Char = token;
 
@@ -51,6 +52,7 @@ struct NExpr* createStringConstExpr (char* token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = StringE;
 	// Result->value.String=(char *)malloc(strlen(token)+1);
 	// strcpy(Result->value.String, token);
@@ -66,6 +68,7 @@ struct NExpr* createBoolConstExpr (bool token)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = BoolE;
 	Result->value.Bool = token;
 
@@ -79,6 +82,7 @@ struct NExpr* createRefnCallExpr (struct NExpr* left_opt, char* id, struct NExpr
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = RefnCallE;
 	Result->value.id = id;
 
@@ -120,6 +124,7 @@ struct NExpr* createPrecursorExpr (char* id_opt, struct NExprList* ExprList_opt)
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = PrecursorE;
 	Result->value.id = id_opt;
 	Result->ExprList = ExprList_opt;
@@ -134,6 +139,7 @@ struct NExpr* createExpr (enum ExprType type, struct NExpr* left, struct NExpr* 
 {
 	struct NExpr* Result = (struct NExpr*) malloc(sizeof (struct NExpr));
 		
+	SAVELOC
 	Result->type = type;
 	Result->left = left;
 	Result->right = right;
@@ -146,6 +152,7 @@ struct NExprList* createExprList (struct NExpr* expr)
 {
 	struct NExprList* Result = (struct NExprList*) malloc(sizeof (struct NExprList));
 
+	SAVELOC
 	Result->first = expr;
 	Result->last = expr;
 
@@ -164,6 +171,7 @@ struct NAssignStmt* createAssignStmt(struct NExpr* left, struct NExpr* expr)
 {
 	struct NAssignStmt* Result = (struct NAssignStmt*) malloc(sizeof (struct NAssignStmt));
 
+	SAVELOC
 	Result->left = left;
 	Result->expr = expr;
 
@@ -196,6 +204,7 @@ struct NId* createId(char* id)
 {
 	struct NId* Result = (struct NId*) malloc(sizeof (struct NId));
 
+	SAVELOC
 	Result->id = id;
 	
 	Result->next = NULL;
@@ -206,6 +215,7 @@ struct NIdList* createIdList(struct NId* id)
 {
 	struct NIdList* Result = (struct NIdList*) malloc(sizeof (struct NIdList));
 
+	SAVELOC
 	Result->first = id;
 	Result->last = id;
 
@@ -225,6 +235,7 @@ struct NIfStmt* createIfStmt (struct NThenPartList* thenPartList, struct NElsePa
 {
 	struct NIfStmt* Result = (struct NIfStmt*) malloc(sizeof (struct NIfStmt));
 
+	SAVELOC
 	Result->thenPart = thenPartList;
 	Result->elsePart = elsePart;
 
@@ -235,6 +246,7 @@ struct NThenPartList* createThenPartList(struct NThenPart* thenPart)
 {
 	struct NThenPartList* Result = (struct NThenPartList*) malloc(sizeof (struct NThenPartList));
 
+	SAVELOC
 	Result->first = thenPart;
 	Result->last = thenPart;
 
@@ -253,6 +265,7 @@ struct NThenPart* createThenPart(struct NExpr* cond, struct NStmtList* stmtList)
 {
 	struct NThenPart* Result = (struct NThenPart*) malloc(sizeof (struct NThenPart));
 
+	SAVELOC
 	Result->cond = cond;
 	Result->stmtList = stmtList;
 
@@ -263,6 +276,7 @@ struct NElsePart* createElsePart(struct NStmtList* stmtList)
 {
 	struct NElsePart* Result = (struct NElsePart*) malloc(sizeof (struct NElsePart));
 
+	SAVELOC
 	Result->stmtList = stmtList;
 
 	return Result;
@@ -273,6 +287,7 @@ struct NLoopStmt* createFromLoop(struct NStmtList* stmtListOpt, struct NExpr* co
 {
 	struct NLoopStmt* Result = (struct NLoopStmt*) malloc(sizeof (struct NLoopStmt));
 
+	SAVELOC
 	Result->stmtListOpt = stmtListOpt;
 	Result->cond = cond;
 	Result->stmtList = stmtList;
@@ -289,6 +304,7 @@ struct NNameAndType* createNameAndType(char* name, struct NType* type)
 	// struct NNameAndType* Result = (struct NNameAndType*) malloc(sizeof (struct NNameAndType));
 	ALLOCATE_POINTER_AS(Result, struct NNameAndType)
 
+	SAVELOC
 	Result->name = name;
 	Result->type = type;
 
@@ -299,6 +315,7 @@ struct NNameAndTypeList* createNameAndTypeList(struct NNameAndType* elem)
 {
 	ALLOCATE_POINTER_AS(Result, struct NNameAndTypeList)
 
+	SAVELOC
 	Result->first = elem;
 	Result->last = elem;
 
@@ -328,6 +345,8 @@ struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, 
 	struct NNameAndTypeList* Result;
 	// assume idList contains at least 1 element
 	struct NId* prevId, *curId = idList->first;
+	
+	SAVELOC
 	Result = createNameAndTypeList(createNameAndType(curId->id,type));
 	while(curId != idList->last) // curId - последний обработанный элемент
 	{
@@ -347,6 +366,7 @@ struct NType* createType(enum ValType type, char* className/* =0 */, struct NTyp
 {
 	ALLOCATE_POINTER_AS(Result, struct NType)
 
+	SAVELOC
 	Result->type = type;
 	Result->className = className;
 	Result->itemType = itemType;
@@ -358,6 +378,7 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 {
 	ALLOCATE_POINTER_AS(Result, struct NStmt)
 
+	SAVELOC
 	Result->type = type;
 	switch(type)
 	{
@@ -382,6 +403,7 @@ struct NStmtList* createStmtList(struct NStmt* elem)
 	
 	ALLOCATE_POINTER_AS(Result, struct NStmtList)
 
+	SAVELOC
 	Result->first = elem;
 	Result->last = elem;
 
@@ -404,6 +426,7 @@ struct NFeature* createFeature(char* name, struct NNameAndTypeList* params, stru
 {
 	ALLOCATE_POINTER_AS(Result, struct NFeature)
 
+	SAVELOC
 	Result->clients = currentFeatureClients; /*use global var*/
 	
 	Result->name = name;
@@ -419,6 +442,7 @@ struct NFeatureList* createFeatureList(struct NFeature* elem)
 {
 	ALLOCATE_POINTER_AS(Result, struct NFeatureList)
 
+	SAVELOC
 	Result->first = elem;
 	Result->last = elem;
 
@@ -438,6 +462,7 @@ struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
 	// assume natList contains at least 1 element
 	struct NNameAndType* prevNat, *curNat = natList->first;
 	// create attribute & place it into list
+	SAVELOC
 	Result = createFeatureList(createFeature(curNat->name,0,curNat->type,0,0));
 	while(curNat != natList->last) // curNat - последний обработанный элемент
 	{
@@ -474,6 +499,7 @@ struct NClass* createClass(char* className, struct NInheritFromClassList* inheri
 {
 	ALLOCATE_POINTER_AS(Result, struct NClass)
 	
+	SAVELOC
 	Result->className = className;
 	Result->inheritance = inheritance;
 	Result->creationList = creationList;
@@ -486,6 +512,7 @@ struct NClassList* createClassList(struct NClass* elem)
 {
 	ALLOCATE_POINTER_AS(Result, struct NClassList)
 
+	SAVELOC
 	Result->first = elem;
 	Result->last = elem;
 
@@ -504,6 +531,7 @@ struct NInheritFromClass* createInheritFromClass(char* className, /*struct NIdLi
 {
 	ALLOCATE_POINTER_AS(Result, struct NInheritFromClass)
 	
+	SAVELOC
 	Result->className = className;
 	/*Result->renameList = renameList;
 	Result->undefineList = undefineList; */
@@ -516,6 +544,7 @@ struct NInheritFromClassList* createInheritFromClassList(struct NInheritFromClas
 {
 	ALLOCATE_POINTER_AS(Result, struct NInheritFromClassList)
 
+	SAVELOC
 	Result->first = elem;
 	Result->last = elem;
 
