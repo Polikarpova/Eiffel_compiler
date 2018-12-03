@@ -5,10 +5,8 @@
 
 struct NId;
 struct NIdList;
-// enum ExprType;
 struct NExpr;
 struct NExprList;
-struct NClassList;
 struct NStmt;
 struct NStmtList;
 struct NType;
@@ -31,8 +29,7 @@ struct NInheritFromClass;
 struct NInheritFromClassList;
 
 
-struct YYLTYPE;
-// #include "bisonFunctions.h"
+struct YYLTYPE; // from
 #include "eiffel_bison.tab.h"
 
 #define DECLLOC struct YYLTYPE loc;

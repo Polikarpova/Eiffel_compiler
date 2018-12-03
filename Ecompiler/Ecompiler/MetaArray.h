@@ -9,6 +9,6 @@ public:
 	MetaArray(void) {};
 	~MetaArray(void) {};
 
-	EiffelType * ElementType;
+	EiffelType * elementType;
 
 };
