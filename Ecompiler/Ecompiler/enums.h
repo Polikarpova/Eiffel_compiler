@@ -12,7 +12,7 @@ union JvmConstantValue {
 	long int int4;
 	float real;
 	QString* utf8;
-	short int	string, 
+	short int	string_const, 
 				class_const,
 				name_and_type[2],
 				method_ref[2],
