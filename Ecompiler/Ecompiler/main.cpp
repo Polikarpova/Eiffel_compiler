@@ -117,7 +117,11 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	+ export tree to DOT
-	+ test parsing empty class, empty features, etc
+	- remove semantics part from ReadMe
+	- remove flex file build step from build (turn off)
+	- apply changes in semantics DOC from 4.12.2018
+	- case-insensitive IDs comparation
+	tip. ID to store: 1st encountered variant (other entries may differ in letter case)
+	- create ByteCode compiler class
 */
 
