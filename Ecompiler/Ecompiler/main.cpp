@@ -2,7 +2,8 @@
 #include <string>
 #include "print2dot.h"
 
-#include <process.h>
+// #include <process.h>
+#include <QProcess>
 
 extern FILE *yyin;
 extern int yyparse();
@@ -83,26 +84,17 @@ int main(int argc, char *argv[])
 		strcat(file_name, ".dot");
 	
 		print2dot(file_name, root);
-		printf("see picture %s\n",file_name);
-		// run dot & kill current process
-// TODO! replace `execlpe` with `spawn**` for this .exe be able to continue
-		//execlpe("cmd", "/c", "run_dot.bat", in_fnm, "../../samples/test", 0,0,0);
+		printf("check out tree in %s\n",file_name);
+
 
 		// make semantic classes
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 		
 		printf("\n ====== Error List: ======\n");
-		//foreach(CompilerError ce, EiffelProgram::currentProgram->errors)
-		//{
-		//	QString print_str = QString("%1 error%3: %2.")
-		//		.arg(ce.type,ce.message)
-		//		.arg(ce.line<0 ?
-		//			("") :
-		//			(QString(" at line %1").arg(ce.line))
-		//			);
-		//	wprintf(L"%s\n",print_str.data());
 
-		//}
+
+		// run dot
+		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
 	}
 	else
 	{
@@ -128,3 +120,4 @@ int main(int argc, char *argv[])
 	+ export tree to DOT
 	+ test parsing empty class, empty features, etc
 */
+

@@ -1,4 +1,6 @@
-REM echo off
+echo off
+echo running dot on %1...
+REM pause
 
 REM make dir test
 if NOT EXIST %2 ( 
@@ -16,4 +18,4 @@ if NOT EXIST %DOT% (
 %DOT% -Tpng %1.dot -o %2/%~nx1.png
 erase %~dp1*.dot
 
-echo picture created: %2/%~nx1.png
+
