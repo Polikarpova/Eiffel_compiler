@@ -1,4 +1,4 @@
-echo off
+REM echo off
 
 REM make dir test
 if NOT EXIST %2 ( 

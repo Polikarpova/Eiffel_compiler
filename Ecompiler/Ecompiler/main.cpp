@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 
 	if(root)
 	{
+		printf("first_line: %d, last_line: %d \n",root->loc.first_line, root->loc.last_line);
 		strcpy(file_name, in_fnm);
 		strcat(file_name, ".dot");
 	
@@ -127,4 +128,3 @@ int main(int argc, char *argv[])
 	+ export tree to DOT
 	+ test parsing empty class, empty features, etc
 */
-
