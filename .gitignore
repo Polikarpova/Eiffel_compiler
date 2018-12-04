@@ -1,6 +1,4 @@
-/flex/flex/*.filters
 /flex/flex/eiffel_bkp.flex
-*.vcxproj.filters
 *.vcxproj.user
 /flex/flex/output.txt
 /flex/flex/php.flex

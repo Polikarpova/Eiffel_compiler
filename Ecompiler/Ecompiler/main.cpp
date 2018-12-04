@@ -92,17 +92,17 @@ int main(int argc, char *argv[])
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 		
 		printf("\n ====== Error List: ======\n");
-		foreach(CompilerError ce, EiffelProgram::currentProgram->errors)
-		{
-			QString print_str = QString("%1 error%3: %2.")
-				.arg(ce.type,ce.message)
-				.arg(ce.line<0 ?
-					("") :
-					(QString(" at line %1").arg(ce.line))
-					);
-			wprintf(L"%s\n",print_str.data());
+		//foreach(CompilerError ce, EiffelProgram::currentProgram->errors)
+		//{
+		//	QString print_str = QString("%1 error%3: %2.")
+		//		.arg(ce.type,ce.message)
+		//		.arg(ce.line<0 ?
+		//			("") :
+		//			(QString(" at line %1").arg(ce.line))
+		//			);
+		//	wprintf(L"%s\n",print_str.data());
 
-		}
+		//}
 	}
 	else
 	{
