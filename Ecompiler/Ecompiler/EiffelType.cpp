@@ -17,7 +17,7 @@ EiffelType::~EiffelType(void)
 	switch(type->type) {
 	
 		case VoidV:
-			return new VoidType();
+			return new VoidType(type);
 		case ClassV:
 			return 0;
 		case ArrayV:

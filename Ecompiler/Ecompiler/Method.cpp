@@ -104,10 +104,11 @@ Method::~Method(void)
 	}
 
 	EiffelType* et =  EiffelType::create(node->type);
+	mtd->tree_node = node;
 	mtd->descriptor = mtd->createDescriptor(et);
 	delete et;
 
-	return NULL;
+	return mtd;
 }
 
 QString Method::createDescriptor(EiffelType* type) {
@@ -115,6 +116,7 @@ QString Method::createDescriptor(EiffelType* type) {
 	QString result = "(";
 
 	//пройтись по всем параметрам
+	if ( this->tree_node->params != NULL )
 	for(NNameAndType* i = this->tree_node->params->first; ; i = i->next) {
 	
 		EiffelType* et = EiffelType::create(i->type);
@@ -124,7 +126,7 @@ QString Method::createDescriptor(EiffelType* type) {
 	result += ")";
 
 	//добавить дескриптор возвращаемого значения
-	result += this->getTypeDescriptor(this->type);
+	result += this->getTypeDescriptor(type);
 
 	return result;
 }
