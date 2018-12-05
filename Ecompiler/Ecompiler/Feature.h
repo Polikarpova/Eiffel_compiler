@@ -19,6 +19,11 @@ public:
 	EiffelType* type;
 
 
+	/*methods*/
 	static bool create(MetaClass* mc, struct NFeature* s);
+
+	void recordClients(const struct NIdList* List);
+	QString createDescriptor() { return QString(""); };
+
 };
 

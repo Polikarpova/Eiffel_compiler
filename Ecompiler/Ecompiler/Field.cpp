@@ -17,3 +17,8 @@ Field::~Field(void)
 
 	return success? fd : NULL;
 }
+
+QString Field::createDescriptor() {
+
+	return QString("");
+}

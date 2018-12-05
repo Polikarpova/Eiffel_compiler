@@ -38,5 +38,7 @@ public:
 	/*methods*/
 
 	static Method* create(MetaClass* mc, struct NFeature* node);
+
+	QString createDescriptor();
 };
 

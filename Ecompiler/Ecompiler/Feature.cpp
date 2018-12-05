@@ -42,7 +42,25 @@ Feature::~Feature(void)
 
 	// set data which is common for Method & Field
 	fe->name = name;
+	fe->recordClients(s->clients);
 
+	fe->descriptor = fe->createDescriptor();
 
 	return success;
+}
+
+void Feature::recordClients(const struct NIdList* List) {
+
+	if ( List == NULL ) {
+	
+		this->clients.insert("ANY");
+	} else {
+	
+		for(struct NId* i = List->first; ; i = i->next) {
+		
+			this->clients.insert( QString(i->id).toUpper() );
+
+			if(i == List->last) break;
+		}
+	}
 }

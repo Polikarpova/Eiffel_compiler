@@ -58,3 +58,8 @@ Method::~Method(void)
 
 	return NULL;
 }
+
+QString Method::createDescriptor() {
+
+	return QString("");
+}
