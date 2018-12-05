@@ -51,6 +51,7 @@ Feature::~Feature(void)
 	fe->descriptor = fe->createDescriptor();
 
 	return true;
+}
 
 bool Feature::isNameConflicting(MetaClass* mc, const QString& lowerName) {
 	if( MetaClass::isNameConflicting(lowerName.toUpper()) )
