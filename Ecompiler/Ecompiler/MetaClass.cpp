@@ -49,6 +49,21 @@ bool MetaClass::createFeatures() {
 
 	bool success = false;
 
+	struct NFeatureList* List = tree_node->featureList;
+	// iterate
+	if(List) {
+		for(struct NFeature* i = List->first ;  ; i = i->next )
+		{
+			success = Feature::create(this, i);
+
+			if(i == List->last) break;
+		}
+	}
+
+	return 0;
+}
+bool MetaClass::round3()
+{
 	/* ПРОВЕРИТЬ число родителей и запомнить родителя (ANY по умолчанию)
 	struct NInheritFromClassList* List =  tree_node->inheritance;
 	int parents_count = 0;
@@ -63,18 +78,13 @@ bool MetaClass::createFeatures() {
 	}
 	// ... */
 	
-	struct NFeatureList* List = tree_node->featureList;
-	// iterate
-	if(List) {
-		for(struct NFeature* i = List->first ;  ; i = i->next )
-		{
-			success = Feature::create(this, i);
-
-			if(i == List->last) break;
-		}
+ 
+	foreach(Method* mtd, this->methods)
+	{
+		//mtd->***();
 	}
 
-	return 0;
+	return true;
 }
 
 bool MetaClass::isNameConflicting(const QString& upperName) {

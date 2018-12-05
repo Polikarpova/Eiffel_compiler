@@ -31,7 +31,10 @@ public:
 		return errors.size();
 	}
 
+	/** Проход 2 */
 	bool round2();
+	/** Проход 3 */
+	bool round3();
 	void createRTL();
 
 	/*functions*/

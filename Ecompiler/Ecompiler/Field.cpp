@@ -23,13 +23,16 @@ QString Field::createDescriptor(EiffelType* type) {
 
 	QString result = "";
 	
-	switch(type->tree_node->type) {
+
+	EiffelClass* ec;
+
+	switch(this->type->tree_node->type) {
 	
 		case VoidV:
 			//Выдать ошибку?
 			break;
 		case ClassV:
-			EiffelClass* ec = (EiffelClass*)type;
+			/* EiffelClass* */ ec = (EiffelClass*)this->type;
 			result += "L" + ec->className + ";";
 			break;
 		case ArrayV:

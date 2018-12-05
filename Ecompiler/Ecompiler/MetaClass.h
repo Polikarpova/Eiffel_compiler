@@ -25,7 +25,7 @@ public:
 	/*fields*/
 	struct NClass* tree_node;
 
-	bool isAbstract;
+	bool isAbstract; // Истина для ANY, NONE
 	EiffelProgram* program;
 
 	MetaClass* parent;
@@ -45,7 +45,10 @@ public:
 	//void doSemantic();
 	byte* toByteCode();
 	
+	/** Проход 2 */
 	bool createFeatures();
+	/** Проход 3 */
+	bool round3();
 
 
 	/*functions*/

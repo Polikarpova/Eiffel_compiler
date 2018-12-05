@@ -56,6 +56,15 @@ bool EiffelProgram::round2()
 
 	return true;
 }
+bool EiffelProgram::round3()
+{
+	foreach(MetaClass* mc, this->classes)
+	{
+		mc->round3();
+	}
+
+	return true;
+}
 
 
 void EiffelProgram::createRTL()
