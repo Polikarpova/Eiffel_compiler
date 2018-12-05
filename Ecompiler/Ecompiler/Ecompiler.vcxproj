@@ -156,7 +156,7 @@
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="LocalVariable.h" />
-    <ClInclude Include="MetaArray.h" />
+    <ClInclude Include="EiffelArray.h" />
     <ClInclude Include="MetaClass.h" />
     <ClInclude Include="Method.h" />
     <ClInclude Include="print2dot.h" />

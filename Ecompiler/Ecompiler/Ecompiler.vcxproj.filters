@@ -139,9 +139,6 @@
     <ClInclude Include="RTLMetaClass.h">
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
-    <ClInclude Include="MetaArray.h">
-      <Filter>Header Files\TypeClasses</Filter>
-    </ClInclude>
     <ClInclude Include="VoidType.h">
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
@@ -158,6 +155,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EiffelSTRING.h">
+      <Filter>Header Files\TypeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="EiffelArray.h">
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
   </ItemGroup>
