@@ -151,7 +151,6 @@
     <ClInclude Include="eiffel_bison.tab.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="Feature.h" />
-    <ClInclude Include="FeatureClients.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="INTEGER.h" />
     <ClInclude Include="JvmConstant.h" />

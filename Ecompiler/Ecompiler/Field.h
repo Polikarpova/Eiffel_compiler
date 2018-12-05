@@ -1,7 +1,7 @@
 #pragma once
 #include "feature.h"
-#include "FeatureClients.h"
 #include "EiffelType.h"
+#include "qset.h"
 
 class Field : public Feature
 {
@@ -14,7 +14,7 @@ public:
 	short int	name_constN,
 				nameAndType_constN,
 				fieldref_constN;
-	FeatureClients* clients;
+	QSet<QString> clients;
 	EiffelType* type;
 };
 

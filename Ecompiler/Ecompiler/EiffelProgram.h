@@ -3,7 +3,6 @@
 #include <qmap.h>
 
 #include <tree_structs.h>
-#include "FeatureClients.h"
 
 //#include "MetaClass.h"
 class MetaClass;
@@ -21,9 +20,6 @@ public:
 	~EiffelProgram(void);
 
 	QMap<QString, MetaClass*> classes;
-
-	//! список классов - клиентов члена класса (feature)
-	QSet<FeatureClients*> clients;
 	
 	QList<CompilerError> errors;
 

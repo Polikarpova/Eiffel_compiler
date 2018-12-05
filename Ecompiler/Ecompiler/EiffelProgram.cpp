@@ -11,7 +11,6 @@ EiffelProgram::EiffelProgram(void)
 EiffelProgram::~EiffelProgram(void)
 {
 	classes.clear();
-	clients.clear();
 }
 
 

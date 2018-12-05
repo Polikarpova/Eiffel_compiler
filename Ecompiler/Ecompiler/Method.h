@@ -1,10 +1,10 @@
 #pragma once
 #include "feature.h"
-#include "FeatureClients.h"
 #include "EiffelType.h"
 #include "LocalVariable.h"
 #include "Statement.h"
 #include "qmap.h"
+#include "qset.h"
 
 typedef char byte;
 
@@ -23,7 +23,7 @@ public:
 				nameAndType_constN,
 				methodref_constN;
 	bool isCreator;
-	FeatureClients* clients;
+	QSet<QString> clients;
 	
 	/**
 	* Возвращаемое значение
