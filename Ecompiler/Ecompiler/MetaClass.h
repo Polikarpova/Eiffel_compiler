@@ -6,12 +6,12 @@
 
 #include "JvmConstant.h"
 #include "EiffelProgram.h"
-#include "Field.h"
-#include "Method.h"
 
 typedef char byte;
 
 class EiffelProgram;
+class Method;
+class Field;
 
 class MetaClass {
 
@@ -23,6 +23,7 @@ public:
 
 
 	/*fields*/
+	bool isAbstract;
 	EiffelProgram* program;
 
 	MetaClass* parent;
@@ -44,5 +45,7 @@ public:
 
 
 	/*functions*/
-	static MetaClass* create(/*EiffelProgram* program,*/ struct NClass* class_node);
+	static bool create(struct NClass* class_node);
+	
+	bool createFeatures(struct NFeatureList* List);
 };

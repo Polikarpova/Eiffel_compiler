@@ -32,9 +32,7 @@ EiffelProgram::~EiffelProgram(void)
 	// iterate classes
 	for(struct NClass* i = List->first ;  ; i = i->next )
 	{
-		MetaClass* meta_class = MetaClass::create(i);
-		if(meta_class)
-			program->classes[ meta_class->name() ] = meta_class;
+		bool success = MetaClass::create(i);
 		if(i == List->last) break;
 	}
 

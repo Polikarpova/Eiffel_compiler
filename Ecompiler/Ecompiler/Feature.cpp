@@ -1,5 +1,7 @@
 #include "Feature.h"
 
+#include "Method.h"
+#include "Field.h"
 
 Feature::Feature(void)
 {
@@ -10,7 +12,15 @@ Feature::~Feature(void)
 {
 }
 
-Feature* Feature::create(struct NFeature* s) {
+/*static*/ bool Feature::create(MetaClass* mc, struct NFeature* s) {
 
-	return new Feature();
+	bool success = false;
+
+	if ( s->routineBody != NULL ) {	
+		success = Method::create(mc, s);
+	} else {	
+		success = Field::create(mc, s);
+	}
+
+	return success;
 }

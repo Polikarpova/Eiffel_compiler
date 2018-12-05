@@ -6,6 +6,8 @@
 #include "qmap.h"
 #include "qset.h"
 
+#include "MetaClass.h"
+
 typedef char byte;
 
 class Method : public Feature
@@ -23,6 +25,7 @@ public:
 				nameAndType_constN,
 				methodref_constN;
 	bool isCreator;
+	QString descriptor;
 	QSet<QString> clients;
 	
 	/**
@@ -35,10 +38,14 @@ public:
 	* short int : имя переменной-UTF8
 	* Номер п/п хранится в LocalVariable
 	*/
-	QMap<short int, LocalVariable*> localVariables;
+	QMap<QString, LocalVariable*> localVariables;
 
 	int paramCount;
 
 	Statement* body;
+
+	/*methods*/
+
+	static bool create(MetaClass* mc, struct NFeature* node);
 };
 

@@ -1,13 +1,14 @@
 #include "MetaClass.h"
+#include "Feature.h"
 
-
-/*static*/ MetaClass* MetaClass::create(/*EiffelProgram* program,*/ struct NClass* class_node)
+/*static*/ bool MetaClass::create(struct NClass* class_node)
 {
 	// check name collisions
 	EiffelProgram* program = EiffelProgram::currentProgram;
 	QString name(class_node->className);
-	
-	if(program->classes.keys().contains(name.toUpper()))
+	name = name.toUpper();
+
+	if(program->classes.keys().contains(name))
 	{
 		program->logError(
 			QString("semantic"), 
@@ -15,7 +16,7 @@
 				.arg(name),
 			class_node->loc.first_line);
 	
-		return NULL;
+		return false;
 	}
 	else
 	{
@@ -24,7 +25,7 @@
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 
 		jc.type = UTF8_VALUE;
-		jc.value.utf8 = new QString(name.toUpper());
+		jc.value.utf8 = new QString(name);
 		int name_n = mc->constantTable.put(jc);
 		
 		jc.type = CLASS_N;
@@ -34,6 +35,24 @@
 		mc->name_constN  = name_n;
 		mc->class_constN = class_n;
 
-		return mc;
+		if(mc)
+			program->classes[ mc->name() ] = mc;
+
+		return true;
 	}
+}
+
+bool MetaClass::createFeatures(struct NFeatureList* List) {
+
+	bool success = false;
+
+	// iterate
+	for(struct NFeature* i = List->first ;  ; i = i->next )
+	{
+		success = Feature::create(this, i);
+
+		if(i == List->last) break;
+	}
+
+	return 0;
 }

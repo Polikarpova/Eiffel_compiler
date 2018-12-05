@@ -1,5 +1,6 @@
 #pragma once
 #include "EiffelType.h"
+#include <qstring.h>
 
 class LocalVariable
 {
@@ -10,8 +11,7 @@ public:
 	~LocalVariable(void);
 
 	/*fields*/
-	short int name_constN;
+	QString name;
 	int n;
 	EiffelType* type;
 };
-
