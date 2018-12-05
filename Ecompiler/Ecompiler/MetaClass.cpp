@@ -8,7 +8,7 @@
 	QString name(class_node->className);
 	name = name.toUpper();
 
-	if(program->classes.keys().contains(name))
+	if(isNameConflicting(name))
 	{
 		program->logError(
 			QString("semantic"), 
@@ -61,3 +61,9 @@ bool MetaClass::createFeatures() {
 
 	return 0;
 }
+
+bool MetaClass::isNameConflicting(const QString& upperName) {
+	EiffelProgram* program = EiffelProgram::currentProgram;
+	return program->classes.keys().contains(upperName);
+}
+

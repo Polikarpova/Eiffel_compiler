@@ -12,6 +12,7 @@ public:
 	/*fields*/
 	struct NFeature* tree_node;
 
+	MetaClass* metaClass;
 	QString name;
 	QString descriptor;
 	QSet<QString> clients;
@@ -21,6 +22,7 @@ public:
 
 	/*methods*/
 	static bool create(MetaClass* mc, struct NFeature* s);
+	static bool isNameConflicting(MetaClass* mc, const QString& lowerName);
 
 	void recordClients(const struct NIdList* List);
 	QString createDescriptor() { return QString(""); };

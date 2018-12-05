@@ -33,8 +33,8 @@ public:
 	short int name_constN, class_constN;
 	ConstantTable constantTable;
 
-	QMap<short int, Field*> fields;		//таблица полей {имя-константа UTF8 -> поле}
-	QMap<short int, Method*> methods;	//таблица методов {имя-константа UTF8 -> метод}
+	QMap<QString, Field*> fields;		//таблица полей {имя -> поле}
+	QMap<QString, Method*> methods;		//таблица методов {имя -> метод}
 
 
 	/*getters*/
@@ -44,10 +44,11 @@ public:
 	/*methods*/
 	//void doSemantic();
 	byte* toByteCode();
+	
+	bool createFeatures();
 
 
 	/*functions*/
 	static MetaClass* create(struct NClass* class_node);
-	
-	bool createFeatures();
+	static bool isNameConflicting(const QString& upperName);
 };

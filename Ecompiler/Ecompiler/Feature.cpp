@@ -14,14 +14,14 @@ Feature::~Feature(void)
 
 /*static*/ bool Feature::create(MetaClass* mc, struct NFeature* s) {
 
-	bool success = false;
+	//bool success = false;
 
 	QString name(s->name);
 	name = name.toLower();
 
 	EiffelProgram* program = EiffelProgram::currentProgram;
 
-	if(program->classes.keys().contains(name))
+	if(isNameConflicting(mc,name))
 	{
 		program->logError(
 			QString("semantic"), 
@@ -40,13 +40,27 @@ Feature::~Feature(void)
 		fe = Field::create(mc, s);
 	}
 
+	if( !fe )
+		return false;
+
 	// set data which is common for Method & Field
 	fe->name = name;
+	fe->metaClass = mc;
 	fe->recordClients(s->clients);
 
 	fe->descriptor = fe->createDescriptor();
+	return true;
+}
 
-	return success;
+
+bool Feature::isNameConflicting(MetaClass* mc, const QString& lowerName) {
+	if( MetaClass::isNameConflicting(lowerName.toUpper()) )
+		return true;
+
+	return
+		mc->fields.keys().contains(lowerName)
+		||
+		mc->methods.keys().contains(lowerName);
 }
 
 void Feature::recordClients(const struct NIdList* List) {
