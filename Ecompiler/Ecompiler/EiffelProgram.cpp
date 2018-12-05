@@ -19,7 +19,7 @@ EiffelProgram::~EiffelProgram(void)
 	EiffelProgram* program = new EiffelProgram();
 	EiffelProgram::currentProgram = program;
 
-	// iterate errors
+	// iterate existing errors
 	if(syntaxErrors && syntaxErrorsN)
 	{
 		for(int i=0 ; i<syntaxErrorsN ; ++i)
@@ -48,6 +48,8 @@ bool EiffelProgram::round2()
 	 
 	foreach(MetaClass* mc, this->classes)
 	{
-		mc->
+		mc->createFeatures();
 	}
+
+	return true;
 }

@@ -35,4 +35,4 @@ public:
 
 	bool round2();
 
-}
+};

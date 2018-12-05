@@ -10,7 +10,7 @@ Method::~Method(void)
 {
 }
 
-/*static*/ bool Method::create(MetaClass* mc, struct NFeature* node)
+/*static*/ Method* Method::create(MetaClass* mc, struct NFeature* node)
 {
 	/*// check name collisions
 
@@ -56,5 +56,5 @@ Method::~Method(void)
 
 	
 
-	return 0;
+	return NULL;
 }

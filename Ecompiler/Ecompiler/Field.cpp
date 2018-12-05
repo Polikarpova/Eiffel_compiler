@@ -10,9 +10,10 @@ Field::~Field(void)
 {
 }
 
-/*static*/ bool Field::create(MetaClass* mc, struct NFeature* node) {
+/*static*/ Field* Field::create(MetaClass* mc, struct NFeature* node) {
 
 	bool success = false;
+	Field* fd;
 
-	return success;
+	return success? fd : NULL;
 }

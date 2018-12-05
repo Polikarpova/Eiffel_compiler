@@ -32,13 +32,16 @@ Feature::~Feature(void)
 		return false;
 	}
 
+	Feature* fe;
 	if ( s->routineBody != NULL ) {	
-		success = Method::create(mc, s);
+		fe = Method::create(mc, s);
 
 	} else {	
-		success = Field::create(mc, s);
+		fe = Field::create(mc, s);
 	}
 
+	// set data which is common for Method & Field
+	fe->name = name;
 
 
 	return success;

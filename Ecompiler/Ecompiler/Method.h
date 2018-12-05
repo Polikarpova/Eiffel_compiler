@@ -37,6 +37,6 @@ public:
 
 	/*methods*/
 
-	static bool create(MetaClass* mc, struct NFeature* node);
+	static Method* create(MetaClass* mc, struct NFeature* node);
 };
 

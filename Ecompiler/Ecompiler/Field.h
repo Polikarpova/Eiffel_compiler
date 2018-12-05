@@ -12,6 +12,6 @@ public:
 	~Field(void);
 
 	/*methods*/
-	static bool create(MetaClass* mc, struct NFeature* node);
+	static Field* create(MetaClass* mc, struct NFeature* node);
 };
 
