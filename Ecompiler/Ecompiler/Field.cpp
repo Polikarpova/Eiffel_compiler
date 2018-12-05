@@ -1,5 +1,6 @@
 #include "Field.h"
 #include "EiffelClass.h"
+#include "EiffelArray.h"
 
 Field::Field(void)
 {
@@ -18,21 +19,23 @@ Field::~Field(void)
 	return success? fd : NULL;
 }
 
-QString Field::createDescriptor() {
+QString Field::createDescriptor(EiffelType* type) {
 
 	QString result = "";
 	
-	switch(this->type->tree_node->type) {
+	switch(type->tree_node->type) {
 	
 		case VoidV:
 			//Выдать ошибку?
 			break;
 		case ClassV:
-			EiffelClass* ec = (EiffelClass*)this->type;
+			EiffelClass* ec = (EiffelClass*)type;
 			result += "L" + ec->className + ";";
 			break;
 		case ArrayV:
 			result += "[";
+			EiffelArray* ea = (EiffelArray*)type;
+			this->createDescriptor(ea->elementType);
 			break;
 		case IntegerV:
 			result += "I";

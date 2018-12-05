@@ -25,7 +25,6 @@ public:
 	static bool isNameConflicting(MetaClass* mc, const QString& lowerName);
 
 	void recordClients(const struct NIdList* List);
-	QString createDescriptor() { return QString(""); };
-
+	QString createDescriptor(EiffelType* type) { return QString(""); };
 };
 

@@ -1,5 +1,6 @@
 #include "Method.h"
 #include "EiffelClass.h"
+#include "EiffelArray.h"
 
 Method::Method(void)
 {
@@ -103,45 +104,57 @@ Method::~Method(void)
 	return NULL;
 }
 
-QString Method::createDescriptor() {
+QString Method::createDescriptor(EiffelType* type) {
 
 	QString result = "(";
 
 	//пройтись по всем параметрам
-
-	//switch(this->type->tree_node->type) {
-	//
-	//	case VoidV:
-	//		//Выдать ошибку?
-	//		break;
-	//	case ClassV:
-	//		EiffelClass* ec = (EiffelClass*)this->type;
-	//		result += "L" + ec->className + ";";
-	//		break;
-	//	case ArrayV:
-	//		result += "[";
-	//		break;
-	//	case IntegerV:
-	//		result += "I";
-	//		break;
-	//	case RealV:
-	//		result += "D";
-	//		break;
-	//	case CharacterV:
-	//		result += "C";
-	//		break;
-	//	case StringV:
-	//		result += "Ljava/lang/String;";
-	//		break;
-	//	case BooleanV:
-	//		result += "Z";	//true or false
-	//		break;
-	//}
+	for(NNameAndType* i = this->tree_node->params->first; ; i = i->next) {
 	
+		EiffelType* et = EiffelType::create(i->type);
+		result += this->getTypeDescriptor(et);
+	}
 
 	result += ")";
 
 	//добавить дескриптор возвращаемого значения
+	result += this->getTypeDescriptor(this->type);
 
 	return result;
+}
+
+QString Method::getTypeDescriptor(EiffelType* type)
+{
+	QString result;
+
+	switch(type->tree_node->type) {
+	
+		case VoidV:
+			result += "V";
+			return result;
+		case ClassV:
+			EiffelClass* ec = (EiffelClass*)type;
+			result += "L" + ec->className + ";";
+			return result;
+		case ArrayV:
+			result += "[";
+			EiffelArray* ea = (EiffelArray*)type;
+			this->getTypeDescriptor(ea->elementType);
+			return result;
+		case IntegerV:
+			result += "I";
+			return result;
+		case RealV:
+			result += "D";
+			return result;
+		case CharacterV:
+			result += "C";
+			return result;
+		case StringV:
+			result += "Ljava/lang/String;";
+			return result;
+		case BooleanV:
+			result += "Z";	//true or false
+			return result;
+	}
 }

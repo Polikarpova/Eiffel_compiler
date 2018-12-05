@@ -40,6 +40,7 @@ public:
 
 	static Method* create(MetaClass* mc, struct NFeature* node);
 
-	QString createDescriptor();
+	QString createDescriptor(EiffelType* type);
+	QString getTypeDescriptor(EiffelType* type);
 };
 
