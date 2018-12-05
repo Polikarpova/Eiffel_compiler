@@ -12,8 +12,8 @@ Method::~Method(void)
 
 /*static*/ bool Method::create(MetaClass* mc, struct NFeature* node)
 {
-	// check name collisions
-	/*EiffelProgram* program = EiffelProgram::currentProgram;
+	/*// check name collisions
+	EiffelProgram* program = EiffelProgram::currentProgram;
 	QString name(class_node->className);
 	name = name.toUpper();
 
@@ -25,7 +25,7 @@ Method::~Method(void)
 				.arg(name),
 			class_node->loc.first_line);
 	
-		return NULL;
+		return false;
 	}
 	else
 	{
@@ -44,7 +44,13 @@ Method::~Method(void)
 		mc->name_constN  = name_n;
 		mc->class_constN = class_n;
 
-		return mc;
+		if(mc)
+			program->classes[ mc->name() ] = mc;
+
+		return true;
 	}*/
+
+	
+
 	return 0;
 }

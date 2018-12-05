@@ -21,17 +21,8 @@ public:
 	byte* toByteCode();
 
 	/*fields*/
-	short int	name_constN,
-				nameAndType_constN,
-				methodref_constN;
 	bool isCreator;
-	QString descriptor;
-	QSet<QString> clients;
 	
-	/**
-	* Возвращаемое значение
-	*/
-	EiffelType* type;
 
 	/**
 	* Current [0], параметры [1..paramCount], локальные переменные метода
