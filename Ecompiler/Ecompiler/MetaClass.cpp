@@ -7,7 +7,7 @@
 	EiffelProgram* program = EiffelProgram::currentProgram;
 	QString name(class_node->className);
 	
-	if(program->classes.keys().contains(name))
+	if(program->classes.keys().contains(name.toUpper()))
 	{
 		program->logError(
 			QString("semantic"), 
@@ -24,7 +24,7 @@
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 
 		jc.type = UTF8_VALUE;
-		jc.value.utf8 = &name;
+		jc.value.utf8 = new QString(name.toUpper());
 		int name_n = mc->constantTable.put(jc);
 		
 		jc.type = CLASS_N;
