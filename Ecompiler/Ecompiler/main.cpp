@@ -99,14 +99,6 @@ int main(int argc, char *argv[])
 	else
 	{
 		printf("tree was not viewed.\n");
-
-		//printf("Error log:\n");
-		//for( int i=0 ; i<syntax_errors_logged ; ++i )
-		//{
-		//	//printf("%d: %s\n",i,syntax_errors[i]);
-		//	printf("%2d: ",i);
-		//	printf("%s\n", "[error in printf()]");  // syntax_errors[i]);
-		//}
 	}
 
 	if(argc <= 1) // debug mode

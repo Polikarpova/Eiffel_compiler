@@ -93,7 +93,6 @@ bool MetaClass::round3()
 }
 
 bool MetaClass::isNameConflicting(const QString& upperName) {
-	EiffelProgram* program = EiffelProgram::currentProgram;
-	return program->classes.keys().contains(upperName);
+	return EiffelProgram::currentProgram -> findClass(upperName) != NULL;
 }
 
