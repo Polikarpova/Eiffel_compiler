@@ -25,10 +25,12 @@
 		
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 
+		// èìÿ êëàññà
 		jc.type = UTF8_VALUE;
 		jc.value.utf8 = new QString(name);
 		int name_n = mc->constantTable.put(jc);
 		
+		// Class Constant
 		jc.type = CLASS_N;
 		jc.value.class_const = name_n;
 		int class_n = mc->constantTable.put(jc);
@@ -47,16 +49,29 @@ bool MetaClass::createFeatures() {
 
 	bool success = false;
 
-	// ÏĞÎÂÅĞÈÒÜ ÷èñëî ğîäèòåëåé è çàïîìíèòü ğîäèòåëÿ
-	// ...
+	/* ÏĞÎÂÅĞÈÒÜ ÷èñëî ğîäèòåëåé è çàïîìíèòü ğîäèòåëÿ (ANY ïî óìîë÷àíèş)
+	struct NInheritFromClassList* List =  tree_node->inheritance;
+	int parents_count = 0;
+	// iterate
+	if(List) {
+		for(struct NInheritFromClass* i = List->first ;  ; i = i->next )
+		{
+			success = Feature::create(this, i);
+
+			if(i == List->last) break;
+		}
+	}
+	// ... */
 	
 	struct NFeatureList* List = tree_node->featureList;
 	// iterate
-	for(struct NFeature* i = List->first ;  ; i = i->next )
-	{
-		success = Feature::create(this, i);
+	if(List) {
+		for(struct NFeature* i = List->first ;  ; i = i->next )
+		{
+			success = Feature::create(this, i);
 
-		if(i == List->last) break;
+			if(i == List->last) break;
+		}
 	}
 
 	return 0;
