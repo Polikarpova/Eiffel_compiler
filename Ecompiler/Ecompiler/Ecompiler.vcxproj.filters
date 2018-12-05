@@ -56,9 +56,6 @@
     <ClCompile Include="VoidType.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
-    <ClCompile Include="MetaArray.cpp">
-      <Filter>Source Files\TypeClasses</Filter>
-    </ClCompile>
     <ClCompile Include="RTLMetaClass.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
@@ -78,6 +75,9 @@
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
     <ClCompile Include="MetaClass.cpp">
+      <Filter>Source Files\TypeClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="EiffelArray.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
   </ItemGroup>
