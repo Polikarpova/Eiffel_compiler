@@ -117,13 +117,14 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	- case-insensitive IDs comparation
+	+ case-insensitive IDs comparation
 	tip. ID to store: 1st encountered variant (other entries may differ in letter case)
 
-	- remove semantics part from ReadMe
-	- remove flex file build step from build (turn off)
-	- apply changes in semantics DOC from 4.12.2018
+	+ remove semantics part from ReadMe
+	+ remove flex file build step from build (turn off)
+	+ apply changes in semantics DOC from 4.12.2018
 
-	- create ByteCode compiler class
+	- (?^3) create ByteCode compiler class
+	- Внести классы стандартных типов в Eiffel.classes
 */
 

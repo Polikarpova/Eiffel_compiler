@@ -10,6 +10,8 @@ public:
 	~Feature(void);
 
 	/*fields*/
+	struct NFeature* tree_node;
+
 	QString name;
 	QString descriptor;
 	QSet<QString> clients;

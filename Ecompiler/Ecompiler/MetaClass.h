@@ -23,6 +23,8 @@ public:
 
 
 	/*fields*/
+	struct NClass* tree_node;
+
 	bool isAbstract;
 	EiffelProgram* program;
 
@@ -36,7 +38,7 @@ public:
 
 
 	/*getters*/
-	QString name() { return * constantTable.get(name_constN).value.utf8; };
+	QString name() { return * constantTable.get(name_constN).value.utf8; }
 
 
 	/*methods*/
@@ -47,5 +49,5 @@ public:
 	/*functions*/
 	static bool create(struct NClass* class_node);
 	
-	bool createFeatures(struct NFeatureList* List);
+	bool createFeatures();
 };

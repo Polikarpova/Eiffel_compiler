@@ -28,7 +28,7 @@ EiffelProgram::~EiffelProgram(void)
 		}
 	}
 
-
+	// опнунд 1
 	// iterate classes
 	for(struct NClass* i = List->first ;  ; i = i->next )
 	{
@@ -36,5 +36,18 @@ EiffelProgram::~EiffelProgram(void)
 		if(i == List->last) break;
 	}
 
+	// опнунд 2
+	program->round2();
+
 	return program;
+}
+
+bool EiffelProgram::round2()
+{
+	// QMap<QString, MetaClass*> classes;
+	 
+	foreach(MetaClass* mc, this->classes)
+	{
+		mc->
+	}
 }

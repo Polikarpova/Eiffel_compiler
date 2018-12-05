@@ -30,6 +30,9 @@ public:
 		return errors.size();
 	}
 
-	static EiffelProgram* create(struct NClassList* root, char** syntaxErrors = 0, int syntaxErrorsN = 0);
 	static EiffelProgram* currentProgram;
-};
+	static EiffelProgram* create(struct NClassList* root, char** syntaxErrors = 0, int syntaxErrorsN = 0);
+
+	bool round2();
+
+}

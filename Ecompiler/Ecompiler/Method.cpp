@@ -13,6 +13,9 @@ Method::~Method(void)
 /*static*/ bool Method::create(MetaClass* mc, struct NFeature* node)
 {
 	/*// check name collisions
+
+	TODO
+
 	EiffelProgram* program = EiffelProgram::currentProgram;
 	QString name(class_node->className);
 	name = name.toUpper();
@@ -30,6 +33,7 @@ Method::~Method(void)
 	else
 	{
 		MetaClass* mc = new MetaClass(program);
+		mc->tree_node = class_node;
 		
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 

@@ -21,6 +21,7 @@
 	else
 	{
 		MetaClass* mc = new MetaClass(program);
+		mc->tree_node = class_node;
 		
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 
@@ -42,10 +43,14 @@
 	}
 }
 
-bool MetaClass::createFeatures(struct NFeatureList* List) {
+bool MetaClass::createFeatures() {
 
 	bool success = false;
 
+	// ПРОВЕРИТЬ число родителей и запомнить родителя
+	// ...
+	
+	struct NFeatureList* List = tree_node->featureList;
 	// iterate
 	for(struct NFeature* i = List->first ;  ; i = i->next )
 	{
