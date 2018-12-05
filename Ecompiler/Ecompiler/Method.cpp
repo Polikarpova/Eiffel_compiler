@@ -103,10 +103,9 @@ Method::~Method(void)
 		}
 	}
 
-	EiffelType* et =  EiffelType::create(node->type);
 	mtd->tree_node = node;
-	mtd->descriptor = mtd->createDescriptor(et);
-	delete et;
+	mtd->type = EiffelType::create(node->type);
+	mtd->descriptor = mtd->createDescriptor(mtd->type);
 
 	return mtd;
 }

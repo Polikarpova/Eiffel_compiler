@@ -47,8 +47,6 @@ Feature::~Feature(void)
 	fe->name = name;
 	fe->metaClass = mc;
 	fe->recordClients(s->clients);
-	fe->type = EiffelType::create(s->type);
-	//fe->descriptor = fe->createDescriptor();
 
 	return true;
 }

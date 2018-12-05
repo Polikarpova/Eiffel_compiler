@@ -16,9 +16,8 @@ Field::~Field(void)
 	bool success = false;
 	Field* fd = new Field();
 
-	EiffelType* et =  EiffelType::create(node->type);
-	fd->descriptor = fd->createDescriptor(et);
-	delete et;
+	fd->type = EiffelType::create(node->type);
+	fd->descriptor = fd->createDescriptor(fd->type);
 
 	success = true;
 
