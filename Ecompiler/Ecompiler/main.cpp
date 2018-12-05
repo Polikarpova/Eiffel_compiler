@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 		////char infile[] = "../../samples/testclass.e";
 		//char infile[] = "../../samples/chain.e";
 
-		//char infile[] = "../../samples/bytecode/hello_world";
-		char infile[] = "../../samples/syntax/class_copy";
+		//char infile[] = "../../samples/syntax/class_copy";
+		char infile[] = "../../samples/bytecode/hello_world";
 		strcpy(in_fnm, infile);
 	}
 		
