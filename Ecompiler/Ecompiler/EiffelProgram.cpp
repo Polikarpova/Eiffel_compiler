@@ -29,10 +29,13 @@ EiffelProgram::~EiffelProgram(void)
 	}
 
 	// опнунд 1
-	// iterate classes
+	// add RTL classes
+	program->createRTL();
+
+	// iterate user classes
 	for(struct NClass* i = List->first ;  ; i = i->next )
 	{
-		bool success = MetaClass::create(i);
+		MetaClass::create(i);
 		if(i == List->last) break;
 	}
 
@@ -52,4 +55,11 @@ bool EiffelProgram::round2()
 	}
 
 	return true;
+}
+
+
+void EiffelProgram::createRTL()
+{
+	////bool success = MetaClass::create(i);
+
 }

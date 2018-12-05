@@ -23,6 +23,7 @@ public:
 	
 	QList<CompilerError> errors;
 
+	/*methods*/
 	int logError(QString type, QString message,	int line)
 	{
 		CompilerError ce = {type,message,line};
@@ -30,9 +31,11 @@ public:
 		return errors.size();
 	}
 
+	bool round2();
+	void createRTL();
+
+	/*functions*/
 	static EiffelProgram* currentProgram;
 	static EiffelProgram* create(struct NClassList* root, char** syntaxErrors = 0, int syntaxErrorsN = 0);
-
-	bool round2();
 
 };

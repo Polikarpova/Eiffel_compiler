@@ -1,7 +1,7 @@
 #include "MetaClass.h"
 #include "Feature.h"
 
-/*static*/ bool MetaClass::create(struct NClass* class_node)
+/*static*/ MetaClass* MetaClass::create(struct NClass* class_node)
 {
 	// check name collisions
 	EiffelProgram* program = EiffelProgram::currentProgram;
@@ -16,7 +16,7 @@
 				.arg(name),
 			class_node->loc.first_line);
 	
-		return false;
+		return NULL;
 	}
 	else
 	{
@@ -39,7 +39,7 @@
 		if(mc)
 			program->classes[ mc->name() ] = mc;
 
-		return true;
+		return mc;
 	}
 }
 

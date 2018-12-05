@@ -47,7 +47,7 @@ public:
 
 
 	/*functions*/
-	static bool create(struct NClass* class_node);
+	static MetaClass* create(struct NClass* class_node);
 	
 	bool createFeatures();
 };
