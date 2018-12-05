@@ -1,4 +1,5 @@
 #pragma once
+#include "tree_structs.h"
 
 /** Общий тип, приписанный к узлу выражения / сущности.
 	Этот класс знает, как нужно создавать байт-код для типовых конструкций,
@@ -12,6 +13,9 @@ public:
 	EiffelType(void);
 	~EiffelType(void);
 
+	/*method*/
+	static EiffelType* create(struct NType* type);
 
+	virtual bool isVoid() { return false; }
 };
 
