@@ -13,6 +13,9 @@ public:
 	EiffelType(void);
 	~EiffelType(void);
 
+	/*fields*/
+	struct NType* tree_node;
+
 	/*method*/
 	static EiffelType* create(struct NType* type);
 

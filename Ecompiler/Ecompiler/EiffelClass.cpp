@@ -8,6 +8,8 @@
 
 EiffelClass::EiffelClass(void)
 {
+	this->className = "";
+	this->metaClass = 0;
 }
 
 
@@ -19,8 +21,13 @@ EiffelClass::~EiffelClass(void)
 
 	EiffelClass* ec = new EiffelClass();
 
+	ec->tree_node = type;
+
 	switch(type->type) {
 	
+		case ClassV:
+			//ec->metaClass = //?
+			ec->className = QString(type->className);
 		case IntegerV:
 			//ec->metaClass = new INTEGER();
 			break;

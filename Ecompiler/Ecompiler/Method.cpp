@@ -1,5 +1,5 @@
 #include "Method.h"
-
+#include "EiffelClass.h"
 
 Method::Method(void)
 {
@@ -105,5 +105,43 @@ Method::~Method(void)
 
 QString Method::createDescriptor() {
 
-	return QString("");
+	QString result = "(";
+
+	//пройтись по всем параметрам
+
+	//switch(this->type->tree_node->type) {
+	//
+	//	case VoidV:
+	//		//Выдать ошибку?
+	//		break;
+	//	case ClassV:
+	//		EiffelClass* ec = (EiffelClass*)this->type;
+	//		result += "L" + ec->className + ";";
+	//		break;
+	//	case ArrayV:
+	//		result += "[";
+	//		break;
+	//	case IntegerV:
+	//		result += "I";
+	//		break;
+	//	case RealV:
+	//		result += "D";
+	//		break;
+	//	case CharacterV:
+	//		result += "C";
+	//		break;
+	//	case StringV:
+	//		result += "Ljava/lang/String;";
+	//		break;
+	//	case BooleanV:
+	//		result += "Z";	//true or false
+	//		break;
+	//}
+	
+
+	result += ")";
+
+	//добавить дескриптор возвращаемого значения
+
+	return result;
 }

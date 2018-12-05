@@ -16,6 +16,8 @@ public:
 	/*fields*/
 	MetaClass* metaClass;
 
+	QString className;
+
 	/*methods*/
 	static EiffelClass* create(struct NType* type);
 };
