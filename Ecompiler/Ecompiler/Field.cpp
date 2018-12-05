@@ -14,7 +14,13 @@ Field::~Field(void)
 /*static*/ Field* Field::create(MetaClass* mc, struct NFeature* node) {
 
 	bool success = false;
-	Field* fd = NULL;
+	Field* fd = new Field();
+
+	EiffelType* et =  EiffelType::create(node->type);
+	fd->descriptor = fd->createDescriptor(et);
+	delete et;
+
+	success = true;
 
 	return success? fd : NULL;
 }
@@ -23,8 +29,8 @@ QString Field::createDescriptor(EiffelType* type) {
 
 	QString result = "";
 	
-
 	EiffelClass* ec;
+	EiffelArray* ea;
 
 	switch(this->type->tree_node->type) {
 	
@@ -37,7 +43,7 @@ QString Field::createDescriptor(EiffelType* type) {
 			break;
 		case ArrayV:
 			result += "[";
-			EiffelArray* ea = (EiffelArray*)type;
+			/* EiffelArray* */ ea = (EiffelArray*)type;
 			this->createDescriptor(ea->elementType);
 			break;
 		case IntegerV:
@@ -55,6 +61,9 @@ QString Field::createDescriptor(EiffelType* type) {
 		case BooleanV:
 			result += "Z";	//true or false
 			break;
+		default:
+			result += "<unknownType!>";	//unknown
+			return result;
 	}
 	
 	return result;

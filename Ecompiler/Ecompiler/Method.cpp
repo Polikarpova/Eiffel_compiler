@@ -103,6 +103,10 @@ Method::~Method(void)
 		}
 	}
 
+	EiffelType* et =  EiffelType::create(node->type);
+	mtd->descriptor = mtd->createDescriptor(et);
+	delete et;
+
 	return NULL;
 }
 
@@ -129,18 +133,21 @@ QString Method::getTypeDescriptor(EiffelType* type)
 {
 	QString result;
 
+	EiffelClass* ec;
+	EiffelArray* ea;
+
 	switch(type->tree_node->type) {
 	
 		case VoidV:
 			result += "V";
 			return result;
 		case ClassV:
-			EiffelClass* ec = (EiffelClass*)type;
+			/* EiffelClass* */ ec = (EiffelClass*)type;
 			result += "L" + ec->className + ";";
 			return result;
 		case ArrayV:
 			result += "[";
-			EiffelArray* ea = (EiffelArray*)type;
+			/* EiffelArray* */ ea = (EiffelArray*)type;
 			this->getTypeDescriptor(ea->elementType);
 			return result;
 		case IntegerV:
@@ -157,6 +164,9 @@ QString Method::getTypeDescriptor(EiffelType* type)
 			return result;
 		case BooleanV:
 			result += "Z";	//true or false
+			return result;
+		default:
+			result += "<unknownType!>";	//unknown
 			return result;
 	}
 }
