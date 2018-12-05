@@ -1,35 +1,35 @@
 # Eiffel_compiler
 University assignment
 
-Возьмём за правило затягивать изменения с опцией --rebase:
+Р’РѕР·СЊРјС‘Рј Р·Р° РїСЂР°РІРёР»Рѕ Р·Р°С‚СЏРіРёРІР°С‚СЊ РёР·РјРµРЅРµРЅРёСЏ СЃ РѕРїС†РёРµР№ --rebase:
 git pull --rebase
 
 Syntax in Eiffel:
-- таблички [старый синтаксис]: http://rigaux.org/language-study/syntax-across-languages-per-language/Eiffel.html
-- Описание различных statement с различными вариантами их использования [старый синтаксис?]: https://www.infor.uva.es/~felix/priii/sintaxis.html
+- С‚Р°Р±Р»РёС‡РєРё [СЃС‚Р°СЂС‹Р№ СЃРёРЅС‚Р°РєСЃРёСЃ]: http://rigaux.org/language-study/syntax-across-languages-per-language/Eiffel.html
+- РћРїРёСЃР°РЅРёРµ СЂР°Р·Р»РёС‡РЅС‹С… statement СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РІР°СЂРёР°РЅС‚Р°РјРё РёС… РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ [СЃС‚Р°СЂС‹Р№ СЃРёРЅС‚Р°РєСЃРёСЃ?]: https://www.infor.uva.es/~felix/priii/sintaxis.html
 - https://www.eiffel.org/doc/eiffel/Quick_reference_to_the_Eiffel_programming_language
-- Полезная статейка о классах: https://www.eiffel.org/doc/solutions/Eiffel_Classes
-- PDF со старым синтаксисом, но полезной информацией: http://www.lirmm.fr/~ducour/Doc-objets/eiffel-tutorial.pdf
-- [PDF] Стандарт ECMA-ST-WITHDRAWN/ECMA-367 https://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-367,%201st%20edition,%20June%202005.pdf
-- Русскоязычный перевод документации Eiffel по технологии безопасности void safety http://www.opennet.ru/base/dev/eiffel_vaid_safety.txt.html
+- РџРѕР»РµР·РЅР°СЏ СЃС‚Р°С‚РµР№РєР° Рѕ РєР»Р°СЃСЃР°С…: https://www.eiffel.org/doc/solutions/Eiffel_Classes
+- PDF СЃРѕ СЃС‚Р°СЂС‹Рј СЃРёРЅС‚Р°РєСЃРёСЃРѕРј, РЅРѕ РїРѕР»РµР·РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№: http://www.lirmm.fr/~ducour/Doc-objets/eiffel-tutorial.pdf
+- [PDF] РЎС‚Р°РЅРґР°СЂС‚ ECMA-ST-WITHDRAWN/ECMA-367 https://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-367,%201st%20edition,%20June%202005.pdf
+- Р СѓСЃСЃРєРѕСЏР·С‹С‡РЅС‹Р№ РїРµСЂРµРІРѕРґ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё Eiffel РїРѕ С‚РµС…РЅРѕР»РѕРіРёРё Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё void safety http://www.opennet.ru/base/dev/eiffel_vaid_safety.txt.html
 
 
-Примеры кода uzh-software-construction
+РџСЂРёРјРµСЂС‹ РєРѕРґР° uzh-software-construction
 
 This repository holds various snippets of Eiffel in order to illustrate particular concepts I explained in the UZH course Software Construction.
 https://github.com/rmatil/uzh-software-construction
 
 ---
 
-## План семантического анализа ##
-[Актуальная версия](https://docs.google.com/document/d/1D-gCdS3YgGxxdEQcVWEHZuipn_IHiS1_ANfpnq0YQLo/edit?usp=sharing)
+## РџР»Р°РЅ СЃРµРјР°РЅС‚РёС‡РµСЃРєРѕРіРѕ Р°РЅР°Р»РёР·Р° ##
+[РђРєС‚СѓР°Р»СЊРЅР°СЏ РІРµСЂСЃРёСЏ](https://docs.google.com/document/d/1D-gCdS3YgGxxdEQcVWEHZuipn_IHiS1_ANfpnq0YQLo/edit?usp=sharing)
 
-Соглашения о преобразовании регистра имен:
-Классы : UPPER_CASE
-Методы/Поля/переменные : lower_case
+РЎРѕРіР»Р°С€РµРЅРёСЏ Рѕ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРё СЂРµРіРёСЃС‚СЂР° РёРјРµРЅ:
+РљР»Р°СЃСЃС‹ : UPPER_CASE
+РњРµС‚РѕРґС‹/РџРѕР»СЏ/РїРµСЂРµРјРµРЅРЅС‹Рµ : lower_case
 
-Спецификация jvm: https://docs.oracle.com/javase/specs/jvms/se7/html/index.html
+РЎРїРµС†РёС„РёРєР°С†РёСЏ jvm: https://docs.oracle.com/javase/specs/jvms/se7/html/index.html
 
-Примечание. Для реализации видится полезным:
- - Наличие у синтаксических конструкций информации об ожидаемых типах дочерних выражений (термин: *expected*, *required*). Например, `A := B;` подразумевает `A` - левостороннее (*lvalue*) выражение.
- - Наличие у типов информации о типах, выводимых из данного. Например, `ID` приводится к *lvalue* (хотя `ID` - ещё пока не тип), `INTEGER` - к `FLOAT`.
+РџСЂРёРјРµС‡Р°РЅРёРµ. Р”Р»СЏ СЂРµР°Р»РёР·Р°С†РёРё РІРёРґРёС‚СЃСЏ РїРѕР»РµР·РЅС‹Рј:
+ - РќР°Р»РёС‡РёРµ Сѓ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёС… РєРѕРЅСЃС‚СЂСѓРєС†РёР№ РёРЅС„РѕСЂРјР°С†РёРё РѕР± РѕР¶РёРґР°РµРјС‹С… С‚РёРїР°С… РґРѕС‡РµСЂРЅРёС… РІС‹СЂР°Р¶РµРЅРёР№ (С‚РµСЂРјРёРЅ: *expected*, *required*). РќР°РїСЂРёРјРµСЂ, `A := B;` РїРѕРґСЂР°Р·СѓРјРµРІР°РµС‚ `A` - Р»РµРІРѕСЃС‚РѕСЂРѕРЅРЅРµРµ (*lvalue*) РІС‹СЂР°Р¶РµРЅРёРµ.
+ - РќР°Р»РёС‡РёРµ Сѓ С‚РёРїРѕРІ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚РёРїР°С…, РІС‹РІРѕРґРёРјС‹С… РёР· РґР°РЅРЅРѕРіРѕ. РќР°РїСЂРёРјРµСЂ, `ID` РїСЂРёРІРѕРґРёС‚СЃСЏ Рє *lvalue* (С…РѕС‚СЏ `ID` - РµС‰С‘ РїРѕРєР° РЅРµ С‚РёРї), `INTEGER` - Рє `FLOAT`.
