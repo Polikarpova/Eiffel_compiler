@@ -45,6 +45,11 @@ EiffelProgram::~EiffelProgram(void)
 	return program;
 }
 
+MetaClass* EiffelProgram::findClass(const QString& upperName)
+{
+	return classes.value(upperName, NULL);
+}
+
 bool EiffelProgram::round2()
 {
 	// QMap<QString, MetaClass*> classes;

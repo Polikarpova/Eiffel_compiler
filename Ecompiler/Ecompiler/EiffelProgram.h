@@ -31,6 +31,9 @@ public:
 		return errors.size();
 	}
 
+	/** \return NULL if no class found */
+	MetaClass* findClass(const QString& upperName);
+
 	/** Проход 2 */
 	bool round2();
 	/** Проход 3 */
