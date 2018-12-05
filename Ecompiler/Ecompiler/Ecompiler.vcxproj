@@ -171,6 +171,7 @@
     <Flex Include="eiffel_flex.l">
       <CaseInsensitive Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CaseInsensitive>
       <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cpp</OutputFile>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Flex>
   </ItemGroup>
   <ItemGroup>
