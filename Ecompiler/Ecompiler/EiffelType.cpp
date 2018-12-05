@@ -32,5 +32,7 @@ EiffelType::~EiffelType(void)
 			return EiffelClass::create(type);
 		case BooleanV:
 			return 0;
+		default:
+			return 0;	//unknown
 	}
 }

@@ -63,6 +63,9 @@ bool EiffelProgram::round3()
 		mc->round3();
 	}
 
+	// set class `NONE` as child of all `leaf`-classes
+
+
 	return true;
 }
 

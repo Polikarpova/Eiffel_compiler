@@ -18,7 +18,7 @@ class MetaClass {
 public:
 
 	MetaClass() {};
-	MetaClass(EiffelProgram* program) {this->program = program;};
+	MetaClass(EiffelProgram* program, const QString& name);
 	~MetaClass() {};
 
 
