@@ -22,11 +22,12 @@ public:
 
 	/*fields*/
 	bool isCreator;
+	bool isRedefined;
 	
 
 	/**
 	* Current [0], параметры [1..paramCount], локальные переменные метода
-	* short int : им€ переменной-UTF8
+	* ключ : им€ переменной
 	* Ќомер п/п хранитс€ в LocalVariable
 	*/
 	QMap<QString, LocalVariable*> localVariables;

@@ -4,6 +4,8 @@
 
 Method::Method(void)
 {
+	this->isCreator = false;
+	this->isRedefined = false;
 }
 
 
