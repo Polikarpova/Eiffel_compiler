@@ -49,9 +49,8 @@ Feature::~Feature(void)
 	fe->recordClients(s->clients);
 
 	fe->descriptor = fe->createDescriptor();
-	return true;
-}
 
+	return true;
 
 bool Feature::isNameConflicting(MetaClass* mc, const QString& lowerName) {
 	if( MetaClass::isNameConflicting(lowerName.toUpper()) )
