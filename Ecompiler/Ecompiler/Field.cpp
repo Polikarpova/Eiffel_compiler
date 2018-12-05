@@ -13,7 +13,7 @@ Field::~Field(void)
 /*static*/ Field* Field::create(MetaClass* mc, struct NFeature* node) {
 
 	bool success = false;
-	Field* fd;
+	Field* fd = NULL;
 
 	return success? fd : NULL;
 }

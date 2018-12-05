@@ -31,6 +31,7 @@ public:
 	*/
 	QMap<QString, LocalVariable*> localVariables;
 
+	/** Количество параметров: 1 (Current) + число формальных параметров */
 	int paramCount;
 
 	Statement* body;
