@@ -52,10 +52,10 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 	}
 }
 
-Field* MetaClass::findField(const QString& lowerName)
+Field* MetaClass::findField(const QString& lowerName, bool lookInParents /*= true*/)
 {
 	Field* p = fields.value(lowerName, NULL);
-	if(!p && this->parent)
+	if(!p && lookInParents && this->parent)
 	{
 		this->parent->findField(lowerName);
 	}
@@ -63,11 +63,11 @@ Field* MetaClass::findField(const QString& lowerName)
 	return p;
 }
 /** \return NULL if no class found */
-Method* MetaClass::findMethod(const QString& lowerName)
+Method* MetaClass::findMethod(const QString& lowerName, bool lookInParents /*= true*/)
 {
 	return methods.value(lowerName, NULL);
 	Method* p = methods.value(lowerName, NULL);
-	if(!p && this->parent)
+	if(!p && lookInParents && this->parent)
 	{
 		this->parent->findMethod(lowerName);
 	}
