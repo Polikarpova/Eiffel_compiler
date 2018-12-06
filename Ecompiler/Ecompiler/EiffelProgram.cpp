@@ -78,8 +78,6 @@ bool EiffelProgram::round3()
 
 void EiffelProgram::createRTL()
 {
-	////bool success = MetaClass::create(i);
-
 	MetaClass* mc;
 
 	mc = new EiffelNONE(this);

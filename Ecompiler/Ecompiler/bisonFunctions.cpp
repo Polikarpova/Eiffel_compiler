@@ -346,8 +346,8 @@ struct NNameAndTypeList* convertIdListToNameAndTypeList(struct NIdList* idList, 
 	// assume idList contains at least 1 element
 	struct NId* prevId, *curId = idList->first;
 	
-	SAVELOC
 	Result = createNameAndTypeList(createNameAndType(curId->id,type));
+	SAVELOC
 	while(curId != idList->last) // curId - последний обработанный элемент
 	{
 		prevId = curId;
@@ -462,8 +462,8 @@ struct NFeatureList* createAttributesFrom(struct NNameAndTypeList* natList)
 	// assume natList contains at least 1 element
 	struct NNameAndType* prevNat, *curNat = natList->first;
 	// create attribute & place it into list
-	SAVELOC
 	Result = createFeatureList(createFeature(curNat->name,0,curNat->type,0,0));
+	SAVELOC
 	while(curNat != natList->last) // curNat - последний обработанный элемент
 	{
 		prevNat = curNat;

@@ -63,7 +63,6 @@ Field* MetaClass::findField(const QString& lowerName, bool lookInParents /*= tru
 
 	return p;
 }
-/** \return NULL if no class found */
 Method* MetaClass::findMethod(const QString& lowerName, bool lookInParents /*= true*/)
 {
 	Method* p = methods.value(lowerName, NULL);
@@ -76,10 +75,14 @@ Method* MetaClass::findMethod(const QString& lowerName, bool lookInParents /*= t
 }
 Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*= true*/)
 {
-	Feature* p = findMethod(lowerName, lookInParents);
+	Feature* p = findMethod(lowerName, false);
 	if(!p)
 	{
-		p = findField(lowerName, lookInParents);
+		p = findField(lowerName, false);
+	}
+	if(!p && lookInParents && this->parent)
+	{
+		p = this->parent->findFeature(lowerName, lookInParents);
 	}
 
 	return p;
@@ -239,6 +242,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 			if(i == List->last) break;
 		}
 	}
+	return true;
 }
 
 bool MetaClass::isNameConflicting(const QString& upperName) {
