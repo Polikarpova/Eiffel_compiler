@@ -93,15 +93,53 @@ bool MetaClass::createFeatures() {
 	}
 	}
 	
-	{
 	// Iterate creators list
+	{
 	// struct NIdList* creationList; // NULL если отсутствует
 	struct NIdList* List = tree_node->creationList;
 	// iterate
 	if(List) {
 		for(struct NId* i = List->first ;  ; i = i->next )
 		{
-			// i 
+			QString name(i->id);
+			name = name.toLower();
+			
+			if( findField(name, false) )
+			{
+				program->logError(
+					QString("semantic"), 
+					QString("Cannot use attribute %1 as a constructor of class %2")
+						.arg(name, this->name()),
+					i->loc.first_line);
+
+				continue;
+			}
+
+			Method* mtd_creator = findMethod(name, false);
+			if( ! mtd_creator )
+			{
+				program->logError(
+					QString("semantic"), 
+					QString("Undefined identifier %1 used as a constructor of class %2. Procedure name expected")
+						.arg(name, this->name()),
+					i->loc.first_line);
+
+				continue;
+			}
+
+			if( ! mtd_creator->type->isVoid() )
+			{
+				program->logError(
+					QString("semantic"), 
+					QString("Cannot use function %1 as a constructor of class %2. Procedure name expected")
+						.arg(name, this->name()),
+					i->loc.first_line);
+
+				continue;
+			}
+
+			// remember flag: method is creator
+			mtd_creator->isCreator = true;
 
 			if(i == List->last) break;
 		}
