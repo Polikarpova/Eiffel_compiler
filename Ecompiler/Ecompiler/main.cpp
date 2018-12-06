@@ -118,5 +118,18 @@ int main(int argc, char *argv[])
 
 	- (?^3) create ByteCode compiler class
 	- Внести классы стандартных типов в Eiffel.classes
+
+
+переворот 4рех байт
+unsigned long int Endian_DWord_Conversion(unsigned long int dword)
+{
+   return ((dword>>24)&0x000000FF) | ((dword>>8)&0x0000FF00) | ((dword<<8)&0x00FF0000) | ((dword<<24)&0xFF000000);
+}
+
+2ух:
+unsigned long int Endian_DWord_Conversion(unsigned long int dword)
+{
+   return ((dword>>8)&0x00FF) | ((dword<<8)&0xFF00);
+}
 */
 
