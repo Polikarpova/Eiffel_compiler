@@ -10,6 +10,7 @@
 typedef char byte;
 
 class EiffelProgram;
+class Feature;
 class Method;
 class Field;
 
@@ -44,6 +45,8 @@ public:
 	Field* findField(const QString& lowerName, bool lookInParents = true);
 	/** \return NULL if no class found */
 	Method* findMethod(const QString& lowerName, bool lookInParents = true);
+	/** \return NULL if no class found */
+	Feature* findFeature(const QString& lowerName, bool lookInParents = true);
 
 
 	/*methods*/
@@ -54,6 +57,7 @@ public:
 	bool createFeatures();
 	/** Проход 3 */
 	bool round3();
+	bool createInheritance(struct NInheritFromClass* inheritance);
 
 
 	/*functions*/

@@ -1,6 +1,7 @@
 #include "MetaClass.h"
 #include "Feature.h"
 #include "Method.h"
+#include "Field.h"
 
 MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 {
@@ -57,7 +58,7 @@ Field* MetaClass::findField(const QString& lowerName, bool lookInParents /*= tru
 	Field* p = fields.value(lowerName, NULL);
 	if(!p && lookInParents && this->parent)
 	{
-		this->parent->findField(lowerName);
+		p = this->parent->findField(lowerName, lookInParents);
 	}
 
 	return p;
@@ -65,16 +66,24 @@ Field* MetaClass::findField(const QString& lowerName, bool lookInParents /*= tru
 /** \return NULL if no class found */
 Method* MetaClass::findMethod(const QString& lowerName, bool lookInParents /*= true*/)
 {
-	return methods.value(lowerName, NULL);
 	Method* p = methods.value(lowerName, NULL);
 	if(!p && lookInParents && this->parent)
 	{
-		this->parent->findMethod(lowerName);
+		p = this->parent->findMethod(lowerName, lookInParents);
 	}
 
 	return p;
 }
+Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*= true*/)
+{
+	Feature* p = findMethod(lowerName, lookInParents);
+	if(!p)
+	{
+		p = findField(lowerName, lookInParents);
+	}
 
+	return p;
+}
 
 bool MetaClass::createFeatures() {
 
@@ -112,7 +121,7 @@ bool MetaClass::createFeatures() {
 						.arg(name, this->name()),
 					i->loc.first_line);
 
-				continue;
+				break;
 			}
 
 			Method* mtd_creator = findMethod(name, false);
@@ -124,7 +133,7 @@ bool MetaClass::createFeatures() {
 						.arg(name, this->name()),
 					i->loc.first_line);
 
-				continue;
+				break;
 			}
 
 			if( ! mtd_creator->type->isVoid() )
@@ -135,7 +144,7 @@ bool MetaClass::createFeatures() {
 						.arg(name, this->name()),
 					i->loc.first_line);
 
-				continue;
+				break;
 			}
 
 			// remember flag: method is creator
@@ -151,14 +160,28 @@ bool MetaClass::createFeatures() {
 bool MetaClass::round3()
 {
 	/* ПРОВЕРИТЬ число родителей и запомнить родителя (ANY по умолчанию),
-	   а также проверить и запомнить переопределения
+	   а также проверить и запомнить переопределения */
+	this->parent = NULL;
+
 	struct NInheritFromClassList* List =  tree_node->inheritance;
-	int parents_count = 0;
 	// iterate
 	if(List) {
 		for(struct NInheritFromClass* i = List->first ;  ; i = i->next )
 		{
-			success = Feature::create(this, i);
+			if(this->parent != NULL) {
+				program->logError(
+					QString("semantic"), 
+					QString("Declaring multiple parents for class `%1`; this feature of Eiffel language is not supported")
+						.arg(this->name()),
+					i->loc.first_line);
+				
+				continue;
+			}
+
+			if( !createInheritance(i) )
+			{
+				continue;
+			}
 
 			if(i == List->last) break;
 		}
@@ -174,7 +197,50 @@ bool MetaClass::round3()
 	return true;
 }
 
+bool MetaClass::createInheritance(struct NInheritFromClass* node)
+{
+	QString name(node->className);
+	name = name.toUpper();
+	// предок
+	MetaClass* ancestor = program->findClass(name);
+
+	if(ancestor == NULL) {
+		program->logError(
+			QString("semantic"), 
+			QString("Undefined class `%1` is used as parent of class %2")
+				.arg(node->className, this->name()),
+			node->loc.first_line);
+				
+		return false;
+	}
+	
+	this->parent = ancestor;
+	
+	struct NIdList* List =  node->redefineList;
+	// iterate
+	if(List) {
+		for(struct NId* i = List->first ;  ; i = i->next )
+		{
+			QString name(i->id);
+			name = name.toLower();
+
+			if( ! this->parent->findFeature(name, true) )
+			{
+				program->logError(
+					QString("semantic"), 
+					QString("Redefine subclause `%1` does not denote redefined feature of class %2; parent %3 does not have such feature")
+						.arg(name, this->name(), this->parent->name()),
+					i->loc.first_line);
+
+				return false;
+			}
+
+
+			if(i == List->last) break;
+		}
+	}
+}
+
 bool MetaClass::isNameConflicting(const QString& upperName) {
 	return EiffelProgram::currentProgram -> findClass(upperName) != NULL;
 }
-
