@@ -41,15 +41,9 @@ public:
 	QString name() { return * constantTable.get(name_constN).value.utf8; }
 
 	/** \return NULL if no class found */
-	Field* findField(const QString& lowerName)
-	{
-		return fields.value(lowerName, NULL);
-	}
+	Field* findField(const QString& lowerName);
 	/** \return NULL if no class found */
-	Method* findMethod(const QString& lowerName)
-	{
-		return methods.value(lowerName, NULL);
-	}
+	Method* findMethod(const QString& lowerName);
 
 
 	/*methods*/
