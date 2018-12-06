@@ -61,6 +61,11 @@ bool Feature::isNameConflicting(MetaClass* mc, const QString& lowerName) {
 		mc->methods.keys().contains(lowerName);
 }
 
+bool Feature::isExportedTo(const QString& upperName)
+{
+	return clients.contains(upperName);
+}
+
 void Feature::recordClients(const struct NIdList* List) {
 
 	if ( List == NULL ) {

@@ -24,6 +24,7 @@ public:
 	static bool create(MetaClass* mc, struct NFeature* s);
 	static bool isNameConflicting(MetaClass* mc, const QString& lowerName);
 
+	bool isExportedTo(const QString& upperName);
 	void recordClients(const struct NIdList* List);
 	QString createDescriptor(EiffelType* type) { return QString(""); };
 };
