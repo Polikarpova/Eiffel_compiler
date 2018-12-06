@@ -101,7 +101,9 @@
     <ClCompile Include="BOOLEAN.cpp" />
     <ClCompile Include="CHARACTER.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
+    <ClCompile Include="EiffelANY.cpp" />
     <ClCompile Include="EiffelClass.cpp" />
+    <ClCompile Include="EiffelNONE.cpp" />
     <ClCompile Include="EiffelProgram.cpp" />
     <ClCompile Include="EiffelType.cpp" />
     <ClCompile Include="eiffel_bison.tab.cpp" />
@@ -130,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
+    <ClInclude Include="EiffelANY.h" />
+    <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="VoidType.h" />

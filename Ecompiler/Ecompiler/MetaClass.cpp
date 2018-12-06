@@ -4,6 +4,7 @@
 MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 {
 	this->program = program;
+	this->isAbstract = false;
 
 	JvmConstant jc = { UTF8_VALUE, 0, false };
 

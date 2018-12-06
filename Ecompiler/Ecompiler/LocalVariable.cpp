@@ -23,6 +23,6 @@ LocalVariable::~LocalVariable(void)
 	// заглушка NULL
 	return new LocalVariable(QString(node->name).toLower(),
 		n,
-		NULL	/*!!! EiffelType::create(node->type) */
+		EiffelType::create(node->type)
 		);
 }

@@ -69,7 +69,7 @@ Method::~Method(void)
 
 	// 1 (Current)
 	// заглушка NULL
-	LocalVariable* lvr = new LocalVariable("Current", loc_i , NULL /*!!! EiffelType::create(???)*/ );
+	LocalVariable* lvr = new LocalVariable("Current", loc_i , new EiffelClass(mc) );
 	mtd->localVariables[lvr->name] = lvr;
 	++loc_i;
 

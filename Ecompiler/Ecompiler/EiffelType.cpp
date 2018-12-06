@@ -19,7 +19,7 @@ EiffelType::~EiffelType(void)
 		case VoidV:
 			return new VoidType(type);
 		case ClassV:
-			return 0;
+			return EiffelClass::create(type);
 		case ArrayV:
 			return 0;
 		case IntegerV:

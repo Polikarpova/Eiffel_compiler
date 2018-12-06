@@ -80,6 +80,12 @@
     <ClCompile Include="EiffelArray.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
+    <ClCompile Include="EiffelANY.cpp">
+      <Filter>Source Files\TypeClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="EiffelNONE.cpp">
+      <Filter>Source Files\TypeClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -158,6 +164,12 @@
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
     <ClInclude Include="EiffelArray.h">
+      <Filter>Header Files\TypeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="EiffelNONE.h">
+      <Filter>Header Files\TypeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="EiffelANY.h">
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
   </ItemGroup>

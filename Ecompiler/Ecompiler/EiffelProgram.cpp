@@ -1,5 +1,6 @@
 #include "EiffelProgram.h"
 #include "MetaClass.h"
+#include "RTLMetaClass.h"
 
 /*static*/ EiffelProgram* EiffelProgram::currentProgram = NULL;
 
@@ -79,4 +80,21 @@ void EiffelProgram::createRTL()
 {
 	////bool success = MetaClass::create(i);
 
+	MetaClass* mc;
+
+	mc = new EiffelNONE(this);
+	mc->tree_node = NULL;
+	this->classes[ mc->name() ] = mc;
+
+	mc = new EiffelANY(this);
+	mc->tree_node = NULL;
+	this->classes[ mc->name() ] = mc;
+
+	mc = new EiffelSTRING(this);
+	mc->tree_node = NULL;
+	this->classes[ mc->name() ] = mc;
+
+	mc = new RTLMetaClass(this, QString("IO"));
+	mc->tree_node = NULL;
+	this->classes[ mc->name() ] = mc;
 }
