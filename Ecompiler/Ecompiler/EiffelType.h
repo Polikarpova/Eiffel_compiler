@@ -20,5 +20,11 @@ public:
 	static EiffelType* create(struct NType* type);
 
 	virtual bool isVoid() { return false; }
+
+	/** ѕроверка на возможность приведени€ к более общему типу.
+		Ќапример, выражени€ справа от равно к типу выражени€ слева.
+		ѕо умолчанию тип не может быть приведЄн ни к чему, -- подклассы могут расширить это поведение.
+	*/
+	virtual bool canCastTo(const EiffelType* otherType) { return false; }
 };
 
