@@ -1,5 +1,6 @@
 #include "MetaClass.h"
 #include "Feature.h"
+#include "Method.h"
 
 MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 {
@@ -54,6 +55,7 @@ bool MetaClass::createFeatures() {
 
 	bool success = false;
 
+	{
 	struct NFeatureList* List = tree_node->featureList;
 	// iterate
 	if(List) {
@@ -63,6 +65,22 @@ bool MetaClass::createFeatures() {
 
 			if(i == List->last) break;
 		}
+	}
+	}
+	
+	{
+	// Iterate creators list
+	// struct NIdList* creationList; // NULL если отсутствует
+	struct NIdList* List = tree_node->creationList;
+	// iterate
+	if(List) {
+		for(struct NId* i = List->first ;  ; i = i->next )
+		{
+			// i 
+
+			if(i == List->last) break;
+		}
+	}
 	}
 
 	return 0;
@@ -87,7 +105,7 @@ bool MetaClass::round3()
  
 	foreach(Method* mtd, this->methods)
 	{
-		//mtd->***();
+		mtd->createBody();
 	}
 
 	return true;

@@ -22,7 +22,7 @@ public:
 
 	/*fields*/
 	bool isCreator;
-	bool isRedefined;
+	//bool isRedefined;
 	
 
 	/**
@@ -35,9 +35,10 @@ public:
 	/** Количество параметров: 1 (Current) + число формальных параметров */
 	int paramCount;
 
-	Statement* body;
+	QList<Statement*> body;
 
 	/*methods*/
+	bool createBody();
 
 	static Method* create(MetaClass* mc, struct NFeature* node);
 
