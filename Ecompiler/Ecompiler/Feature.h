@@ -19,6 +19,9 @@ public:
 	/** Тип поля / возвращаемое значение метода */
 	EiffelType* type;
 
+	/**getters*/
+	virtual bool isMethod() = 0;
+	virtual bool isField() = 0;
 
 	/*methods*/
 	static bool create(MetaClass* mc, struct NFeature* s);

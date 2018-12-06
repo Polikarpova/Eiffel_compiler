@@ -24,6 +24,8 @@ public:
 	bool isCreator;
 	//bool isRedefined;
 	
+	virtual bool isMethod() { return true; }
+	virtual bool isField()  { return false;}
 
 	/**
 	* Current [0], параметры [1..paramCount], локальные переменные метода
