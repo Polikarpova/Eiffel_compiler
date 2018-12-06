@@ -86,6 +86,9 @@
     <ClCompile Include="EiffelNONE.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
+    <ClCompile Include="ByteCode.cpp">
+      <Filter>Source Files\CompilerClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -171,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="EiffelANY.h">
       <Filter>Header Files\TypeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteCode.h">
+      <Filter>Header Files\CompilerClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

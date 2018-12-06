@@ -99,6 +99,7 @@
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
     <ClCompile Include="BOOLEAN.cpp" />
+    <ClCompile Include="ByteCode.cpp" />
     <ClCompile Include="CHARACTER.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
     <ClCompile Include="EiffelANY.cpp" />
@@ -132,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bisonFunctions.h" />
+    <ClInclude Include="ByteCode.h" />
     <ClInclude Include="EiffelANY.h" />
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
