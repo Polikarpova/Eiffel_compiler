@@ -126,39 +126,38 @@ bool MetaClass::createFeatures() {
 
 				break;
 			}
-
-			Method* mtd_creator = findMethod(name, false);
-			if( ! mtd_creator )
+			else
 			{
-				program->logError(
-					QString("semantic"), 
-					QString("Undefined identifier %1 used as a constructor of class %2. Procedure name expected")
+				Method* mtd_creator = findMethod(name, false);
+				if( ! mtd_creator )
+				{
+					program->logError(
+						QString("semantic"), 
+						QString("Undefined identifier %1 used as a constructor of class %2. Procedure name expected")
 						.arg(name, this->name()),
-					i->loc.first_line);
-
-				break;
-			}
-
-			if( ! mtd_creator->type->isVoid() )
-			{
-				program->logError(
-					QString("semantic"), 
-					QString("Cannot use function %1 as a constructor of class %2. Procedure name expected")
+						i->loc.first_line);
+				}
+				else if( ! mtd_creator->type->isVoid() )
+				{
+					program->logError(
+						QString("semantic"), 
+						QString("Cannot use function %1 as a constructor of class %2. Procedure name expected")
 						.arg(name, this->name()),
-					i->loc.first_line);
-
-				break;
+						i->loc.first_line);
+				} 
+				else
+				{
+					// remember flag: method is creator
+					mtd_creator->isCreator = true;
+					success = true;
+				}
 			}
-
-			// remember flag: method is creator
-			mtd_creator->isCreator = true;
-
 			if(i == List->last) break;
 		}
 	}
 	}
 
-	return 0;
+	return success;
 }
 bool MetaClass::round3()
 {
