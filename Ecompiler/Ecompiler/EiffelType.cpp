@@ -3,6 +3,8 @@
 #include "VoidType.h"
 #include "EiffelClass.h"
 
+#include <typeinfo>
+
 EiffelType::EiffelType(void)
 {
 }
@@ -11,6 +13,12 @@ EiffelType::EiffelType(void)
 EiffelType::~EiffelType(void)
 {
 }
+
+/*virtual*/ bool EiffelType::canCastTo(const EiffelType* otherType)
+{
+	return (typeid(this) == typeid(*otherType));
+}
+
 
 /*static*/ EiffelType* EiffelType::create(struct NType* type) {
 
