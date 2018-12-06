@@ -161,8 +161,10 @@ bool MetaClass::createFeatures() {
 }
 bool MetaClass::round3()
 {
+	bool success = false;
+
 	/* ПРОВЕРИТЬ число родителей и запомнить родителя (ANY по умолчанию),
-	   а также проверить и запомнить переопределения */
+	   а также проверить переопределения */
 	this->parent = NULL;
 
 	struct NInheritFromClassList* List =  tree_node->inheritance;
@@ -188,21 +190,50 @@ bool MetaClass::round3()
 			if(i == List->last) break;
 		}
 	}
-	// ... */
 	
+	if(this->parent = NULL) {
+		// set ANY as parent
+		MetaClass* ancestor = program->findClass("ANY");
+		if(ancestor)
+		{
+			this->parent = ancestor;
+			success = true;
+		}
+		else
+		{
+			program->logError(
+				QString("internal"), 
+				QString("/!\\ Class `ANY` is not known /!\\"),
+				this->tree_node->loc.first_line);
+			success = false;
+		}
+	}
+	// ... */
+		
  
 	foreach(Method* mtd, this->methods)
 	{
 		mtd->createBody();
 	}
 
-	return true;
+	return success;
 }
 
 bool MetaClass::createInheritance(struct NInheritFromClass* node)
 {
 	QString name(node->className);
 	name = name.toUpper();
+
+	if(name.compare("NONE") == 0) {
+		program->logError(
+			QString("semantic"), 
+			QString("Inheritance form special class `NONE` is not allowed; (inheritance clause in class `%1`)")
+				.arg(this->name()),
+			node->loc.first_line);
+				
+		return false;
+	}
+
 	// предок
 	MetaClass* ancestor = program->findClass(name);
 
@@ -217,6 +248,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	}
 	
 	this->parent = ancestor;
+	// ^ set parent successfully !
 	
 	struct NIdList* List =  node->redefineList;
 	// iterate
@@ -226,15 +258,64 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 			QString name(i->id);
 			name = name.toLower();
 
-			if( ! this->parent->findFeature(name, true) )
+			Feature* parent_feature = this->parent->findFeature(name, true);
+
+			if( ! parent_feature )
 			{
 				program->logError(
 					QString("semantic"), 
 					QString("Redefine subclause `%1` does not denote redefined feature of class %2; parent %3 does not have such feature")
 						.arg(name, this->name(), this->parent->name()),
 					i->loc.first_line);
+			}
 
-				return false;
+			Feature* this_feature = this->findFeature(name, false);
+
+			if( ! this_feature )
+			{
+				program->logError(
+					QString("semantic"), 
+					QString("Redefine subclause lists feature `%1`, but class %2 does not redefined it")
+						.arg(name, this->name(), this->parent->name()),
+					i->loc.first_line);
+			}
+
+			if( parent_feature && this_feature )
+			{
+				if( parent_feature->isField() && this_feature->isField() )
+				{
+					program->logError(
+						QString("semantic"), 
+						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
+							.arg(this->parent->name(), name, this-> name()),
+						i->loc.first_line);
+				}
+				else if( ! this_feature->type->canCastTo(parent_feature->type) )
+				{
+					program->logError(
+						QString("semantic"), 
+						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
+							.arg(this->parent->name(), name, this-> name()),
+						i->loc.first_line);
+				}
+				else if( parent_feature->isField() == this_feature->isMethod() ) // one is field, another is method
+				{
+					/********* /!\ ********** /
+					Мы допускаем, вопреки результатам экспериментов с Eiffel,
+					возможность переопределять поля методами без аргументов и наоборот.
+					/********* /!\ ***********/
+
+					//Field*  field_fe  = (Field*)  ( parent_feature->isField() ? parent_feature : this_feature );
+					Method* method_fe = (Method*) ( parent_feature->isMethod()? parent_feature : this_feature );
+
+					if(false) {
+						program->logError(
+							QString("semantic"), 
+							QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
+								.arg(this->parent->name(), name, this-> name()),
+							i->loc.first_line);
+					}
+				}
 			}
 
 
