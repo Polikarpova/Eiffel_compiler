@@ -88,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="ByteCode.cpp">
       <Filter>Source Files\CompilerClasses</Filter>
+	</ClCompile>
+	<ClCompile Include="CallStmt.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,9 +163,6 @@
     <ClInclude Include="Statement.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Expression.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EiffelSTRING.h">
       <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
@@ -177,6 +177,12 @@
     </ClInclude>
     <ClInclude Include="ByteCode.h">
       <Filter>Header Files\CompilerClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="CallStmt.h">
+      <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
