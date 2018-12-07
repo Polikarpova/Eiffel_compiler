@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayElemRef.cpp" />
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
     <ClCompile Include="BOOLEAN.cpp" />
@@ -113,6 +114,7 @@
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Feature.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="FieldRef.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -120,26 +122,36 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="INTEGER.cpp" />
+    <ClCompile Include="LiteralExpr.cpp" />
     <ClCompile Include="LocalVariable.cpp" />
+    <ClCompile Include="LocalVariableRef.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EiffelArray.cpp" />
     <ClCompile Include="MetaClass.cpp" />
     <ClCompile Include="Method.cpp" />
+    <ClCompile Include="OperationExpr.cpp" />
     <ClCompile Include="print2dot.cpp" />
     <ClCompile Include="REAL.cpp" />
     <ClCompile Include="RTLMetaClass.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="EiffelSTRING.cpp" />
+    <ClCompile Include="ValueMethodCall.cpp" />
     <ClCompile Include="VoidType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayElemRef.h" />
     <ClInclude Include="bisonFunctions.h" />
     <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CallStmt.h" />
     <ClInclude Include="EiffelANY.h" />
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="FieldRef.h" />
+    <ClInclude Include="LiteralExpr.h" />
+    <ClInclude Include="LocalVariableRef.h" />
+    <ClInclude Include="OperationExpr.h" />
     <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="ValueMethodCall.h" />
     <ClInclude Include="VoidType.h" />
     <CustomBuild Include="bisontest.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

@@ -88,9 +88,27 @@
     </ClCompile>
     <ClCompile Include="ByteCode.cpp">
       <Filter>Source Files\CompilerClasses</Filter>
-	</ClCompile>
-	<ClCompile Include="CallStmt.cpp">
+    </ClCompile>
+    <ClCompile Include="CallStmt.cpp">
       <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrayElemRef.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldRef.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalVariableRef.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationExpr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LiteralExpr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueMethodCall.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +201,24 @@
     </ClInclude>
     <ClInclude Include="CallStmt.h">
       <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayElemRef.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldRef.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalVariableRef.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationExpr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LiteralExpr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueMethodCall.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
