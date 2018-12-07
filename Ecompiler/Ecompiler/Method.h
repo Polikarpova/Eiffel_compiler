@@ -7,6 +7,7 @@
 #include "qset.h"
 
 #include "MetaClass.h"
+#include "Expression.h"
 
 typedef char byte;
 
@@ -46,5 +47,7 @@ public:
 
 	QString createDescriptor(EiffelType* type);
 	QString getTypeDescriptor(EiffelType* type);
+
+	bool checkArguments(QList<Expression*> factParams);
 };
 

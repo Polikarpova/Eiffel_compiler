@@ -136,3 +136,8 @@ QString Method::getTypeDescriptor(EiffelType* type)
 			return result;
 	}
 }
+
+bool Method::checkArguments(QList<Expression*> factParams){
+
+	return false;
+}

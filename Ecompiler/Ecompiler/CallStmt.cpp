@@ -1,5 +1,6 @@
 #include "CallStmt.h"
 #include "Method.h"
+#include "Expression.h"
 
 CallStmt::CallStmt(void)
 {
@@ -43,6 +44,7 @@ CallStmt::~CallStmt(void)
 					.arg(name, mtd->metaClass->name()),
 				expr->loc.first_line);
 	
+			delete m;
 			return NULL;
 
 		} else {
@@ -56,6 +58,7 @@ CallStmt::~CallStmt(void)
 						.arg(m->name, m->metaClass->name(), mtd->metaClass->name()),
 					expr->loc.first_line);
 	
+				delete m;
 				return NULL;
 
 			} else {
@@ -68,6 +71,7 @@ CallStmt::~CallStmt(void)
 							.arg(m->name),
 						expr->loc.first_line);
 	
+					delete m;
 					return NULL;
 				}
 			}
@@ -78,12 +82,34 @@ CallStmt::~CallStmt(void)
 	cs->createMethodRef(m);
 
 	//проверка соответствия количества и типов выражений
-		//аргументы в QList<Expression>
-		//в Method функция checkArguments
+	int paramCount = 0;
+	QList<Expression*> factParams;
 
-	success = true;
+	if ( expr->ExprList->first != NULL ) {
+		for(struct NExpr* i = expr->ExprList->first ;  ; i = i->next )
+		{
+			paramCount++;
+			factParams.append(Expression::create(i));
+			if(i == expr->ExprList->last) break;
+		}
+	}
+	
+	if ( paramCount != m->paramCount ) {
+	
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Invalid CALL: wrong number of arguments; routine %1 declares %2 formal arguments but %3 actual arguments provided")
+				.arg(m->name, QString(m->paramCount), QString(paramCount)),
+			expr->loc.first_line);
+	
+		return NULL;
+	}
 
-	return success? cs : 0;
+	//в Method функция checkArguments
+	//!!!!!!!!!!!!!ошибки выдавать тут или внутри checkArguments???
+	success = m->checkArguments(factParams);
+
+	return success? cs : NULL;
 }
 
 void CallStmt::createMethodRef(Method* callMethod) {
