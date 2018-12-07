@@ -12,8 +12,18 @@ public:
 
 	/*methods*/
 	static Expression* create(struct NExpr* s);
+	
+	//перегружается в дочерних классах
+	bool isLeftValue() { return false; };
+
+	//возвращает тип возвращаемый выражением
+	//2+2 вернет INTEGER
 	EiffelType* expressionType();
 
 	/*fields*/
-	bool isLeftValue;
+	struct NExpr* tree_node;
+
+	Expression* left;
+	Expression* right;
+
 };
