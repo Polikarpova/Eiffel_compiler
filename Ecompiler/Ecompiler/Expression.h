@@ -25,5 +25,6 @@ public:
 
 	Expression* left;
 	Expression* right;
+	EiffelType* type;	//(?)тип возвращаемого значения
 
 };

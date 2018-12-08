@@ -1,5 +1,6 @@
 #include "Expression.h"
-
+#include "LiteralExpr.h"
+#include "OperationExpr.h"
 
 Expression::Expression(void)
 {
@@ -15,15 +16,18 @@ Expression::~Expression(void)
 	switch(s->type) {
 		
 		case IntE:
+			return 0;
 		case RealE:
+			return 0;
 		case CharE:
+			return 0;
 		case StringE:
+			return LiteralExpr::create(s);
 		case BoolE:
 			return 0;
 		case NotE:
 		case UPlusE:
 		case UMinusE:
-			return 0;
 		case PowerE:
 		case MulE:
 		case DivE:
@@ -41,7 +45,7 @@ Expression::~Expression(void)
 		case OrElseE:
 		case XORE:
 		case ImpliesE:
-			return 0;
+			return OperationExpr::create(s);
 		case RefnCallE:
 			return 0;
 		case PrecursorE:

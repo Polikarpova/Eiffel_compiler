@@ -102,13 +102,13 @@
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
     <ClCompile Include="OperationExpr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LiteralExpr.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
     <ClCompile Include="ValueMethodCall.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="LiteralExpr.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,13 +212,13 @@
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="OperationExpr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LiteralExpr.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="ValueMethodCall.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="LiteralExpr.h">
+      <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,18 +228,10 @@
     <Flex Include="eiffel_flex.l" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;cxx;c;def</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h</Extensions>
       <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Source Files\flex+bison">
-      <UniqueIdentifier>{85c54d4a-94e3-4ab6-b090-03c717bc4875}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\flex+bison">
       <UniqueIdentifier>{92dc9683-533a-4715-8b7f-436d54e0c842}</UniqueIdentifier>
@@ -247,17 +239,25 @@
     <Filter Include="Header Files\TypeClasses">
       <UniqueIdentifier>{e59ae465-5a43-4364-b5a8-608599ee47ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\TypeClasses">
-      <UniqueIdentifier>{dd5cce63-83db-408c-9fdd-eee5aadc4bd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\CompilerClasses">
       <UniqueIdentifier>{e62943a8-789d-478b-8cfd-0b5a134795cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CompilerClasses">
-      <UniqueIdentifier>{14d33202-0489-4f98-8269-c85328d2f4ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ExprClasses">
       <UniqueIdentifier>{0b9dc6a7-62ec-4aa0-bbac-d1751cae4139}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files\flex+bison">
+      <UniqueIdentifier>{85c54d4a-94e3-4ab6-b090-03c717bc4875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TypeClasses">
+      <UniqueIdentifier>{dd5cce63-83db-408c-9fdd-eee5aadc4bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CompilerClasses">
+      <UniqueIdentifier>{14d33202-0489-4f98-8269-c85328d2f4ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ExprClasses">
       <UniqueIdentifier>{39ebc258-eea0-491b-967c-144371fbc069}</UniqueIdentifier>
