@@ -45,6 +45,7 @@ CallStmt::~CallStmt(void)
 					.arg(name, mtd->metaClass->name()),
 				expr->loc.first_line);
 	
+			//delete m; // удалять не нужно, metaClass->findMethod(name); возвращает живую ссылку из контейнера (ссылку на метод)
 			delete cs;
 			return NULL;
 
@@ -109,6 +110,8 @@ CallStmt::~CallStmt(void)
 
 	//в Method функция checkArguments
 	//!!!!!!!!!!!!!ошибки выдавать тут или внутри checkArguments???
+	// >>> Ошибки выдавать тут, т.к. только здесь известно описание ошибки, внутри checkArguments его нет.
+	// >>> checkArguments должна тихо возвращать успех/неуспех проверки.
 	success = m->checkArguments(factParams);
 
 	return success? cs : NULL;
