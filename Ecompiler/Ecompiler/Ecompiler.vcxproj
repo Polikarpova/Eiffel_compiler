@@ -122,7 +122,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="INTEGER.cpp" />
-    <ClCompile Include="LiteralExpr.cpp" />
+    <ClCompile Include="StringExpr.cpp" />
     <ClCompile Include="LocalVariable.cpp" />
     <ClCompile Include="LocalVariableRef.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="FieldRef.h" />
-    <ClInclude Include="LiteralExpr.h" />
+    <ClInclude Include="StringExpr.h" />
     <ClInclude Include="LocalVariableRef.h" />
     <ClInclude Include="OperationExpr.h" />
     <ClInclude Include="TreeNode.h" />

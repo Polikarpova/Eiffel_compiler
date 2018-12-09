@@ -1,5 +1,5 @@
 #include "Expression.h"
-#include "LiteralExpr.h"
+#include "StringExpr.h"
 #include "OperationExpr.h"
 
 Expression::Expression(void)
@@ -22,7 +22,7 @@ Expression::~Expression(void)
 		case CharE:
 			return 0;
 		case StringE:
-			return LiteralExpr::create(s);
+			return StringExpr::create(s);
 		case BoolE:
 			return 0;
 		case NotE:
