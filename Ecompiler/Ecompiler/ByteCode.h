@@ -79,8 +79,12 @@ public:
 	bool assertOnNegativeStack;
 
 	// ==================================================================== //
-	//* лог
-	QList<LogLine> log;
+	/** добавить сообщение в лог.
+		При логировании добавляемых инструкций
+		следует вызывать log() до записи инструкции к код,
+		чтобы в лог попала позиция первого байта инструкции (а не следующего после неё)
+	*/
+	ByteCode& log(const QString& s);
 
 
 	// ==================================================================== //
@@ -88,12 +92,17 @@ public:
 	ByteCode& ByteCode::append(const ByteCode& other);
 	ByteCode& s1(signed char v);
 	ByteCode& u1(unsigned char v);
+	ByteCode& u2(unsigned short int v);
+	ByteCode& u4(unsigned long int v);
 
 
 	//*  запись в байт-кода в файл
 	bool toFile(const QString& fname);
 
 private:
+	//* лог
+	QList<LogLine> _log;
+
 	void incStack(int sizeDiff);
 	void appendLog(const QList<LogLine>& other_log);
 };
