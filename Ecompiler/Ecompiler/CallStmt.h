@@ -10,7 +10,6 @@ public:
 
 	/*fields*/
 	short int methodref_constN;
-	Method* currentMethod;
 
 	/*methods*/
 	static CallStmt* create(Method* mtd, struct NExpr* expr);

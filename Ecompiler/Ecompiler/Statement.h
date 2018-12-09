@@ -10,6 +10,7 @@ public:
 
 	Statement(void);
 	~Statement(void);
+	Method* currentMethod;
 
 	static Statement* create(Method* mtd, struct NStmt* s);
 };
