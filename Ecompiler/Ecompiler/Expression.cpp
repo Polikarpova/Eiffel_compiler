@@ -11,7 +11,7 @@ Expression::~Expression(void)
 {
 }
 
-/*static*/ Expression* Expression::create(struct NExpr* s) {
+/*static*/ Expression* Expression::create(Method* mtd, struct NExpr* s) {
 
 	switch(s->type) {
 		
@@ -22,7 +22,7 @@ Expression::~Expression(void)
 		case CharE:
 			return 0;
 		case StringE:
-			return StringExpr::create(s);
+			return StringExpr::create(mtd, s);
 		case BoolE:
 			return 0;
 		case NotE:
@@ -45,7 +45,7 @@ Expression::~Expression(void)
 		case OrElseE:
 		case XORE:
 		case ImpliesE:
-			return OperationExpr::create(s);
+			return OperationExpr::create(mtd, s);
 		case RefnCallE:
 			return 0;
 		case PrecursorE:

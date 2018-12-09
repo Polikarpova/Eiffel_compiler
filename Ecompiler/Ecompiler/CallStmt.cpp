@@ -30,6 +30,7 @@ CallStmt::~CallStmt(void)
 			QString("Invalid procedure call"),
 			expr->loc.first_line);
 	
+		delete cs;
 		return NULL;
 
 	} else {
@@ -44,7 +45,7 @@ CallStmt::~CallStmt(void)
 					.arg(name, mtd->metaClass->name()),
 				expr->loc.first_line);
 	
-			delete m;
+			delete cs;
 			return NULL;
 
 		} else {
@@ -58,7 +59,7 @@ CallStmt::~CallStmt(void)
 						.arg(m->name, m->metaClass->name(), mtd->metaClass->name()),
 					expr->loc.first_line);
 	
-				delete m;
+				delete cs;
 				return NULL;
 
 			} else {
@@ -71,7 +72,7 @@ CallStmt::~CallStmt(void)
 							.arg(m->name),
 						expr->loc.first_line);
 	
-					delete m;
+					delete cs;
 					return NULL;
 				}
 			}
@@ -89,7 +90,7 @@ CallStmt::~CallStmt(void)
 		for(struct NExpr* i = expr->ExprList->first ;  ; i = i->next )
 		{
 			paramCount++;
-			factParams.append(Expression::create(i));
+			factParams.append(Expression::create(mtd, i));
 			if(i == expr->ExprList->last) break;
 		}
 	}
@@ -102,6 +103,7 @@ CallStmt::~CallStmt(void)
 				.arg(m->name, QString(m->paramCount), QString(paramCount)),
 			expr->loc.first_line);
 	
+		delete cs;
 		return NULL;
 	}
 

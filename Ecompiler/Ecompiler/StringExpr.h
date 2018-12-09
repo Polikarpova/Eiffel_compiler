@@ -15,5 +15,5 @@ public:
 	QString string;
 
 	/*methods*/
-	static StringExpr* create(struct NExpr* expr);
+	static StringExpr* create(Method* mtd, struct NExpr* expr);
 };

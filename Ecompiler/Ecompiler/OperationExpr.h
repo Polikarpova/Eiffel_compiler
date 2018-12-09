@@ -8,5 +8,5 @@ public:
 	OperationExpr(void);
 	~OperationExpr(void);
 
-	static OperationExpr* create(struct NExpr* expr);
+	static OperationExpr* create(Method* mtd, struct NExpr* expr);
 };

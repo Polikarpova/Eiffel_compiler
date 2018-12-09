@@ -10,13 +10,15 @@ StringExpr::~StringExpr(void)
 {
 }
 
-/*static*/ StringExpr* StringExpr::create(struct NExpr* expr) {
+/*static*/ StringExpr* StringExpr::create(Method* mtd, struct NExpr* expr) {
 	
-	StringExpr* le = new StringExpr();
+	StringExpr* se = new StringExpr();
 
-	le->tree_node = expr;
-	//le->constTableN = ...;
-	le->string = QString(expr->value.String);
+	se->currentMethod = mtd;
 
-	return le;
+	se->tree_node = expr;
+	//se->constTableN = ...;
+	se->string = QString(expr->value.String);
+
+	return se;
 }

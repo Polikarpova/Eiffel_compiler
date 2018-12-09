@@ -11,7 +11,11 @@ OperationExpr::~OperationExpr(void)
 }
 
 
-/*static*/ OperationExpr* OperationExpr::create(struct NExpr* expr)
+/*static*/ OperationExpr* OperationExpr::create(Method* mtd, struct NExpr* expr)
 {
-	return 0;
+	OperationExpr* oe = new OperationExpr();
+
+	oe->currentMethod = mtd;
+
+	return oe;
 }
