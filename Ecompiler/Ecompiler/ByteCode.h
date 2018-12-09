@@ -36,19 +36,7 @@ public:
 	QString msg;
 
 	//* convert to string
-	QString toString() const {
-		QString formatted;
-		if(this->pos > -1)
-		{
-			formatted = QString("%1 | ").arg(QString::number(this->pos));
-		}
-		if(this->global_pos > -1 && this->global_pos != this->pos)
-		{
-			formatted = QString("%1:%2").arg(QString::number(this->global_pos), formatted);
-		}
-		formatted += this->msg;
-		return formatted;
-	}
+	QString toString() const; // see ByteCode.cpp
 };
 
 

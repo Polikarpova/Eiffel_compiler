@@ -1,12 +1,31 @@
 #include "ByteCode.h"
 #include <QFile>
 
+//* convert to string
+QString LogLine::toString() const {
+	QString formatted;
+	if(this->pos > -1)
+	{
+		formatted = QString("%1 | ").arg(QString::number(this->pos));
+	}
+	if(this->global_pos > -1 && this->global_pos != this->pos)
+	{
+		formatted = QString("%1:%2").arg(QString::number(this->global_pos), formatted);
+	}
+	QString& trimmed = this->msg.trimmed();
+	formatted += trimmed;
+	 int indents = this->msg.size() - trimmed.size();
+	 if(indents > 0)
+		 formatted.prepend(QString(indents, ' ' ));
+	return formatted;
+}
+
 
 ByteCode::ByteCode(void)
 {
+	this->currentOffset = 0;
 	this->stackSize = this->maxStackSize = 0;
 	this->assertOnNegativeStack = true;
-
 }
 
 ByteCode& ByteCode::log(const QString& s)
@@ -85,7 +104,6 @@ void ByteCode::incStack(int sizeDiff)
 
 void ByteCode::appendLog(const QList<LogLine>& other_log)
 {
-	//currentOffset
 	QString indent(" ");
 
 	LogLine brace("{");
@@ -94,7 +112,7 @@ void ByteCode::appendLog(const QList<LogLine>& other_log)
 	foreach(const LogLine& line, other_log)
 	{
 		this->_log.append(
-			LogLine(line.global_pos, line.pos, indent + line.msg)
+			LogLine(line.global_pos + this->currentOffset, line.pos, indent + line.msg)
 			);
 	}
 
