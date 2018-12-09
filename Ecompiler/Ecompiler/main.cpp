@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 
 	if(true)
 	{
+		printf("Running a test for ByteCode...\n");
 		ByteCode bc;
 		bc.s1(0xCA).s1(0xFE).u1(0x00).u1(0xBA).u1(0xBE);
 		bc.toFile("bytecode-test.bin");
