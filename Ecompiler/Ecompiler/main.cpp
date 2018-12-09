@@ -15,6 +15,7 @@ extern int syntax_errors_logged;
 /* </ Error handling > */
 
 #include "EiffelProgram.h"
+#include "ByteCode.h"
 
 // tests
 #include "bisontest.h"
@@ -36,6 +37,14 @@ int main(int argc, char *argv[])
 	//freopen("output.txt", "w", stdout);
 
 	//Expression expr;
+
+	if(true)
+	{
+		ByteCode bc;
+		bc.s1(0xCA).s1(0xFE).u1(0x00).u1(0xBA).u1(0xBE);
+		bc.toFile("bytecode-test.bin");
+		return 0;
+	}
 
 	if(false)
 	{
@@ -120,16 +129,5 @@ int main(int argc, char *argv[])
 	- Внести классы стандартных типов в Eiffel.classes
 
 
-//* переворот четырёх байт
-unsigned long int Endian_DWord_Conversion(unsigned long int dword)
-{
-   return ((dword>>24)&0x000000FF) | ((dword>>8)&0x0000FF00) | ((dword<<8)&0x00FF0000) | ((dword<<24)&0xFF000000);
-}
-
-//* переворот двух байт
-unsigned short int Endian_Word_Conversion(unsigned short int word)
-{
-   return ((word>>8)&0x00FF) | ((word<<8)&0xFF00);
-}
 */
 

@@ -10,7 +10,7 @@ LiteralExpr::~LiteralExpr(void)
 {
 }
 
-/*static*/ LiteralExpr* create(struct NExpr* expr) {
+/*static*/ LiteralExpr* LiteralExpr::create(struct NExpr* expr) {
 	
 	LiteralExpr* le = new LiteralExpr();
 
