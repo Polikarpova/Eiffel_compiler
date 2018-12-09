@@ -77,6 +77,12 @@
       <Message>
       </Message>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>run_prebuild_step.bat</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Compile all .java sources in /java dir, etc.</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
