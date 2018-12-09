@@ -16,6 +16,15 @@ ByteCode& ByteCode::log(const QString& s)
 		);
 	return *this;
 }
+void ByteCode::printLog()
+{
+	QStringList l;
+	foreach(const LogLine& line, this->_log)
+	{
+		l << line.toString();
+	}
+	qDebug(l.join("\n").toLocal8Bit());
+}
 
 
 ByteCode::~ByteCode(void)

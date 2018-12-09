@@ -36,7 +36,7 @@ public:
 	QString msg;
 
 	//* convert to string
-	QString toString() {
+	QString toString() const {
 		QString formatted;
 		if(this->pos > -1)
 		{
@@ -85,6 +85,7 @@ public:
 		чтобы в лог попала позиция первого байта инструкции (а не следующего после неё)
 	*/
 	ByteCode& log(const QString& s);
+	void printLog();
 
 
 	// ==================================================================== //

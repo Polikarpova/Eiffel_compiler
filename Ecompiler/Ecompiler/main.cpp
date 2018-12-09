@@ -43,7 +43,16 @@ int main(int argc, char *argv[])
 		printf("Running a test for ByteCode...\n");
 		ByteCode bc;
 		bc.s1(0xCA).s1(0xFE).u1(0x00).u1(0xBA).u1(0xBE);
+		 ByteCode bc_1;
+		 bc_1.u2(0x0000).u4(0xCAFEBABE).log("Nested ByteCode block");
+		bc.append(bc_1)
+			.u1(0x00).u1(-2)
+			.u1(0x00).u2(-2)
+			.u1(0x00).u4(-2);
 		bc.toFile("bytecode-test.bin");
+
+		bc.printLog();
+
 		return 0;
 	}
 
