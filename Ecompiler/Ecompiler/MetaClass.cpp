@@ -333,6 +333,12 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	return true;
 }
 
+
+bool MetaClass::generateCode()
+{
+	return true;
+}
+
 bool MetaClass::isNameConflicting(const QString& upperName) {
 	return 
 		upperName==("NONE") // нужно ли в конечном итоге?

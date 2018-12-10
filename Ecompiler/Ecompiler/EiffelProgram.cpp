@@ -43,6 +43,12 @@ EiffelProgram::~EiffelProgram(void)
 	// ÏÐÎÕÎÄ 2
 	program->round2();
 
+	// ÏÐÎÕÎÄ 3
+	//program->round3();
+
+	// ÏÐÎÕÎÄ 4
+	//program->compile(); // çäåñü èëè íåò?
+
 	return program;
 }
 
@@ -111,7 +117,7 @@ void EiffelProgram::createRTL()
 	mc->tree_node = NULL;
 	this->classes[ mc->name() ] = mc;
 
-	mc = new RTLMetaClass(this, QString("IO"));
+	mc = new RTLMetaClass(this, QString("Io"));
 	mc->tree_node = NULL;
 	this->classes[ mc->name() ] = mc;
 }

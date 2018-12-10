@@ -38,6 +38,9 @@ public:
 	bool round2();
 	/** Проход 3 */
 	bool round3();
+	/** Проход 4 */
+	bool compile();
+
 	void createRTL();
 
 	/*functions*/

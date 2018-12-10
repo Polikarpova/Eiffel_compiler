@@ -58,6 +58,8 @@ public:
 	/** Проход 3 */
 	bool round3();
 	bool createInheritance(struct NInheritFromClass* inheritance);
+	/** Проход 4 */
+	bool generateCode();
 
 
 	/*functions*/
