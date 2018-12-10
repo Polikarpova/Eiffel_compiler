@@ -1,6 +1,6 @@
 #pragma once
 #include "Expression.h"
-#include <QString>
+#include <qstring.h>
 
 class StringExpr : public Expression
 {
@@ -15,5 +15,5 @@ public:
 	QString string;
 
 	/*methods*/
-	static StringExpr* create(Method* mtd, struct NExpr* expr);
+	static StringExpr* create(struct NExpr* expr);
 };

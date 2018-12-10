@@ -10,6 +10,7 @@ StringExpr::~StringExpr(void)
 {
 }
 
+<<<<<<< HEAD
 /*static*/ StringExpr* StringExpr::create(Method* mtd, struct NExpr* expr) {
 	
 	StringExpr* se = new StringExpr();
