@@ -18,9 +18,6 @@ CallStmt::~CallStmt(void)
 	Method* m = 0;
 
 	bool success = false;
-	CallStmt* cs = new CallStmt();
-
-	cs->currentMethod = mtd;
 
 	//проверка на ошибулечки
 	if ( expr->type != RefnCallE ) {
@@ -30,13 +27,14 @@ CallStmt::~CallStmt(void)
 			QString("Invalid procedure call"),
 			expr->loc.first_line);
 	
-		delete cs;
 		return NULL;
 
 	} else {
 	
 		QString name = QString( expr->value.id ).toLower();
+		//EiffelClass* qualification = 0;
 		m = mtd->metaClass->findMethod(name);
+
 		if ( !m ) {
 			
 			EiffelProgram::currentProgram->logError(
@@ -46,7 +44,6 @@ CallStmt::~CallStmt(void)
 				expr->loc.first_line);
 	
 			//delete m; // удалять не нужно, metaClass->findMethod(name); возвращает живую ссылку из контейнера (ссылку на метод)
-			delete cs;
 			return NULL;
 
 		} else {
@@ -60,7 +57,6 @@ CallStmt::~CallStmt(void)
 						.arg(m->name, m->metaClass->name(), mtd->metaClass->name()),
 					expr->loc.first_line);
 	
-				delete cs;
 				return NULL;
 
 			} else {
@@ -73,12 +69,15 @@ CallStmt::~CallStmt(void)
 							.arg(m->name),
 						expr->loc.first_line);
 	
-					delete cs;
 					return NULL;
 				}
 			}
 		}
 	}
+
+	CallStmt* cs = new CallStmt();
+
+	cs->currentMethod = mtd;
 
 	//приписать номер к узлу константы
 	cs->createMethodRef(m);
@@ -88,7 +87,7 @@ CallStmt::~CallStmt(void)
 	QList<Expression*> factParams;
 
 	if ( expr->ExprList->first != NULL ) {
-		for(struct NExpr* i = expr->ExprList->first ;  ; i = i->next )
+		for(struct NExpr* i = expr->ExprList->first ; i != NULL ; i = i->next )
 		{
 			paramCount++;
 			factParams.append(Expression::create(mtd, i));

@@ -54,7 +54,7 @@ Expression::~Expression(void)
 		case SubscriptE:
 			return 0;
 		default:
-			return 0; //unknow
+			return 0; //unknown
 	}
 
 	return 0;

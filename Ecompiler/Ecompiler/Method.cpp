@@ -88,6 +88,7 @@ QString Method::createDescriptor(EiffelType* type) {
 	
 			EiffelType* et = EiffelType::create(i->type);
 			result += this->getTypeDescriptor(et);
+			delete et;
 		}
 	}
 
@@ -140,7 +141,7 @@ QString Method::getTypeDescriptor(EiffelType* type)
 	}
 }
 
-bool Method::checkArguments(QList<Expression*> factParams){
+bool Method::checkArguments(QList<Expression*> factParams) {
 
 	return false;
 }
