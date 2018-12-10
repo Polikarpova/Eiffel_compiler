@@ -117,8 +117,10 @@ void EiffelProgram::createRTL()
 	mc->tree_node = NULL;
 	this->classes[ mc->name() ] = mc;
 
+	// IO class
 	mc = new RTLMetaClass(this, QString("IO"));
 	mc->tree_node = NULL;
+	//mc->isStatic = true; // this allows LocalVariableRef to refer the class as variable
 	this->classes[ mc->name() ] = mc;
 }
 

@@ -27,6 +27,7 @@ public:
 	struct NClass* tree_node;
 
 	bool isAbstract; // Истина для ANY, NONE
+	//bool isStatic; // Истина для IO
 	EiffelProgram* program;
 
 	MetaClass* parent;
