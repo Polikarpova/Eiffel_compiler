@@ -121,3 +121,18 @@ void EiffelProgram::createRTL()
 	mc->tree_node = NULL;
 	this->classes[ mc->name() ] = mc;
 }
+
+
+void EiffelProgram::printErrors()
+{
+	foreach(CompilerError ce, this->errors)
+	{
+		QString print_str = QString("%1 error%3: %2.")
+			.arg(ce.type,ce.message)
+			.arg(ce.line<0 ?
+				("") :
+				(QString(" at line %1").arg(ce.line))
+				);
+		wprintf(L"%s\n",print_str.data());
+	}
+}

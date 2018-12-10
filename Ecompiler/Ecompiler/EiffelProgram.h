@@ -30,6 +30,7 @@ public:
 		errors.push_back(ce);
 		return errors.size();
 	}
+	void printErrors();
 
 	/** \return NULL if no class found */
 	MetaClass* findClass(const QString& upperName);

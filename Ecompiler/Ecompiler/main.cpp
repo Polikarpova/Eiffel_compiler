@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 		
 		printf("\n ====== Error List: ======\n");
-
+		program->printErrors();
 
 		// run dot
 		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
