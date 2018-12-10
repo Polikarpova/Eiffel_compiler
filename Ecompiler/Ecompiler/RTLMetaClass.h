@@ -17,7 +17,7 @@ public:
 	/*fields*/
 };
 
-// ячдю янахпюел бяе RTL-ЙКЮЯЯШ дкъ ондйкчвемхъ бяецн кхьэ 1 RTLMetaClass.h
+// ячдю янахпюел бяе RTL-ЙКЮЯЯШ дкъ ондйкчвемхъ й опнцпюллле бяецн кхьэ ндмнцн RTLMetaClass.h
 
 #include "EiffelNONE.h"
 #include "EiffelANY.h"

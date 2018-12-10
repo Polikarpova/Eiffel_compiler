@@ -38,12 +38,12 @@ int main(int argc, char *argv[])
 
 	//Expression expr;
 
-	if(true)
+	if(false)
 	{
 		printf("Running a test for ByteCode...\n");
 
 		ByteCode bc;
-		bc.log("Begin of vakhanalia /o/");
+		bc.log("Begin writing something \\o/");
 		bc.s1(0xCA).s1(0xFE).u1(0x66).u1(0xBA).u1(0xBE);
 		bc.iconst_(-1).iconst_(5);
 		 ByteCode bc_1;
@@ -53,8 +53,10 @@ int main(int argc, char *argv[])
 		bc.append(bc_1)
 			.u1(0x00).u1(-2)
 			.u1(0x00).u2(-2)
-			.u1(0x00).u4(-2)
-			.log("End Of Whole ByteCode");
+			.u1(0x00).u4(-2);
+		bc.currentOffset = 2; // move to some place in existing code
+		bc.u1(0x77).u2(0x2BAD) // overwrite some consequent bytes
+			.gotoEnd().log("End Of Whole ByteCode"); 
 
 		bc.toFile("bytecode-test.bin");
 
@@ -135,16 +137,9 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	+ case-insensitive IDs comparation
-	tip. ID to store: 1st encountered variant (other entries may differ in letter case)
-
-	+ remove semantics part from ReadMe
-	+ remove flex file build step from build (turn off)
-	+ apply changes in semantics DOC from 4.12.2018
-
-	- (?^3) create ByteCode compiler class
 	- Внести классы стандартных типов в Eiffel.classes
-
+	- решить, где будет располагаться генерация байт-кода для каждого вида конструкции
+		и какие виртуальные методы будут за это отвечать.
 
 */
 

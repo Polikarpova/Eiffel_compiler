@@ -49,6 +49,8 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 		if(mc)
 			program->classes[ mc->name() ] = mc;
 
+		printf("Created class:\t `%s`", class_node->className);
+
 		return mc;
 	}
 }
@@ -116,11 +118,11 @@ bool MetaClass::createFeatures() {
 			QString name(i->id);
 			name = name.toLower();
 			
-			if( findField(name, false) )
+			if( findField(name, false) != NULL )
 			{
 				program->logError(
 					QString("semantic"), 
-					QString("Cannot use attribute %1 as a constructor of class %2")
+					QString("Cannot use attribute %1 as a constructor procedure of class %2")
 						.arg(name, this->name()),
 					i->loc.first_line);
 
@@ -286,16 +288,16 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 				{
 					program->logError(
 						QString("semantic"), 
-						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
-							.arg(this->parent->name(), name, this-> name()),
+						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (you may redefine it with function instead)")
+							.arg(this->parent->name(), name, this->name()),
 						i->loc.first_line);
 				}
 				else if( ! this_feature->type->canCastTo(parent_feature->type) )
 				{
 					program->logError(
 						QString("semantic"), 
-						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
-							.arg(this->parent->name(), name, this-> name()),
+						QString("Redefined feature`s base type is incompatible with the base type of a feature in parent class %1 (feature `%2` in class %3)")
+							.arg(this->parent->name(), name, this->name()),
 						i->loc.first_line);
 				}
 				else if( parent_feature->isField() == this_feature->isMethod() ) // one is field, another is method
@@ -308,13 +310,19 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 					//Field*  field_fe  = (Field*)  ( parent_feature->isField() ? parent_feature : this_feature );
 					Method* method_fe = (Method*) ( parent_feature->isMethod()? parent_feature : this_feature );
 
-					if(false) {
+					if(method_fe->paramCount != 0) {
 						program->logError(
 							QString("semantic"), 
-							QString("Redefine attribute of class %1 with attribute `%2` in class %3 (redefine it with function instead)")
-								.arg(this->parent->name(), name, this-> name()),
+							  (method_fe == this_feature
+							   ?
+							   QString("Redefining an attribute `%2` of class %1 with a function with parameters in class %3 (no arguments are required in order to provide the same usage of a feature)")
+							   :
+							  QString("Redefining a function with parameters of class %1 with an attribute `%2` in class %3 (you can redefine it with a routine only)")
+							  ).arg(this->parent->name(), name, this->name()),
 							i->loc.first_line);
 					}
+
+					// ... проверки не дописаны
 				}
 			}
 
@@ -326,5 +334,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 }
 
 bool MetaClass::isNameConflicting(const QString& upperName) {
-	return EiffelProgram::currentProgram -> findClass(upperName) != NULL;
+	return 
+		upperName==("NONE") // нужно ли в конечном итоге?
+		|| EiffelProgram::currentProgram -> findClass(upperName) != NULL;
 }
