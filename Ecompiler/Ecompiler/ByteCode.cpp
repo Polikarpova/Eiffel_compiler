@@ -95,7 +95,7 @@ void ByteCode::incStack(int sizeDiff)
 		QStringList l;
 		for(int i=1; i<=5; ++i)
 		{
-			l << this->_log[_log.size()-i] . toString();
+			l.prepend( this->_log[_log.size()-i] . toString() );
 		}
 		qWarning(l.join("\n").toLocal8Bit());
 	}
