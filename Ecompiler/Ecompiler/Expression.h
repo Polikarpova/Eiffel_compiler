@@ -18,7 +18,7 @@ public:
 	static Expression* create(Method* mtd, struct NExpr* s);
 	
 	//перегружается в дочерних классах
-	virtual bool isLeftValue() { return false; };
+	virtual bool isLeftValue() { return this->_isLeftValue; };
 
 	//возвращает тип возвращаемый выражением
 	//2+2 вернет INTEGER
@@ -26,6 +26,8 @@ public:
 
 	/*fields*/
 	struct NExpr* tree_node;
+
+	bool _isLeftValue;
 
 	Expression* left;
 	Expression* right;

@@ -20,6 +20,7 @@ Expression::~Expression(void)
 		case RealE:
 			return 0;
 		case CharE:
+			//можно забыть
 			return 0;
 		case StringE:
 			return StringExpr::create(mtd, s);

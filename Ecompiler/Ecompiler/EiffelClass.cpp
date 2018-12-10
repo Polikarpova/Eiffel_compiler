@@ -46,9 +46,9 @@ EiffelClass::~EiffelClass(void)
 			//ec->metaClass = new REAL();
 			break;
 		case CharacterV:
+			//можно забыть
 			break;
 		case StringV:
-			//ec->metaClass = new EiffelSTRING();
 			ec->metaClass = program->findClass("STRING");
 			break;
 		case BooleanV:
