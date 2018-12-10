@@ -1,4 +1,6 @@
 #include "MetaClass.h"
+#include "EiffelClass.h"
+#include "EiffelProgram.h"
 #include "Feature.h"
 #include "Method.h"
 #include "Field.h"
@@ -8,7 +10,7 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 	this->program = program;
 	this->parent = NULL;
 	this->isAbstract = false;
-	//this->isStatic = false;
+	this->_exprType = NULL;
 
 	JvmConstant jc = { UTF8_VALUE, 0, false };
 
@@ -23,6 +25,11 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 	this->class_constN = this->constantTable.put(jc);
 		
 }
+
+MetaClass::~MetaClass() {
+	if(!_exprType)
+		delete _exprType;
+};
 
 
 /*static*/ MetaClass* MetaClass::create(struct NClass* class_node)
@@ -90,6 +97,14 @@ Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*=
 
 	return p;
 }
+
+EiffelClass* MetaClass::getType()
+{
+	if(!_exprType)
+		_exprType = new EiffelClass(this);
+	return _exprType;
+}
+
 
 bool MetaClass::createFeatures() {
 

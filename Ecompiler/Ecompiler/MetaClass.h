@@ -5,11 +5,12 @@
 #include "tree_structs.h"
 
 #include "JvmConstant.h"
-#include "EiffelProgram.h"
+//#include "EiffelProgram.h"
 
-typedef char byte;
+//typedef char byte;
 
 class EiffelProgram;
+class EiffelClass;
 class Feature;
 class Method;
 class Field;
@@ -20,7 +21,7 @@ public:
 
 	MetaClass() {};
 	MetaClass(EiffelProgram* program, const QString& name);
-	~MetaClass() {};
+	~MetaClass();
 
 
 	/*fields*/
@@ -49,10 +50,10 @@ public:
 	/** \return NULL if no class found */
 	Feature* findFeature(const QString& lowerName, bool lookInParents = true);
 
+	//* тип в выражении
+	EiffelClass* getType();
 
 	/*methods*/
-	//void doSemantic();
-	byte* toByteCode();
 	
 	/** ѕроход 2 */
 	bool createFeatures();
@@ -66,4 +67,9 @@ public:
 	/*functions*/
 	static MetaClass* create(struct NClass* class_node);
 	static bool isNameConflicting(const QString& upperName);
+
+private:
+	//* тип в выражении
+	EiffelClass* _exprType;
+
 };

@@ -1,4 +1,5 @@
 #include "EiffelClass.h"
+#include "MetaClass.h"
 
 #include "INTEGER.h"
 #include "REAL.h"
@@ -10,6 +11,11 @@ EiffelClass::EiffelClass(void)
 {
 	this->className = "";
 	this->metaClass = 0;
+}
+EiffelClass::EiffelClass(MetaClass* metaClass) {
+	this->tree_node = NULL;
+	this->metaClass = metaClass;
+	this->className = this->metaClass->name();
 }
 
 
