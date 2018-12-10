@@ -153,6 +153,7 @@
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="FieldRef.h" />
+    <ClInclude Include="instructions.h" />
     <ClInclude Include="StringExpr.h" />
     <ClInclude Include="LocalVariableRef.h" />
     <ClInclude Include="OperationExpr.h" />

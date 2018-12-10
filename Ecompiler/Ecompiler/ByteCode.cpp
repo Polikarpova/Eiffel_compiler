@@ -137,7 +137,8 @@ ByteCode& ByteCode::append(const ByteCode& other)
 }
 ByteCode& ByteCode::u1(unsigned char v)
 {
-	this->code.append(v);
+	//this->code.append(v);
+	this->code[this->currentOffset] = v;
 	this->currentOffset += 1;
 	return *this;
 }
@@ -154,9 +155,8 @@ ByteCode& ByteCode::u2(unsigned short int v)
 	} data;
 
 	data.u2 = v;
-	this->code.append(data.b[0]);
-	this->code.append(data.b[1]);
-	this->currentOffset += 2;
+	this->s1(data.b[0]);
+	this->s1(data.b[1]);
 	return *this;
 }
 
@@ -172,10 +172,9 @@ ByteCode& ByteCode::u4(unsigned long int v)
 	} data;
 
 	data.u4 = v;
-	this->code.append(data.b[0]);
-	this->code.append(data.b[1]);
-	this->code.append(data.b[2]);
-	this->code.append(data.b[3]);
-	this->currentOffset += 4;
+	this->s1(data.b[0]);
+	this->s1(data.b[1]);
+	this->s1(data.b[2]);
+	this->s1(data.b[3]);
 	return *this;
 }

@@ -88,6 +88,8 @@ public:
 	//*  запись в байт-кода в файл
 	bool toFile(const QString& fname);
 
+	#include "instructions.h"
+
 private:
 	//* лог
 	QList<LogLine> _log;
