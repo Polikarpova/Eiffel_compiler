@@ -70,7 +70,10 @@ Method::~Method(void)
 
 bool Method::createBody()
 {
-	return false;
+	this->body.currentMethod = this;
+	return 
+		this->body.createBody(this->tree_node->routineBody);
+}
 }
 
 

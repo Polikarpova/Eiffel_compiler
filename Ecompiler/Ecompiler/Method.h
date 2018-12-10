@@ -2,7 +2,7 @@
 #include "feature.h"
 #include "EiffelType.h"
 #include "LocalVariable.h"
-#include "Statement.h"
+#include "StatementBlock.h"
 #include "qmap.h"
 #include "qset.h"
 
@@ -38,7 +38,7 @@ public:
 	/** Количество параметров: 1 (Current) + число формальных параметров */
 	int paramCount;
 
-	QList<Statement*> body;
+	StatementBlock body;
 
 	/*methods*/
 	bool createBody();
