@@ -1,7 +1,7 @@
 #pragma once
 #include "tree_structs.h"
 
-typedef char byte;
+class ByteCode;
 
 class TreeNode {
 
@@ -10,7 +10,7 @@ public:
 	~TreeNode() {};
 
 	/*methods*/
-	byte* toByteCode();
+	ByteCode& toByteCode();
 
 	/*fields*/
 	//Struct* pStruct;

@@ -336,6 +336,8 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 
 bool MetaClass::generateCode()
 {
+
+
 	return true;
 }
 

@@ -61,7 +61,7 @@ enum ExprType
 	/* IDs & calls */
 	RefnCallE,
 	// IdE,  		// uses {value.Id}
-	// CallE, 		// uses {left,value.ExprList}
+	// CallE, 		// uses {left,ExprList}
 	PrecursorE, // uses {value.Id | NULL}
 	/* Chains */
 	// QualificationE, 
@@ -82,7 +82,6 @@ struct NExpr
 		
 		// struct NId* Id; 
 		char* id;
-
 	} value;
 	
 	struct NExprList* ExprList;  // для CallE
