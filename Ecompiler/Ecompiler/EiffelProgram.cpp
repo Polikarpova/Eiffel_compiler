@@ -57,6 +57,9 @@ bool EiffelProgram::round2()
 	 
 	foreach(MetaClass* mc, this->classes)
 	{
+		if(mc->tree_node == NULL)
+			continue; // RTL class
+
 		mc->createFeatures();
 	}
 
@@ -66,11 +69,27 @@ bool EiffelProgram::round3()
 {
 	foreach(MetaClass* mc, this->classes)
 	{
+		if(mc->tree_node == NULL)
+			continue; // RTL class
+
 		mc->round3();
 	}
 
 	// set class `NONE` as child of all `leaf`-classes
 
+
+	return true;
+}
+
+bool EiffelProgram::compile()
+{
+	foreach(MetaClass* mc, this->classes)
+	{
+		if(mc->tree_node == NULL)
+			continue; // RTL class
+
+		mc->generateCode();
+	}
 
 	return true;
 }
