@@ -19,5 +19,6 @@ public class HELLO_WORLD {
 	public static void main(java.lang.String args[])
 	{
 		(new HELLO_WORLD()).make();
+		// CREATE My_VAr.make
 	}
 }
