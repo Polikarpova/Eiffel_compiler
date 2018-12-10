@@ -42,6 +42,8 @@ public:
 
 	/*methods*/
 	bool createBody();
+	LocalVariable* findLocalVar(const QString& lowerName);
+
 
 	static Method* create(MetaClass* mc, struct NFeature* node);
 

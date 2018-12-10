@@ -74,6 +74,10 @@ bool Method::createBody()
 	return 
 		this->body.createBody(this->tree_node->routineBody);
 }
+
+LocalVariable* Method::findLocalVar(const QString& lowerName)
+{
+	return localVariables.value(lowerName, NULL);
 }
 
 
