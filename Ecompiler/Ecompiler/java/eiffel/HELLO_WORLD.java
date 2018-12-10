@@ -4,7 +4,7 @@ package eiffel;
  *
  * @author Пользователь
  */
-public class HELLO_WORLD {
+public class HELLO_WORLD extends rtl.ANY {
     public HELLO_WORLD()
 	{
 		
@@ -12,7 +12,7 @@ public class HELLO_WORLD {
 
     public void make()
 	{
-		rtl.Io.put_string("Hello world!");
+		io.put_string("Hello world!");
 		// System.out.print("Hello world!");
 	}
 	
