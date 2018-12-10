@@ -27,7 +27,7 @@ Method::~Method(void)
 
 	// 1 (Current)
 	// заглушка NULL
-	LocalVariable* lvr = new LocalVariable("current", loc_i , new EiffelClass(mc) );
+	LocalVariable* lvr = new LocalVariable("current", loc_i, mc->getType() );
 	mtd->localVariables[lvr->name] = lvr;
 	++loc_i;
 

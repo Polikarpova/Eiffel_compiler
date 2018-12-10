@@ -23,43 +23,42 @@ EiffelClass::~EiffelClass(void)
 {
 }
 
-/*static*/ EiffelClass* EiffelClass::create(struct NType* type) {
+/*static*/ EiffelClass* EiffelClass::create(struct NType* node) {
 
 	EiffelProgram* program = EiffelProgram::currentProgram;
 
-	EiffelClass* ec = new EiffelClass();
-	ec->tree_node = type;
+	MetaClass* mc = 0;
 
-	switch(type->type) {
+	switch(node->type) {
 	
 		case ClassV:
-			ec->className = QString(type->className);
-			ec->metaClass = program->findClass(ec->className);
-			if(ec->metaClass == NULL)
+			mc = program->findClass( QString(node->className).toUpper() );
+			if(mc == NULL)
 			{
 				program->logError(
 					QString("semantic"), 
 					QString("Using undefined class %1 as type")
-					.arg(type->className),
-					ec->tree_node->loc.first_line);
-				delete ec;
-				ec = NULL;
+					.arg(node->className),
+					node->loc.first_line);
 			}
 		case IntegerV:
-			//ec->metaClass = new INTEGER();
+			//mc = new INTEGER();
 			break;
 		case RealV:
-			//ec->metaClass = new REAL();
+			//mc = new REAL();
 			break;
 		case CharacterV:
 			//можно забыть
 			break;
 		case StringV:
-			ec->metaClass = program->findClass("STRING");
+			mc = program->findClass("STRING");
 			break;
 		case BooleanV:
 			break;
 	}
 
-	return ec;
+	if( !mc )
+		return NULL;
+
+	return mc->getType();
 }
