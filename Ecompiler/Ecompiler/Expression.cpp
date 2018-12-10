@@ -59,8 +59,10 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	}
 	else // Check Qualification as `node->left`
 	{
-		qualification_expr = 0;
+		qualification_expr = 0; // find out type & class of left expr
 	}
+
+	// check if the feature exists if qual. class
 
 	return 0;
 }
