@@ -1,6 +1,8 @@
 #pragma once
 #include "TreeNode.h"
 
+#include "EiffelProgram.h"
+
 class Method;
 
 class Statement : public TreeNode

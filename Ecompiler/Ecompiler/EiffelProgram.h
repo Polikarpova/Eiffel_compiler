@@ -3,6 +3,7 @@
 #include <qmap.h>
 
 #include <tree_structs.h>
+#include <QString>
 
 //#include "MetaClass.h"
 class MetaClass;

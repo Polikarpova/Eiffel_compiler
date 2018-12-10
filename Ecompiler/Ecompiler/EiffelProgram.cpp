@@ -2,6 +2,9 @@
 #include "MetaClass.h"
 #include "RTLMetaClass.h"
 
+#include "Field.h"
+#include "Method.h"
+
 /*static*/ EiffelProgram* EiffelProgram::currentProgram = NULL;
 
 EiffelProgram::EiffelProgram(void)
