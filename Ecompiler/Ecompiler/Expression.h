@@ -22,7 +22,8 @@ public:
 
 	//возвращает тип возвращаемый выражением
 	//2+2 вернет INTEGER
-	EiffelType* expressionType();
+	EiffelType* expressionType(){ return type; }
+
 
 	/*fields*/
 	struct NExpr* tree_node;

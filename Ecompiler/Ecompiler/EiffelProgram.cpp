@@ -1,5 +1,6 @@
 #include "EiffelProgram.h"
 #include "MetaClass.h"
+#include "EiffelClass.h"
 #include "RTLMetaClass.h"
 
 #include "Field.h"

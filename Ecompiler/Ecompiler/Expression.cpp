@@ -3,6 +3,7 @@
 #include "OperationExpr.h"
 
 #include "MetaClass.h"
+#include "EiffelClass.h"
 #include "Method.h"
 #include "LocalVariableRef.h"
 
@@ -51,6 +52,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 			{
 				// create LocalVariableRef
 				return LocalVariableRef::create(mtd, loc_var);
+				// finish
 			}
 		}
 		
@@ -59,7 +61,31 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	}
 	else // Check Qualification as `node->left`
 	{
-		qualification_expr = 0; // find out type & class of left expr
+		qualification_expr = Expression::create(mtd, node->left);
+
+		if(qualification_expr == NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Error occured while analyzing left of `.%1`. (Routine: %3.%2)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		
+		// find out type & class of left expr
+		EiffelType* et = qualification_expr->expressionType();
+
+		if( dynamic_cast<EiffelClass*>(et) != nullptr ) {
+			qualification_class = ((EiffelClass*)et)->metaClass;
+		}
+		else {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Left of `.%1` is not a class (-). (Routine: %3.%2)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
 	}
 
 	// check if the feature exists if qual. class
