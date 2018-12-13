@@ -48,7 +48,7 @@ void ByteCode::printLog()
 
 ByteCode::~ByteCode(void)
 {
-	this->code.clear();
+	this->codeStream.clear();
 	this->_log.clear();
 }
 
@@ -58,7 +58,7 @@ bool ByteCode::toFile(const QString& fname)
     if (!file.open(QIODevice::WriteOnly))
         return false;
 
-	file.write( this->code );
+	file.write( this->codeStream );
 
 	if( !file.flush() )
         return false;
@@ -122,7 +122,7 @@ void ByteCode::appendLog(const QList<LogLine>& other_log)
 
 ByteCode& ByteCode::append(const ByteCode& other)
 {
-	this->code.append(other.code);
+	this->codeStream.append(other.codeStream);
 	this->appendLog(other._log);
 	this->incStack(other.stackSize);
 	this->gotoEnd();
@@ -137,8 +137,8 @@ ByteCode& ByteCode::append(const ByteCode& other)
 }
 ByteCode& ByteCode::u1(unsigned char v)
 {
-	//this->code.append(v);
-	this->code[this->currentOffset] = v;
+	//this->codeStream.append(v);
+	this->codeStream[this->currentOffset] = v;
 	this->currentOffset += 1;
 	return *this;
 }
@@ -150,13 +150,13 @@ ByteCode& ByteCode::u2(unsigned short int v)
 #endif
 	
 	union {
-		unsigned long int u2;
+		unsigned short int u2;
 		char b[2];
 	} data;
 
 	data.u2 = v;
-	this->s1(data.b[0]);
-	this->s1(data.b[1]);
+	this->u1(data.b[0]);
+	this->u1(data.b[1]);
 	return *this;
 }
 
@@ -172,9 +172,9 @@ ByteCode& ByteCode::u4(unsigned long int v)
 	} data;
 
 	data.u4 = v;
-	this->s1(data.b[0]);
-	this->s1(data.b[1]);
-	this->s1(data.b[2]);
-	this->s1(data.b[3]);
+	this->u1(data.b[0]);
+	this->u1(data.b[1]);
+	this->u1(data.b[2]);
+	this->u1(data.b[3]);
 	return *this;
 }

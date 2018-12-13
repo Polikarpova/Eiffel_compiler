@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 		bc.u1(0x77).u2(0x2BAD) // overwrite some consequent bytes
 			.gotoEnd().log("End Of Whole ByteCode"); 
 
-		bc.toFile("bytecode-test.bin");
+		bc.toFile("bytecode-test.bc");
 
 		bc.printLog();
 

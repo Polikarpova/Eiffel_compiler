@@ -48,17 +48,19 @@ public:
 	~ByteCode(void);
 
 	// ==================================================================== //
-	//* байт-код
-	QByteArray code;
-	int size() {return code.size();};
+	//* поток байт-кода
+	QByteArray codeStream;
+	int size() {return codeStream.size();};
 
 	/** “екуща€ позици€ записи в байт-код.
-		¬ обычном режиме (дозапись) равна code.size().
+		¬ обычном режиме (дозапись) равна codeStream.size().
 		¬ режиме перезаписи указывает на некоторую позицию в середине массива записанных байтов
 	*/
 	int currentOffset;
 
 	ByteCode& gotoEnd() {currentOffset = size(); return *this;}
+
+	ByteCode& gotoPos(int pos) {currentOffset = pos; return *this;}
 
 
 	// ==================================================================== //
@@ -84,11 +86,11 @@ public:
 	ByteCode& u2(unsigned short int v);
 	ByteCode& u4(unsigned long int v);
 
+	#include "instructions.h"
+
 
 	//*  запись в байт-кода в файл
 	bool toFile(const QString& fname);
-
-	#include "instructions.h"
 
 private:
 	//* лог
