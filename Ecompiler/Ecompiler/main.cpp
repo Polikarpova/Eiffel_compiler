@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 		bc.pop()
 		  .dup()
 		  .dup2()
-		  .iastore();
+		  .putfield(0x1B3D);
 
 //		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
 

@@ -312,3 +312,28 @@ ByteCode& aastore() {
 
 	return *this;
 }
+
+//Функции команд работы с объектами
+ByteCode& new_(short int u2) {
+	this->log(QString("new_")+CombinedPrint(u2, 2));
+	this->u1(0xBB);
+	this->u2(u2);
+	this->incStack(+1);
+
+	return *this;
+}
+ByteCode& getfield(short int u2) {
+	this->log(QString("getfield")+CombinedPrint(u2, 2));
+	this->u1(0xB4);
+	this->u2(u2);
+
+	return *this;
+}
+ByteCode& putfield(short int u2) {
+	this->log(QString("putfield")+CombinedPrint(u2, 2));
+	this->u1(0xB5);
+	this->u2(u2);
+	this->incStack(-2);
+
+	return *this;
+}
