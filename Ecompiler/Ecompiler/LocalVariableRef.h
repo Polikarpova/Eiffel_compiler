@@ -14,6 +14,5 @@ public:
 	LocalVariable* locVar;
 
 	static LocalVariableRef* create(Method* mtd, LocalVariable* locVar);
-	//static LocalVariableRef* createRtlClassRef(Method* mtd, const QString& uncasedName);
 
 };

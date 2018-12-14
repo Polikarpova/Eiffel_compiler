@@ -37,6 +37,7 @@ public:
 
 	/** Количество параметров: 1 (Current) + число формальных параметров */
 	int paramCount;
+	int exactNumberOfArgs() {return this->paramCount - 1;}
 
 	/** тело метода (при генерации должно заканчиваться инструкцией возврата) */
 	StatementBlock body;
@@ -51,6 +52,6 @@ public:
 	QString createDescriptor(EiffelType* type);
 	QString getTypeDescriptor(EiffelType* type);
 
-	bool checkArguments(QList<Expression*> factParams);
+	bool checkArguments(const QList<Expression*>& factParams);
 };
 

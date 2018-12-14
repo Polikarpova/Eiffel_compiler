@@ -145,7 +145,7 @@ QString Method::getTypeDescriptor(EiffelType* type)
 	}
 }
 
-bool Method::checkArguments(QList<Expression*> factParams) {
+bool Method::checkArguments(const QList<Expression*>& factParams) {
 
 	return false;
 }

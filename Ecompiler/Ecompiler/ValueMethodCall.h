@@ -17,6 +17,6 @@ public:
 	QList<Expression*> arguments;
 
 	/*methods*/
-	static ValueMethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* List, Expression* qualification = NULL );
+	static ValueMethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification = NULL );
 
 };

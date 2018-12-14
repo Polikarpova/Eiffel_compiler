@@ -123,7 +123,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	if( called_feature->isMethod() ) // feature is a method
 	{
-		// create ValueMethodCall. It`s parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* List, Expression* qualification /*= NULL*/ )
+		// create ValueMethodCall. It`s parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
 		return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
 		// finish
 	}
