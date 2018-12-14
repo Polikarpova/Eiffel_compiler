@@ -43,11 +43,11 @@ public:
 	/*getters*/
 	QString name() { return * constantTable.get(name_constN).value.utf8; }
 
-	/** \return NULL if no class found */
+	/** \return NULL if no field found */
 	Field* findField(const QString& lowerName, bool lookInParents = true);
-	/** \return NULL if no class found */
+	/** \return NULL if no method found */
 	Method* findMethod(const QString& lowerName, bool lookInParents = true);
-	/** \return NULL if no class found */
+	/** \return NULL if no feature found */
 	Feature* findFeature(const QString& lowerName, bool lookInParents = true);
 
 	//* тип в выражении

@@ -6,6 +6,8 @@
 #include "EiffelClass.h"
 #include "Method.h"
 #include "LocalVariableRef.h"
+#include "FieldRef.h"
+#include "ValueMethodCall.h"
 
 Expression::Expression(void)
 {
