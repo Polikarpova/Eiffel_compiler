@@ -25,7 +25,10 @@ public:
 
 
 	/*fields*/
+	//* can be NULL for RTL classes
 	struct NClass* tree_node;
+
+	bool isRTL() { return tree_node == NULL; }
 
 	bool isAbstract; // Истина для ANY, NONE
 	//bool isStatic; // Истина для IO

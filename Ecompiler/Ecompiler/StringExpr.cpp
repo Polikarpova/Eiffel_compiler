@@ -1,10 +1,12 @@
 #include "StringExpr.h"
 #include "JvmConstant.h"
 #include "Method.h"
+#include "EiffelClass.h"
 
 StringExpr::StringExpr(void)
 	: Expression()
 {
+	this->type = EiffelProgram::currentProgram->findClass("STRING")->getType();
 }
 
 

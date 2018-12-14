@@ -65,6 +65,9 @@ Method::~Method(void)
 	mtd->type = EiffelType::create(node->type);
 	mtd->descriptor = mtd->createDescriptor(mtd->type);
 
+	// report creation
+	qDebug("created Method: %s", node->name);
+
 	return mtd;
 }
 

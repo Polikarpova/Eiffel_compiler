@@ -16,8 +16,10 @@ public:
 	QString name;
 	QString descriptor;
 	QSet<QString> clients;
+
 	/** Тип поля / возвращаемое значение метода */
 	EiffelType* type;
+	bool isVoid() { return this->type->isVoid(); }
 
 	/**getters*/
 	virtual bool isMethod() = 0;

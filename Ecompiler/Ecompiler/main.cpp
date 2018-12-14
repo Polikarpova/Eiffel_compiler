@@ -2,7 +2,6 @@
 #include <string>
 #include "print2dot.h"
 
-// #include <process.h>
 #include <QProcess>
 
 extern FILE *yyin;
@@ -20,7 +19,7 @@ extern int syntax_errors_logged;
 // tests
 #include "bisontest.h"
 
-/*
+/**
 arg[0]: -
 arg[1]: input file name (no extension): fnm
 	fnm.e
@@ -33,12 +32,7 @@ arg[1]: input file name (no extension): fnm
 
 int main(int argc, char *argv[])
 {
-	//setlocale(LC_ALL, "russian");
-	//freopen("output.txt", "w", stdout);
-
-	//Expression expr;
-
-	if(true)
+	if(false)
 	{
 		printf("Running a test for ByteCode...\n");
 
@@ -124,15 +118,15 @@ int main(int argc, char *argv[])
 		print2dot(file_name, root);
 		printf("check out tree in %s\n",file_name);
 
+		// run dot
+		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
+
 
 		// make semantic classes
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 		
 		printf("\n ====== Error List: ======\n");
 		program->printErrors();
-
-		// run dot
-		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
 	}
 	else
 	{

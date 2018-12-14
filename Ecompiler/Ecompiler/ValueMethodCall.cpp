@@ -91,5 +91,8 @@ ValueMethodCall::~ValueMethodCall(void)
 
 	vmc->type = calledMethod->type;
 
+	// report creation
+	qDebug("created ValueMethodCall: %s(%d params)", calledMethod->name.data(), n_formal_args);
+
 	return vmc;
 }

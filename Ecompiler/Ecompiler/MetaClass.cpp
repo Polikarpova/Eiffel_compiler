@@ -57,7 +57,8 @@ MetaClass::~MetaClass() {
 		if(mc)
 			program->classes[ mc->name() ] = mc;
 
-		printf("Created class:\t `%s`", class_node->className);
+		// report creation
+		qDebug("Created class:\t `%s`", class_node->className);
 
 		return mc;
 	}
@@ -155,7 +156,7 @@ bool MetaClass::createFeatures() {
 						.arg(name, this->name()),
 						i->loc.first_line);
 				}
-				else if( ! mtd_creator->type->isVoid() )
+				else if( ! mtd_creator->isVoid() )
 				{
 					program->logError(
 						QString("semantic"), 

@@ -13,13 +13,21 @@ Field::~Field(void)
 
 /*static*/ Field* Field::create(MetaClass* mc, struct NFeature* node) {
 
+	QString name(node->name);
+	name = name.toLower();
+
 	bool success = false;
 	Field* fd = new Field();
+	// add to class
+	mc->fields[name] = fd;
 
 	fd->type = EiffelType::create(node->type);
 	fd->descriptor = fd->createDescriptor(fd->type);
 
 	success = true;
+
+	// report creation
+	qDebug("created Field: %s", node->name);
 
 	return success? fd : NULL;
 }
