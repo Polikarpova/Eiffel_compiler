@@ -45,7 +45,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 			if(node->ExprList != NULL) {
 				EiffelProgram::currentProgram->logError(
 					QString("semantic"), 
-					QString("Call to local variable (`%1`) is not allowed. (Routine: %3.%2)")
+					QString("Call to local variable (`%1`) is not allowed. (In routine: %3.%2)")
 						.arg(id, mtd->metaClass->name(), mtd->name),
 					node->loc.first_line);
 				return NULL;
@@ -58,7 +58,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 			}
 		}
 		
-		// обращение к члену текущего класса
+		// обращение к члену текущего класса (неявный Current)
 		qualification_class = mtd->metaClass;
 	}
 	else // Check Qualification as `node->left`
@@ -68,7 +68,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		if(qualification_expr == NULL) {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Error occured while analyzing left of `.%1`. (Routine: %3.%2)")
+				QString("Error occured while analyzing left of `.%1`. (In routine: %3.%2)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;
@@ -78,21 +78,66 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		EiffelType* et = qualification_expr->expressionType();
 
 		if( dynamic_cast<EiffelClass*>(et) != nullptr ) {
-			qualification_class = ((EiffelClass*)et)->metaClass;
+			qualification_class = ((EiffelClass*) et)->metaClass;
 		}
 		else {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Left of `.%1` is not a class (-). (Routine: %3.%2)")
+				QString("Left of `.%1` is not a class (-). (In routine: %3.%2)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;
 		}
 	}
 
-	// check if the feature exists if qual. class
+	// check if the feature exists if qualification_class class
 
-	return 0;
+	Feature* called_feature = qualification_class->findFeature(id);
+
+	if(called_feature == NULL) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Using undefined feature `%1` of class `%4`. (In routine: %3.%2)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	if( called_feature->isField() ) // feature is a field
+	{
+		if(node->ExprList != NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Call to field (`%1`) is not allowed. (In routine: %3.%2)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		else	// единственный вариант для поля: без аргументов
+		{
+			// create FieldRef. It`s parameters: (Method* mtd, Field* field, Expression* qualification = NULL );
+			return FieldRef::create(mtd, (Field*)called_feature, qualification_expr);
+			// finish
+		}
+	}
+
+	if( called_feature->isMethod() ) // feature is a method
+	{
+		// create ValueMethodCall. It`s parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* List, Expression* qualification /*= NULL*/ )
+		return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
+		// finish
+	}
+	else
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Cannot identify feature `%1` of class `%4` neither as attribute nor as function. (In routine: %3.%2)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	return NULL;
 }
 
 
