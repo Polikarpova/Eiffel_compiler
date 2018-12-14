@@ -2,6 +2,7 @@
 
 
 OperationExpr::OperationExpr(void)
+	: Expression()
 {
 }
 

@@ -2,6 +2,7 @@
 
 
 ArrayElemRef::ArrayElemRef(void)
+	: Expression()
 {
 }
 

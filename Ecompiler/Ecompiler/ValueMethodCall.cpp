@@ -3,6 +3,7 @@
 #include "Method.h"
 
 ValueMethodCall::ValueMethodCall(void)
+	: Expression()
 {
 }
 

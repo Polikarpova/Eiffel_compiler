@@ -3,6 +3,7 @@
 #include "Field.h"
 
 FieldRef::FieldRef(void)
+	: Expression()
 {
 }
 

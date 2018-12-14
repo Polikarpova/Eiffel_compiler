@@ -3,6 +3,7 @@
 #include "Method.h"
 
 StringExpr::StringExpr(void)
+	: Expression()
 {
 }
 
