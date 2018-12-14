@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
 		bc.pop()
 		  .dup()
 		  .dup2()
-		  .iinc(0x0D, 0x0F);  //продолжение оператора
+		  .goto_(0x2D1F);
+
 //		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
 
 

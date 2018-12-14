@@ -136,3 +136,129 @@ ByteCode& iinc(char u1, signed char i) {
 
 	return *this;
 }
+
+//* Функции команд передачи управления
+ //** Условный переход если сравнение целых чисел дает истину.
+ByteCode& if_icmpeq(short int s2) {
+	this->log(QString("if_icmpeq")+CombinedPrint(s2, 2));
+	this->u1(0x9F);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_icmpne(short int s2) {
+	this->log(QString("if_icmpne")+CombinedPrint(s2, 2));
+	this->u1(0xA0);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_icmplt(short int s2) {
+	this->log(QString("if_icmplt")+CombinedPrint(s2, 2));
+	this->u1(0xA1);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_icmpge(short int s2) {
+	this->log(QString("if_icmpge")+CombinedPrint(s2, 2));
+	this->u1(0xA2);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_icmpgt(short int s2) {
+	this->log(QString("if_icmpgt")+CombinedPrint(s2, 2));
+	this->u1(0xA3);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_icmple(short int s2) {
+	this->log(QString("if_icmple")+CombinedPrint(s2, 2));
+	this->u1(0xA4);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+
+ //** Перейти, если сравнение целого числа с нулем дает истину
+ByteCode& ifeq(short int s2) {
+	this->log(QString("ifeq")+CombinedPrint(s2, 2));
+	this->u1(0x99);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& ifne(short int s2) {
+	this->log(QString("ifne")+CombinedPrint(s2, 2));
+	this->u1(0x9A);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& iflt(short int s2) {
+	this->log(QString("iflt")+CombinedPrint(s2, 2));
+	this->u1(0x55);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& ifle(short int s2) {
+	this->log(QString("ifle")+CombinedPrint(s2, 2));
+	this->u1(0x9E);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& ifgt(short int s2) {
+	this->log(QString("ifgt")+CombinedPrint(s2, 2));
+	this->u1(0x9D);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& ifge(short int s2) {
+	this->log(QString("ifge")+CombinedPrint(s2, 2));
+	this->u1(0x9C);
+	this->u2(s2);
+	this->incStack(-1);
+
+	return *this;
+}
+ //** Перейти, если сравнение ссылок верно
+ByteCode& if_acmpeq(short int s2) {
+	this->log(QString("if_acmpeq")+CombinedPrint(s2, 2));
+	this->u1(0xA5);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ByteCode& if_acmpne(short int s2) {
+	this->log(QString("if_acmpne")+CombinedPrint(s2, 2));
+	this->u1(0xA6);
+	this->u2(s2);
+	this->incStack(-2);
+
+	return *this;
+}
+ //** Безусловный  переход
+ByteCode& goto_(short int s2) {
+	this->log(QString("goto_")+CombinedPrint(s2, 2));
+	this->u1(0xA7);
+	this->u2(s2);
+
+	return *this;
+}
