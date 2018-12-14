@@ -38,13 +38,14 @@ int main(int argc, char *argv[])
 
 	//Expression expr;
 
-	if(false)
+	if(true)
 	{
 		printf("Running a test for ByteCode...\n");
 
 		ByteCode bc;
-		bc.log("Begin writing something \\o/");
-		bc.s1(0xCA).s1(0xFE).u1(0x66).u1(0xBA).u1(0xBE);
+		bc.log("Begin writing Java-signature \\o/");
+		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
+		/*
 		bc.iconst_(-1).iconst_(5);
 		 ByteCode bc_1;
 		 bc_1.log("Begin Of Nested ByteCode block")
@@ -57,6 +58,14 @@ int main(int argc, char *argv[])
 		bc.currentOffset = 2; // move to some place in existing code
 		bc.u1(0x77).u2(0x2BAD) // overwrite some consequent bytes
 			.gotoEnd().log("End Of Whole ByteCode"); 
+		*/
+
+		bc.pop()
+		  .dup()
+		  .dup2()
+		  .ldc_w(0x000D);  //продолжение оператора
+//		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
+
 
 		bc.toFile("bytecode-test.bc");
 
@@ -132,7 +141,7 @@ int main(int argc, char *argv[])
 	if(argc <= 1) // debug mode
 	{
 		// `hit any key ...`
-		system("pause");
+//		system("pause");
 	}
 }
 

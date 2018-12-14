@@ -25,7 +25,7 @@ ByteCode::ByteCode(void)
 {
 	this->currentOffset = 0;
 	this->stackSize = this->maxStackSize = 0;
-	this->assertOnNegativeStack = true;
+	this->assertOnNegativeStack = false; //true;
 }
 
 ByteCode& ByteCode::log(const QString& s)
