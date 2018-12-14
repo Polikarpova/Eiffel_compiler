@@ -2,6 +2,7 @@
 
 #include "Method.h"
 #include "Field.h"
+#include "EiffelClass.h"
 
 Feature::Feature(void)
 {
@@ -63,8 +64,26 @@ bool Feature::isNameConflicting(MetaClass* mc, const QString& lowerName) {
 
 bool Feature::isExportedTo(const QString& upperName)
 {
-	return clients.contains(upperName);
+	MetaClass* mc = EiffelProgram::currentProgram -> findClass(upperName);
+	return 
+		mc && (
+			this->clients.contains(upperName) 
+			|| this->isExportedTo( mc->getType() )
+		);
 }
+bool Feature::isExportedTo(const EiffelClass* clientClass)
+{
+	foreach(const QString& clientName , this->clients)
+	{
+		MetaClass* mc_client_parent = clientClass->metaClass;
+		if( mc_client_parent && clientClass->canCastTo(mc_client_parent->getType()) )
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void Feature::recordClients(const struct NIdList* List) {
 

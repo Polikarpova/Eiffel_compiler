@@ -23,7 +23,7 @@ EiffelClass::~EiffelClass(void)
 {
 }
 
-/*virtual*/ bool EiffelClass::canCastTo(const EiffelType* otherType)
+/*virtual*/ bool EiffelClass::canCastTo(const EiffelType* otherType) const
 {
 	// проверить, если участвуют массивы ...
 

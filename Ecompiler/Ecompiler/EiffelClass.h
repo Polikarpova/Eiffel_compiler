@@ -20,7 +20,7 @@ public:
 		Ќапример, выражени€ справа от равно к типу выражени€ слева.
 		ѕо умолчанию тип не может быть приведЄн ни к чему, кроме себ€ -- подклассы могут расширить это поведение.
 	*/
-	virtual bool canCastTo(const EiffelType* otherType);
+	bool canCastTo(const EiffelType* otherType) const;
 
 
 	/*fields*/
