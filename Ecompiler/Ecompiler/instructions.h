@@ -262,3 +262,53 @@ ByteCode& goto_(short int s2) {
 
 	return *this;
 }
+
+//Функции команд работы с массивами
+ByteCode& newarray(char u1) {
+	this->log(QString("newarray")+CombinedPrint(u1, 1));
+	this->u1(0xBC);
+	this->u1(u1);
+
+	return *this;
+}
+ByteCode& anewarray(short int u2) {
+	this->log(QString("anewarray")+CombinedPrint(u2, 2));
+	this->u1(0xBD);
+	this->u2(u2);
+
+	return *this;
+}
+ByteCode& arraylength() {
+	this->log(QString("arraylength"));
+	this->u1(0xBE);
+
+	return *this;
+}
+ByteCode& iaload() {
+	this->log(QString("iaload"));
+	this->u1(0x2E);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& aaload() {
+	this->log(QString("aaload"));
+	this->u1(0x32);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& iastore() {
+	this->log(QString("iastore"));
+	this->u1(0x4F);
+	this->incStack(-3);
+
+	return *this;
+}
+ByteCode& aastore() {
+	this->log(QString("aastore"));
+	this->u1(0x53);
+	this->incStack(-3);
+
+	return *this;
+}
