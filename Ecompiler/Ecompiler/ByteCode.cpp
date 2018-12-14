@@ -25,7 +25,7 @@ ByteCode::ByteCode(void)
 {
 	this->currentOffset = 0;
 	this->stackSize = this->maxStackSize = 0;
-	this->assertOnNegativeStack = false; //true;
+	this->assertOnNegativeStack = true;
 }
 
 ByteCode& ByteCode::log(const QString& s)
@@ -91,13 +91,18 @@ void ByteCode::incStack(int sizeDiff)
 
 	if(assertOnNegativeStack && this->stackSize < 0)
 	{
-		qWarning("/!\\ ByteCode : negative stack size == %d\n 5 last log messages on ByteCode:\n", this->stackSize);
-		QStringList l;
-		for(int i=1; i<=5; ++i)
+		this->log( QString("/!\\ Negative stack size == %1").arg(this->stackSize) );
+		if( false )
 		{
-			l.prepend( this->_log[_log.size()-i] . toString() );
+			qWarning("/!\\ ByteCode : negative stack size == %d\n Max 5 last log messages on ByteCode:", this->stackSize);
+			QStringList l;
+			int limit = qMin(5, _log.size()-1);
+			for(int i=1; i<=limit; ++i)
+			{
+				l.prepend( this->_log[_log.size()-i] . toString() );
+			}
+			qWarning(l.join("\n").toLocal8Bit());
 		}
-		qWarning(l.join("\n").toLocal8Bit());
 	}
 }
 
@@ -112,7 +117,7 @@ void ByteCode::appendLog(const QList<LogLine>& other_log)
 	foreach(const LogLine& line, other_log)
 	{
 		this->_log.append(
-			LogLine(line.global_pos + this->currentOffset, line.pos, indent + line.msg)
+			LogLine(line.global_pos + this->size(), line.pos, indent + line.msg)
 			);
 	}
 
@@ -123,10 +128,15 @@ void ByteCode::appendLog(const QList<LogLine>& other_log)
 ByteCode& ByteCode::append(const ByteCode& other)
 {
 	this->codeStream.append(other.codeStream);
-	this->appendLog(other._log);
-	this->incStack(other.stackSize);
 	this->gotoEnd();
 
+	this->appendLog(other._log);
+
+	// append stackSize & maxStackSize
+	this->incStack(+ other.maxStackSize);
+	this->incStack(- other.maxStackSize);
+	this->incStack(+ other.stackSize);
+	
 	return *this;
 }
 
