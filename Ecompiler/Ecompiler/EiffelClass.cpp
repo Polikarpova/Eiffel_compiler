@@ -23,6 +23,39 @@ EiffelClass::~EiffelClass(void)
 {
 }
 
+/*virtual*/ bool EiffelClass::canCastTo(const EiffelType* otherType)
+{
+	// проверить, если участвуют массивы ...
+
+	if( ! EiffelType::canCastTo(otherType) ) // объект не класс
+	{
+		return false;
+	}
+
+	// оба типа - классы
+	const EiffelClass* otherClass = (EiffelClass*) otherType;
+
+	// проверить по иерархии...
+	
+	if( this->metaClass->name() == otherClass->metaClass->name() )
+	{
+		// имена классов совпадают
+		return true;
+	}
+	else if( this->metaClass->parent != NULL )
+	{
+		// chain up
+		return this->metaClass->parent->getType() -> canCastTo(otherClass);
+	}
+	else
+	{
+		// no common parent can be found.
+		return false;
+	}
+
+}
+
+
 /*static*/ EiffelClass* EiffelClass::create(struct NType* node) {
 
 	EiffelProgram* program = EiffelProgram::currentProgram;

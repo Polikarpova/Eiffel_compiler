@@ -31,6 +31,7 @@ public:
 	//bool isStatic; // Истина для IO
 	EiffelProgram* program;
 
+	//* parent (NULL for class `ANY`)
 	MetaClass* parent;
 
 	short int name_constN, class_constN;

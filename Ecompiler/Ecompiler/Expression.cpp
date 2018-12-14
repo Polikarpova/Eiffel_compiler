@@ -45,7 +45,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 			if(node->ExprList != NULL) {
 				EiffelProgram::currentProgram->logError(
 					QString("semantic"), 
-					QString("Call to local variable (`%1`) is not allowed. (In routine: %3.%2)")
+					QString("Call to local variable (`%1`) is not allowed. (In routine: %2.%3)")
 						.arg(id, mtd->metaClass->name(), mtd->name),
 					node->loc.first_line);
 				return NULL;
@@ -68,7 +68,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		if(qualification_expr == NULL) {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Error occured while analyzing left of `.%1`. (In routine: %3.%2)")
+				QString("Error occured while analyzing left of `.%1`. (In routine: %2.%3)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;
@@ -83,7 +83,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		else {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Left of `.%1` is not a class (-). (In routine: %3.%2)")
+				QString("Left of `.%1` is not an object (cannot call anything in it). (In routine: %2.%3)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;
@@ -97,7 +97,16 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	if(called_feature == NULL) {
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Using undefined feature `%1` of class `%4`. (In routine: %3.%2)")
+			QString("Using undefined feature `%1` of class `%4`. (In routine: %2.%3)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	if( ! called_feature->isExportedTo(mtd->metaClass->name()) ) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Cannot use feature `%1` of class `%4`: it is not exported to class `%2`. (In routine: %2.%3)")
 				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
 			node->loc.first_line);
 		return NULL;
@@ -108,14 +117,14 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		if(node->ExprList != NULL) {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Call to field (`%1`) is not allowed. (In routine: %3.%2)")
+				QString("Calling to field (`%1`) is not allowed. (In routine: %2.%3)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;
 		}
 		else	// единственный вариант для поля: без аргументов
 		{
-			// create FieldRef. It`s parameters: (Method* mtd, Field* field, Expression* qualification = NULL );
+			// create FieldRef. Parameters: (Method* mtd, Field* field, Expression* qualification = NULL );
 			return FieldRef::create(mtd, (Field*)called_feature, qualification_expr);
 			// finish
 		}
@@ -123,15 +132,27 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	if( called_feature->isMethod() ) // feature is a method
 	{
-		// create ValueMethodCall. It`s parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
-		return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
-		// finish
+		if( called_feature->type->isVoid() ) // Void method
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Invalid function call: routine `%1` is a procedure, function expected. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		else
+		{
+			// create ValueMethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+			return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
+			// finish
+		}
 	}
 	else
 	{
 		EiffelProgram::currentProgram->logError(
 			QString("internal"), 
-			QString("Cannot identify feature `%1` of class `%4` neither as attribute nor as function. (In routine: %3.%2)")
+			QString("Cannot identify feature `%1` of class `%4` as neither attribute nor function. (In routine: %2.%3)")
 				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
 			node->loc.first_line);
 		return NULL;
