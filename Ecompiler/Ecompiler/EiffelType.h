@@ -28,5 +28,7 @@ public:
 		По умолчанию тип не может быть приведён ни к чему, кроме себя -- подклассы могут расширить это поведение.
 	*/
 	virtual bool canCastTo(const EiffelType* otherType) const;
+	
+	virtual QString toReadableString() const {return "not implemented yet...";};
 };
 

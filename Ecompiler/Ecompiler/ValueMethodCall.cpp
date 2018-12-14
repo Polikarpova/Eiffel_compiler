@@ -49,10 +49,41 @@ ValueMethodCall::~ValueMethodCall(void)
 				.arg(n_formal_args)
 				.arg(n_actual_args),
 			source_line);
+		delete vmc;
 		return NULL;
 	}
 
 	// проверка соответствия типов аргументов
+	for(int i=0 ; i < n_formal_args; ++i)
+	{
+		LocalVariable* formal_arg = calledMethod->findLocalVar(i+1); // +1 : 0 is `Current`
+		if( !formal_arg )
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Cannot find variable # %1 (as parameter) in routine: %2.%3")
+					.arg(i)
+					.arg(calledMethod->metaClass->name(), calledMethod->name),
+				source_line);
+			delete vmc;
+			return NULL;
+		}
+
+		bool types_ok = vmc->arguments[i]->expressionType()->canCastTo( formal_arg->type );
+		if(!types_ok)
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Signatures differ in call to routine `%4`.`%1`: cannot convert argument %5 from type `%6` to type `%7`. (In routine: %2.%3)")
+					.arg(calledMethod->name, context_mtd->metaClass->name(), context_mtd->name, calledMethod->metaClass->name())
+					.arg(i)
+					.arg("TODO...","TODO!"),
+				source_line);
+			delete vmc;
+			return NULL;
+		}
+	}
+
 
 	vmc->currentMethod = context_mtd;
 	vmc->left  = qualification;

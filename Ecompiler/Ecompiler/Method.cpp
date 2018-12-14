@@ -77,7 +77,17 @@ bool Method::createBody()
 
 LocalVariable* Method::findLocalVar(const QString& lowerName)
 {
-	return localVariables.value(lowerName, NULL);
+	return this->localVariables.value(lowerName, NULL);
+}
+
+LocalVariable* Method::findLocalVar(int n)
+{
+	foreach(LocalVariable* lvar , this->localVariables)
+	{
+		if(lvar->n == n)
+			return lvar;
+	}
+	return NULL;
 }
 
 
