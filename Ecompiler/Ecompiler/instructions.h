@@ -99,3 +99,40 @@ ByteCode& dup2() {
 	return *this;
 }
 
+//‘ункции команд, выполн€ющих арифметические операции
+ByteCode& iadd() {
+	this->log(QString("iadd"));
+	this->u1(0x60);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& imul() {
+	this->log(QString("imul"));
+	this->u1(0x64);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& isub() {
+	this->log(QString("isub"));
+	this->u1(0x68);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& idiv() {
+	this->log(QString("idiv"));
+	this->u1(0x6C);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& iinc(char u1, signed char i) {
+	this->log(QString("iinc")+CombinedPrint(u1, 1)+CombinedPrint(i, 1));
+	this->u1(0x84);
+	this->u1(u1);
+	this->u1(i);
+
+	return *this;
+}
