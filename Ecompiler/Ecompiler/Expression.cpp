@@ -41,7 +41,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	if(node->left == NULL)	// единственный вариант для локальной переменой: без квалификации
 	{
 		LocalVariable* loc_var = mtd->findLocalVar(id);
-		if(node->ExprList)
+		if(loc_var)
 		{
 			if(node->ExprList != NULL) {
 				EiffelProgram::currentProgram->logError(
@@ -84,7 +84,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		else {
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Left of `.%1` is not an object (cannot call anything in it). (In routine: %2.%3)")
+				QString("Left of `.%1` is not an object (cannot call anything on it). (In routine: %2.%3)")
 					.arg(id, mtd->metaClass->name(), mtd->name),
 				node->loc.first_line);
 			return NULL;

@@ -1,21 +1,148 @@
 #include "CallStmt.h"
+
 #include "Method.h"
 #include "Expression.h"
+#include "EiffelClass.h"
 
 CallStmt::CallStmt(void)
 {
 }
-
-
 CallStmt::~CallStmt(void)
 {
 }
+
+
+/** mtd - метод, где всё происходит
+	Эта функция сделана на основе  `fromRefnCall`  в Expression.cpp
+	(дублируются многие фрагменты кода: часть удалена, некоторые чуть подправлены)
+*/
+ValueMethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
+{
+	if(!node)
+		return 0;
+
+	QString id(node->value.id);
+	id = id.toLower();
+
+	Expression* qualification_expr = 0;
+	MetaClass* qualification_class = 0;
+
+	if(node->left == NULL)	// без квалификации
+	{
+		// обращение к члену текущего класса (неявный Current)
+		qualification_class = mtd->metaClass;
+	}
+	else // Check Qualification as `node->left`
+	{
+		qualification_expr = Expression::create(mtd, node->left);
+
+		if(qualification_expr == NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Error occured while analyzing left of `.%1`. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		
+		// find out type & class of left expr
+		EiffelType* et = qualification_expr->expressionType();
+
+		if( dynamic_cast<EiffelClass*>(et) != nullptr ) {
+			qualification_class = ((EiffelClass*) et)->metaClass;
+		}
+		else {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Left of `.%1` is not an object (cannot call anything on it). (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+	}
+
+	// check if the feature exists if qualification_class class
+
+	Feature* called_feature = qualification_class->findFeature(id);
+
+	if(called_feature == NULL) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Using undefined feature `%1` of class `%4`. (In routine: %2.%3)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	if( ! called_feature->isExportedTo(mtd->metaClass->getType()) ) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Cannot use feature `%1` of class `%4`: it is not exported to class `%2`. (In routine: %2.%3)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	if( called_feature->isField() ) // feature is a field
+	{
+		if(node->ExprList != NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Calling to field (`%1`) is not allowed. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		else	// единственный вариант для поля: без аргументов
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Access to field (`%1`) is not a valid statement. Use procedure instead. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+	}
+
+	if( called_feature->isMethod() ) // feature is a method
+	{
+		if( ! called_feature->isVoid() ) // Non-Void (Value) method
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Invalid procedure call: routine `%1` is a function, procedure expected. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+			return NULL;
+		}
+		else
+		{
+			// create ValueMethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+			return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
+			// finish
+		}
+	}
+	else
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Cannot identify feature `%1` of class `%4` as neither attribute nor procedure. (In routine: %2.%3)")
+				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			node->loc.first_line);
+		return NULL;
+	}
+
+	return NULL;
+}
+
+
 
 /*static*/ CallStmt* CallStmt::create(Method* mtd, struct NExpr* expr) {
 
 	//mtd - метод, где всё происходит
 	//m - метод, который вызван
 	Method* m = 0;
+	ValueMethodCall* general_method_call;
 
 	bool success = false;
 
@@ -31,138 +158,18 @@ CallStmt::~CallStmt(void)
 
 	} else {
 	
-		QString name = QString( expr->value.id ).toLower();
-		//EiffelClass* qualification = 0;
-		m = mtd->metaClass->findMethod(name);
-
-		if ( !m ) {
-			
-			EiffelProgram::currentProgram->logError(
-				QString("semantic"), 
-				QString("Call undefined procedure: %1 is not a feature of class %2")
-					.arg(name, mtd->metaClass->name()),
-				expr->loc.first_line);
-	
-			//delete m; // удалять не нужно, metaClass->findMethod(name); возвращает живую ссылку из контейнера (ссылку на метод)
-			return NULL;
-
-		} else {
-			
-			//если m не экспортируется текущему классу
-			if ( false ) {
-			
-				EiffelProgram::currentProgram->logError(
-					QString("semantic"), 
-					QString("Cannot use feature %1 of class %2: it is not exported to class %3")
-						.arg(m->name, m->metaClass->name(), mtd->metaClass->name()),
-					expr->loc.first_line);
-	
-				return NULL;
-
-			} else {
-			
-				if ( !m->type->isVoid() ) {
-				
-					EiffelProgram::currentProgram->logError(
-						QString("semantic"), 
-						QString("Invalid procedure call: routine %1 is a function, procedure expected")
-							.arg(m->name),
-						expr->loc.first_line);
-	
-					return NULL;
-				}
-			}
-		}
+		general_method_call = fromRefnCall(mtd, expr);
 	}
+
+	if( ! general_method_call )
+		return NULL;
+
+	success = true;
 
 	CallStmt* cs = new CallStmt();
 
 	cs->currentMethod = mtd;
-
-	//приписать номер к узлу константы
-	cs->createMethodRef(m);
-
-	//проверка соответствия количества и типов выражений
-	int paramCount = 0;
-	QList<Expression*> factParams;
-
-	if ( expr->ExprList->first != NULL ) {
-		for(struct NExpr* i = expr->ExprList->first ; i != NULL ; i = i->next )
-		{
-			paramCount++;
-			factParams.append(Expression::create(mtd, i));
-			if(i == expr->ExprList->last) break;
-		}
-	}
-	
-	if ( paramCount != m->paramCount ) {
-	
-		EiffelProgram::currentProgram->logError(
-			QString("semantic"), 
-			QString("Invalid CALL: wrong number of arguments; routine %1 declares %2 formal arguments but %3 actual arguments provided")
-				.arg(m->name, QString(m->paramCount), QString(paramCount)),
-			expr->loc.first_line);
-	
-		delete cs;
-		return NULL;
-	}
-
-	//в Method функция checkArguments
-	//!!!!!!!!!!!!!ошибки выдавать тут или внутри checkArguments???
-	// >>> Ошибки выдавать тут, т.к. только здесь известно описание ошибки, внутри checkArguments его нет.
-	// >>> checkArguments должна тихо возвращать успех/неуспех проверки.
-	success = m->checkArguments(factParams);
+	cs->generalMethodCall = general_method_call;
 
 	return success? cs : NULL;
-}
-
-void CallStmt::createMethodRef(Method* callMethod) {
-
-	/*
-		Methodref
-			|_______Class
-			|			|_______utf8 - имя
-			|
-			|_______Name&Type
-						|_______utf8 - имя
-						|
-						|_______utf8 - дескриптор метода
-	*/
-
-	JvmConstant jc = { UTF8_VALUE, 0, false };
-
-	//-----------------Class-----------------//
-	//имя класса
-	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(callMethod->metaClass->name());
-	short int class_utf8 = currentMethod->metaClass->constantTable.put(jc);
-		
-	// Class Constant
-	jc.type = CLASS_N;
-	jc.value.class_const = class_utf8;
-	short int class_class = currentMethod->metaClass->constantTable.put(jc);
-
-	//-----------------Name&Type-----------------//
-	//имя метода
-	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(callMethod->name);
-	short int method_name_utf8 = currentMethod->metaClass->constantTable.put(jc);
-	
-	//дескриптор метода
-	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(callMethod->getDescriptor());
-	short int method_descriptor_utf8 = currentMethod->metaClass->constantTable.put(jc);
-	
-	//Name&Type Constant
-	jc.type = NAME_AND_TYPE;
-	jc.value.name_and_type[UTF8_NAME] = method_name_utf8;
-	jc.value.name_and_type[UTF8_TYPE] = method_descriptor_utf8;
-	short int method_name_and_type = currentMethod->metaClass->constantTable.put(jc);
-
-	//-----------------MethodRef-----------------//
-	//MethodRef Constant
-	jc.type = METHOD_REF;
-	jc.value.method_ref[CONST_CLASS] = class_class;
-	jc.value.method_ref[CONST_NAMEnTYPE] = method_name_and_type;
-	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
 }

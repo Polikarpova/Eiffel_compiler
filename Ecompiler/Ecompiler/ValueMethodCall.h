@@ -11,12 +11,20 @@ public:
 	ValueMethodCall(void);
 	~ValueMethodCall(void);
 
+	/*fields*/
+
+	short int methodref_constN;
+
 	//* метод, к которому производится доступ
 	Method* calledMethod;
+
 	//* список аргументов метода
 	QList<Expression*> arguments;
 
+
 	/*methods*/
 	static ValueMethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification = NULL );
+
+	void createMethodRef(Method* calledMethod);
 
 };

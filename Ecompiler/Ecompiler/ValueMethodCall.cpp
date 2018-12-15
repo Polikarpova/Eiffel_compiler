@@ -44,7 +44,7 @@ ValueMethodCall::~ValueMethodCall(void)
 	{
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Routine `%1` declares %4 formal parameters, but %5 actual arguments were provided. (In routine: %2.%3)")
+			QString("Call: wrong number of arguments. Routine `%1` declares %4 formal parameters, but %5 actual arguments were provided. (In routine: %2.%3)")
 				.arg(calledMethod->name, context_mtd->metaClass->name(), context_mtd->name)
 				.arg(n_formal_args)
 				.arg(n_actual_args),
@@ -92,10 +92,63 @@ ValueMethodCall::~ValueMethodCall(void)
 	vmc->type = calledMethod->type;
 
 	// set up class constants
-	// ...
+	//приписать номер к узлу константы
+	vmc->createMethodRef(calledMethod);
 
 	// report creation
 	qDebug("created ValueMethodCall: %s(%d params)", calledMethod->name.data(), n_formal_args);
 
 	return vmc;
+}
+
+
+void ValueMethodCall::createMethodRef(Method* calledMethod) {
+
+	/*
+		Methodref
+			|_______Class
+			|			|_______utf8 - имя
+			|
+			|_______Name&Type
+						|_______utf8 - имя
+						|
+						|_______utf8 - дескриптор метода
+	*/
+
+	JvmConstant jc = { UTF8_VALUE, 0, false };
+
+	//-----------------Class-----------------//
+	//имя класса
+	jc.type = UTF8_VALUE;
+	jc.value.utf8 = new QString(calledMethod->metaClass->name());
+	short int class_utf8 = currentMethod->metaClass->constantTable.put(jc);
+		
+	// Class Constant
+	jc.type = CLASS_N;
+	jc.value.class_const = class_utf8;
+	short int class_class = currentMethod->metaClass->constantTable.put(jc);
+
+	//-----------------Name&Type-----------------//
+	//имя метода
+	jc.type = UTF8_VALUE;
+	jc.value.utf8 = new QString(calledMethod->name);
+	short int method_name_utf8 = currentMethod->metaClass->constantTable.put(jc);
+	
+	//дескриптор метода
+	jc.type = UTF8_VALUE;
+	jc.value.utf8 = new QString(calledMethod->getDescriptor());
+	short int method_descriptor_utf8 = currentMethod->metaClass->constantTable.put(jc);
+	
+	//Name&Type Constant
+	jc.type = NAME_AND_TYPE;
+	jc.value.name_and_type[UTF8_NAME] = method_name_utf8;
+	jc.value.name_and_type[UTF8_TYPE] = method_descriptor_utf8;
+	short int method_name_and_type = currentMethod->metaClass->constantTable.put(jc);
+
+	//-----------------MethodRef-----------------//
+	//MethodRef Constant
+	jc.type = METHOD_REF;
+	jc.value.method_ref[CONST_CLASS] = class_class;
+	jc.value.method_ref[CONST_NAMEnTYPE] = method_name_and_type;
+	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
 }
