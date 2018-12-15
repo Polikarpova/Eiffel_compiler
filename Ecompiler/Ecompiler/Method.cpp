@@ -98,20 +98,16 @@ QString Method::createDescriptor() {
 
 	QString result = "(";
 
-
-	if(this->tree_node->params != NULL) {
-		//пройтись по всем параметрам
-		for(NNameAndType* i = this->tree_node->params->first; ; i = i->next) {
-	
-			EiffelType* et = EiffelType::create(i->type);
-			//result += this->getTypeDescriptor(et);
-			delete et;
-		}
+	//пройтись по всем параметрам
+	for(int i=1 ; i<this->paramCount ; ++i )
+	{
+		result += this->findLocalVar(i)->type->descriptor();
 	}
 
 	result += ")";
 
 	//добавить дескриптор возвращаемого значения
+	result += this->type->descriptor();
 
 	return result;
 }

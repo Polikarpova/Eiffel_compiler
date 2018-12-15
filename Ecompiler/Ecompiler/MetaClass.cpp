@@ -353,7 +353,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 }
 
 
-bool MetaClass::generateCode(const QDir& file_dir)
+bool MetaClass::generateCode(const QDir& code_dir)
 {
 	// составляем байт-код и записываем в файл ...
 
@@ -363,7 +363,7 @@ bool MetaClass::generateCode(const QDir& file_dir)
 
 
 	// записываем байт-код в файл
-	QDir package_dir = dir.absoluteFilePath( this->javaPackage() );
+	QDir package_dir = code_dir.absoluteFilePath( this->javaPackage() );
 	QString filepath = package_dir.absoluteFilePath( this->name() + ".class ");
 	bc.toFile(filepath);
 

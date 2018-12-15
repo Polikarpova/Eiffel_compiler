@@ -27,15 +27,16 @@ Field::~Field(void)
 	success = true;
 
 	// report creation
-	qDebug("created Field: %s", node->name);
+	qDebug("created Field: %s. Descriptor: %s", node->name, fd->getDescriptor());
 
 	return success? fd : NULL;
 }
 
 QString Field::createDescriptor() {
 
+	return this->type->descriptor();
+	/*
 	QString result = "";
-	
 	EiffelClass* ec;
 	EiffelArray* ea;
 
@@ -45,7 +46,7 @@ QString Field::createDescriptor() {
 			//Выдать ошибку?
 			break;
 		case ClassV:
-			/* EiffelClass* */ ec = (EiffelClass*)this->type;
+			ec = (EiffelClass*)this->type;
 			//result += "L" + ec->className + ";";
 			break;
 		case ArrayV:
@@ -73,4 +74,5 @@ QString Field::createDescriptor() {
 	}
 	
 	return result;
+	// */
 }

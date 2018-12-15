@@ -68,7 +68,7 @@ public:
 	bool round3();
 	bool createInheritance(struct NInheritFromClass* inheritance);
 	/** Проход 4 */
-	bool generateCode(const QDir& file_dir);
+	bool generateCode(const QDir& code_dir = QDir());
 
 
 	/*functions*/

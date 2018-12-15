@@ -29,7 +29,7 @@ public:
 	virtual bool isField()  { return false;}
 
 	/**
-	* Current [0], параметры [1..paramCount], локальные переменные метода
+	* Current [0], параметры [1..paramCount), локальные переменные метода
 	* ключ : имя переменной
 	* Номер п/п хранится в LocalVariable
 	*/
