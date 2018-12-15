@@ -133,7 +133,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	if( called_feature->isMethod() ) // feature is a method
 	{
-		if( called_feature->type->isVoid() ) // Void method
+		if( called_feature->isVoid() ) // Void method
 		{
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 

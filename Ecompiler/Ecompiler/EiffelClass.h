@@ -25,7 +25,9 @@ public:
 	/*fields*/
 	MetaClass* metaClass;
 
-	QString className;
+	const QString& className();
+	//* дескриптор класса с полной квалификацией: `Lпакет.класс;`
+	QString descriptor();
 
 	/*methods*/
 	static EiffelClass* create(struct NType* type);

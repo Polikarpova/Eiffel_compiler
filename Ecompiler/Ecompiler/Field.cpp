@@ -22,7 +22,7 @@ Field::~Field(void)
 	mc->fields[name] = fd;
 
 	fd->type = EiffelType::create(node->type);
-	fd->descriptor = fd->createDescriptor(fd->type);
+	fd->descriptor = fd->createDescriptor();
 
 	success = true;
 
@@ -32,7 +32,7 @@ Field::~Field(void)
 	return success? fd : NULL;
 }
 
-QString Field::createDescriptor(EiffelType* type) {
+QString Field::createDescriptor() {
 
 	QString result = "";
 	
@@ -46,12 +46,11 @@ QString Field::createDescriptor(EiffelType* type) {
 			break;
 		case ClassV:
 			/* EiffelClass* */ ec = (EiffelClass*)this->type;
-			result += "L" + ec->className + ";";
+			//result += "L" + ec->className + ";";
 			break;
 		case ArrayV:
 			result += "[";
-			/* EiffelArray* */ ea = (EiffelArray*)type;
-			this->createDescriptor(ea->elementType);
+			this->createDescriptor();
 			break;
 		case IntegerV:
 			result += "I";

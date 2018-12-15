@@ -45,7 +45,7 @@ public:
 
 
 	/*getters*/
-	QString name() { return * constantTable.get(name_constN).value.utf8; }
+	const QString& name() { return * constantTable.get(name_constN).value.utf8; }
 
 	/** \return NULL if no field found */
 	Field* findField(const QString& lowerName, bool lookInParents = true);

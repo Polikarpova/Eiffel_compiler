@@ -1,5 +1,7 @@
 #pragma once
 #include "MetaClass.h"
+#include "EiffelType.h"
+
 
 class RTLMetaClass : public MetaClass
 {
@@ -12,6 +14,7 @@ public:
 	~RTLMetaClass(void);
 
 	/*methods*/
+	QString javaPackage() {return QString("rtl");}
 
 
 	/*fields*/
@@ -22,4 +25,5 @@ public:
 #include "EiffelNONE.h"
 #include "EiffelANY.h"
 #include "EiffelSTRING.h"
+#include "INTEGER.h"
 

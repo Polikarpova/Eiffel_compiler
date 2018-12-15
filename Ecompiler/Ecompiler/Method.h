@@ -50,8 +50,8 @@ public:
 
 	static Method* create(MetaClass* mc, struct NFeature* node);
 
-	QString createDescriptor(EiffelType* type);
-	QString getTypeDescriptor(EiffelType* type);
+	QString createDescriptor();
+	//QString getTypeDescriptor(EiffelType* type);
 
 	bool checkArguments(const QList<Expression*>& factParams);
 };

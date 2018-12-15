@@ -11,4 +11,5 @@ public:
 
 	EiffelType * elementType;
 
+	QString descriptor() { return QString("[%1").arg(elementType->descriptor()); }
 };

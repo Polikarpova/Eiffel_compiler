@@ -24,6 +24,7 @@ public:
 	/**getters*/
 	virtual bool isMethod() = 0;
 	virtual bool isField() = 0;
+	QString getDescriptor() {if(descriptor.isEmpty()){descriptor=createDescriptor();} return descriptor; }
 
 	/*methods*/
 	static bool create(MetaClass* mc, struct NFeature* s);
@@ -33,6 +34,6 @@ public:
 	bool isExportedTo(const EiffelClass* clientClass);
 	
 	void recordClients(const struct NIdList* List);
-	QString createDescriptor(EiffelType* type) { return QString(""); };
+	virtual QString createDescriptor() { return QString(""); };
 };
 

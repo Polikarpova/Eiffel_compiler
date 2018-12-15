@@ -9,13 +9,11 @@
 
 EiffelClass::EiffelClass(void)
 {
-	this->className = "";
 	this->metaClass = 0;
 }
 EiffelClass::EiffelClass(MetaClass* metaClass) {
 	this->tree_node = NULL;
 	this->metaClass = metaClass;
-	this->className = this->metaClass->name();
 }
 
 
@@ -53,6 +51,18 @@ EiffelClass::~EiffelClass(void)
 		return false;
 	}
 
+}
+
+
+const QString& EiffelClass::className()
+{
+	return metaClass->name();
+}
+
+// дескриптор класса с полной квалификацией: `Lпакет.класс;`
+QString EiffelClass::descriptor()
+{
+	return QString("Leiffel/%1;").arg(metaClass->name());
 }
 
 

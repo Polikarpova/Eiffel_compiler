@@ -150,7 +150,7 @@ void CallStmt::createMethodRef(Method* callMethod) {
 	
 	//дескриптор метода
 	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(callMethod->descriptor);
+	jc.value.utf8 = new QString(callMethod->getDescriptor());
 	short int method_descriptor_utf8 = currentMethod->metaClass->constantTable.put(jc);
 	
 	//Name&Type Constant

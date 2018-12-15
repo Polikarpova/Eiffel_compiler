@@ -63,10 +63,10 @@ Method::~Method(void)
 
 	mtd->tree_node = node;
 	mtd->type = EiffelType::create(node->type);
-	mtd->descriptor = mtd->createDescriptor(mtd->type);
+	mtd->descriptor = mtd->createDescriptor();
 
 	// report creation
-	qDebug("created Method: %s", node->name);
+	qDebug("created Method: %s. Descriptor: %s", node->name, mtd->getDescriptor());
 
 	return mtd;
 }
@@ -94,7 +94,7 @@ LocalVariable* Method::findLocalVar(int n)
 }
 
 
-QString Method::createDescriptor(EiffelType* type) {
+QString Method::createDescriptor() {
 
 	QString result = "(";
 
@@ -104,7 +104,7 @@ QString Method::createDescriptor(EiffelType* type) {
 		for(NNameAndType* i = this->tree_node->params->first; ; i = i->next) {
 	
 			EiffelType* et = EiffelType::create(i->type);
-			result += this->getTypeDescriptor(et);
+			//result += this->getTypeDescriptor(et);
 			delete et;
 		}
 	}
@@ -116,47 +116,47 @@ QString Method::createDescriptor(EiffelType* type) {
 	return result;
 }
 
+/*
 QString Method::getTypeDescriptor(EiffelType* type)
 {
 	QString result;
 
-	EiffelClass* ec;
-	EiffelArray* ea;
+	//EiffelClass* ec;
+	//EiffelArray* ea;
 
-	switch(type->tree_node->type) {
-	
-		case VoidV:
-			result += "V";
-			return result;
-		case ClassV:
-			/* EiffelClass* */ ec = (EiffelClass*)type;
-			result += "L" + ec->className + ";";
-			return result;
-		case ArrayV:
-			result += "[";
-			/* EiffelArray* */ ea = (EiffelArray*)type;
-			this->getTypeDescriptor(ea->elementType);
-			return result;
-		case IntegerV:
-			result += "I";
-			return result;
-		case RealV:
-			result += "D";
-			return result;
-		case CharacterV:
-			result += "C";
-			return result;
-		case StringV:
-			result += "Ljava/lang/String;";
-			return result;
-		case BooleanV:
-			result += "Z";	//true or false
-			return result;
-		default:
-			result += "<unknownType!>";	//unknown
-			return result;
-	}
-}
+	//switch(type->tree_node->type) {
+	//
+	//	case VoidV:
+	//		result += "V";
+	//		return result;
+	//	case ClassV:
+	//		result += "L" + ec->className + ";";
+	//		return result;
+	//	case ArrayV:
+	//		result += "[";
+	//		this->getTypeDescriptor(ea->elementType);
+	//		return result;
+	//	case IntegerV:
+	//		result += "I";
+	//		return result;
+	//	case RealV:
+	//		result += "D";
+	//		return result;
+	//	case CharacterV:
+	//		result += "C";
+	//		return result;
+	//	case StringV:
+	//		result += "Ljava/lang/String;";
+	//		return result;
+	//	case BooleanV:
+	//		result += "Z";	//true or false
+	//		return result;
+	//	default:
+	//		result += "<unknownType!>";	//unknown
+	//		return result;
+	//}
+	return result;
+} // */
 
 bool Method::checkArguments(const QList<Expression*>& factParams) {
 
