@@ -20,10 +20,10 @@ public:
 	//перегружается в дочерних классах
 	virtual bool isLeftValue() { return this->_isLeftValue; };
 
+	//необходим
 	//возвращает тип возвращаемый выражением
 	//2+2 вернет INTEGER
-	EiffelType* expressionType(){ return type; }
-
+	EiffelType* expressionType();
 
 	/*fields*/
 	struct NExpr* tree_node;
@@ -32,6 +32,5 @@ public:
 
 	Expression* left;
 	Expression* right;
-	EiffelType* type;	//(?)тип возвращаемого значения
-
+	EiffelType* type;	//тип возвращаемого значения
 };

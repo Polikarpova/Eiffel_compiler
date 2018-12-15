@@ -211,3 +211,47 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	return 0;
 }
+
+EiffelType* Expression::expressionType()
+{
+	//простые выражени€, которые имеют тип IntE, RealE, CharE, StringE, BoolE уже знают о своЄм типе. ќн записываетс€ в их конструкторе
+	if( type == NULL ) {
+
+		//рекурсивное узнавание типа и его запоминание?
+		switch(this->tree_node->type) {
+			case NotE:
+			case UPlusE:
+			case UMinusE:
+			case PowerE:
+			case MulE:
+			case DivE:
+			case PlusE:
+			case MinusE:
+			case EqualsE:
+			case NotEqualE:
+			case LessE:
+			case GreaterE:
+			case LessOrEqualE:
+			case GreaterOrEqualE:
+			case AndE:
+			case AndThenE:
+			case OrE:
+			case OrElseE:
+			case XORE:
+			case ImpliesE:
+				break;
+			case RefnCallE:
+				break;
+			case PrecursorE:
+				break;
+			case SubscriptE:
+				break;
+			default:
+				type = NULL;
+				break; //unknown
+		}
+		
+	}
+	
+	return type;
+}
