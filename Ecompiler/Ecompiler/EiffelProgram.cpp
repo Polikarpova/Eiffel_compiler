@@ -48,7 +48,7 @@ EiffelProgram::~EiffelProgram(void)
 	program->round2();
 
 	// опнунд 3
-	//program->round3();
+	program->round3();
 
 	// опнунд 4
 	//program->compile(); // ГДЕЯЭ ХКХ МЕР?

@@ -35,5 +35,7 @@ StringExpr::~StringExpr(void)
 	jc.value.string_const = utf8;
 	se->constTableN = se->currentMethod->metaClass->constantTable.put(jc);
 
+	qDebug("created StringExpr (literal): %s. In method: %s", expr->value.String, mtd->tree_node->name);
+
 	return se;
 }
