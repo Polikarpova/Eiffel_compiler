@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 		bc.pop()
 		  .dup()
 		  .dup2()
-		  .putfield(0x1B3D);
+		  .invokestatic(0x1B3D, 2, false) .ireturn().areturn().return_();
 
 //		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
 

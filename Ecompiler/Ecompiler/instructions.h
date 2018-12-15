@@ -337,3 +337,52 @@ ByteCode& putfield(short int u2) {
 
 	return *this;
 }
+
+//Функции команд работы с методами
+ByteCode& invokevirtual(short int u2, short int argCount, bool isVoid) {
+	//argCount - кол-во ТОЛЬКО аргументов (this - не входит)
+	this->log(QString("invokevirtual")+CombinedPrint(u2, 2));
+	this->u1(0xB6);
+	this->u2(u2);
+	this->incStack(-argCount - (isVoid ? 1 : 0) );
+
+	return *this;
+}
+ByteCode& invokespecial(short int u2, short int argCount, bool isVoid) {
+	//argCount - кол-во ТОЛЬКО аргументов (this - не входит)
+	this->log(QString("invokespecial")+CombinedPrint(u2, 2));
+	this->u1(0xB7);
+	this->u2(u2);
+	this->incStack(-argCount - (isVoid ? 1 : 0) );
+
+	return *this;
+}
+ByteCode& invokestatic(short int u2, short int argCount, bool isVoid) {
+	//argCount - кол-во ТОЛЬКО аргументов (this - вообще отсутствует)
+	this->log(QString("invokestatic")+CombinedPrint(u2, 2));
+	this->u1(0xB8);
+	this->u2(u2);
+	this->incStack(-(argCount-1) - (isVoid ? 1 : 0) );
+
+	return *this;
+}
+ByteCode& ireturn() {
+	this->log(QString("ireturn"));
+	this->u1(0xAC);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& areturn() {
+	this->log(QString("areturn"));
+	this->u1(0xB0);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& return_() {
+	this->log(QString("return_"));
+	this->u1(0xB1);
+
+	return *this;
+}
