@@ -13,4 +13,5 @@ public:
 	/*methods*/
 
 	bool isVoid();
+	QString descriptor() {return QString("V");}
 };

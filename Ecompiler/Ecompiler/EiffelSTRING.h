@@ -1,7 +1,7 @@
 #pragma once
 #include "RTLMetaClass.h"
 
-class EiffelSTRING : public RTLMetaClass
+class EiffelSTRING : public RTLMetaClass, public EiffelType 
 {
 
 public:
@@ -12,4 +12,5 @@ public:
 	~EiffelSTRING(void);
 
 
+	QString descriptor() {return QString("Ljava/lang/String;");}
 };

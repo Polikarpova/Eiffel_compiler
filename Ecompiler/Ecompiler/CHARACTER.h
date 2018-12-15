@@ -1,7 +1,7 @@
 #pragma once
 #include "RTLMetaClass.h"
 
-class CHARACTER : public RTLMetaClass
+class CHARACTER : public RTLMetaClass, public EiffelType
 {
 
 public:
@@ -9,5 +9,6 @@ public:
 	CHARACTER(void);
 	~CHARACTER(void);
 
+	QString descriptor() {return QString("C");}
 
 };

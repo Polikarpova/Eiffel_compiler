@@ -1,7 +1,7 @@
 #pragma once
 #include "RTLMetaClass.h"
 
-class BOOLEAN : public RTLMetaClass
+class BOOLEAN : public RTLMetaClass, public EiffelType
 {
 
 public:
@@ -9,5 +9,6 @@ public:
 	BOOLEAN(void);
 	~BOOLEAN(void);
 
+	QString descriptor() {return QString("Z");}
 
 };

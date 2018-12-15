@@ -13,6 +13,8 @@ public:
 	//* поле, к которому производится доступ
 	Field* field;
 
+
+
 	/*methods*/
 	static FieldRef* create(Method* mtd, Field* field, Expression* qualification = NULL );
 
