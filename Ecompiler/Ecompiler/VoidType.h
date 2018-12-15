@@ -12,6 +12,6 @@ public:
 
 	/*methods*/
 
-	bool isVoid();
+	bool isVoid() const; // { return true; } -- see .cpp
 	QString descriptor() {return QString("V");}
 };

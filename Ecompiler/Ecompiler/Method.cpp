@@ -26,7 +26,6 @@ Method::~Method(void)
 	int loc_i = 0;
 
 	// 1 (Current)
-	// заглушка NULL
 	LocalVariable* lvr = new LocalVariable("current", loc_i, mc->getType() );
 	mtd->localVariables[lvr->name] = lvr;
 	++loc_i;
@@ -66,7 +65,7 @@ Method::~Method(void)
 	mtd->descriptor = mtd->createDescriptor();
 
 	// report creation
-	qDebug("created Method: %s. Descriptor: %s", node->name, mtd->getDescriptor());
+	qDebug("created Method: %s. Descriptor: %s", node->name, mtd->getDescriptor().toLocal8Bit().data());
 
 	return mtd;
 }

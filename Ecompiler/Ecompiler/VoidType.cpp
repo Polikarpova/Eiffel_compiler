@@ -14,7 +14,7 @@ VoidType::~VoidType(void)
 {
 }
 
-bool VoidType::isVoid() {
+bool VoidType::isVoid() const {
 
 	return true;
 }

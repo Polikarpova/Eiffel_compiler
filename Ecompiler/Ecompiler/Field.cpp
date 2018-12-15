@@ -27,7 +27,7 @@ Field::~Field(void)
 	success = true;
 
 	// report creation
-	qDebug("created Field: %s. Descriptor: %s", node->name, fd->getDescriptor());
+	qDebug("created Field: %s. Descriptor: %s", node->name, fd->getDescriptor().toLocal8Bit().data());
 
 	return success? fd : NULL;
 }

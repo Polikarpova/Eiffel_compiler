@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 		printf("check out tree in %s\n",file_name);
 
 		// run dot
-		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
+		/// для отладки /// QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
 
 
 		// make semantic classes
@@ -141,13 +141,13 @@ int main(int argc, char *argv[])
 }
 
 /* TODO
-	- Внести классы стандартных типов в Eiffel.classes
+	+ Внести классы стандартных типов в Eiffel.classes
 	- решить, где будет располагаться генерация байт-кода для каждого вида конструкции
 		и какие виртуальные методы будут за это отвечать.
 
 
 		я писал коммит
-		>> Treat class `Io` as static (emulating global variable)
+		>> `Treat class `Io` as static (emulating global variable)`
 		для поля isStatic в MetaClass`е,
 		и понял:
 		Io - всем доступная переменная, значит, -- это поле класса ANY !
