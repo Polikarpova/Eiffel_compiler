@@ -1,24 +1,24 @@
-#include "ValueMethodCall.h"
+#include "MethodCall.h"
 
 #include "Method.h"
 
-ValueMethodCall::ValueMethodCall(void)
+MethodCall::MethodCall(void)
 	: Expression()
 {
 }
 
 
-ValueMethodCall::~ValueMethodCall(void)
+MethodCall::~MethodCall(void)
 {
 	qDeleteAll(arguments);
 	arguments.clear();
 }
 
-/*static*/ ValueMethodCall* ValueMethodCall::create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+/*static*/ MethodCall* MethodCall::create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
 {
 	int source_line = -1;
 
-	ValueMethodCall* vmc = new ValueMethodCall();
+	MethodCall* vmc = new MethodCall();
 
 	//«аполнить массив аргументов выражени€ми
 	//arguments << <Expr>*
@@ -96,13 +96,13 @@ ValueMethodCall::~ValueMethodCall(void)
 	vmc->createMethodRef(calledMethod);
 
 	// report creation
-	qDebug("created ValueMethodCall: %s(%d params)", calledMethod->name.data(), n_formal_args);
+	qDebug("created MethodCall: %s(%d params)", calledMethod->name.data(), n_formal_args);
 
 	return vmc;
 }
 
 
-void ValueMethodCall::createMethodRef(Method* calledMethod) {
+void MethodCall::createMethodRef(Method* calledMethod) {
 
 	/*
 		Methodref

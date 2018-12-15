@@ -8,7 +8,7 @@
 #include "Method.h"
 #include "LocalVariableRef.h"
 #include "FieldRef.h"
-#include "ValueMethodCall.h"
+#include "MethodCall.h"
 
 Expression::Expression(void)
 {
@@ -144,8 +144,8 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		}
 		else
 		{
-			// create ValueMethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
-			return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
+			// create MethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+			return MethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
 			// finish
 		}
 	}

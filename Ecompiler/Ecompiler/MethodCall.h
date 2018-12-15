@@ -4,12 +4,12 @@
 
 class Method;
 
-class ValueMethodCall : public Expression
+class MethodCall : public Expression
 {
 
 public:
-	ValueMethodCall(void);
-	~ValueMethodCall(void);
+	MethodCall(void);
+	~MethodCall(void);
 
 	/*fields*/
 
@@ -23,7 +23,7 @@ public:
 
 
 	/*methods*/
-	static ValueMethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification = NULL );
+	static MethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification = NULL );
 
 	void createMethodRef(Method* calledMethod);
 

@@ -16,7 +16,7 @@ CallStmt::~CallStmt(void)
 	Эта функция сделана на основе  `fromRefnCall`  в Expression.cpp
 	(дублируются многие фрагменты кода: часть удалена, некоторые чуть подправлены)
 */
-ValueMethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
+MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 {
 	if(!node)
 		return 0;
@@ -117,8 +117,8 @@ ValueMethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 		}
 		else
 		{
-			// create ValueMethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
-			return ValueMethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
+			// create MethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+			return MethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
 			// finish
 		}
 	}
@@ -142,7 +142,7 @@ ValueMethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 	//mtd - метод, где всё происходит
 	//m - метод, который вызван
 	Method* m = 0;
-	ValueMethodCall* general_method_call;
+	MethodCall* general_method_call;
 
 	bool success = false;
 

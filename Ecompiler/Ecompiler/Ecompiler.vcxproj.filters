@@ -104,13 +104,13 @@
     <ClCompile Include="OperationExpr.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
-    <ClCompile Include="ValueMethodCall.cpp">
-      <Filter>Source Files\ExprClasses</Filter>
-    </ClCompile>
     <ClCompile Include="StringExpr.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
     <ClCompile Include="StatementBlock.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodCall.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
   </ItemGroup>
@@ -217,9 +217,6 @@
     <ClInclude Include="OperationExpr.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
-    <ClInclude Include="ValueMethodCall.h">
-      <Filter>Header Files\ExprClasses</Filter>
-    </ClInclude>
     <ClInclude Include="StringExpr.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
@@ -227,6 +224,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StatementBlock.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodCall.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>

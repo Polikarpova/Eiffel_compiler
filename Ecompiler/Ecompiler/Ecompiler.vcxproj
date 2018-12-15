@@ -145,7 +145,7 @@
     <ClCompile Include="RTLMetaClass.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="EiffelSTRING.cpp" />
-    <ClCompile Include="ValueMethodCall.cpp" />
+    <ClCompile Include="MethodCall.cpp" />
     <ClCompile Include="VoidType.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +163,7 @@
     <ClInclude Include="LocalVariableRef.h" />
     <ClInclude Include="OperationExpr.h" />
     <ClInclude Include="TreeNode.h" />
-    <ClInclude Include="ValueMethodCall.h" />
+    <ClInclude Include="MethodCall.h" />
     <ClInclude Include="VoidType.h" />
     <CustomBuild Include="bisontest.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

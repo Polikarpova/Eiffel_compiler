@@ -1,6 +1,6 @@
 #pragma once
 #include "Statement.h"
-#include "ValueMethodCall.h"
+#include "MethodCall.h"
 
 class CallStmt : public Statement
 {
@@ -9,7 +9,7 @@ public:
 	~CallStmt(void);
 
 	/*fields*/
-	ValueMethodCall* generalMethodCall;
+	MethodCall* generalMethodCall;
 
 
 	/*methods*/
