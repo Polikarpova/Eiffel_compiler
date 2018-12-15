@@ -1,6 +1,7 @@
 #pragma once
 #include <qlist.h>
 #include <qmap.h>
+#include <QDir>
 
 #include "tree_structs.h"
 
@@ -47,6 +48,8 @@ public:
 	/*getters*/
 	const QString& name() { return * constantTable.get(name_constN).value.utf8; }
 
+	virtual QString javaPackage() {return QString("eiffel");}
+
 	/** \return NULL if no field found */
 	Field* findField(const QString& lowerName, bool lookInParents = true);
 	/** \return NULL if no method found */
@@ -65,7 +68,7 @@ public:
 	bool round3();
 	bool createInheritance(struct NInheritFromClass* inheritance);
 	/** Проход 4 */
-	bool generateCode();
+	bool generateCode(const QDir& file_dir);
 
 
 	/*functions*/

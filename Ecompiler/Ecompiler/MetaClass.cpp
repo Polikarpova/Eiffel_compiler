@@ -5,6 +5,8 @@
 #include "Method.h"
 #include "Field.h"
 
+#include "ByteCode.h"
+
 MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 {
 	this->program = program;
@@ -351,9 +353,19 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 }
 
 
-bool MetaClass::generateCode()
+bool MetaClass::generateCode(const QDir& file_dir)
 {
+	// составляем байт-код и записываем в файл ...
 
+	ByteCode bc;
+
+	// ...
+
+
+	// записываем байт-код в файл
+	QDir package_dir = dir.absoluteFilePath( this->javaPackage() );
+	QString filepath = package_dir.absoluteFilePath( this->name() + ".class ");
+	bc.toFile(filepath);
 
 	return true;
 }
