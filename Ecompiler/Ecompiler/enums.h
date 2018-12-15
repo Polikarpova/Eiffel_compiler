@@ -21,7 +21,7 @@ union JvmConstantValue {
 
 enum JvmConstantType {
 	INT4_VALUE,
-	REAL_VALUE,
+	FLOAT_VALUE = 4, // renamed:  real -> float
 	UTF8_VALUE,
 	STRING_N,
 	CLASS_N,

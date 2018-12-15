@@ -72,7 +72,7 @@ public:
 				{
 				case INT4_VALUE:
 					equal = jc.value.int4 == cnst.value.int4; break;
-				case REAL_VALUE:
+				case FLOAT_VALUE:
 					equal = jc.value.real == cnst.value.real; break;
 				case UTF8_VALUE:
 					equal = *jc.value.utf8 == *cnst.value.utf8; break;
