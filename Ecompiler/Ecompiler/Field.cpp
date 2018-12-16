@@ -21,6 +21,17 @@ Field::~Field(void)
 	mc->fields[name] = fd;
 
 	fd->type = EiffelType::create(node->type);
+
+	if( ! fd->type )
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Field does not declared with a type! where: Field::create()"),
+			node->loc.first_line);
+		delete fd;
+		return false;
+	}
+
 	fd->descriptor = fd->createDescriptor();
 
 	success = true;
@@ -34,46 +45,6 @@ Field::~Field(void)
 QString Field::createDescriptor() {
 
 	return this->type->descriptor();
-	/*
-	QString result = "";
-	EiffelClass* ec;
-	EiffelArray* ea;
-
-	switch(this->type->tree_node->type) {
-	
-		case VoidV:
-			//Выдать ошибку?
-			break;
-		case ClassV:
-			ec = (EiffelClass*)this->type;
-			//result += "L" + ec->className + ";";
-			break;
-		case ArrayV:
-			result += "[";
-			this->createDescriptor();
-			break;
-		case IntegerV:
-			result += "I";
-			break;
-		case RealV:
-			result += "D";
-			break;
-		case CharacterV:
-			result += "C";
-			break;
-		case StringV:
-			result += "Ljava/lang/String;";
-			break;
-		case BooleanV:
-			result += "Z";	//true or false
-			break;
-		default:
-			result += "<unknownType!>";	//unknown
-			return result;
-	}
-	
-	return result;
-	// */
 }
 
 //Таблица полей -> в ByteCode

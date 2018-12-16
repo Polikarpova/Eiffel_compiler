@@ -398,9 +398,6 @@ struct NStmt* createStmt(enum StmtType type, void* body)
 }
 struct NStmtList* createStmtList(struct NStmt* elem)
 {
-	if(!elem) // drop error stmt
-		return NULL;
-	
 	ALLOCATE_POINTER_AS(Result, struct NStmtList)
 
 	SAVELOC

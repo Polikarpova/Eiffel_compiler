@@ -6,7 +6,6 @@ create
 feature
 	make
 	do
-		
 		cat("Meow");
 		--Io.put_string("Hello world!");
 		-- Io.put_integer(arr[i]);
@@ -14,6 +13,6 @@ feature
 	
 	cat (str: STRING)
 	do
-		-- jdfdfj,ldm
+		-- make
 	end
 end

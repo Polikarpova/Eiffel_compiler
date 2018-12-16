@@ -22,6 +22,15 @@ EiffelType::~EiffelType(void)
 
 /*static*/ EiffelType* EiffelType::create(struct NType* type) {
 
+	if( ! type )
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Type does not exist"),
+			-1);
+		return NULL;
+	}
+
 	switch(type->type) {
 	
 		case VoidV:
