@@ -2,6 +2,7 @@
 #include "MetaClass.h"
 #include "EiffelClass.h"
 #include "RTLMetaClass.h"
+#include "VoidType.h"
 
 #include "Field.h"
 #include "Method.h"
@@ -107,26 +108,35 @@ bool EiffelProgram::compile()
 
 void EiffelProgram::createRTL()
 {
-	MetaClass* mc;
+	MetaClass *mc, *string_mc;
+	Method* mtd;
+	Field* fld;
+	EiffelClass *string_type;
+	EiffelType *void_type = new VoidType();
 
-	// IO class
-	mc = new RTLMetaClass(this, QString("CONSOLEIO"));
-	mc->tree_node = NULL;
-	//mc->isStatic = true; // this allows LocalVariableRef to refer the class as variable
-	this->classes[ mc->name() ] = mc;
-
-	mc = new EiffelNONE(this);
-	mc->tree_node = NULL;
-	this->classes[ mc->name() ] = mc;
-
-	mc = new EiffelANY(this);
-	mc->tree_node = NULL;
-	Field* f_io = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
-	mc->fields[ f_io->name ] = f_io;
+	// VOID class
+	mc = new RTLMetaClass(this, QString("VOID"));
 	this->classes[ mc->name() ] = mc;
 
 	mc = new EiffelSTRING(this);
-	mc->tree_node = NULL;
+	this->classes[ mc->name() ] = mc;
+	string_mc = mc;
+	string_type = string_mc->getType();
+
+	// IO class
+	mc = new RTLMetaClass(this, QString("CONSOLEIO"));
+	mtd = new Method(mc, void_type, "put_string",
+		QList<LocalVariable>() << LocalVariable(string_type, "v")
+		);
+	mc->methods[ mtd->name ] = mtd;
+	this->classes[ mc->name() ] = mc;
+
+	mc = new EiffelNONE(this);
+	this->classes[ mc->name() ] = mc;
+
+	mc = new EiffelANY(this);
+	fld = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
+	mc->fields[ fld->name ] = fld;
 	this->classes[ mc->name() ] = mc;
 }
 
