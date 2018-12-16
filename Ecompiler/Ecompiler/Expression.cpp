@@ -213,17 +213,17 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 
 EiffelType* Expression::expressionType()
 {
-	return getReturnType(this);
+	return getReturnType();
 }
 
-EiffelType* Expression::getReturnType( Expression* expr) {
+EiffelType* Expression::getReturnType() {
 
 	//простые выражения, которые имеют тип IntE, RealE, CharE, StringE, BoolE уже знают о своём типе. Он записывается в их конструкторе
 	//так же если ранее это функция вызывалась для текущего объекта, то он уже знает о своём типе и нет надобности опять его высчитывать
-	if( expr->type == NULL ) {
+	if( type == NULL ) {
 
 		//рекурсивное узнавание типа и его запоминание?
-		switch(expr->tree_node->type) {
+		switch(tree_node->type) {
 			case NotE:
 			case UPlusE:
 			case UMinusE:
@@ -245,8 +245,8 @@ EiffelType* Expression::getReturnType( Expression* expr) {
 			case XORE:
 			case ImpliesE:
 				{
-				OperationExpr* oe = (OperationExpr*) expr;
-				expr->type = oe->getReturnType(expr);
+				OperationExpr* oe = (OperationExpr*) this;
+				type = oe->getReturnType();
 				}
 				break;
 			case RefnCallE:
@@ -256,10 +256,10 @@ EiffelType* Expression::getReturnType( Expression* expr) {
 			case SubscriptE:
 				break;
 			default:
-				expr->type = NULL;
+				type = NULL;
 				break; //unknown
 		}
 	}
 	
-	return expr->type;
+	return type;
 }

@@ -35,5 +35,5 @@ public:
 	EiffelType* type;	//тип возвращаемого значения
 
 private:
-	EiffelType* getReturnType( Expression* expr);
+	EiffelType* getReturnType();
 };
