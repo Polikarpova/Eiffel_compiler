@@ -52,7 +52,7 @@ EiffelProgram::~EiffelProgram(void)
 	program->round3();
 
 	// ÏĞÎÕÎÄ 4
-	//program->compile(); // çäåñü èëè íåò?
+	program->compile(); // çäåñü èëè íåò?
 
 	return program;
 }
@@ -94,12 +94,14 @@ bool EiffelProgram::round3()
 
 bool EiffelProgram::compile()
 {
+	QDir out_dir("out");
+
 	foreach(MetaClass* mc, this->classes)
 	{
 		if(mc->tree_node == NULL)
 			continue; // RTL class
 
-		mc->generateCode();
+		mc->generateCode(out_dir);
 	}
 
 	return true;

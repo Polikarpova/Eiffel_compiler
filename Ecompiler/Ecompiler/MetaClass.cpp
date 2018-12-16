@@ -389,11 +389,15 @@ bool MetaClass::generateCode(const QDir& code_dir)
  //   u2 major_version;
  //   u2 constant_pool_count;
  //   cp_info constant_pool[constant_pool_count-1];
+	this->constantTable.to_ByteCode(bc);
+
  //   u2 access_flags;
  //   u2 this_class;
  //   u2 super_class;
  //   u2 interfaces_count;
  //   u2 interfaces[interfaces_count];
+
+
  //   u2 fields_count;
  //   field_info fields[fields_count];
  //   u2 methods_count;
@@ -405,8 +409,11 @@ bool MetaClass::generateCode(const QDir& code_dir)
 
 	// записываем байт-код в файл
 	QDir package_dir = code_dir.absoluteFilePath( this->javaPackage() );
+	// !!! создать путь до нужной папки !!!
 	QString filepath = package_dir.absoluteFilePath( this->name() + ".class ");
 	bc.toFile(filepath);
+
+	// сохранить также лог 
 
 	return true;
 }
