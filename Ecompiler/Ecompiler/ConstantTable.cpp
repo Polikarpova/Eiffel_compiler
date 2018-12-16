@@ -3,7 +3,7 @@
 #include "ByteCode.h"
 
 //Таблица констант -> в ByteCode
-ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
+ByteCode& ConstantTable::to_ByteCode(ByteCode & bc) {
 
 	short int constant_pool_count, len;
 	JvmConstant jc;

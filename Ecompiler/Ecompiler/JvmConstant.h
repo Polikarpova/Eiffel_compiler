@@ -23,7 +23,7 @@ public:
 	QList<JvmConstant> constants; // номер константы = индекс + 1
 
 	//“аблица констант -> в ByteCode
-	ByteCode to_ByteCode(ByteCode &);
+	ByteCode& to_ByteCode(ByteCode &);
 
 	/** 
 	* ¬озврашает константу по номеру n: [1...N] - номер по таблице констант
