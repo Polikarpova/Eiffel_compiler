@@ -26,6 +26,10 @@ public:
 
 
 	/*fields*/
+
+	//* простое имя класса
+	QString _name;
+
 	//* can be NULL for RTL classes
 	struct NClass* tree_node;
 
@@ -46,7 +50,8 @@ public:
 
 
 	/*getters*/
-	virtual const QString& name() { return * constantTable.get(name_constN).value.utf8; }
+	//virtual const QString& name() { return * constantTable.get(name_constN).value.utf8; }
+	virtual const QString& name() { return _name; }
 
 	virtual QString javaPackage() {return QString("eiffel");}
 	
