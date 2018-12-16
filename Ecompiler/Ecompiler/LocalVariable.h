@@ -11,7 +11,8 @@ class LocalVariable
 public:
 	
 	LocalVariable(void);
-	LocalVariable(QString name, int n, EiffelType* type);
+	LocalVariable(const QString& name, int n, EiffelType* type);
+	LocalVariable(EiffelType* type, const QString& name); // сокращенная форма
 	~LocalVariable(void);
 
 	/*fields*/

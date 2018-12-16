@@ -18,8 +18,7 @@ public:
 
 	Method(void);
 	//* for RTL classes
-	Method(MetaClass* mc, EiffelType* type, QString name)
-		: Feature(mc, type, name) {}
+	Method(MetaClass* mc, EiffelType* type, const QString& name, QList<LocalVariable> argList = QList<LocalVariable>() );
 	~Method(void);
 
 	//byte* toByteCode();

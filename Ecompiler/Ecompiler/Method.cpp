@@ -5,7 +5,32 @@
 Method::Method(void)
 {
 	this->isCreator = false;
-	//this->isRedefined = false;
+}
+Method::Method(MetaClass* mc, EiffelType* type, const QString& name, QList<LocalVariable> argList /*= QList<>()*/ )
+	: Feature(mc, type, name)
+{
+	this->isCreator = false;
+
+	// local vars
+	int loc_i = 0;
+
+	// 1 (Current)
+	LocalVariable* lvr = new LocalVariable("current", loc_i, mc->getType() );
+	this->localVariables[lvr->name] = lvr;
+	++loc_i;
+
+	// + формальные параметры
+	if( ! argList.isEmpty() )
+	{
+		foreach(LocalVariable lvar, argList ) {
+			// add var
+			this->localVariables[lvar.name] = new LocalVariable(lvar.name, loc_i, lvar.type );
+			++loc_i;
+		}
+	}
+
+	// Зафиксировать количество параметров
+	this->paramCount = loc_i;
 }
 
 

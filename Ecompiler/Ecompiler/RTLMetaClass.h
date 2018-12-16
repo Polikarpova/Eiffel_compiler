@@ -9,14 +9,7 @@ class RTLMetaClass : public MetaClass
 public:
 	
 	RTLMetaClass(void);
-	RTLMetaClass(EiffelProgram* program, const QString& name) {
-		this->program = program;
-		this->parent = NULL;
-		this->isAbstract = false;
-		this->_exprType = NULL;
-
-		this->_name = name;
-	};
+	RTLMetaClass(EiffelProgram* program, const QString& name);
 	~RTLMetaClass(void);
 
 	/*methods*/

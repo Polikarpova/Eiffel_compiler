@@ -5,10 +5,16 @@ LocalVariable::LocalVariable(void)
 {
 }
 
-LocalVariable::LocalVariable(QString name, int n, EiffelType* type)
+LocalVariable::LocalVariable(const QString& name, int n, EiffelType* type)
 {
 	this->name = name.toLower();
 	this->n = n;
+	this->type = type;
+}
+LocalVariable::LocalVariable(EiffelType* type, const QString& name)
+{
+	this->name = name.toLower();
+	this->n = 99;
 	this->type = type;
 }
 
