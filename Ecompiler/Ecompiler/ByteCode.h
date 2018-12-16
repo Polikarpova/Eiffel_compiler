@@ -85,6 +85,7 @@ public:
 	ByteCode& u1(unsigned char v);
 	ByteCode& u2(unsigned short int v);
 	ByteCode& u4(unsigned long int v);
+	ByteCode& appendHere(QByteArray ba);
 
 	QString CombinedPrint(int pArg, short int bytes){
 		return QString(" %1 (0x%2)").arg(pArg) .arg( QString::number(pArg,16).right(bytes*2).toUpper().rightJustified(bytes*2,'0'));

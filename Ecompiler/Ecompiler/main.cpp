@@ -29,16 +29,17 @@ arg[1]: input file name (no extension): fnm
 */
 
 //#include "Expression.h"
+#include "JvmConstant.h"	//для Отладки Заполнения таблицы Констант
 
 int main(int argc, char *argv[])
 {
-	if(false)
+	if(true)
 	{
 		printf("Running a test for ByteCode...\n");
 
 		ByteCode bc;
 		bc.log("Begin writing Java-signature \\o/");
-		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
+//		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
 		/*
 		bc.iconst_(-1).iconst_(5);
 		 ByteCode bc_1;
@@ -54,12 +55,30 @@ int main(int argc, char *argv[])
 			.gotoEnd().log("End Of Whole ByteCode"); 
 		*/
 
-		bc.pop()
-		  .dup()
-		  .dup2()
-		  .invokestatic(0x1B3D, 2, false) .ireturn().areturn().return_();
+		//bc.pop()
+		//  .dup()
+		//  .dup2()
+		//  .invokestatic(0x1B3D, 2, false) .ireturn().areturn().return_();
 
 //		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
+
+//Отладка Заполнения таблицы Констант
+		ConstantTable ConstTable;
+		JvmConstant jc = { UTF8_VALUE, 0, true };
+
+		// имя класса
+		jc.type = UTF8_VALUE;
+		jc.value.utf8 = new QString("Constant_1");
+		ConstTable.put(jc);
+		
+		// Class Constant
+		jc.type = CLASS_N;
+		jc.value.class_const = 4;
+		ConstTable.put(jc);
+
+//		bc.append(ConstTable.to_ByteCode());
+		ConstTable.to_ByteCode(bc);
+		
 
 
 		bc.toFile("bytecode-test.bc");

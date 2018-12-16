@@ -188,3 +188,11 @@ ByteCode& ByteCode::u4(unsigned long int v)
 	this->u1(data.b[3]);
 	return *this;
 }
+
+ByteCode& ByteCode::appendHere(QByteArray ba)
+{
+	this->codeStream.append(ba);
+	this->gotoEnd();
+
+	return *this;
+}

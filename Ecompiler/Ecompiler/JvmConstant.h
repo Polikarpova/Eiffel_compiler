@@ -2,6 +2,8 @@
 #include "enums.h"
 #include <qlist.h>
 
+class ByteCode;
+
 struct JvmConstant
 {
 	enum JvmConstantType type;		// see "enums.h"
@@ -19,6 +21,9 @@ public:
 
 	/*fields*/
 	QList<JvmConstant> constants; // номер константы = индекс + 1
+
+	//“аблица констант -> в ByteCode
+	ByteCode to_ByteCode(ByteCode &);
 
 	/** 
 	* ¬озврашает константу по номеру n: [1...N] - номер по таблице констант
@@ -50,7 +55,7 @@ public:
 			// выделить автономную пам€ть под QString (указатель)
 			cnst.value.utf8 = new QString( *cnst.value.utf8 );
 		}		
-		cnst.isInvalid = false;
+	//	cnst.isInvalid = false;
 		constants.push_back(cnst);
 		return constants.size();
 	}
