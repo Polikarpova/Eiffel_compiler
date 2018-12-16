@@ -62,7 +62,7 @@ const QString& EiffelClass::className()
 // дескриптор класса с полной квалификацией: `Lпакет.класс;`
 QString EiffelClass::descriptor()
 {
-	return QString("Leiffel/%1;").arg(metaClass->name());
+	return QString("L%1;").arg(metaClass->fullJavaName());
 }
 
 

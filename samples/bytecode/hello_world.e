@@ -6,8 +6,8 @@ create
 feature
 	make
 	do
-		cat("Meow");
-		--Io.put_string("Hello world!");
+		--cat("Meow");
+		Io.put_string("Hello world!");
 		-- Io.put_integer(arr[i]);
 	end
 	

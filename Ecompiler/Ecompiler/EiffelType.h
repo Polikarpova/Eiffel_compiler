@@ -29,7 +29,7 @@ public:
 	*/
 	virtual bool canCastTo(const EiffelType* otherType) const;
 
-	virtual QString descriptor() {return QString("<!>");}
+	virtual QString descriptor() {return QString("<!Type!>");}
 	
 	virtual QString toReadableString() const {return "not implemented yet...";};
 };

@@ -46,10 +46,15 @@ public:
 
 
 	/*getters*/
-	const QString& name() { return * constantTable.get(name_constN).value.utf8; }
+	virtual const QString& name() { return * constantTable.get(name_constN).value.utf8; }
 
 	virtual QString javaPackage() {return QString("eiffel");}
+	
+	//* Полное квалифицированное имя, типа: `java/lang/String`
+	virtual QString fullJavaName() {return QString("%1/%2").arg(javaPackage(), name());}
 
+	/* Поиск среди членов класса */
+	
 	/** \return NULL if no field found */
 	Field* findField(const QString& lowerName, bool lookInParents = true);
 	/** \return NULL if no method found */
@@ -75,7 +80,7 @@ public:
 	static MetaClass* create(struct NClass* class_node);
 	static bool isNameConflicting(const QString& upperName);
 
-private:
+protected:
 	//* тип в выражении
 	EiffelClass* _exprType;
 
