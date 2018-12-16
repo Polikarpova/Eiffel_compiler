@@ -38,6 +38,10 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 				bc.u4(jc.value.int4);
 				bc.log( QString("type=CONSTANT_Integer,  value =")+bc.CombinedPrint(jc.value.int4, 4) );
 				break;
+			case FLOAT_VALUE:
+				bc.u4(jc.value.real);
+				bc.log( QString("type=CONSTANT_Float,  value =")+bc.CombinedPrint(jc.value.real, 4) );
+				break;
 			case CLASS_N:
 				bc.u2(jc.value.class_const);
 				bc.log( QString("type=CONSTANT_Class,  Num CONSTANT_Utf8 =")+bc.CombinedPrint(jc.value.class_const, 2) );
@@ -55,7 +59,7 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 			case METHOD_REF:
 				bc.u2(jc.value.method_ref[CONST_CLASS]);
 				bc.u2(jc.value.method_ref[CONST_NAMEnTYPE]);
-				bc.log( QString("type=CONSTANT_Fieldref,  Num CONSTANT_Class =")+bc.CombinedPrint(jc.value.method_ref[CONST_CLASS], 2)
+				bc.log( QString("type=CONSTANT_Methodref,  Num CONSTANT_Class =")+bc.CombinedPrint(jc.value.method_ref[CONST_CLASS], 2)
 					+ QString(",  Num CONSTANT_NameAndType =")+bc.CombinedPrint(jc.value.method_ref[CONST_NAMEnTYPE], 2) );
 				break;
 			case NAME_AND_TYPE:
