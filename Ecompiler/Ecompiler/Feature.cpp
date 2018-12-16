@@ -127,3 +127,21 @@ void Feature::recordClients(const struct NIdList* List) {
 		}
 	}
 }
+
+//* создать константы в классе: имя и дескриптор
+void Feature::initConstants()
+{
+	// short int name_constN, descr_constN;
+
+	JvmConstant jc = { UTF8_VALUE, 0, false };
+
+	// имя поля/метода
+	jc.type = UTF8_VALUE;
+	jc.value.utf8 = new QString(this->name);
+	this->name_constN = this->metaClass->constantTable.put(jc);
+	
+	// дескриптор поля/метода
+	jc.type = UTF8_VALUE;
+	jc.value.utf8 = new QString(this->getDescriptor());
+	this->descr_constN = this->metaClass->constantTable.put(jc);
+}

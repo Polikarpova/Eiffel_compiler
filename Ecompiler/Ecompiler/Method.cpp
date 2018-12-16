@@ -96,6 +96,10 @@ Method::~Method(void)
 
 	mtd->descriptor = mtd->createDescriptor();
 
+	// создать константы в классе: имя и дескриптор
+	mtd->initConstants();
+
+
 	// report creation
 	qDebug("created Method: %s. Descriptor: %s", node->name, mtd->getDescriptor().toLocal8Bit().data());
 

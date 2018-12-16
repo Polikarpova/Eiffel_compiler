@@ -33,6 +33,10 @@ Field::~Field(void)
 
 	success = true;
 
+	// создать константы в классе: имя и дескриптор
+	fd->initConstants();
+
+
 	// report creation
 	qDebug("created Field: %s. Descriptor: %s", node->name, fd->getDescriptor().toLocal8Bit().data());
 

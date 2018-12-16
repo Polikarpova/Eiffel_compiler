@@ -45,6 +45,10 @@ public:
 	bool isExportedTo(const EiffelClass* clientClass);
 	
 	void recordClients(const struct NIdList* List);
-	virtual QString createDescriptor() { return QString(""); };
+	virtual QString createDescriptor() { return QString("!"); };
+
+	//* создать константы в классе: имя и дескриптор
+	void initConstants();
+
 };
 
