@@ -8,7 +8,7 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 	short int constant_pool_count, len;
 	JvmConstant jc;
 
- // формат - ClassFile
+ // Пишем заголовок Class-файла
 	bc.u4(0xCAFEBABE); //magic Java-signature
 	bc.u2(0x0000); //minor_version;
 	bc.u2(0x0034); //major_version;
@@ -48,7 +48,7 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 				break;
 			case STRING_N:
 				bc.u2(jc.value.string_const);
-				bc.log( QString("type=CONSTANT_String,  value =")+bc.CombinedPrint(jc.value.string_const, 2) );
+				bc.log( QString("type=CONSTANT_String,  Num CONSTANT_Utf8 =")+bc.CombinedPrint(jc.value.string_const, 2) );
 				break;
 			case FIELD_REF:
 				bc.u2(jc.value.field_ref[CONST_CLASS]);

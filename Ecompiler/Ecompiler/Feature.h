@@ -2,6 +2,8 @@
 #include "tree_structs.h"
 #include "MetaClass.h"
 #include "EiffelType.h"
+#include "ByteCode.h"
+
 
 class Feature
 {

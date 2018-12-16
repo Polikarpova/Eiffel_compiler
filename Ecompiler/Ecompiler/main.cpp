@@ -33,7 +33,7 @@ arg[1]: input file name (no extension): fnm
 
 int main(int argc, char *argv[])
 {
-	if(false)
+	if(true)
 	{
 		printf("Running a test for ByteCode...\n");
 
@@ -71,9 +71,10 @@ int main(int argc, char *argv[])
 		jc.value.utf8 = new QString("Constant_1");
 		ConstTable.put(jc);
 		
-		// Class Constant
-		jc.type = CLASS_N;
-		jc.value.class_const = 4;
+		// NAME_AND_TYPE Constant
+		jc.type = NAME_AND_TYPE;
+		jc.value.name_and_type[UTF8_NAME] = 7;
+		jc.value.name_and_type[UTF8_DESCR] = 12;
 		ConstTable.put(jc);
 
 		// INT4 Constant

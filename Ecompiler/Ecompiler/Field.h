@@ -21,5 +21,7 @@ public:
 	static Field* create(MetaClass* mc, struct NFeature* node);
 
 	QString createDescriptor();
+
+	ByteCode Field::to_ByteCode(ByteCode &);
 };
 
