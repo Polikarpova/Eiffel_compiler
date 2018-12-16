@@ -86,9 +86,26 @@ public:
 	ByteCode& u2(unsigned short int v);
 	ByteCode& u4(unsigned long int v);
 	ByteCode& appendHere(QByteArray ba);
+	ByteCode& f4(float v);
 
 	QString CombinedPrint(int pArg, short int bytes){
 		return QString(" %1 (0x%2)").arg(pArg) .arg( QString::number(pArg,16).right(bytes*2).toUpper().rightJustified(bytes*2,'0'));
+	}
+
+	QString CombinedPrint(float pArg){
+		union {
+			float f4;
+			char b[4];
+		} data;
+		data.f4 = pArg;
+		QByteArray s ;
+		short int dg;
+		for(short int i=0; i<=3; i++)
+		{
+			dg = data.b[i];
+			s += QString::number(dg,16).right(2).toUpper().rightJustified(2,'0');
+		}
+		return QString(" %1 [").arg(pArg) +QString(s) +"]";
 	}
 
 

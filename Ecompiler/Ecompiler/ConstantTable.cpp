@@ -39,8 +39,8 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 				bc.log( QString("type=CONSTANT_Integer,  value =")+bc.CombinedPrint(jc.value.int4, 4) );
 				break;
 			case FLOAT_VALUE:
-				bc.u4(jc.value.real);
-				bc.log( QString("type=CONSTANT_Float,  value =")+bc.CombinedPrint(jc.value.real, 4) );
+				bc.f4(jc.value.real);
+				bc.log( QString("type=CONSTANT_Float,  value =")+bc.CombinedPrint(jc.value.real) );
 				break;
 			case CLASS_N:
 				bc.u2(jc.value.class_const);

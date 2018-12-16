@@ -76,6 +76,16 @@ int main(int argc, char *argv[])
 		jc.value.class_const = 4;
 		ConstTable.put(jc);
 
+		// INT4 Constant
+		jc.type = INT4_VALUE;
+		jc.value.int4 = 0x404;
+		ConstTable.put(jc);
+
+		// FLOAT Constant
+		jc.type = FLOAT_VALUE;
+		jc.value.real = 2.5;
+		ConstTable.put(jc);
+
 //		bc.append(ConstTable.to_ByteCode());
 		ConstTable.to_ByteCode(bc);
 		
