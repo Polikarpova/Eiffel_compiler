@@ -33,4 +33,7 @@ public:
 	Expression* left;
 	Expression* right;
 	EiffelType* type;	//тип возвращаемого значения
+
+private:
+	EiffelType* getReturnType( Expression* expr);
 };

@@ -9,4 +9,7 @@ public:
 	~OperationExpr(void);
 
 	static OperationExpr* create(Method* mtd, struct NExpr* expr);
+
+	/* не трогать эту функцию */
+	EiffelType* getReturnType( Expression* expr);
 };

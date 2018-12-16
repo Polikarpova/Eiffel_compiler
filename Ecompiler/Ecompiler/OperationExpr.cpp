@@ -16,6 +16,15 @@ OperationExpr::~OperationExpr(void)
 	OperationExpr* oe = new OperationExpr();
 
 	oe->currentMethod = mtd;
+	oe->tree_node = expr;
+	oe->left = Expression::create(mtd, expr->left);
+	oe->right = Expression::create(mtd, expr->right);
 
 	return oe;
+}
+
+EiffelType* OperationExpr::getReturnType( Expression* expr) {
+
+
+	return expr->type;
 }
