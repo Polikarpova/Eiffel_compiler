@@ -361,7 +361,7 @@ return_value: type_mark	{$$=$1;}
 ;
 
 return_value_opt: return_value	{$$=$1;}
-| /*empty*/						{$$=0; }
+| /*empty*/						{$$=createType(VoidV); }
 ;
 
 local_vars: LOCAL declaration_list	{$$=$2;}

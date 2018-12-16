@@ -96,7 +96,7 @@ MethodCall::~MethodCall(void)
 	vmc->createMethodRef(calledMethod);
 
 	// report creation
-	qDebug("created MethodCall: %s(%d params)", calledMethod->name.data(), n_formal_args);
+	qDebug("created MethodCall: %s(%d params)", calledMethod->name.toLocal8Bit().data(), n_formal_args);
 
 	return vmc;
 }

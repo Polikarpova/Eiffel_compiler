@@ -20,7 +20,7 @@ LocalVariable::~LocalVariable(void)
 
 /*static*/ LocalVariable* LocalVariable::create(/*Method* mtd,*/ struct NNameAndType* node, int n)
 {
-	qDebug("created LocalVariable: %s. it`s N: %s", node->name, n);
+	qDebug("created LocalVariable: %s. it`s N: %d", node->name? node->name : "<null name>", n);
 
 	return new LocalVariable(QString(node->name).toLower(),
 		n,

@@ -24,10 +24,7 @@ Field::~Field(void)
 
 	if( ! fd->type )
 	{
-		EiffelProgram::currentProgram->logError(
-			QString("internal"), 
-			QString("Field does not declared with a type! where: Field::create()"),
-			node->loc.first_line);
+		qDebug("Field does not declared with a type! where: Field::create()");
 		delete fd;
 		return false;
 	}

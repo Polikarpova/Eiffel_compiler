@@ -62,6 +62,13 @@ Method::~Method(void)
 
 	mtd->tree_node = node;
 	mtd->type = EiffelType::create(node->type);
+	if( ! mtd->type )
+	{
+		qDebug("Method does not declared with a type! where: Method::create()");
+		delete mtd;
+		return false;
+	}
+
 	mtd->descriptor = mtd->createDescriptor();
 
 	// report creation
