@@ -20,6 +20,9 @@ Field::~Field(void)
 	// add to class
 	mc->fields[name] = fd;
 
+	fd->name = name;
+	fd->metaClass = mc;
+
 	fd->type = EiffelType::create(node->type);
 
 	if( ! fd->type )

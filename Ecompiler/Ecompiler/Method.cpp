@@ -47,6 +47,9 @@ Method::~Method(void)
 	// add to class
 	mc->methods[name] = mtd;
 
+	mtd->name = name;
+	mtd->metaClass = mc;
+
 	// local vars
 	int loc_i = 0;
 

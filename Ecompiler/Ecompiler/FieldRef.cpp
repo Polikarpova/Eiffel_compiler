@@ -22,6 +22,9 @@ FieldRef::~FieldRef(void)
 
 	fr->type = field->type;
 
+	// report creation
+	qDebug("created FieldRef: %s", field->name.toLocal8Bit().data());
+
 	return fr;
 }
 

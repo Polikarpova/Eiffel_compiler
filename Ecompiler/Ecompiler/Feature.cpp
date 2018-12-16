@@ -53,8 +53,6 @@ Feature::~Feature(void)
 		return false;
 
 	// set data which is common for Method & Field
-	fe->name = name;
-	fe->metaClass = mc;
 	fe->recordClients(s->clients);
 
 	return true;
