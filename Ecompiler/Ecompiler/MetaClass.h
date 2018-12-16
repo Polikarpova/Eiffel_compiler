@@ -42,8 +42,13 @@ public:
 	//* parent (NULL for class `ANY`)
 	MetaClass* parent;
 
-	short int name_constN, class_constN;
+	short int name_constN, class_constN, super_class_constN;
 	ConstantTable constantTable;
+	/** Создать константы в классе: имя и класс, родительский класс.
+		Этот метод можно вызывать сколько угодно раз,
+		он добавит (если нету) несозданные ранее константы по родительскому классу.
+	*/
+	void initConstants();
 
 	QMap<QString, Field*> fields;		//таблица полей {имя -> поле}
 	QMap<QString, Method*> methods;		//таблица методов {имя -> метод}

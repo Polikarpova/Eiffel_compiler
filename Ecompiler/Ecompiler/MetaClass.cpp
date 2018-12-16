@@ -16,18 +16,7 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 
 	this->_name = name;
 
-	JvmConstant jc = { UTF8_VALUE, 0, false };
-
-	// имя класса
-	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(name);
-	this->name_constN = this->constantTable.put(jc);
-		
-	// Class Constant
-	jc.type = CLASS_N;
-	jc.value.class_const = this->name_constN;
-	this->class_constN = this->constantTable.put(jc);
-		
+	initConstants();
 }
 
 MetaClass::~MetaClass() {
@@ -35,6 +24,39 @@ MetaClass::~MetaClass() {
 		delete _exprType;
 };
 
+void MetaClass::initConstants()
+{
+	//short int name_constN, class_constN, super_class_constN;
+
+	JvmConstant jc = { UTF8_VALUE, 0, false };
+	QString buffer;
+
+	// имя класса
+	jc.type = UTF8_VALUE;
+	buffer = this->fullJavaName();
+	jc.value.utf8 = & buffer;
+	this->name_constN = this->constantTable.put(jc);
+		
+	// Class Constant
+	jc.type = CLASS_N;
+	jc.value.class_const = this->name_constN;
+	this->class_constN = this->constantTable.put(jc);
+	
+
+	if(this->parent)
+	{
+		// имя класса
+		jc.type = UTF8_VALUE;
+		buffer = this->parent->fullJavaName();
+		jc.value.utf8 = & buffer;
+		int parent_name_constN = this->constantTable.put(jc);
+		
+		// Class Constant
+		jc.type = CLASS_N;
+		jc.value.class_const = parent_name_constN;
+		this->super_class_constN = this->constantTable.put(jc);
+	}
+}
 
 /*static*/ MetaClass* MetaClass::create(struct NClass* class_node)
 {
