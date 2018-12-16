@@ -6,7 +6,6 @@ Field::Field(void)
 {
 }
 
-
 Field::~Field(void)
 {
 }

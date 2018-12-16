@@ -7,6 +7,14 @@
 Feature::Feature(void)
 {
 }
+Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
+{
+	this->tree_node = NULL;
+	this->metaClass = mc;
+	this->name = name;
+	this->type = type;
+	this->recordClients(NULL); // set ANY as client
+}
 
 
 Feature::~Feature(void)

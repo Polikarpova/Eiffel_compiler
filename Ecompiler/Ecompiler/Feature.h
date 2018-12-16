@@ -7,6 +7,8 @@ class Feature
 {
 public:
 	Feature(void);
+	//* for RTL classes
+	Feature(MetaClass* mc, EiffelType* type, const QString& name);
 	~Feature(void);
 
 	/*fields*/

@@ -17,6 +17,9 @@ class Method : public Feature
 public:
 
 	Method(void);
+	//* for RTL classes
+	Method(MetaClass* mc, EiffelType* type, QString name)
+		: Feature(mc, type, name) {}
 	~Method(void);
 
 	byte* toByteCode();

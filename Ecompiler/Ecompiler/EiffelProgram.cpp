@@ -121,10 +121,7 @@ void EiffelProgram::createRTL()
 
 	mc = new EiffelANY(this);
 	mc->tree_node = NULL;
-	Field* f_io = new Field();
-	f_io->name = "io";
-	f_io->type = this->findClass("CONSOLEIO")->getType();
-	f_io->recordClients(NULL); // set ANY as client
+	Field* f_io = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
 	mc->fields[ f_io->name ] = f_io;
 	this->classes[ mc->name() ] = mc;
 
