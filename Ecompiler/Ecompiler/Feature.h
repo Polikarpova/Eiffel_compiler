@@ -13,21 +13,28 @@ public:
 	Feature(MetaClass* mc, EiffelType* type, const QString& name);
 	~Feature(void);
 
+
 	/*fields*/
 	struct NFeature* tree_node;
 
 	MetaClass* metaClass;
 	QString name;
 	QString descriptor;
+	
+	//* номера констант_UTF8 класса: имя члена класса, дескриптор члена класса 
+	short int name_constN, descr_constN;
+	
 	QSet<QString> clients;
 
 	/** Тип поля / возвращаемое значение метода */
 	EiffelType* type;
 	bool isVoid() { return this->type->isVoid(); }
 
+
 	/**getters*/
 	virtual bool isMethod() = 0;
 	virtual bool isField() = 0;
+
 	QString getDescriptor() {if(descriptor.isEmpty()){descriptor=createDescriptor();} return descriptor; }
 
 	/*methods*/

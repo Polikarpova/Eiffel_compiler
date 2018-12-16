@@ -22,7 +22,7 @@ public:
 		: Feature(mc, type, name) {}
 	~Method(void);
 
-	byte* toByteCode();
+	//byte* toByteCode();
 
 	/*fields*/
 	bool isCreator;
