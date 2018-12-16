@@ -73,10 +73,29 @@ bool Feature::isExportedTo(const QString& upperName)
 }
 bool Feature::isExportedTo(const EiffelClass* clientClass)
 {
+	if( ! clientClass->metaClass )
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Cannot get clientClass->metaClass! where: Feature::isExportedTo()"),
+			-1);
+		return false;
+	}
+
 	foreach(const QString& clientName , this->clients)
 	{
-		MetaClass* mc_client_parent = clientClass->metaClass;
-		if( mc_client_parent && clientClass->canCastTo(mc_client_parent->getType()) )
+		MetaClass* metaclass_client = EiffelProgram::currentProgram->findClass(clientName);
+		if( ! metaclass_client )
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Cannot get find class `%1` in program! where: Feature::isExportedTo()")
+					.arg(clientName),
+				-1);
+			return false;
+		}
+		bool b = clientClass->canCastTo(metaclass_client->getType());
+		if( b )
 		{
 			return true;
 		}
