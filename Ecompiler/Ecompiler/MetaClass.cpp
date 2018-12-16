@@ -212,7 +212,7 @@ bool MetaClass::round3()
 		}
 	}
 	
-	if(this->parent = NULL) {
+	if(this->parent == NULL) {
 		// set ANY as parent
 		MetaClass* ancestor = program->findClass("ANY");
 		if(ancestor)
@@ -248,7 +248,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	if(name.compare("NONE") == 0) {
 		program->logError(
 			QString("semantic"), 
-			QString("Inheritance form special class `NONE` is not allowed; (inheritance clause in class `%1`)")
+			QString("Inheritance form special frozen class `NONE` is not allowed; (inheritance clause in class `%1`)")
 				.arg(this->name()),
 			node->loc.first_line);
 				
