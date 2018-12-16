@@ -15,7 +15,7 @@ enum JvmConstantType {
 
 
 #define UTF8_NAME 0
-#define UTF8_TYPE 1
+#define UTF8_DESCR 1
 
 #define CONST_CLASS 0
 #define CONST_NAMEnTYPE 1

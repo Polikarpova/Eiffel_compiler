@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 //Отладка Заполнения таблицы Констант
 		ConstantTable ConstTable;
-		JvmConstant jc = { UTF8_VALUE, 0, true };
+		JvmConstant jc = { UTF8_VALUE, 0, false };
 
 		// имя класса
 		jc.type = UTF8_VALUE;

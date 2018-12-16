@@ -142,7 +142,7 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	//Name&Type Constant
 	jc.type = NAME_AND_TYPE;
 	jc.value.name_and_type[UTF8_NAME] = method_name_utf8;
-	jc.value.name_and_type[UTF8_TYPE] = method_descriptor_utf8;
+	jc.value.name_and_type[UTF8_DESCR] = method_descriptor_utf8;
 	short int method_name_and_type = currentMethod->metaClass->constantTable.put(jc);
 
 	//-----------------MethodRef-----------------//

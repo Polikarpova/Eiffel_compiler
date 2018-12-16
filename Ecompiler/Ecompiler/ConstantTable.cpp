@@ -35,18 +35,34 @@ ByteCode ConstantTable::to_ByteCode(ByteCode & bc) {
 				bc.appendHere(jc.value.utf8->toLocal8Bit());
 				break;
 			case INT4_VALUE:
+				bc.u4(jc.value.int4);
+				bc.log( QString("type=CONSTANT_Integer,  value =")+bc.CombinedPrint(jc.value.int4, 4) );
 				break;
 			case CLASS_N:
 				bc.u2(jc.value.class_const);
 				bc.log( QString("type=CONSTANT_Class,  Num CONSTANT_Utf8 =")+bc.CombinedPrint(jc.value.class_const, 2) );
 				break;
 			case STRING_N:
+				bc.u2(jc.value.string_const);
+				bc.log( QString("type=CONSTANT_String,  value =")+bc.CombinedPrint(jc.value.string_const, 2) );
 				break;
 			case FIELD_REF:
+				bc.u2(jc.value.field_ref[CONST_CLASS]);
+				bc.u2(jc.value.field_ref[CONST_NAMEnTYPE]);
+				bc.log( QString("type=CONSTANT_Fieldref,  Num CONSTANT_Class =")+bc.CombinedPrint(jc.value.field_ref[CONST_CLASS], 2)
+					+ QString(",  Num CONSTANT_NameAndType =")+bc.CombinedPrint(jc.value.field_ref[CONST_NAMEnTYPE], 2) );
 				break;
 			case METHOD_REF:
+				bc.u2(jc.value.method_ref[CONST_CLASS]);
+				bc.u2(jc.value.method_ref[CONST_NAMEnTYPE]);
+				bc.log( QString("type=CONSTANT_Fieldref,  Num CONSTANT_Class =")+bc.CombinedPrint(jc.value.method_ref[CONST_CLASS], 2)
+					+ QString(",  Num CONSTANT_NameAndType =")+bc.CombinedPrint(jc.value.method_ref[CONST_NAMEnTYPE], 2) );
 				break;
 			case NAME_AND_TYPE:
+				bc.u2(jc.value.name_and_type[UTF8_NAME]);
+				bc.u2(jc.value.name_and_type[UTF8_DESCR]);
+				bc.log( QString("type=CONSTANT_NameAndType,  Name_CONSTANT_Utf8 =")+bc.CombinedPrint(jc.value.name_and_type[UTF8_NAME], 2)
+					+ QString(",  Descriptor_CONSTANT_Utf8 =")+bc.CombinedPrint(jc.value.name_and_type[UTF8_DESCR], 2) );
 				break;
 		}
 	}
