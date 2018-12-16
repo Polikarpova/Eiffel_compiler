@@ -68,10 +68,14 @@ enum ExprType
 	SubscriptE
 };
 
+enum ReturnType { Integer, Real, Character, String, Boolean };
+
 /* Expr - выражение */
 struct NExpr
 {
 	DECLLOC
+	enum ReturnType returnType;
+
 	enum ExprType type;
 	union {
 		int Int;
