@@ -204,6 +204,19 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 	bc.log( QString("ByteCode of method starts here ...") );
 
 
+
+	// Возврат из метода
+
+	QString type_descr = this->type->descriptor();
+
+	if(this->isVoid())
+		bc.return_();
+	else if( type_descr.startsWith("L") )
+		bc.areturn();
+	else if( type_descr == "I" )
+		bc.ireturn();
+	// ...
+
 	return bc;
 }
 
