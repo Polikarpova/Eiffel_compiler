@@ -6,6 +6,7 @@
 
 Feature::Feature(void)
 {
+	this->isStatic = false;
 }
 Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
 {
@@ -14,12 +15,25 @@ Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
 	this->name = name;
 	this->type = type;
 	this->recordClients(NULL); // set ANY as client
+	this->isStatic = false;
+
+	// javaName
+	//this->javaName = name;
+	this->initJavaName();
 }
 
 
 Feature::~Feature(void)
 {
 }
+
+void Feature::initJavaName()
+{
+	this->javaName = name;
+	if(javaName == "main")
+		javaName = "^" + javaName;
+}
+
 
 /*static*/ bool Feature::create(MetaClass* mc, struct NFeature* s) {
 
@@ -136,7 +150,7 @@ void Feature::initConstants()
 
 	// имя поля/метода
 	jc.type = UTF8_VALUE;
-	buffer = this->name;
+	buffer = this->javaName;
 	jc.value.utf8 = & buffer;
 	this->name_constN = this->metaClass->constantTable.put(jc);
 	

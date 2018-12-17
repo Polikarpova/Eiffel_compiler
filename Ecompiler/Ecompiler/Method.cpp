@@ -3,6 +3,7 @@
 #include "EiffelArray.h"
 
 Method::Method(void)
+	: Feature()
 {
 	this->isCreator = false;
 }
@@ -96,6 +97,8 @@ Method::~Method(void)
 		delete mtd;
 		return false;
 	}
+
+	mtd->initJavaName();
 
 	mtd->descriptor = mtd->createDescriptor();
 
@@ -203,6 +206,11 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 {
 	bc.log( QString("ByteCode of method starts here ...") );
 
+	if(isCreator)
+	{
+         //0: aload_0
+         //1: invokespecial #1                  // Method rtl/ANY."<init>":()V
+	}
 
 
 	// Возврат из метода
@@ -223,7 +231,7 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 //Таблица метода -> в ByteCode
 ByteCode& Method::to_ByteCode(ByteCode & bc) {
 //пишем в ByteCode данные об одном методе
-	bc.u2(0x0001); //флаги
+	bc.u2(ACC_PUBLIC | (isStatic? ACC_STATIC : 0x0000)); //флаги
 	bc.u2(name_constN); //имя
 	bc.log( QString("Method_name, num CONSTANT_Utf8 =")+bc.CombinedPrint(name_constN, 2) );
 	bc.u2(descr_constN); //дескриптор

@@ -4,6 +4,9 @@
 #include "EiffelType.h"
 #include "ByteCode.h"
 
+// флаги доступа
+#define ACC_PUBLIC  0x0001
+#define ACC_STATIC  0x0008
 
 class Feature
 {
@@ -19,10 +22,12 @@ public:
 
 	MetaClass* metaClass;
 	QString name;
+	QString javaName;
 	QString descriptor;
 	
 	//* номера констант_UTF8 класса: имя члена класса, дескриптор члена класса 
 	short int name_constN, descr_constN;
+	bool isStatic; // для метода `public static void main(java.lang.String args[])`
 	
 	QSet<QString> clients;
 
@@ -36,6 +41,7 @@ public:
 	virtual bool isField() = 0;
 
 	QString getDescriptor() {if(descriptor.isEmpty()){descriptor=createDescriptor();} return descriptor; }
+	virtual void initJavaName();
 
 	/*methods*/
 	static bool create(MetaClass* mc, struct NFeature* s);
