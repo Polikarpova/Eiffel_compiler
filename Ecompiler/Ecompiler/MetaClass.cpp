@@ -404,8 +404,10 @@ bool MetaClass::generateCode(const QDir& code_dir)
 	bc.u2(0x0001); //флаги
  //   u2 this_class;
 	bc.u2(class_constN);
+	bc.log(QString("Current class,  num CONSTANT_Class =")+bc.CombinedPrint(class_constN, 2));
  //   u2 super_class;
 	bc.u2(super_class_constN);
+	bc.log(QString("Super class,  num CONSTANT_Class =")+bc.CombinedPrint(super_class_constN, 2));
  //   u2 interfaces_count;
 	bc.u2(0x0000); //количество интерфейсов
  //   u2 interfaces[interfaces_count];
