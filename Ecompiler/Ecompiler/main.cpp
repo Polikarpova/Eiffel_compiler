@@ -36,7 +36,7 @@ arg[1]: input file name (no extension): fnm
 
 int main(int argc, char *argv[])
 {
-	if(true)
+	if(false)
 	{
 		printf("Running a test for ByteCode...\n");
 
