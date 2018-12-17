@@ -116,7 +116,7 @@ void EiffelProgram::createRTL()
 	Method* mtd;
 	Field* fld;
 	EiffelClass *string_type;
-	EiffelType *void_type = new VoidType();
+	EiffelType *void_type = VoidType::instance();
 
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));

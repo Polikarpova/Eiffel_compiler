@@ -1,5 +1,6 @@
 #include "VoidType.h"
 
+/*static*/ VoidType* VoidType::singleton = NULL;
 
 VoidType::VoidType(void)
 {

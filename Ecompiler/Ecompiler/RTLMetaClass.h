@@ -22,6 +22,7 @@ public:
 
 // ячдю янахпюел бяе RTL-ЙКЮЯЯШ дкъ ондйкчвемхъ й опнцпюллле бяецн кхьэ ндмнцн RTLMetaClass.h
 
+#include "VoidType.h"
 #include "EiffelNONE.h"
 #include "EiffelANY.h"
 #include "EiffelSTRING.h"
