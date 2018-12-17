@@ -198,8 +198,23 @@ bool MetaClass::createFeatures() {
 				} 
 				else
 				{
+					// !!! Проверить, что нет других конструкторов с такой же сигнатурой !
+					// ...
+
 					// remember flag: method is creator
 					mtd_creator->isCreator = true;
+					
+					// threat this method as constructor
+					QString newJavaName = "<init>";
+
+					// change class constant (грубая замена)
+					int n = this->constantTable.searchUtf8(mtd_creator->javaName);
+					if(n == -1)
+						throw "utf8 not found. [in MetaClass.createFeatures()]";
+					*(constantTable.get(n).value.utf8) = newJavaName;
+
+					mtd_creator->javaName = newJavaName;
+
 					success = true;
 				}
 			}
