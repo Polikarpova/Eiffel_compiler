@@ -5,7 +5,9 @@
 #include "Method.h"
 #include "Field.h"
 
+#include "RTLMetaClass.h"
 #include "ByteCode.h"
+#include "SpecialMethod.h"
 
 MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 {

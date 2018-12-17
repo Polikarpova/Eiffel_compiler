@@ -158,6 +158,7 @@
     <ClInclude Include="Expression.h" />
     <ClInclude Include="FieldRef.h" />
     <ClInclude Include="instructions.h" />
+    <ClInclude Include="SpecialMethod.h" />
     <ClInclude Include="StatementBlock.h" />
     <ClInclude Include="StringExpr.h" />
     <ClInclude Include="LocalVariableRef.h" />

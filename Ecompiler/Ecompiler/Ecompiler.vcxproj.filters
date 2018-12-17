@@ -229,6 +229,9 @@
     <ClInclude Include="MethodCall.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
+    <ClInclude Include="SpecialMethod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Bison Include="eiffel_bison.y" />
