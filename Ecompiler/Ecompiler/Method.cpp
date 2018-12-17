@@ -150,49 +150,8 @@ QString Method::createDescriptor() {
 	return result;
 }
 
-/*
-QString Method::getTypeDescriptor(EiffelType* type)
-{
-	QString result;
 
-	//EiffelClass* ec;
-	//EiffelArray* ea;
+ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 
-	//switch(type->tree_node->type) {
-	//
-	//	case VoidV:
-	//		result += "V";
-	//		return result;
-	//	case ClassV:
-	//		result += "L" + ec->className + ";";
-	//		return result;
-	//	case ArrayV:
-	//		result += "[";
-	//		this->getTypeDescriptor(ea->elementType);
-	//		return result;
-	//	case IntegerV:
-	//		result += "I";
-	//		return result;
-	//	case RealV:
-	//		result += "D";
-	//		return result;
-	//	case CharacterV:
-	//		result += "C";
-	//		return result;
-	//	case StringV:
-	//		result += "Ljava/lang/String;";
-	//		return result;
-	//	case BooleanV:
-	//		result += "Z";	//true or false
-	//		return result;
-	//	default:
-	//		result += "<unknownType!>";	//unknown
-	//		return result;
-	//}
-	return result;
-} // */
-
-bool Method::checkArguments(const QList<Expression*>& factParams) {
-
-	return false;
+	return bc;
 }

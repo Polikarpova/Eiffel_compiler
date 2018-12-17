@@ -1,5 +1,5 @@
 #pragma once
-#include "feature.h"
+#include "Feature.h"
 #include "EiffelType.h"
 #include "LocalVariable.h"
 #include "StatementBlock.h"
@@ -55,6 +55,10 @@ public:
 	QString createDescriptor();
 	//QString getTypeDescriptor(EiffelType* type);
 
-	bool checkArguments(const QList<Expression*>& factParams);
+	/** —оздаЄт артибут "Code" дл€ метода
+		в том виде, в котором без изменений будет записан
+		в таблицу атрибутов метода.
+	*/
+	ByteCode& generateCodeAttribute(ByteCode &);
 };
 
