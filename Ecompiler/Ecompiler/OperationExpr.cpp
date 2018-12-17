@@ -50,11 +50,9 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//получаем тип
 			this->type = this->left->expressionType();
 
-			const char* typeName = typeid(this->type).name();
-
-			if ( typeName != "INTEGER" || typeName != "REAL") {
+			if ( ((EiffelClass*)this->type)->className() != "INTEGER" || ((EiffelClass*)this->type)->className() != "REAL") {
 				
-				getError( typeName, "INTEGER or REAL");
+				getError( ((EiffelClass*)this->type)->className(), "INTEGER or REAL");
 				return NULL;
 			}
 		}
@@ -69,20 +67,22 @@ EiffelType* OperationExpr::getReturnType( ) {
 		//арифметические операции
 		if ( this->tree_node->type == PlusE || this->tree_node->type == MinusE || this->tree_node->type == MulE || this->tree_node->type == DivE || this->tree_node->type == PowerE ) {
 
-			if ( typeid(lType).name() != "INTEGER" || typeid(lType).name() != "REAL") {
+			if ( ((EiffelClass*)lType)->className() != "INTEGER" || ((EiffelClass*)lType)->className() != "REAL") {
 
 				//доп проверка на строки у операции +
-				if ( this->tree_node->type == PlusE && (typeid(lType).name() == "STRING" || typeid(rType).name() == "STRING") ) {
-				
-					if ( typeid(rType).name() != "STRING") {
+
+				//QString str = ((EiffelClass*)lType)->className();
+				if ( this->tree_node->type == PlusE && ( ((EiffelClass*)lType)->className() == "STRING" || ((EiffelClass*)rType)->className() == "STRING") ) {
+
+					if ( ((EiffelClass*)rType)->className() != "STRING") {
 						
-						getError( QString(typeid(rType).name()), "STRING");
+						getError( ((EiffelClass*)rType)->className(), "STRING");
 						delete rType;
 						delete lType;
 						return NULL;
-					} else if ( typeid(lType).name() != "STRING") {
+					} else if ( ((EiffelClass*)lType)->className() != "STRING") {
 						
-						getError( QString(typeid(lType).name()), "STRING");
+						getError( ((EiffelClass*)lType)->className(), "STRING");
 						delete rType;
 						delete lType;
 						return NULL;
@@ -92,7 +92,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 					}
 
 				} else {
-					getError( QString(typeid(lType).name()), "INTEGER or REAL");
+					getError( ((EiffelClass*)lType)->className(), "INTEGER or REAL");
 					delete rType;
 					delete lType;
 					return NULL;
@@ -100,11 +100,11 @@ EiffelType* OperationExpr::getReturnType( ) {
 
 			} else {
 			
-				if ( typeid(rType).name() != typeid(lType).name() ) {
+				if ( typeid(rType).name() !=((EiffelClass*)lType)->className() ) {
 
 					//≈сли справа char или boolean или string, то ошибочка
-					if ( typeid(rType).name() == "BOOLEAN" || typeid(rType).name() == "CHARACTER" || typeid(rType).name() == "STRING") {
-						getError( QString(typeid(rType).name()), QString(typeid(lType).name()));
+					if ( ((EiffelClass*)rType)->className() == "BOOLEAN" || ((EiffelClass*)rType)->className() == "CHARACTER" || ((EiffelClass*)rType)->className() == "STRING") {
+						getError( ((EiffelClass*)rType)->className(), ((EiffelClass*)lType)->className() );
 						delete rType;
 						delete lType;
 						return NULL;
@@ -127,7 +127,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 		
 			//сравниваетс€ всЄ со всем
 			//даже если типы не совпадают....
-			if ( typeid(rType).name() != typeid(lType).name() ) {
+			if ( ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
 				qDebug("Use diffrent operands  in operation = or /=");
 			}
 
@@ -142,9 +142,9 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//чар с чар
 			//стринг со стринг
 
-			if ( typeid(lType).name() == "BOOLEAN" /*|| typeid(lType).name() == "BOOLEAN" */) {
+			if ( ((EiffelClass*)lType)->className() == "BOOLEAN" /*|| typeid(lType).name() == "BOOLEAN" */) {
 				
-				getError( QString(typeid(lType).name()), "INTEGER or REAL or CHARACTER or STRING");
+				getError( ((EiffelClass*)lType)->className(), "INTEGER or REAL or CHARACTER or STRING");
 				delete rType;
 				delete lType;
 				return NULL;
@@ -152,15 +152,15 @@ EiffelType* OperationExpr::getReturnType( ) {
 
 			if ( typeid(rType).name() == "BOOLEAN") {
 				
-				getError( QString(typeid(rType).name()), "INTEGER or REAL or CHARACTER or STRING");
+				getError( ((EiffelClass*)rType)->className() , "INTEGER or REAL or CHARACTER or STRING");
 				delete rType;
 				delete lType;
 				return NULL;
 			}
 
-			if ( typeid(rType).name() != typeid(lType).name() ) {
+			if ( ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
 				
-				getError( QString(typeid(rType).name()), QString(typeid(lType).name()));
+				getError( ((EiffelClass*)rType)->className() , ((EiffelClass*)lType)->className() );
 				delete rType;
 				delete lType;
 				return NULL;
@@ -173,17 +173,17 @@ EiffelType* OperationExpr::getReturnType( ) {
 		else if ( this->tree_node->type == AndE || this->tree_node->type == AndThenE || this->tree_node->type == OrE || this->tree_node->type == OrElseE || this->tree_node->type == XORE || this->tree_node->type == ImpliesE ) {
 		
 			//только bool с bool, возвращает bool
-			if ( ( typeid(lType).name() != "BOOLEAN" || typeid(rType).name() != "BOOLEAN") && typeid(rType).name() != typeid(lType).name() ) {
+			if ( ( ((EiffelClass*)lType)->className() != "BOOLEAN" || ((EiffelClass*)rType)->className() != "BOOLEAN") && ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
 				
-				if ( typeid(lType).name() != "BOOLEAN" ) {
-					getError( QString(typeid(lType).name()), "BOOLEAN");
+				if ( ((EiffelClass*)lType)->className() != "BOOLEAN" ) {
+					getError( ((EiffelClass*)lType)->className() , "BOOLEAN");
 					delete rType;
 					delete lType;
 					return NULL;
 				}
 
-				if ( typeid(rType).name() != "BOOLEAN" ) {
-					getError( QString(typeid(rType).name()), "BOOLEAN");
+				if ( ((EiffelClass*)rType)->className() != "BOOLEAN" ) {
+					getError( ((EiffelClass*)rType)->className(), "BOOLEAN");
 					delete rType;
 					delete lType;
 					return NULL;
