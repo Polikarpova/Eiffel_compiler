@@ -116,11 +116,13 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	*/
 
 	JvmConstant jc = { UTF8_VALUE, 0, false };
+	QString buffer;
 
 	//-----------------Class-----------------//
 	//имя класса
 	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(calledMethod->metaClass->name());
+	buffer = calledMethod->metaClass->name();
+	jc.value.utf8 = & buffer;
 	short int class_utf8 = currentMethod->metaClass->constantTable.put(jc);
 		
 	// Class Constant
@@ -131,12 +133,14 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	//-----------------Name&Type-----------------//
 	//имя метода
 	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(calledMethod->name);
+	buffer = calledMethod->name;
+	jc.value.utf8 = & buffer;
 	short int method_name_utf8 = currentMethod->metaClass->constantTable.put(jc);
 	
 	//дескриптор метода
 	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(calledMethod->getDescriptor());
+	buffer = calledMethod->getDescriptor();
+	jc.value.utf8 = & buffer;
 	short int method_descriptor_utf8 = currentMethod->metaClass->constantTable.put(jc);
 	
 	//Name&Type Constant
