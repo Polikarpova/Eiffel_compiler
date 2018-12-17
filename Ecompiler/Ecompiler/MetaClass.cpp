@@ -406,8 +406,12 @@ bool MetaClass::generateCode(const QDir& code_dir)
 
  //   u2 fields_count;
  //   field_info fields[fields_count];
+
+
  //   u2 methods_count;
  //   method_info methods[methods_count];
+	this->methods_to_ByteCode(bc);
+
  //   u2 attributes_count;
  //   attribute_info attributes[attributes_count];
  // }

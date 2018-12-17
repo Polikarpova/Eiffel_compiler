@@ -153,10 +153,55 @@ QString Method::createDescriptor() {
 
 ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 
+	int attribute_size_u4_pos, attribute_start, attribute_length;
+
 	bc.log("").log(QString("Start of atribute `Code` of method `%1` ...").arg(this->name));
 
-	// this->metaClass->code_constN
+	// `Code`
+	bc.u2(this->metaClass->code_constN);
 
+	// Длина атрибута
+	attribute_size_u4_pos = bc.currentOffset;
+	bc.u4(0xDEADBEEF); // пока отладочное значение, позже перезапишется
+
+	attribute_start = bc.currentOffset; // начало атрибута (за исключением первых 6 байт)
+
+	// байт-код собственно тела метода (исполнимые инструкции)
+	ByteCode body_bc;
+	this->generateCode4Body(body_bc);
+
+	// размер стека операндов
+	bc.u2( body_bc.maxStackSize + 0 ); // прибавить на всякий случай ?
+
+	// кол-во локальных переменных
+	bc.u2( this->localVariables.size() );
+
+	// Длина собственно байт-кода
+	bc.log( QString("Length of ByteCode = ")+bc.CombinedPrint(body_bc.size(), 4) );
+	bc.u4(body_bc.size()); // пока отладочное значение, позже перезапишется
+
+	// Байт-код
+	bc.append(body_bc);
+
+	// длины таблиц исключений и атрибутов
+	bc.u2(0x0000).u2(0x0000);
+
+
+	attribute_length = bc.currentOffset - attribute_start;
+
+	// Длина атрибута:
+	// перезапись
+	bc.gotoPos(attribute_size_u4_pos)
+		.u4( attribute_length )
+		.gotoEnd();
+	bc.log( QString("Length of written attribute `Code` = ")+bc.CombinedPrint(attribute_length, 4) );
+
+	return bc;
+}
+
+ByteCode& Method::generateCode4Body(ByteCode &bc)
+{
+	bc.log( QString("ByteCode of method starts here ...") );
 
 
 	return bc;
