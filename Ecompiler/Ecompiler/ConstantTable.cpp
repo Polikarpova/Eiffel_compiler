@@ -5,21 +5,21 @@
 //Таблица констант -> в ByteCode
 ByteCode& ConstantTable::to_ByteCode(ByteCode & bc) {
 
-	short int constant_pool_count, len;
+	short int Constant_pool_count, len;
 	JvmConstant jc;
 
  // Пишем заголовок Class-файла
+	bc.log("Writing Java Class file signature, version number");
 	bc.u4(0xCAFEBABE); //magic Java-signature
 	bc.u2(0x0000); //minor_version;
 	bc.u2(0x0034); //major_version;
 
-	bc.log(QString("Writing Constant_pool ..."));
-	constant_pool_count = constants.size() + 1;
- 	bc.u2(constant_pool_count); //длина Таблицы констант
-	bc.log(QString("constant_pool_count")+bc.CombinedPrint(constant_pool_count, 2));
+	bc.log("").log(QString("Writing Constant_pool ..."));
+	Constant_pool_count = constants.size() + 1;
+ 	bc.u2(Constant_pool_count); //длина Таблицы констант
+	bc.log(QString("Constant_pool_count")+bc.CombinedPrint(Constant_pool_count, 2));
 
- //   cp_info constant_pool[constant_pool_count-1];
-	for(short int i = 1; i < constant_pool_count;  i++)
+	for(short int i = 1; i < Constant_pool_count;  i++)
 	{
 		jc = get(i);
 		bc.log(QString("Constant N %1").arg(i));

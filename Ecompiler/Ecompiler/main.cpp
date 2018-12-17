@@ -15,6 +15,8 @@ extern int syntax_errors_logged;
 
 #include "EiffelProgram.h"
 #include "ByteCode.h"
+#include "MetaClass.h"
+#include "Field.h"
 
 // tests
 #include "bisontest.h"
@@ -38,7 +40,7 @@ int main(int argc, char *argv[])
 		printf("Running a test for ByteCode...\n");
 
 		ByteCode bc;
-		bc.log("Begin writing Java-signature \\o/");
+	//	bc.log("Begin writing Java-signature \\o/");
 //		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
 		/*
 		bc.iconst_(-1).iconst_(5);
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
 
 //		bc.log("Writed istore (0xAB);  ldc_w (0x008D); /o\\");
 
-//Отладка Заполнения таблицы Констант
+//Отладка Записи в ByteCode таблицы Констант
 		ConstantTable ConstTable;
 		JvmConstant jc = { UTF8_VALUE, 0, false };
 
@@ -87,9 +89,22 @@ int main(int argc, char *argv[])
 		jc.value.real = 2.5;
 		ConstTable.put(jc);
 
-//		bc.append(ConstTable.to_ByteCode());
 		ConstTable.to_ByteCode(bc);
-		
+
+//Отладка Записи в ByteCode таблицы Полей
+		MetaClass MetaClassD;
+		Field Field1, Field2;
+
+		Field1.name_constN = 0x1111;
+		Field1.descr_constN = 0x8888;
+		MetaClassD.fields["Field1"] = &Field1;
+
+		Field2.name_constN = 0x2222;
+		Field2.descr_constN = 0x9999;
+		MetaClassD.fields["Field2"] = &Field2;
+
+		MetaClassD.fields_to_ByteCode(bc);
+
 
 
 		bc.toFile("bytecode-test.bc");

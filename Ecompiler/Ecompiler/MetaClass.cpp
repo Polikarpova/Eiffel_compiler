@@ -425,20 +425,30 @@ ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
 
 	short int Fields_pool_count, i=0;
 	QList<Field*> fieldsVals;
+	Field* Field_1;
 
-	bc.log(QString("Writing Fields_pool ..."));
+	bc.log("").log(QString("Writing Fields_pool ..."));
 
 	Fields_pool_count = fields.size();
  	bc.u2(Fields_pool_count); //длина Таблицы полей
 	bc.log(QString("Fields_pool_count")+bc.CombinedPrint(Fields_pool_count, 2));
 
-	fieldsVals = fields.values();
-
-	foreach(Field* Field_1, fieldsVals)
+	//вариант без указания Имени_поля (только Номер_поля)
+/*	fieldsVals = fields.values();
+	foreach(Field_1, fieldsVals)
 	{
 		bc.log(QString("Field N %1:").arg(i++));
 		Field_1->to_ByteCode(bc);
+	} */
+
+	//вариант с указанием Имени_поля
+	foreach(QString Field_name, fields.keys()) //итерация по ключам
+	{
+		Field_1 = fields[Field_name];
+		bc.log(QString("Field N %1   \"%2\":").arg(i++).arg(Field_name));
+		Field_1->to_ByteCode(bc);
 	}
+
 	return bc;
 }
 
