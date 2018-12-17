@@ -61,7 +61,7 @@ public:
 	*/
 	ByteCode& generateCodeAttribute(ByteCode &);
 
-	ByteCode to_ByteCode(ByteCode &);
+	ByteCode& to_ByteCode(ByteCode &);
 
 };
 

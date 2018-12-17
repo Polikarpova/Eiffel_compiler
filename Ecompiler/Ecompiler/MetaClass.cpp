@@ -420,7 +420,7 @@ bool MetaClass::generateCode(const QDir& code_dir)
 	return true;
 }
 
-ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
+ByteCode& MetaClass::fields_to_ByteCode(ByteCode &bc) {
 //пишем в ByteCode данные обо всех полях
 
 	short int Fields_pool_count, i=0;
@@ -451,7 +451,7 @@ ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
 	return bc;
 }
 
-ByteCode MetaClass::methods_to_ByteCode(ByteCode &bc) {
+ByteCode& MetaClass::methods_to_ByteCode(ByteCode &bc) {
 //пишем в ByteCode данные обо всех методах
 
 	short int Methods_pool_count, i=0;

@@ -157,7 +157,7 @@ ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 }
 
 //Таблица метода -> в ByteCode
-ByteCode Method::to_ByteCode(ByteCode & bc) {
+ByteCode& Method::to_ByteCode(ByteCode & bc) {
 //пишем в ByteCode данные об одном методе
 	bc.u2(0x0001); //флаги
 	bc.u2(name_constN); //имя

@@ -95,7 +95,7 @@ protected:
 	EiffelClass* _exprType;
 
 public:
-	ByteCode fields_to_ByteCode(ByteCode &bc);
-	ByteCode methods_to_ByteCode(ByteCode &bc);
+	ByteCode& fields_to_ByteCode(ByteCode &bc);
+	ByteCode& methods_to_ByteCode(ByteCode &bc);
 
 };
