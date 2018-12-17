@@ -15,5 +15,5 @@ public:
 
 private:
 
-	EiffelType* getError( /*QString operType,*/ QString actualType, QString expectedType );
+	void getError( QString actualType, QString expectedType );
 };
