@@ -60,5 +60,8 @@ public:
 		в таблицу атрибутов метода.
 	*/
 	ByteCode& generateCodeAttribute(ByteCode &);
+
+	ByteCode to_ByteCode(ByteCode &);
+
 };
 

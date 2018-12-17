@@ -448,11 +448,28 @@ ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
 		bc.log(QString("Field N %1   \"%2\":").arg(i++).arg(Field_name));
 		Field_1->to_ByteCode(bc);
 	}
-
 	return bc;
 }
 
 ByteCode MetaClass::methods_to_ByteCode(ByteCode &bc) {
+//пишем в ByteCode данные обо всех методах
+
+	short int Methods_pool_count, i=0;
+	Method* Method_1;
+
+	bc.log("").log(QString("Writing Methods_pool ..."));
+
+	Methods_pool_count = methods.size();
+ 	bc.u2(Methods_pool_count); //длина “аблицы методов
+	bc.log(QString("Methods_pool_count")+bc.CombinedPrint(Methods_pool_count, 2));
+
+	//с указанием »мени_метода
+	foreach(QString Method_name, methods.keys())
+	{
+		Method_1 = methods[Method_name];
+		bc.log(QString("Method N %1   \"%2\":").arg(i++).arg(Method_name));
+		Method_1->to_ByteCode(bc);
+	}
 	return bc;
 }
 

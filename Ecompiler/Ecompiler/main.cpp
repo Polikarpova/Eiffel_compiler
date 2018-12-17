@@ -17,6 +17,7 @@ extern int syntax_errors_logged;
 #include "ByteCode.h"
 #include "MetaClass.h"
 #include "Field.h"
+#include "Method.h"
 
 // tests
 #include "bisontest.h"
@@ -91,19 +92,19 @@ int main(int argc, char *argv[])
 
 		ConstTable.to_ByteCode(bc);
 
-//Отладка Записи в ByteCode таблицы Полей
+//Отладка Записи в ByteCode таблицы Методов
 		MetaClass MetaClassD;
-		Field Field1, Field2;
+		Method Method1, Method2;
 
-		Field1.name_constN = 0x1111;
-		Field1.descr_constN = 0x8888;
-		MetaClassD.fields["Field1"] = &Field1;
+		Method1.name_constN = 0x1111;
+		Method1.descr_constN = 0x8888;
+		MetaClassD.methods["Method_1"] = &Method1;
 
-		Field2.name_constN = 0x2222;
-		Field2.descr_constN = 0x9999;
-		MetaClassD.fields["Field2"] = &Field2;
+		Method2.name_constN = 0x2222;
+		Method2.descr_constN = 0x9999;
+		MetaClassD.methods["Method_2"] = &Method2;
 
-		MetaClassD.fields_to_ByteCode(bc);
+		MetaClassD.methods_to_ByteCode(bc);
 
 
 

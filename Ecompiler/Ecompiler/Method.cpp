@@ -155,3 +155,15 @@ ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 
 	return bc;
 }
+
+//Таблица метода -> в ByteCode
+ByteCode Method::to_ByteCode(ByteCode & bc) {
+//пишем в ByteCode данные об одном методе
+	bc.u2(0x0001); //флаги
+	bc.u2(name_constN); //имя
+	bc.log( QString("Method_name, num CONSTANT_Utf8 =")+bc.CombinedPrint(name_constN, 2) );
+	bc.u2(descr_constN); //дескриптор
+	bc.log( QString("Method_descriptor, num CONSTANT_Utf8 =")+bc.CombinedPrint(descr_constN, 2) );
+	bc.u2(0x0001); //кол-во атрибутов
+	return bc;
+}
