@@ -15,8 +15,6 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 	this->_exprType = NULL;
 
 	this->_name = name;
-
-	//initConstants();
 }
 
 MetaClass::~MetaClass() {
@@ -270,6 +268,9 @@ bool MetaClass::round3()
 		mtd->createBody();
 	}
 
+	// подготовить специальные методы (конструкторы и геттеры)
+	makeSpecialMethods();
+
 	return success;
 }
 
@@ -385,6 +386,12 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	return true;
 }
 
+bool MetaClass::makeSpecialMethods()
+{
+
+
+	return true;
+}
 
 bool MetaClass::generateCode(const QDir& code_dir)
 {

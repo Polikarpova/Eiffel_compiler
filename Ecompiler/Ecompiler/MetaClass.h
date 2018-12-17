@@ -82,6 +82,8 @@ public:
 	/** Проход 3 */
 	bool round3();
 	bool createInheritance(struct NInheritFromClass* inheritance);
+	//* подготовить специальные методы (конструкторы и геттеры)
+	bool makeSpecialMethods();
 	/** Проход 4 */
 	bool generateCode(const QDir& code_dir = QDir());
 
