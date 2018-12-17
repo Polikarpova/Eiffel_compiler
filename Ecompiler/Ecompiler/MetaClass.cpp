@@ -420,8 +420,13 @@ bool MetaClass::generateCode(const QDir& code_dir)
 	return true;
 }
 
-ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc)  {return bc;};
-ByteCode MetaClass::methods_to_ByteCode(ByteCode &bc) {return bc;};
+ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
+	return bc;
+}
+
+ByteCode MetaClass::methods_to_ByteCode(ByteCode &bc) {
+	return bc;
+}
 
 
 bool MetaClass::isNameConflicting(const QString& upperName) {
