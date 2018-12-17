@@ -25,3 +25,4 @@ Debug
 *.bc
 *exe.txt
 *.exe
+*.log

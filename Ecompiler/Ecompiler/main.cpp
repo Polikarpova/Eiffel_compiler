@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
 		bc.toFile("bytecode-test.bc");
 
 		bc.printLog();
+		bc.LogToFile( "bytecode-test.log");
 
 		return 0;
 	}

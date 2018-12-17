@@ -28,6 +28,12 @@ ByteCode::ByteCode(void)
 	this->assertOnNegativeStack = true;
 }
 
+ByteCode::~ByteCode(void)
+{
+	this->codeStream.clear();
+	this->_log.clear();
+}
+
 ByteCode& ByteCode::log(const QString& s)
 {
 	this->_log.append(
@@ -37,19 +43,35 @@ ByteCode& ByteCode::log(const QString& s)
 }
 void ByteCode::printLog()
 {
+	qDebug(LogToPrint());
+}
+
+QByteArray ByteCode::LogToPrint(bool forFile /* = false */)
+{
 	QStringList l;
 	foreach(const LogLine& line, this->_log)
 	{
 		l << line.toString();
 	}
-	qDebug(l.join("\n").toLocal8Bit());
+	return (l.join(forFile ? "\r\n":"\n").toLocal8Bit());
 }
 
-
-ByteCode::~ByteCode(void)
+//сохраняем Лог в текстовый файл
+bool ByteCode::LogToFile(const QString& fname)
 {
-	this->codeStream.clear();
-	this->_log.clear();
+	qDebug("Writing Log to file: `%s`", fname.toLocal8Bit().data());
+
+    QFile file(fname);
+    if (!file.open(QIODevice::WriteOnly))
+        return false;
+
+	file.write( this-> LogToPrint(true) );
+
+	if( !file.flush() )
+        return false;
+
+	file.close();
+    return true;
 }
 
 bool ByteCode::toFile(const QString& fname)

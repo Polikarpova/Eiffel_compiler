@@ -216,5 +216,7 @@ ByteCode& Method::to_ByteCode(ByteCode & bc) {
 	bc.u2(descr_constN); //дескриптор
 	bc.log( QString("Method_descriptor, num CONSTANT_Utf8 =")+bc.CombinedPrint(descr_constN, 2) );
 	bc.u2(0x0001); //кол-во атрибутов
+
+	generateCodeAttribute(bc); //атрибут "Code"
 	return bc;
 }

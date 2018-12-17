@@ -425,10 +425,13 @@ bool MetaClass::generateCode(const QDir& code_dir)
 	QString filepath = package_dir.absoluteFilePath( this->name() + ".class");
 	bc.toFile(filepath);
 
-	// сохранить также лог 
+
+	// сохраняем Лог в текстовый файл с именем <Имя_Класса>.log
+	bc.LogToFile((QString)package_dir.absoluteFilePath( this->name() + ".log"));
 
 	return true;
 }
+
 
 ByteCode& MetaClass::fields_to_ByteCode(ByteCode &bc) {
 //пишем в ByteCode данные обо всех полях

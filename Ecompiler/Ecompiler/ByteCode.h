@@ -115,6 +115,12 @@ public:
 	//*  запись в байт-кода в файл
 	bool toFile(const QString& fname);
 
+	//* сохраняем Лог в текстовый файл
+	bool LogToFile(const QString& fname);
+
+	QByteArray ByteCode::LogToPrint(bool forFile = false);
+
+
 private:
 	//* лог
 	QList<LogLine> _log;
