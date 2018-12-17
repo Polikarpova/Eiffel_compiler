@@ -421,6 +421,24 @@ bool MetaClass::generateCode(const QDir& code_dir)
 }
 
 ByteCode MetaClass::fields_to_ByteCode(ByteCode &bc) {
+//пишем в ByteCode данные обо всех пол€х
+
+	short int Fields_pool_count, i=0;
+	QList<Field*> fieldsVals;
+
+	bc.log(QString("Writing Fields_pool ..."));
+
+	Fields_pool_count = fields.size();
+ 	bc.u2(Fields_pool_count); //длина “аблицы полей
+	bc.log(QString("Fields_pool_count")+bc.CombinedPrint(Fields_pool_count, 2));
+
+	fieldsVals = fields.values();
+
+	foreach(Field* Field_1, fieldsVals)
+	{
+		bc.log(QString("Field N %1:").arg(i++));
+		Field_1->to_ByteCode(bc);
+	}
 	return bc;
 }
 
