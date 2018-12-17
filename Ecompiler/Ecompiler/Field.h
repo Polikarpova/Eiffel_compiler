@@ -22,6 +22,6 @@ public:
 
 	QString createDescriptor();
 
-	ByteCode Field::to_ByteCode(ByteCode &);
+	ByteCode& to_ByteCode(ByteCode &);
 };
 

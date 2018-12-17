@@ -52,6 +52,6 @@ QString Field::createDescriptor() {
 }
 
 //Таблица поля -> в ByteCode
-ByteCode Field::to_ByteCode(ByteCode & bc) {
+ByteCode& Field::to_ByteCode(ByteCode & bc) {
 	return bc;
 }
