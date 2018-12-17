@@ -31,6 +31,12 @@ void MetaClass::initConstants()
 	JvmConstant jc = { UTF8_VALUE, 0, false };
 	QString buffer;
 
+	// имя атрибута Code
+	jc.type = UTF8_VALUE;
+	buffer = "Code";
+	jc.value.utf8 = & buffer;
+	this->code_constN = this->constantTable.put(jc);
+	
 	// имя класса
 	jc.type = UTF8_VALUE;
 	buffer = this->fullJavaName();

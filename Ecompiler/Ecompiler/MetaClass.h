@@ -42,7 +42,7 @@ public:
 	//* parent (NULL for class `ANY`)
 	MetaClass* parent;
 
-	short int name_constN, class_constN, super_class_constN;
+	short int name_constN, class_constN, super_class_constN, code_constN;
 	ConstantTable constantTable;
 	/** Создать константы в классе: имя и класс, родительский класс.
 		Этот метод можно вызывать сколько угодно раз,

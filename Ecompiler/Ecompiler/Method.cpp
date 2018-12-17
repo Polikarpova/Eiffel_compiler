@@ -153,6 +153,12 @@ QString Method::createDescriptor() {
 
 ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 
+	bc.log("").log(QString("Start of atribute `Code` of method `%1` ...").arg(this->name));
+
+	// this->metaClass->code_constN
+
+
+
 	return bc;
 }
 
