@@ -109,14 +109,14 @@ ByteCode& iadd() {
 }
 ByteCode& imul() {
 	this->log(QString("imul"));
-	this->u1(0x64);
+	this->u1(0x68);
 	this->incStack(-1);
 
 	return *this;
 }
 ByteCode& isub() {
 	this->log(QString("isub"));
-	this->u1(0x68);
+	this->u1(0x64);
 	this->incStack(-1);
 
 	return *this;
