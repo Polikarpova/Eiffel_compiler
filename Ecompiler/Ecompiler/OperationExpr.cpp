@@ -1,5 +1,6 @@
 #include "OperationExpr.h"
 #include "Method.h"
+#include "BOOLEAN.h"
 
 OperationExpr::OperationExpr(void)
 	: Expression()
@@ -65,6 +66,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 		EiffelType* lType = this->left->expressionType();
 		EiffelType* rType = this->right->expressionType();
 
+		//арифметические операции
 		if ( this->tree_node->type == PlusE || this->tree_node->type == MinusE || this->tree_node->type == MulE || this->tree_node->type == DivE || this->tree_node->type == PowerE ) {
 		
 			//доп проверка на строки у операции +
@@ -106,6 +108,40 @@ EiffelType* OperationExpr::getReturnType( ) {
 					}
 				}
 			}
+		}
+		//сравнение: = /=
+		else if ( this->tree_node->type == EqualsE || this->tree_node->type == NotEqualE ) {
+		
+			//сравнивается всё со всем
+			//даже если типы не совпадают....
+
+			//всегда возвращает boolean
+			//this->type = new BOOLEAN();
+		}
+		//< > <= >=
+		else if ( this->tree_node->type == LessE || this->tree_node->type == GreaterE || this->tree_node->type == LessOrEqualE || this->tree_node->type == GreaterOrEqualE ) {
+		
+			//инт с интом
+			//флоат с флоат
+			//чар с чар
+			//стринг со стринг
+
+			//возвращает bool
+		}
+		//OR OR_ELSE XOR AND AND_THEN IMPLIES
+		else if ( this->tree_node->type == AndE || this->tree_node->type == AndThenE || this->tree_node->type == OrE || this->tree_node->type == OrElseE || this->tree_node->type == XORE || this->tree_node->type == ImpliesE ) {
+		
+			//только bool с bool, возвращает bool
+		} else {
+		
+			type = 0;
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Unknow operation"),
+					this->tree_node->loc.first_line);
+			delete rType;
+			delete lType;
+			return NULL;
 		}
 	}
 
