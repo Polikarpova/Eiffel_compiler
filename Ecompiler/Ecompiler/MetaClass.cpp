@@ -398,21 +398,26 @@ bool MetaClass::generateCode(const QDir& code_dir)
 	this->constantTable.to_ByteCode(bc);
 
  //   u2 access_flags;
+	bc.u2(0x0001); //флаги
  //   u2 this_class;
+	bc.u2(class_constN);
  //   u2 super_class;
+	bc.u2(super_class_constN);
  //   u2 interfaces_count;
+	bc.u2(0x0000); //количество интерфейсов
  //   u2 interfaces[interfaces_count];
 
 
  //   u2 fields_count;
  //   field_info fields[fields_count];
-
+	this->fields_to_ByteCode(bc);
 
  //   u2 methods_count;
  //   method_info methods[methods_count];
 	this->methods_to_ByteCode(bc);
 
  //   u2 attributes_count;
+	bc.u2(0x0000);
  //   attribute_info attributes[attributes_count];
  // }
 
