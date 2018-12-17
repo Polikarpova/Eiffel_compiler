@@ -62,28 +62,28 @@ ByteCode& aload(char u1) {
 	return *this;
 }
 ByteCode& aload_0 () {
-	this->log(QString("aload_0 "));
+	this->log(QString("aload_0"));
 	this->u1(0x2A);
 	this->incStack(+1);
 
 	return *this;
 }
 ByteCode& aload_1 () {
-	this->log(QString("aload_1 "));
+	this->log(QString("aload_1"));
 	this->u1(0x2B);
 	this->incStack(+1);
 
 	return *this;
 }
 ByteCode& aload_2 () {
-	this->log(QString("aload_2 "));
+	this->log(QString("aload_2"));
 	this->u1(0x2C);
 	this->incStack(+1);
 
 	return *this;
 }
 ByteCode& aload_3 () {
-	this->log(QString("aload_3 "));
+	this->log(QString("aload_3"));
 	this->u1(0x2D);
 	this->incStack(+1);
 
@@ -106,28 +106,28 @@ ByteCode& astore(char u1) {
 	return *this;
 }
 ByteCode& astore_0 () {
-	this->log(QString("astore_0 "));
+	this->log(QString("astore_0"));
 	this->u1(0x4B);
 	this->incStack(-1);
 
 	return *this;
 }
 ByteCode& astore_1 () {
-	this->log(QString("astore_1 "));
+	this->log(QString("astore_1"));
 	this->u1(0x4C);
 	this->incStack(-1);
 
 	return *this;
 }
 ByteCode& astore_2 () {
-	this->log(QString("astore_2 "));
+	this->log(QString("astore_2"));
 	this->u1(0x4D);
 	this->incStack(-1);
 
 	return *this;
 }
 ByteCode& astore_3 () {
-	this->log(QString("astore_3 "));
+	this->log(QString("astore_3"));
 	this->u1(0x4E);
 	this->incStack(-1);
 
