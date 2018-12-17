@@ -390,6 +390,20 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 
 bool MetaClass::makeSpecialMethods()
 {
+	//Method* mtd;
+	SpecialMethod* spmtd;
+	EiffelType *void_type = VoidType::instance();
+
+	// конструктор <init> ...
+	// найти конструктор по умолчанию: который первый без параметров
+	Method* default_eiffel_creator;
+
+	spmtd = new SpecialMethod(this, void_type, "<init>" /*, no args */);
+	spmtd->initConstants();
+	// write bytecode
+	//spmtd->bytecode.
+
+	this->methods[ spmtd->name ] = mtd;
 
 
 	return true;
