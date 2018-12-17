@@ -130,6 +130,11 @@ Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*=
 
 	return p;
 }
+Method* MetaClass::findVoidCreatorMethod()
+{
+	// !!!
+	return NULL;
+}
 
 EiffelClass* MetaClass::getType()
 {
@@ -405,20 +410,25 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 
 bool MetaClass::makeSpecialMethods()
 {
-	//Method* mtd;
-	SpecialMethod* spmtd;
-	EiffelType *void_type = VoidType::instance();
+	////Method* mtd;
+	//SpecialMethod* spmtd;
+	//EiffelType *void_type = VoidType::instance();
 
-	// конструктор <init> ...
-	// найти конструктор по умолчанию: который первый без параметров
-	Method* default_eiffel_creator;
+	//// конструктор <init> ...
+	//// найти конструктор по умолчанию: который первый без параметров
+	//Method* default_eiffel_creator;
 
-	spmtd = new SpecialMethod(this, void_type, "<init>" /*, no args */);
-	spmtd->initConstants();
-	// write bytecode
-	//spmtd->bytecode.
+	//spmtd = new SpecialMethod(this, void_type, "<init>" /*, no args */);
+	//spmtd->initConstants();
+	//// write bytecode
+	////spmtd->bytecode.
 
-	this->methods[ spmtd->name ] = mtd;
+	//this->methods[ spmtd->name ] = spmtd;
+
+	
+	// TODO
+	// создать метод `public static void main(java.lang.String args[])`
+	// найти конструктор: findVoidCreatorMethod()
 
 
 	return true;

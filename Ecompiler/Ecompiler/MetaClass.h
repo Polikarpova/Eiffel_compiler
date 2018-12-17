@@ -72,6 +72,10 @@ public:
 	/** \return NULL if no feature found */
 	Feature* findFeature(const QString& lowerName, bool lookInParents = true);
 
+	/** \return NULL if no method found */
+	Method* findVoidCreatorMethod();
+
+
 	//* тип в выражении
 	EiffelClass* getType();
 

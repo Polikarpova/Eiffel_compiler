@@ -16,7 +16,8 @@ public:
 
 	SpecialMethod(void);
 	//* for RTL classes
-	SpecialMethod(MetaClass* mc, EiffelType* type, const QString& name, QList<LocalVariable> argList = QList<LocalVariable>() );
+	SpecialMethod(MetaClass* mc, EiffelType* type, const QString& name, QList<LocalVariable> argList = QList<LocalVariable>() )
+		: Method(mc, type, name, argList) {};
 	~SpecialMethod(void);
 
 	/*fields*/
