@@ -16,7 +16,7 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 
 	this->_name = name;
 
-	initConstants();
+	//initConstants();
 }
 
 MetaClass::~MetaClass() {
@@ -261,6 +261,9 @@ bool MetaClass::round3()
 	}
 	// ... */
 		
+
+	// после заполнения предка
+	this->initConstants();
  
 	foreach(Method* mtd, this->methods)
 	{
