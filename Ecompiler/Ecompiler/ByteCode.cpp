@@ -54,6 +54,8 @@ ByteCode::~ByteCode(void)
 
 bool ByteCode::toFile(const QString& fname)
 {
+	qDebug("Writing ByteCode to file: `%s`", fname.toLocal8Bit().data());
+
     QFile file(fname);
     if (!file.open(QIODevice::WriteOnly))
         return false;

@@ -94,7 +94,9 @@ bool EiffelProgram::round3()
 
 bool EiffelProgram::compile()
 {
-	QDir out_dir("out");
+	QDir out_dir;
+	out_dir.mkpath("out");
+	out_dir.cd("out");
 
 	foreach(MetaClass* mc, this->classes)
 	{

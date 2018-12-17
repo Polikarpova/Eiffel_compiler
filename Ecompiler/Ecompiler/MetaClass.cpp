@@ -407,10 +407,12 @@ bool MetaClass::generateCode(const QDir& code_dir)
  // }
 
 
+	// создать путь до нужной папки
+	QDir package_dir(code_dir);
+	package_dir.mkpath(this->javaPackage());
+	package_dir.cd(this->javaPackage());
 	// записываем байт-код в файл
-	QDir package_dir = code_dir.absoluteFilePath( this->javaPackage() );
-	// !!! создать путь до нужной папки !!!
-	QString filepath = package_dir.absoluteFilePath( this->name() + ".class ");
+	QString filepath = package_dir.absoluteFilePath( this->name() + ".class");
 	bc.toFile(filepath);
 
 	// сохранить также лог 
