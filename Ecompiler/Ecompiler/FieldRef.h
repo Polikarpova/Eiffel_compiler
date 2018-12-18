@@ -13,7 +13,7 @@ public:
 	//* поле, к которому производится доступ
 	Field* field;
 
-
+	short int fieldref_constN;
 
 	/*methods*/
 	static FieldRef* create(Method* mtd, Field* field, Expression* qualification = NULL );
