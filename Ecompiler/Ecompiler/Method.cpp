@@ -239,7 +239,7 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 	{
 		if( type_descr.startsWith("L") || type_descr.startsWith("[") ) // class or array
 		{
-			bc.aload( result_var->n );
+			bc.aload_auto( result_var->n );
 			bc.areturn();
 		}
 		else if( type_descr == "I" )
