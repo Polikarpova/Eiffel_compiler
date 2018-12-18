@@ -440,7 +440,8 @@ bool MetaClass::makeSpecialMethods()
 
 		static_void_main = new SpecialMethod(this, void_type, "main" /*, no args */);
 		static_void_main->javaName = "main"; // after auto-decorating of special names
-		static_void_main->isStatic = true;
+		static_void_main->addFlags = ACC_STATIC;
+		
 		static_void_main->initConstants();
 
 		// (Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );

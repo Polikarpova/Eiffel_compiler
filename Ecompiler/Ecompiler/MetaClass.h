@@ -36,7 +36,6 @@ public:
 	bool isRTL() { return tree_node == NULL; }
 
 	bool isAbstract; // Истина для ANY, NONE
-	//bool isStatic; // Истина для IO
 	EiffelProgram* program;
 
 	//* parent (NULL for class `ANY`)

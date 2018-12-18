@@ -27,10 +27,9 @@ public:
 	
 	//* номера констант_UTF8 класса: им€ члена класса, дескриптор члена класса 
 	short int name_constN, descr_constN
-		, addFlags;	//addFlags - в дополнение к флагу по умолчанию ACC_PUBLIC. —юда можно помещать и другие флаги (напр., ACC_STATIC)
+		, addFlags;	//addFlags - в дополнение к флагу по умолчанию ACC_PUBLIC.
+		    //—юда можно помещать и другие флаги (напр., ACC_STATIC), дл€ метода `public static void main(java.lang.String args[])`
 
-	bool isStatic; // дл€ метода `public static void main(java.lang.String args[])`
-	
 	QSet<QString> clients;
 
 	/** “ип пол€ / возвращаемое значение метода */
