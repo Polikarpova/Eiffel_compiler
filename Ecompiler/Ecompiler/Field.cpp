@@ -2,7 +2,7 @@
 #include "EiffelClass.h"
 #include "EiffelArray.h"
 
-Field::Field(void)
+Field::Field(void) 
 	: Feature()
 {
 }
@@ -57,7 +57,7 @@ QString Field::createDescriptor() {
 //Таблица поля -> в ByteCode
 ByteCode& Field::to_ByteCode(ByteCode & bc) {
 //пишем в ByteCode данные об одном поле
-	bc.u2(ACC_PUBLIC | (isStatic? ACC_STATIC : 0x0000)); //флаги
+	bc.u2(ACC_PUBLIC | addFlags); //флаги
 	bc.u2(name_constN); //имя
 	bc.log( QString("Field_name, num CONSTANT_Utf8 =")+bc.CombinedPrint(name_constN, 2) );
 	bc.u2(descr_constN); //дескриптор

@@ -6,7 +6,7 @@
 
 Feature::Feature(void)
 {
-	this->isStatic = false;
+	addFlags = 0;
 }
 Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
 {
@@ -15,10 +15,8 @@ Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
 	this->name = name;
 	this->type = type;
 	this->recordClients(NULL); // set ANY as client
-	this->isStatic = false;
-
+	addFlags = 0;
 	// javaName
-	//this->javaName = name;
 	this->initJavaName();
 }
 

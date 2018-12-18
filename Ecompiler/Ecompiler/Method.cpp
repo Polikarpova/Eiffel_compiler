@@ -231,7 +231,7 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 //Таблица метода -> в ByteCode
 ByteCode& Method::to_ByteCode(ByteCode & bc) {
 //пишем в ByteCode данные об одном методе
-	bc.u2(ACC_PUBLIC | (isStatic? ACC_STATIC : 0x0000)); //флаги
+	bc.u2(ACC_PUBLIC | addFlags); //флаги
 	bc.u2(name_constN); //имя
 	bc.log( QString("Method_name, num CONSTANT_Utf8 =")+bc.CombinedPrint(name_constN, 2) );
 	bc.u2(descr_constN); //дескриптор
