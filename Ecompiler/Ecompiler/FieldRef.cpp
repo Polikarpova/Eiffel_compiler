@@ -34,6 +34,7 @@ FieldRef::~FieldRef(void)
 	*/
 
 	// report creation
+	qDebug("created FieldRef: %s", field->name.toLocal8Bit().data());
 	JvmConstant jc = { UTF8_VALUE, 0, false };
 	QString buffer;
 
