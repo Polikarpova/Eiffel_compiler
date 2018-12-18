@@ -17,12 +17,7 @@ public:
 		Если Выражение не позволяет этого
 		сделать, вернётся false.
 	*/
-	virtual bool setRightValue(Expression* r)
-	{
-		this->right = r;
-		this->_isLeftValue = true;
-		return _isLeftValue;
-	};
+	virtual bool setRightValue(Expression* r);
 
 	short int fieldref_constN;
 

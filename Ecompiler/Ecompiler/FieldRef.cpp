@@ -3,6 +3,8 @@
 #include "Field.h"
 #include "Method.h"
 
+#include "EiffelClass.h"
+
 FieldRef::FieldRef(void)
 	: Expression()
 {
@@ -102,4 +104,48 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 	}
 
 	return bc;
+}
+
+/*virtual*/ bool FieldRef::setRightValue(Expression* r)
+{
+	_isLeftValue = false;
+
+	if ( ((EiffelClass*)r->expressionType())->className() != "VOID" ) {
+			
+		//если типы не совпадают, то всё плохо
+		QString rType = ((EiffelClass*)r->expressionType())->className();
+		QString lType = ((EiffelClass*)this->expressionType())->className();
+		if ( rType != lType ) {
+		
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Invalid assignment: cannot convert type %1 into type %2")
+					.arg(rType, lType),
+				r->tree_node->loc.first_line);
+			return NULL;
+		}
+
+		this->right = r;
+		this->_isLeftValue = true;
+
+	} else {
+		
+		if ( r->tree_node->type == RefnCallE ) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Source of assignment is not an expression. Procedure %1 does not return a value.")
+					.arg(r->tree_node->value.id),
+				r->tree_node->loc.first_line);
+			return NULL;
+		} else {
+		
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Source of assignment is not an expression"),
+				r->tree_node->loc.first_line);
+			return NULL;
+		}
+	}
+
+	return _isLeftValue;
 }
