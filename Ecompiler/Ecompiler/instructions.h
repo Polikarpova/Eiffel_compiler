@@ -89,6 +89,27 @@ ByteCode& aload_3 () {
 
 	return *this;
 }
+ByteCode& aload_auto(char u1) {
+//автоматический выбор конкретной функции
+	switch(u1)
+	{
+		case 0:
+			aload_0();
+			break;
+		case 1:
+			aload_1();
+			break;
+		case 2:
+			aload_2();
+			break;
+		case 3:
+			aload_3();
+			break;
+		default:
+			aload(u1);
+	}	
+	return *this;
+}
 ByteCode& istore(char u1) {
 	this->log(QString("istore")+CombinedPrint(u1, 1));
 	this->u1(0x36);
@@ -131,6 +152,27 @@ ByteCode& astore_3 () {
 	this->u1(0x4E);
 	this->incStack(-1);
 
+	return *this;
+}
+ByteCode& astore_auto(char u1) {
+//автоматический выбор конкретной функции
+	switch(u1)
+	{
+		case 0:
+			astore_0();
+			break;
+		case 1:
+			astore_1();
+			break;
+		case 2:
+			astore_2();
+			break;
+		case 3:
+			astore_3();
+			break;
+		default:
+			astore(u1);
+	}	
 	return *this;
 }
 ByteCode& pop() {

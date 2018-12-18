@@ -13,21 +13,25 @@ ByteCode& aload_0 ()
 ByteCode& aload_1 ()
 ByteCode& aload_2 ()
 ByteCode& aload_3 ()
+ByteCode& aload_auto(char u1)
 ByteCode& istore(char u1)
 ByteCode& astore(char u1)
 ByteCode& astore_0 ()
 ByteCode& astore_1 ()
 ByteCode& astore_2 ()
 ByteCode& astore_3 ()
+ByteCode& astore_auto(char u1)
 ByteCode& pop()
 ByteCode& dup()
 ByteCode& dup2()
+
 //Функции команд, выполняющих арифметические операции
 ByteCode& iadd()
 ByteCode& imul()
 ByteCode& isub()
 ByteCode& idiv()
 ByteCode& iinc(char u1, signed char i)
+
 //Функции команд передачи управления
 //** Условный переход если сравнение целых чисел дает истину.
 ByteCode& if_icmpeq(short int s2)
@@ -48,6 +52,7 @@ ByteCode& if_acmpeq(short int s2)
 ByteCode& if_acmpne(short int s2)
 //** Безусловный переход
 ByteCode& goto_(short int s2)
+
 //Функции команд работы с массивами
 ByteCode& newarray(char u1)
 ByteCode& anewarray(short int u2)
@@ -56,10 +61,12 @@ ByteCode& iaload()
 ByteCode& aaload()
 ByteCode& iastore()
 ByteCode& aastore()
+
 //Функции команд работы с объектами
 ByteCode& new_(short int u2)
 ByteCode& getfield(short int u2)
 ByteCode& putfield(short int u2)
+
 //Функции команд работы с методами
 ByteCode& invokevirtual(short int u2, short int argCount, bool isVoid)
 ByteCode& invokespecial(short int u2, short int argCount, bool isVoid)
