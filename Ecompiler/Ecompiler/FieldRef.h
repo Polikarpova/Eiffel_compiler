@@ -13,9 +13,21 @@ public:
 	//* поле, к которому производится доступ
 	Field* field;
 
+	/** Задать величину справа от равно.
+		Если Выражение не позволяет этого
+		сделать, вернётся false.
+	*/
+	virtual bool setRightValue(Expression* r)
+	{
+		this->right = r;
+		this->_isLeftValue = true;
+		return _isLeftValue;
+	};
+
 	short int fieldref_constN;
 
 	/*methods*/
 	static FieldRef* create(Method* mtd, Field* field, Expression* qualification = NULL );
 
+	ByteCode& toByteCode(ByteCode &);
 };

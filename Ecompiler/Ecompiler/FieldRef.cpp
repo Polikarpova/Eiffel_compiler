@@ -78,3 +78,21 @@ FieldRef::~FieldRef(void)
 
 	return fr;
 }
+
+
+ByteCode& FieldRef::toByteCode(ByteCode &bc)
+{
+	if(this->isLeftValue())
+	{
+		//bc.invokespecial(methodref_constN,
+		//	this->calledMethod->exactNumberOfArgs(),
+		//	this->calledMethod->isVoid());
+	}
+	else
+	{
+		//bc.invokevirtual(methodref_constN,
+		//	this->calledMethod->exactNumberOfArgs(),
+		//	this->calledMethod->isVoid());
+	}
+	return bc;
+}

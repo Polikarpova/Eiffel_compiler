@@ -19,6 +19,12 @@ public:
 	
 	//перегружается в дочерних классах
 	virtual bool isLeftValue() { return this->_isLeftValue; };
+	
+	/** Задать величину справа от равно.
+		Если Выражение не позволяет этого
+		сделать, вернётся false.
+	*/
+	virtual bool setRightValue(Expression* r) { return false; };
 
 	//необходим
 	//возвращает тип возвращаемый выражением
