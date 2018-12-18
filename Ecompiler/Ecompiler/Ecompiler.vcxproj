@@ -106,6 +106,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArrayElemRef.cpp" />
+    <ClCompile Include="AssignStmt.cpp" />
     <ClCompile Include="bisonFunctions.cpp" />
     <ClCompile Include="bisontest.cpp" />
     <ClCompile Include="BOOLEAN.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayElemRef.h" />
+    <ClInclude Include="AssignStmt.h" />
     <ClInclude Include="bisonFunctions.h" />
     <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CallStmt.h" />
