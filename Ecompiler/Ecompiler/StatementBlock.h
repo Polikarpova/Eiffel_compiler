@@ -27,5 +27,7 @@ public:
 		throw 1;
 		return 0;
 	}
+
+	virtual ByteCode& toByteCode(ByteCode &bc);
 };
 

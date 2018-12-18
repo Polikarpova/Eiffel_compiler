@@ -16,3 +16,18 @@ bool StatementBlock::createBody(struct NStmtList* List)
 
 	return true;
 }
+
+
+ByteCode& StatementBlock::toByteCode(ByteCode &bc_main)
+{
+	ByteCode bc;
+
+	// QList<Statement*> body;
+
+	foreach(Statement* stmt, body)
+	{
+		stmt->toByteCode(bc);
+	}
+
+	return bc_main.append(bc);
+}

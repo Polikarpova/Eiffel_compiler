@@ -51,6 +51,15 @@ Method::~Method(void)
 	mtd->name = name;
 	mtd->metaClass = mc;
 
+	mtd->tree_node = node;
+	mtd->type = EiffelType::create(node->type);
+	if( ! mtd->type )
+	{
+		qDebug("Method does not declared with a type! where: Method::create()");
+		delete mtd;
+		return false;
+	}
+
 	// local vars
 	int loc_i = 0;
 
@@ -77,6 +86,7 @@ Method::~Method(void)
 	mtd->paramCount = loc_i;
 
 	// + локальные переменные
+
 	List = node->localVars;
 	if(List) {
 		for(struct NNameAndType* i = List->first; ; i = i->next) {
@@ -89,13 +99,13 @@ Method::~Method(void)
 		}
 	}
 
-	mtd->tree_node = node;
-	mtd->type = EiffelType::create(node->type);
-	if( ! mtd->type )
+	// переменная Result: для возврата значения
+	if( ! mtd->type->isVoid() )
 	{
-		qDebug("Method does not declared with a type! where: Method::create()");
-		delete mtd;
-		return false;
+		// 1 (Result)
+		LocalVariable* lvr = new LocalVariable("result", loc_i, mtd->type );
+		mtd->localVariables[lvr->name] = lvr;
+		++loc_i;
 	}
 
 	mtd->initJavaName();
@@ -206,23 +216,39 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 {
 	bc.log( QString("ByteCode of method starts here ...") );
 
-	if(isCreator)
+	if(this->isCreator)
 	{
          //0: aload_0
          //1: invokespecial #1                  // Method rtl/ANY."<init>":()V
 	}
 
+	
+	body.toByteCode(bc);
+
 
 	// Возврат из метода
 
+	LocalVariable* result_var = findLocalVar("result");
 	QString type_descr = this->type->descriptor();
-
+	
 	if(this->isVoid())
+	{
 		bc.return_();
-	else if( type_descr.startsWith("L") )
+	}
+	else if( type_descr.startsWith("L") || type_descr.startsWith("[") ) // class or array
+	{
+		bc.aload( result_var->n );
 		bc.areturn();
+	}
 	else if( type_descr == "I" )
+	{
+		bc.iload( result_var->n );
 		bc.ireturn();
+	}
+	else
+	{
+		bc.log( QString("/!\\ Unknown return type: `%1`").arg(type_descr) );
+	}
 	// ...
 
 	return bc;
