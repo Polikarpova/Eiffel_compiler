@@ -1,5 +1,6 @@
 #include "ByteCode.h"
 #include <QFile>
+#include <QStringList>
 
 //* convert to string
 QString LogLine::toString() const {

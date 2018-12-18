@@ -516,7 +516,7 @@ ByteCode& MetaClass::fields_to_ByteCode(ByteCode &bc) {
 	foreach(QString Field_name, fields.keys()) //итерация по ключам
 	{
 		Field_1 = fields[Field_name];
-		bc.log(QString("Field N %1   \"%2\":").arg(i++).arg(Field_name));
+		bc.log(QString("Field N %1   \"%2\" (`%3`):").arg(i++).arg(Field_name, Field_1->javaName));
 		Field_1->to_ByteCode(bc);
 	}
 	return bc;
@@ -538,7 +538,7 @@ ByteCode& MetaClass::methods_to_ByteCode(ByteCode &bc) {
 	foreach(QString Method_name, methods.keys())
 	{
 		Method_1 = methods[Method_name];
-		bc.log(QString("Method N %1   \"%2\":").arg(i++).arg(Method_name));
+		bc.log(QString("Method N %1   \"%2\" (`%3`):").arg(i++).arg(Method_name, Method_1->javaName));
 		Method_1->to_ByteCode(bc);
 	}
 	return bc;
