@@ -36,11 +36,9 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//получаем тип
 			this->type = this->left->expressionType();
 
-			const char* typeName = typeid(this->type).name();
-
-			if ( typeName != "BOOLEAN" ) {
+			if ( ((EiffelClass*)this->type)->className() != "BOOLEAN" ) {
 				
-				getError(typeName, "BOOLEAN");
+				getError( ((EiffelClass*)this->type)->className(), "BOOLEAN");
 				return NULL;
 			}
 
