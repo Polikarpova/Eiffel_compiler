@@ -14,5 +14,7 @@ public:
 
 	/*methods*/
 	static CallStmt* create(Method* mtd, struct NExpr* expr);
+
+	ByteCode& toByteCode(ByteCode &);
 };
 

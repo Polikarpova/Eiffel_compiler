@@ -449,7 +449,7 @@ bool MetaClass::makeSpecialMethods()
 	
 		ByteCode &bc = static_void_main->bytecode;
 		bc.new_( this->class_constN );
-		specialcall->toByteCode(bc);
+		specialcall->toByteCode(bc, true);
 		bc.return_();
 
 		this->methods[ static_void_main->name ] = static_void_main;

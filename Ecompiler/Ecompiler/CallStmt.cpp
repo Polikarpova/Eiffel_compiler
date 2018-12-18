@@ -173,3 +173,9 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	return success? cs : NULL;
 }
+
+ByteCode& CallStmt::toByteCode(ByteCode &bc)
+{
+	// вызвать нижележащий узел: обращение к методу
+	return generalMethodCall->toByteCode(bc);
+}

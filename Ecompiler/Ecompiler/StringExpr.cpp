@@ -27,7 +27,7 @@ StringExpr::~StringExpr(void)
 	//-----------------String-----------------//
 	//имя класса
 	jc.type = UTF8_VALUE;
-	jc.value.utf8 = new QString(se->string);
+	jc.value.utf8 = &(se->string);
 	short int utf8 = se->currentMethod->metaClass->constantTable.put(jc);
 		
 	// String Constant
@@ -38,4 +38,15 @@ StringExpr::~StringExpr(void)
 	qDebug("created StringExpr (literal): %s. In method: %s", expr->value.String, mtd->tree_node->name);
 
 	return se;
+}
+
+
+ByteCode& StringExpr::toByteCode(ByteCode &bc)
+{
+	// загрузить строковую константу
+	if(constTableN < 256)
+		bc.ldc(constTableN);
+	else
+		bc.ldc_w(constTableN);
+	return bc;
 }

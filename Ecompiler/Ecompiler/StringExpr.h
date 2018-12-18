@@ -16,4 +16,6 @@ public:
 
 	/*methods*/
 	static StringExpr* create(Method* mtd, struct NExpr* expr);
+
+	ByteCode& toByteCode(ByteCode &);
 };

@@ -96,7 +96,7 @@ MethodCall::~MethodCall(void)
 	vmc->createMethodRef(calledMethod);
 
 	// report creation
-	qDebug("created MethodCall: %s(%d params)", calledMethod->name.toLocal8Bit().data(), n_formal_args);
+	qDebug("created MethodCall: %s( args: %d )", calledMethod->name.toLocal8Bit().data(), n_formal_args);
 
 	return vmc;
 }
@@ -157,8 +157,29 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
 }
 
-ByteCode& MethodCall::toByteCode(ByteCode &bc)
+ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 {
+	//bc.log("MethodCall : object ...");
+
+	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) )
+	{	
+		// для динамического метода с this
+		// load a reference to an object ...
+		// call qualification as this->left
+		if(this->left)
+			this->left->toByteCode(bc); // load qualification
+		else
+			bc.aload_0(); // load Current
+	}
+
+	//bc.log("MethodCall : arguments ...");
+
+	// load arguments
+	foreach(Expression* arg, this->arguments)
+	{
+		arg->toByteCode(bc); // load argument
+	}
+
 	if(this->calledMethod->isCreator)
 	{
 		bc.invokespecial(methodref_constN,

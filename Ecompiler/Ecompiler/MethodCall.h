@@ -28,6 +28,7 @@ public:
 	void createMethodRef(Method* calledMethod);
 
 	// при генерации учесть, что метод м.б. конструктором: использовать invokespecial вместо invokevirtual
-	ByteCode& toByteCode(ByteCode &);
+	// noQualify: опустить загрузку ссылки на объект
+	ByteCode& toByteCode(ByteCode &, bool noQualify = false);
 
 };
