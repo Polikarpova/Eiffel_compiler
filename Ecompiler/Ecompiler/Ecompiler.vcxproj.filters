@@ -230,7 +230,7 @@
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="SpecialMethod.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CompilerClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

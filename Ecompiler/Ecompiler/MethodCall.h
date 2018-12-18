@@ -23,8 +23,11 @@ public:
 
 
 	/*methods*/
-	static MethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification = NULL );
+	static MethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
 
 	void createMethodRef(Method* calledMethod);
+
+	// при генерации учесть, что метод м.б. конструктором: использовать invokespecial вместо invokevirtual
+	ByteCode& toByteCode(ByteCode &);
 
 };

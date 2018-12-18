@@ -24,6 +24,6 @@ public:
 	ByteCode bytecode;
 
 	/*methods*/
-	virtual ByteCode& generateCode4Body(ByteCode &) { return bytecode; }
+	virtual ByteCode& generateCode4Body(ByteCode &bc) { return bc.append(bytecode); }
 
 };

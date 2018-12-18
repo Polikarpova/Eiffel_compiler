@@ -4,6 +4,7 @@
 #include "Feature.h"
 #include "Method.h"
 #include "Field.h"
+#include "MethodCall.h"
 
 #include "RTLMetaClass.h"
 #include "ByteCode.h"
@@ -132,8 +133,17 @@ Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*=
 }
 Method* MetaClass::findVoidCreatorMethod()
 {
-	// !!!
-	return NULL;
+	Method* creator = NULL;
+	foreach(Method* mtd, this->methods)
+	{
+		if(mtd->isCreator && mtd->exactNumberOfArgs() == 0)
+		{
+			creator = mtd;
+			break;
+		}
+	}
+
+	return creator;
 }
 
 EiffelClass* MetaClass::getType()
@@ -410,26 +420,41 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 
 bool MetaClass::makeSpecialMethods()
 {
-	////Method* mtd;
-	//SpecialMethod* spmtd;
-	//EiffelType *void_type = VoidType::instance();
+	//Method* mtd;
+	SpecialMethod* static_void_main;
+	EiffelType *void_type = VoidType::instance();
 
 	//// конструктор <init> ...
-	//// найти конструктор по умолчанию: который первый без параметров
-	//Method* default_eiffel_creator;
 
-	//spmtd = new SpecialMethod(this, void_type, "<init>" /*, no args */);
-	//spmtd->initConstants();
 	//// write bytecode
 	////spmtd->bytecode.
 
 	//this->methods[ spmtd->name ] = spmtd;
 
-	
-	// TODO
-	// создать метод `public static void main(java.lang.String args[])`
-	// найти конструктор: findVoidCreatorMethod()
+	// найти конструктор по умолчанию: который первый без параметров
+	Method* default_eiffel_creator = this->findVoidCreatorMethod();
 
+	if(default_eiffel_creator)
+	{
+		// создать метод `public static void main(java.lang.String args[])`
+
+		static_void_main = new SpecialMethod(this, void_type, "main" /*, no args */);
+		static_void_main->javaName = "main"; // after auto-decorating of special names
+		static_void_main->isStatic = true;
+		static_void_main->initConstants();
+
+		// (Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
+		MethodCall* specialcall = MethodCall::create(static_void_main, default_eiffel_creator);
+	
+		ByteCode &bc = static_void_main->bytecode;
+		bc.new_( this->class_constN );
+		specialcall->toByteCode(bc);
+		bc.return_();
+
+		this->methods[ static_void_main->name ] = static_void_main;
+
+		delete specialcall;
+	}
 
 	return true;
 }

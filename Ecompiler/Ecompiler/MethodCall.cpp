@@ -14,7 +14,7 @@ MethodCall::~MethodCall(void)
 	arguments.clear();
 }
 
-/*static*/ MethodCall* MethodCall::create(Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
+/*static*/ MethodCall* MethodCall::create(Method* context_mtd, Method* calledMethod, struct NExprList* argList /*= NULL*/, Expression* qualification /*= NULL*/ )
 {
 	int source_line = -1;
 
@@ -155,4 +155,21 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	jc.value.method_ref[CONST_CLASS] = class_class;
 	jc.value.method_ref[CONST_NAMEnTYPE] = method_name_and_type;
 	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
+}
+
+ByteCode& MethodCall::toByteCode(ByteCode &bc)
+{
+	if(this->calledMethod->isCreator)
+	{
+		bc.invokespecial(methodref_constN,
+			this->calledMethod->exactNumberOfArgs(),
+			this->calledMethod->isVoid());
+	}
+	else
+	{
+		bc.invokevirtual(methodref_constN,
+			this->calledMethod->exactNumberOfArgs(),
+			this->calledMethod->isVoid());
+	}
+	return bc;
 }
