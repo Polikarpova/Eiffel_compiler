@@ -1,5 +1,6 @@
 #include "Statement.h"
 #include "CallStmt.h"
+#include "AssignStmt.h"
 
 Statement* createAssignStmt(Method* mtd, struct NAssignStmt* s);
 
@@ -21,7 +22,7 @@ Statement::~Statement(void)
 		case CreateSt:
 			break;
 		case AssignSt:
-			st = createAssignStmt(mtd, s->body.assign);
+			st = AssignStmt::create(mtd, s->body.assign);
 			break;
 		case ExprSt: //CallSt
 			st = CallStmt::create(mtd, s->body.expr);
@@ -35,13 +36,4 @@ Statement::~Statement(void)
 	}
 
 	return st;
-}
-
-
-Statement* createAssignStmt(Method* mtd, struct NAssignStmt* s) {
-
-	Expression* left = Expression::create(mtd, s->left);
-	Expression* expr = Expression::create(mtd, s->expr);
-
-	return 0;
 }
