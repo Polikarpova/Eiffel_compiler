@@ -1,7 +1,7 @@
 #pragma once
 #include "TreeNode.h"
-
 #include "EiffelProgram.h"
+#include "ByteCode.h"
 
 class Method;
 
@@ -15,5 +15,7 @@ public:
 	Method* currentMethod;
 
 	static Statement* create(Method* mtd, struct NStmt* s);
+
+	virtual ByteCode& toByteCode(ByteCode &bc) {return bc.log("/!\\ stmt -> code not implemented!.."); };
 };
 

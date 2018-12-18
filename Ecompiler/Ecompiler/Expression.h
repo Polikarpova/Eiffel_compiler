@@ -1,6 +1,7 @@
 #pragma once
 #include "TreeNode.h"
 #include "EiffelType.h"
+#include "ByteCode.h"
 
 class Method;
 
@@ -39,6 +40,9 @@ public:
 	Expression* left;
 	Expression* right;
 	EiffelType* type;	//тип возвращаемого значения
+
+	virtual ByteCode& toByteCode(ByteCode &bc) {return bc.log("/!\\ expr -> code not implemented!.."); };
+
 
 private:
 	EiffelType* getReturnType();

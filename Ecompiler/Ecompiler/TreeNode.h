@@ -10,7 +10,7 @@ public:
 	~TreeNode() {};
 
 	/*methods*/
-	ByteCode& toByteCode();
+	virtual ByteCode& toByteCode(ByteCode &) = 0;
 
 	/*fields*/
 	//Struct* pStruct;
