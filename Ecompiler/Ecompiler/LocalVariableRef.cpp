@@ -20,3 +20,41 @@ LocalVariableRef::~LocalVariableRef(void)
 	lvr->type = locVar->type;
 	return lvr;
 }
+
+ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
+{
+	if(this->isLeftValue()) // eiffel code:   left := right
+	{
+		this->right->toByteCode(bc); // load right value to store in the field
+		bc.astore_auto(this->locVar->n);
+	}
+	else
+	{
+		bc.aload_auto(this->locVar->n);
+	}
+
+	return bc;
+}
+
+/*virtual*/ bool LocalVariableRef::setRightValue(Expression* r)
+{
+	this->_isLeftValue = false;
+
+	//EiffelType *lType = this->type;
+	//EiffelType *rType = r->expressionType();
+
+	//if ( ! lType->canCastTo( rType ) ) {
+	//	
+	////	EiffelProgram::currentProgram->logError(
+	////		QString("semantic"), 
+	////		QString("Invalid assignment: cannot convert type from `%1` to `%2`.")
+	////			.arg(rType->toReadableString(), lType->toReadableString()),
+	////		r->tree_node->loc.first_line);
+	//	return false;
+	//}
+
+	this->right = r;
+	this->_isLeftValue = true;
+
+	return this->_isLeftValue;
+}
