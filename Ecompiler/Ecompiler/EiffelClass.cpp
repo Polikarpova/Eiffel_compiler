@@ -54,7 +54,7 @@ EiffelClass::~EiffelClass(void)
 }
 
 
-const QString& EiffelClass::className()
+const QString& EiffelClass::className() const
 {
 	return metaClass->name();
 }
