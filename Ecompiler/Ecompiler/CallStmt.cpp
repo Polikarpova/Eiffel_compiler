@@ -141,7 +141,6 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	//mtd - метод, где всё происходит
 	//m - метод, который вызван
-	Method* m = 0;
 	MethodCall* general_method_call;
 
 	bool success = false;
@@ -163,6 +162,16 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 
 	if( ! general_method_call )
 		return NULL;
+
+	if ( general_method_call->calledMethod->isCreator ) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Call to constructor `%1`: `CREATE` mark not specified. Creating type: %2.")
+				.arg(general_method_call->calledMethod->name, general_method_call->type->toReadableString()),
+			expr->loc.first_line);
+	
+		return NULL;
+	}
 
 	success = true;
 

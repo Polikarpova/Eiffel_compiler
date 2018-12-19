@@ -114,6 +114,7 @@
     <ClCompile Include="CallStmt.cpp" />
     <ClCompile Include="CHARACTER.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
+    <ClCompile Include="CreateStmt.cpp" />
     <ClCompile Include="EiffelANY.cpp" />
     <ClCompile Include="EiffelClass.cpp" />
     <ClCompile Include="EiffelNONE.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="bisonFunctions.h" />
     <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CallStmt.h" />
+    <ClInclude Include="CreateStmt.h" />
     <ClInclude Include="EiffelANY.h" />
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />

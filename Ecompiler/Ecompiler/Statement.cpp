@@ -1,5 +1,6 @@
 #include "Statement.h"
 #include "CallStmt.h"
+#include "CreateStmt.h"
 #include "AssignStmt.h"
 #include "IfStmt.h"
 
@@ -20,6 +21,7 @@ Statement::~Statement(void)
 	
 		case CreateSt:
 			break;
+			st = CreateStmt::create(mtd, s->body.expr);
 		case AssignSt:
 			st = AssignStmt::create(mtd, s->body.assign);
 			break;

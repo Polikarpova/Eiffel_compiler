@@ -119,6 +119,9 @@
     <ClCompile Include="IfStmt.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
+    <ClCompile Include="CreateStmt.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
     <ClCompile Include="ThenPart.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
@@ -248,6 +251,9 @@
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="IfStmt.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateStmt.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="ThenList.h">
