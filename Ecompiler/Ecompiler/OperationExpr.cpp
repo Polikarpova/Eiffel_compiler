@@ -36,9 +36,9 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//получаем тип
 			this->type = this->left->expressionType();
 
-			if ( ((EiffelClass*)this->type)->className() != "BOOLEAN" ) {
+			if ( this->type->toReadableString() != "BOOLEAN" ) {
 				
-				getError( ((EiffelClass*)this->type)->className(), "BOOLEAN");
+				getError( this->type->toReadableString(), "BOOLEAN");
 				return NULL;
 			}
 
@@ -48,9 +48,9 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//получаем тип
 			this->type = this->left->expressionType();
 
-			if ( ((EiffelClass*)this->type)->className() != "INTEGER" || ((EiffelClass*)this->type)->className() != "REAL") {
+			if ( this->type->toReadableString() != "INTEGER" || this->type->toReadableString() != "REAL") {
 				
-				getError( ((EiffelClass*)this->type)->className(), "INTEGER or REAL");
+				getError( this->type->toReadableString(), "INTEGER or REAL");
 				return NULL;
 			}
 		}
@@ -65,22 +65,22 @@ EiffelType* OperationExpr::getReturnType( ) {
 		//арифметические операции
 		if ( this->tree_node->type == PlusE || this->tree_node->type == MinusE || this->tree_node->type == MulE || this->tree_node->type == DivE || this->tree_node->type == PowerE ) {
 
-			if ( ((EiffelClass*)lType)->className() != "INTEGER" || ((EiffelClass*)lType)->className() != "REAL") {
+			if ( lType->toReadableString() != "INTEGER" || lType->toReadableString() != "REAL") {
 
 				//доп проверка на строки у операции +
 
-				//QString str = ((EiffelClass*)lType)->className();
-				if ( this->tree_node->type == PlusE && ( ((EiffelClass*)lType)->className() == "STRING" || ((EiffelClass*)rType)->className() == "STRING") ) {
+				//QString str = lType->toReadableString();
+				if ( this->tree_node->type == PlusE && ( lType->toReadableString() == "STRING" || rType->toReadableString() == "STRING") ) {
 
-					if ( ((EiffelClass*)rType)->className() != "STRING") {
+					if ( rType->toReadableString() != "STRING") {
 						
-						getError( ((EiffelClass*)rType)->className(), "STRING");
+						getError( rType->toReadableString(), "STRING");
 						delete rType;
 						delete lType;
 						return NULL;
-					} else if ( ((EiffelClass*)lType)->className() != "STRING") {
+					} else if ( lType->toReadableString() != "STRING") {
 						
-						getError( ((EiffelClass*)lType)->className(), "STRING");
+						getError( lType->toReadableString(), "STRING");
 						delete rType;
 						delete lType;
 						return NULL;
@@ -90,7 +90,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 					}
 
 				} else {
-					getError( ((EiffelClass*)lType)->className(), "INTEGER or REAL");
+					getError( lType->toReadableString(), "INTEGER or REAL");
 					delete rType;
 					delete lType;
 					return NULL;
@@ -98,11 +98,11 @@ EiffelType* OperationExpr::getReturnType( ) {
 
 			} else {
 			
-				if ( typeid(rType).name() !=((EiffelClass*)lType)->className() ) {
+				if ( rType->toReadableString() != lType->toReadableString() ) {
 
 					//≈сли справа char или boolean или string, то ошибочка
-					if ( ((EiffelClass*)rType)->className() == "BOOLEAN" || ((EiffelClass*)rType)->className() == "CHARACTER" || ((EiffelClass*)rType)->className() == "STRING") {
-						getError( ((EiffelClass*)rType)->className(), ((EiffelClass*)lType)->className() );
+					if ( rType->toReadableString() == "BOOLEAN" || rType->toReadableString() == "CHARACTER" || rType->toReadableString() == "STRING") {
+						getError( rType->toReadableString(), lType->toReadableString() );
 						delete rType;
 						delete lType;
 						return NULL;
@@ -125,7 +125,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 		
 			//сравниваетс€ всЄ со всем
 			//даже если типы не совпадают....
-			if ( ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
+			if ( rType->toReadableString() != lType->toReadableString() ) {
 				qDebug("Use diffrent operands  in operation = or /=");
 			}
 
@@ -140,25 +140,25 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//чар с чар
 			//стринг со стринг
 
-			if ( ((EiffelClass*)lType)->className() == "BOOLEAN" /*|| typeid(lType).name() == "BOOLEAN" */) {
+			if ( lType->toReadableString() == "BOOLEAN" ) {
 				
-				getError( ((EiffelClass*)lType)->className(), "INTEGER or REAL or CHARACTER or STRING");
+				getError( lType->toReadableString(), "INTEGER or REAL or CHARACTER or STRING");
 				delete rType;
 				delete lType;
 				return NULL;
 			}
 
-			if ( typeid(rType).name() == "BOOLEAN") {
+			if ( rType->toReadableString() == "BOOLEAN") {
 				
-				getError( ((EiffelClass*)rType)->className() , "INTEGER or REAL or CHARACTER or STRING");
+				getError( rType->toReadableString() , "INTEGER or REAL or CHARACTER or STRING");
 				delete rType;
 				delete lType;
 				return NULL;
 			}
 
-			if ( ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
+			if ( rType->toReadableString() != lType->toReadableString() ) {
 				
-				getError( ((EiffelClass*)rType)->className() , ((EiffelClass*)lType)->className() );
+				getError( rType->toReadableString() , lType->toReadableString() );
 				delete rType;
 				delete lType;
 				return NULL;
@@ -171,17 +171,17 @@ EiffelType* OperationExpr::getReturnType( ) {
 		else if ( this->tree_node->type == AndE || this->tree_node->type == AndThenE || this->tree_node->type == OrE || this->tree_node->type == OrElseE || this->tree_node->type == XORE || this->tree_node->type == ImpliesE ) {
 		
 			//только bool с bool, возвращает bool
-			if ( ( ((EiffelClass*)lType)->className() != "BOOLEAN" || ((EiffelClass*)rType)->className() != "BOOLEAN") && ((EiffelClass*)rType)->className() != ((EiffelClass*)lType)->className() ) {
+			if ( ( lType->toReadableString() != "BOOLEAN" || rType->toReadableString() != "BOOLEAN") && rType->toReadableString() != lType->toReadableString() ) {
 				
-				if ( ((EiffelClass*)lType)->className() != "BOOLEAN" ) {
-					getError( ((EiffelClass*)lType)->className() , "BOOLEAN");
+				if ( lType->toReadableString() != "BOOLEAN" ) {
+					getError( lType->toReadableString() , "BOOLEAN");
 					delete rType;
 					delete lType;
 					return NULL;
 				}
 
-				if ( ((EiffelClass*)rType)->className() != "BOOLEAN" ) {
-					getError( ((EiffelClass*)rType)->className(), "BOOLEAN");
+				if ( rType->toReadableString() != "BOOLEAN" ) {
+					getError( rType->toReadableString(), "BOOLEAN");
 					delete rType;
 					delete lType;
 					return NULL;
