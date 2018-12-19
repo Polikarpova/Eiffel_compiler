@@ -10,5 +10,6 @@ public:
 	~BOOLEAN(void);
 
 	QString descriptor() {return QString("Z");}
+	QString toReadableString() const {return "BOOLEAN";};
 
 };

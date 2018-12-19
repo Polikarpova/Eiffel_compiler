@@ -24,4 +24,5 @@ public:
 		return this;	// EiffelSTRING выступает также в роли EiffelClass
 	}
 
+	QString toReadableString() const {return "STRING";};
 };

@@ -10,5 +10,6 @@ public:
 	~CHARACTER(void);
 
 	QString descriptor() {return QString("C");}
+	QString toReadableString() const {return "CHARACTER";};
 
 };

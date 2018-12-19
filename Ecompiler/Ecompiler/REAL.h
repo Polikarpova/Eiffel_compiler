@@ -10,4 +10,6 @@ public:
 	~REAL(void);
 
 	QString descriptor() {return QString("D");}
+	QString toReadableString() const {return "REAL";};
+
 };

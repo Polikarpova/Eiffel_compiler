@@ -12,6 +12,7 @@ public:
 		: RTLMetaClass(program, QString("INTEGER")) , EiffelType() {};
 	~INTEGER(void);
 
+	QString toReadableString() const {return "INTEGER";};
 
 	bool isInteger() const { return true; }
 
