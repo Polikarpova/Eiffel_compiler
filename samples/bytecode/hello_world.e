@@ -12,7 +12,9 @@ feature
 	end
 	
 	cat (str: STRING)
+		int_var: INTeger
 	do
+		Io.put_string(str)
 		str := "AAAAAAAAAAAAAAAAA!"
 		Io.new_line
 		Io.put_string(str)

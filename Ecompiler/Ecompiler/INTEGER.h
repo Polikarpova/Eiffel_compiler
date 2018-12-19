@@ -6,12 +6,15 @@ class INTEGER : public RTLMetaClass, public EiffelType
 
 public:
 
-	INTEGER(void);
+	INTEGER(void)
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("INTEGER")) , EiffelType() {};
 	INTEGER(EiffelProgram* program) 
-		: RTLMetaClass(program, QString("INTEGER")) {};
+		: RTLMetaClass(program, QString("INTEGER")) , EiffelType() {};
 	~INTEGER(void);
 
 
 	bool isInteger() const { return true; }
+
+	//ByteCode& toByteCode(ByteCode &bc);
 };
 

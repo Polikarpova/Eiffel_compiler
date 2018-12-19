@@ -134,6 +134,10 @@ void EiffelProgram::createRTL()
 		QList<LocalVariable>() << LocalVariable(string_type, "v")
 		);
 	mc->methods[ mtd->name ] = mtd;
+	mtd = new Method(mc, void_type, "put_integer",
+		QList<LocalVariable>() << LocalVariable(string_type, "v")
+		);
+	mc->methods[ mtd->name ] = mtd;
 	mtd = new Method(mc, void_type, "new_line");
 	mc->methods[ mtd->name ] = mtd;
 	this->classes[ mc->name() ] = mc;
