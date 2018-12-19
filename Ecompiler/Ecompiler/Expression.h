@@ -13,6 +13,7 @@ public:
 	Expression(void);
 	~Expression(void);
 
+	//* метод-контекст
 	Method* currentMethod;
 
 	/*methods*/

@@ -27,7 +27,7 @@ public:
 
 	const QString& className();
 	//* дескриптор класса с полной квалификацией: `Lпакет.класс;`
-	QString descriptor();
+	virtual QString descriptor();
 
 	/*methods*/
 	static EiffelClass* create(struct NType* type);

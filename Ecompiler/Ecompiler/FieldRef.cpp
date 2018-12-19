@@ -44,7 +44,7 @@ FieldRef::~FieldRef(void)
 	//-----------------Class-----------------//
 	//имя класса
 	jc.type = UTF8_VALUE;
-	buffer = fr->field->metaClass->name();
+	buffer = fr->field->metaClass->fullJavaName();
 	jc.value.utf8 = & buffer;
 	short int class_utf8 = fr->currentMethod->metaClass->constantTable.put(jc);
 		

@@ -121,7 +121,7 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	//-----------------Class-----------------//
 	//имя класса
 	jc.type = UTF8_VALUE;
-	buffer = calledMethod->metaClass->name();
+	buffer = calledMethod->metaClass->fullJavaName();
 	jc.value.utf8 = & buffer;
 	short int class_utf8 = currentMethod->metaClass->constantTable.put(jc);
 		

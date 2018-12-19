@@ -87,8 +87,8 @@ public:
 				case NAME_AND_TYPE:
 				case METHOD_REF:
 				case FIELD_REF:
-					equal = jc.value.name_and_type[UTF8_NAME] == cnst.value.name_and_type[UTF8_DESCR]
-						 && jc.value.name_and_type[UTF8_NAME] == cnst.value.name_and_type[UTF8_DESCR];
+					equal = jc.value.name_and_type[UTF8_NAME] == cnst.value.name_and_type[UTF8_NAME]
+						 && jc.value.name_and_type[UTF8_DESCR] == cnst.value.name_and_type[UTF8_DESCR];
 						 break;
 				}
 				if(equal)

@@ -7,10 +7,16 @@ class EiffelSTRING : public RTLMetaClass, public EiffelClass
 
 public:
 	
-	EiffelSTRING(void);
+	EiffelSTRING(void)
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("STRING")) , EiffelClass(this) {};
 	EiffelSTRING(EiffelProgram* program) 
-		: RTLMetaClass(program, QString("STRING")) {};
+		: RTLMetaClass(program, QString("STRING")) , EiffelClass(this) {};
 	~EiffelSTRING(void);
+
+	virtual QString javaPackage() {return QString("java/lang");}
+	
+	//* Полное квалифицированное имя, типа: `java/lang/String`
+	virtual QString fullJavaName() {return QString("%1/%2").arg(javaPackage(), "String");}
 
 	//* тип в выражении
 	EiffelSTRING* getType()
