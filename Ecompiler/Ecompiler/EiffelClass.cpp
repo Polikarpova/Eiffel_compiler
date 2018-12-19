@@ -1,7 +1,7 @@
 #include "EiffelClass.h"
 #include "MetaClass.h"
 
-#include "INTEGER.h"
+#include "IntegerType.h"
 #include "REAL.h"
 #include "CHARACTER.h"
 #include "EiffelSTRING.h"
@@ -85,7 +85,7 @@ QString EiffelClass::descriptor()
 					node->loc.first_line);
 			}
 		case IntegerV:
-			//mc = new INTEGER();
+			//mc = new IntegerType();
 			break;
 		case RealV:
 			//mc = new REAL();

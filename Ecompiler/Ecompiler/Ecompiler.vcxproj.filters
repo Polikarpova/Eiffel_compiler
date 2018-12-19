@@ -41,9 +41,6 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <Filter>Source Files\flex+bison</Filter>
     </ClCompile>
-    <ClCompile Include="INTEGER.cpp">
-      <Filter>Source Files\TypeClasses</Filter>
-    </ClCompile>
     <ClCompile Include="REAL.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
@@ -122,6 +119,9 @@
     <ClCompile Include="CreateStmt.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
+    <ClCompile Include="IntegerType.cpp">
+      <Filter>Source Files\TypeClasses</Filter>
+    </ClCompile>
     <ClCompile Include="ThenPart.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
@@ -165,9 +165,6 @@
     </ClInclude>
     <ClInclude Include="tree_structs.h">
       <Filter>Header Files\flex+bison</Filter>
-    </ClInclude>
-    <ClInclude Include="INTEGER.h">
-      <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
     <ClInclude Include="REAL.h">
       <Filter>Header Files\TypeClasses</Filter>
@@ -255,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="CreateStmt.h">
       <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerType.h">
+      <Filter>Header Files\TypeClasses</Filter>
     </ClInclude>
     <ClInclude Include="ThenList.h">
       <Filter>Header Files\ExprClasses</Filter>

@@ -96,7 +96,7 @@ public:
 	static MetaClass* create(struct NClass* class_node);
 	static bool isNameConflicting(const QString& upperName);
 
-protected:
+//protected:
 	//* тип в выражении
 	EiffelClass* _exprType;
 

@@ -1,6 +1,7 @@
 #include "EiffelProgram.h"
 #include "MetaClass.h"
 #include "EiffelClass.h"
+#include "EiffelArray.h"
 #include "RTLMetaClass.h"
 #include "VoidType.h"
 #include "BOOLEAN.h"
@@ -128,6 +129,7 @@ void EiffelProgram::createRTL()
 	Field* fld;
 	EiffelClass *string_type;
 	EiffelType *void_type = VoidType::instance();
+	EiffelType *int_type = IntegerType::instance();
 
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));
@@ -136,11 +138,16 @@ void EiffelProgram::createRTL()
 	mc = new EiffelBOOLEAN();
 	this->classes[ mc->name() ] = mc;
 
+
+	// IntegerType class
+	mc = (MetaClass*)int_type;
+	this->classes[ mc->name() ] = mc;
+
+	// STRING class
 	mc = new EiffelSTRING(this);
 	this->classes[ mc->name() ] = mc;
 	string_mc = mc;
 	string_type = string_mc->getType();
-
 
 	// IO class
 	mc = new RTLMetaClass(this, QString("CONSOLEIO"));
@@ -164,6 +171,26 @@ void EiffelProgram::createRTL()
 	fld = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
 	mc->fields[ fld->name ] = fld;
 	this->classes[ mc->name() ] = mc;
+
+
+	// ARRAY class
+	mc = new RTLMetaClass(this, QString("ARRAY"));
+	// type
+	mc->_exprType = new EiffelArray( this->findClass("ANY")->getType() );
+	// `make`: setup auto-created constructor
+	mtd = mc->findVoidCreatorMethod();
+	mtd->isCreator = true; // set again to be sure
+	mtd->localVariables["lower"] = new LocalVariable("lower", 1, int_type);
+	mtd->localVariables["upper"] = new LocalVariable("upper", 2, int_type);
+	mtd->paramCount = 3; // this + 2 параметра
+	mtd->name = "make";
+	mtd->descriptor.clear(); // reset if been created
+	// `length`: size of array
+	fld = new Field(mc, int_type, "count");
+	fld->javaName = "length";
+	fld->descriptor.clear(); // reset if been created
+
+
 }
 
 

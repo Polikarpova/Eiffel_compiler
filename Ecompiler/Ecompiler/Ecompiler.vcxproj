@@ -133,7 +133,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IfStmt.cpp" />
-    <ClCompile Include="INTEGER.cpp" />
+    <ClCompile Include="IntegerType.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StringExpr.cpp" />
     <ClCompile Include="LocalVariable.cpp" />
@@ -195,7 +195,7 @@
     <ClInclude Include="enums.h" />
     <ClInclude Include="Feature.h" />
     <ClInclude Include="Field.h" />
-    <ClInclude Include="INTEGER.h" />
+    <ClInclude Include="IntegerType.h" />
     <ClInclude Include="JvmConstant.h" />
     <ClInclude Include="lexHelpers.h" />
     <ClInclude Include="LocalVariable.h" />

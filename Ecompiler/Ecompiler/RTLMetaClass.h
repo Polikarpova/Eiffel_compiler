@@ -26,5 +26,5 @@ public:
 #include "EiffelNONE.h"
 #include "EiffelANY.h"
 #include "EiffelSTRING.h"
-#include "INTEGER.h"
+#include "IntegerType.h"
 
