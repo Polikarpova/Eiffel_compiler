@@ -13,6 +13,8 @@ feature
 	
 	cat (str: STRING)
 	do
-		-- make
+		Io.new_line
+		-- Io.put_string(str)
+		Io.new_line
 	end
 end

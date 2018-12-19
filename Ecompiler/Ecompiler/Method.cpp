@@ -191,8 +191,8 @@ ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 	bc.u2( this->localVariables.size() );
 
 	// Длина собственно байт-кода
-	bc.log( QString("Length of ByteCode = ")+bc.CombinedPrint(body_bc.size(), 4) );
-	bc.u4(body_bc.size()); // пока отладочное значение, позже перезапишется
+	//bc.log( QString("Length of ByteCode = ")+bc.CombinedPrint(body_bc.size(), 4) );
+	bc.u4(body_bc.size());
 
 	// Байт-код
 	bc.append(body_bc);
@@ -208,7 +208,7 @@ ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 	bc.gotoPos(attribute_size_u4_pos)
 		.u4( attribute_length )
 		.gotoEnd();
-	bc.log( QString("Length of written attribute `Code` = ")+bc.CombinedPrint(attribute_length, 4) );
+	//bc.log( QString("Length of written attribute `Code` = ")+bc.CombinedPrint(attribute_length, 4) );
 
 	return bc;
 }

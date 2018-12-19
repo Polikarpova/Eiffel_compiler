@@ -127,13 +127,17 @@ void EiffelProgram::createRTL()
 	string_mc = mc;
 	string_type = string_mc->getType();
 
+
 	// IO class
 	mc = new RTLMetaClass(this, QString("CONSOLEIO"));
 	mtd = new Method(mc, void_type, "put_string",
 		QList<LocalVariable>() << LocalVariable(string_type, "v")
 		);
 	mc->methods[ mtd->name ] = mtd;
+	mtd = new Method(mc, void_type, "new_line");
+	mc->methods[ mtd->name ] = mtd;
 	this->classes[ mc->name() ] = mc;
+
 
 	mc = new EiffelNONE(this);
 	this->classes[ mc->name() ] = mc;
