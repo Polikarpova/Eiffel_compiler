@@ -31,6 +31,6 @@ public:
 
 	virtual QString descriptor() {return QString("<!Type!>");}
 	
-	virtual QString toReadableString() const {return "not implemented yet...";};
+	virtual QString toReadableString() const {return "Child type did not implemented type helper...";};
 };
 
