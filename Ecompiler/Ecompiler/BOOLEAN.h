@@ -1,13 +1,14 @@
 #pragma once
 #include "RTLMetaClass.h"
 
-class BOOLEAN : public RTLMetaClass, public EiffelType
+class EiffelBOOLEAN : public RTLMetaClass, public EiffelType
 {
 
 public:
 	
-	BOOLEAN(void);
-	~BOOLEAN(void);
+	EiffelBOOLEAN(void)
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("BOOLEAN")) {};
+	~EiffelBOOLEAN(void);
 
 	QString descriptor() {return QString("Z");}
 	QString toReadableString() const {return "BOOLEAN";};

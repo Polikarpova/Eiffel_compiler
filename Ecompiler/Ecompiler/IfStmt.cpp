@@ -22,7 +22,7 @@ IfStmt::~IfStmt(void)
 		
 		success = false;
 	} else {
-		is->elseBody->currentMethod = mtd;
+		is->elseBody = new StatementBlock(mtd);
 		is->elseBody->createBody(stmt->elsePart->stmtList);
 	}
 

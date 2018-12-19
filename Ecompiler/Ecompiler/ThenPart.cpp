@@ -45,7 +45,7 @@ ThenPart::~ThenPart(void)
 		}
 	}
 
-	tp->body->currentMethod = mtd;
+	tp->body = new StatementBlock(mtd);
 	tp->body->createBody(s->stmtList);
 
 	return success ? tp : 0;

@@ -1,11 +1,11 @@
 #include "BOOLEAN.h"
 
 
-BOOLEAN::BOOLEAN(void)
-{
-}
+//EiffelBOOLEAN::EiffelBOOLEAN(void)
+//{
+//}
 
 
-BOOLEAN::~BOOLEAN(void)
+EiffelBOOLEAN::~EiffelBOOLEAN(void)
 {
 }

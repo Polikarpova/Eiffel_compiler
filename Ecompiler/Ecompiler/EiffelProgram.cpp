@@ -3,6 +3,7 @@
 #include "EiffelClass.h"
 #include "RTLMetaClass.h"
 #include "VoidType.h"
+#include "BOOLEAN.h"
 
 #include "Field.h"
 #include "Method.h"
@@ -130,6 +131,9 @@ void EiffelProgram::createRTL()
 
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));
+	this->classes[ mc->name() ] = mc;
+
+	mc = new EiffelBOOLEAN();
 	this->classes[ mc->name() ] = mc;
 
 	mc = new EiffelSTRING(this);
