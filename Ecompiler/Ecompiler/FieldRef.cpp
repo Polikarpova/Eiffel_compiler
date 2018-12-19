@@ -110,11 +110,19 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 {
 	_isLeftValue = false;
 
-	if ( ((EiffelClass*)r->expressionType())->className() != "VOID" ) {
+	//if ( ((EiffelClass*)r->expressionType())->className() != "VOID" ) {
+	if ( ! r->expressionType()->isVoid() ) {
 			
 		//если типы не совпадают, то всЄ плохо
 		QString rType = ((EiffelClass*)r->expressionType())->className();
 		QString lType = ((EiffelClass*)this->expressionType())->className();
+		
+		// ! передалать с использованием виртуального метода:
+		//   bool EiffelType::canCastTo(const EiffelType* otherType)
+
+		// ! ¬ыводить типы на печать при помощи:
+		//   QString EiffelType::toReadableString()
+
 		if ( rType != lType ) {
 		
 			EiffelProgram::currentProgram->logError(
@@ -122,7 +130,7 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 				QString("Invalid assignment: cannot convert type %1 into type %2")
 					.arg(rType, lType),
 				r->tree_node->loc.first_line);
-			return NULL;
+			return false;
 		}
 
 		this->right = r;
@@ -136,14 +144,14 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 				QString("Source of assignment is not an expression. Procedure %1 does not return a value.")
 					.arg(r->tree_node->value.id),
 				r->tree_node->loc.first_line);
-			return NULL;
+			return false;
 		} else {
 		
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
-				QString("Source of assignment is not an expression"),
+				QString("Source of assignment is not an expression."),
 				r->tree_node->loc.first_line);
-			return NULL;
+			return false;
 		}
 	}
 
