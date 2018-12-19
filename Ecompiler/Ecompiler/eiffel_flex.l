@@ -8,6 +8,11 @@
 	#include "lexHelpers.h"
 	#include "eiffel_bison.tab.h"
 
+	
+	/* < Error handling > */
+	void yyerror (char const *s);	
+	/* </ Error handling > */
+	
 /* write line numbers to bison`s yylloc */ 
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; 
 /* \ yylloc.first_column = yylloc.last_column = yylineno; */
@@ -146,5 +151,5 @@ or{WHITESPACE}+else 	{ return OR_ELSE;}
 {LF}					{ if (global_LF_enabled) return LF;}
 {WHITESPACE}+			{ /* skip  {WHITESPACE} */ }
 
-<*>.					{ printf("Unexpected char \'%c\' encountered at line %d\n", yytext, yylineno);  BEGIN(INITIAL);}
+<*>.					{ sprintf(literal, "Unexpected char \'%c\' encountered at line %d\n", yytext[0], yylineno); yyerror(literal); BEGIN(INITIAL);}
 %%

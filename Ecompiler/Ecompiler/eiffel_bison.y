@@ -390,16 +390,25 @@ id_list_2_or_more: ID ',' ID	{$$=addToIdList(createIdList(createId($1)),createId
 
 void yyerror (const char *s)
 {
-	printf ("BISON near line %d: %s\n", yylloc.first_line, s);
+	printf ("Syntax error near line %d: %s\n", yylloc.first_line, s);
 	if(syntax_errors_logged >= MAX_SYNTAX_ERRORS)
 	{
 		return;
 	}
 	else if(syntax_errors_logged >= MAX_SYNTAX_ERRORS-1)
 	{
-		char too_namy_errors [] = "Cannot recover from errors, abort compilation";
+		char too_namy_errors [] = "Cannot recover from errors, logging stopped.";
 		s = too_namy_errors;
 		printf ("BISON: %s\n", s);
+	}
+	else
+	{
+		char s_with_lines [101] = "";
+		if(yylloc.first_line != yylloc.last_line)
+			sprintf(s_with_lines, "lines %d-%d: %s", yylloc.first_line, yylloc.last_line, s);
+		else
+			sprintf(s_with_lines, "line %d: %s", yylloc.first_line, s);
+		s = s_with_lines;
 	}
 	// append allocated string to array
 	syntax_errors[syntax_errors_logged] = (char*)malloc(strlen(s)+1);

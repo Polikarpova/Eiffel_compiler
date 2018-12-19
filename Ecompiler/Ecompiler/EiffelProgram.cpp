@@ -34,6 +34,11 @@ EiffelProgram::~EiffelProgram(void)
 		}
 	}
 
+	if(syntaxErrorsN > 0) {
+		// stop analyze
+		return program;
+	}
+
 	// опнунд 1
 	// add RTL classes
 	program->createRTL();
@@ -50,6 +55,11 @@ EiffelProgram::~EiffelProgram(void)
 
 	// опнунд 3
 	program->round3();
+
+	if(program->errors.size() > 0) {
+		// stop compilation
+		return program;
+	}
 
 	// опнунд 4
 	program->compile(); // ГДЕЯЭ ХКХ МЕР?

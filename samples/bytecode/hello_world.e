@@ -10,8 +10,9 @@ feature
 		Io.put_string("Hello world!!");
 		-- Io.put_integer(arr[i]);
 	end
-	
+
 	cat (str: STRING)
+	LOCAL
 		int_var: INTeger
 	do
 		Io.put_string(str)

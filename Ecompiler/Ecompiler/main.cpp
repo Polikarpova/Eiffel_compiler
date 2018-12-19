@@ -9,7 +9,8 @@ extern int yyparse();
 extern struct NClassList* root;
 
 /* < Error handling > */
-extern char** syntax_errors;
+#define MAX_SYNTAX_ERRORS 20 /* copy of define in bison file */
+extern char* syntax_errors[MAX_SYNTAX_ERRORS];
 extern int syntax_errors_logged;
 /* </ Error handling > */
 
@@ -172,8 +173,12 @@ int main(int argc, char *argv[])
 		// make semantic classes
 		EiffelProgram* program = EiffelProgram::create(root, syntax_errors, syntax_errors_logged);
 		
-		printf("\n ====== Error List: ======\n");
-		program->printErrors();
+		if(program->errors.size() > 0) {
+			printf("\n ====== Error List: ======\n");
+			program->printErrors();
+		} else {
+			printf("\nCompilation completed successfully. Class files saved.\n");
+		}
 	}
 	else
 	{
