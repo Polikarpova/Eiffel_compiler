@@ -6,6 +6,8 @@
 #include "Field.h"
 #include "MethodCall.h"
 
+#include "EiffelArray.h"
+
 #include "RTLMetaClass.h"
 #include "ByteCode.h"
 #include "SpecialMethod.h"
@@ -16,6 +18,7 @@ MetaClass::MetaClass(EiffelProgram* program, const QString& name)
 	this->parent = NULL;
 	this->isAbstract = false;
 	this->_exprType = NULL;
+	this->parentsCreatorRef = NULL;
 
 	this->_name = name;
 }
@@ -426,19 +429,16 @@ bool MetaClass::makeSpecialMethods()
 
 	//// конструктор <init> ...
 
-	//// write bytecode
-	////spmtd->bytecode.
-
-	//this->methods[ spmtd->name ] = spmtd;
-
 	// найти конструктор по умолчанию: который первый без параметров
 	Method* default_eiffel_creator = this->findVoidCreatorMethod();
 
 	if(default_eiffel_creator)
 	{
 		// создать метод `public static void main(java.lang.String args[])`
+		EiffelSTRING str_type = EiffelSTRING();
+		EiffelArray arg_type = EiffelArray(&str_type);
 
-		static_void_main = new SpecialMethod(this, void_type, "main" /*, no args */);
+		static_void_main = new SpecialMethod(this, void_type, "main" ,  QList<LocalVariable>() << LocalVariable(&arg_type,"args") );
 		static_void_main->javaName = "main"; // after auto-decorating of special names
 		static_void_main->addFlags = ACC_STATIC;
 		
@@ -455,6 +455,13 @@ bool MetaClass::makeSpecialMethods()
 		this->methods[ static_void_main->name ] = static_void_main;
 
 		delete specialcall;
+
+
+		// create MethodRef to parent`s constructor ...
+		// to use in constructors of this class
+		//// create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
+		this->parentsCreatorRef = MethodCall::create(default_eiffel_creator, this->parent->findVoidCreatorMethod());
+
 	}
 
 	return true;

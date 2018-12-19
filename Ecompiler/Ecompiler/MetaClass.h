@@ -14,6 +14,7 @@ class EiffelProgram;
 class EiffelClass;
 class Feature;
 class Method;
+class MethodCall;
 class Field;
 
 class MetaClass {
@@ -73,7 +74,7 @@ public:
 
 	/** \return NULL if no method found */
 	Method* findVoidCreatorMethod();
-
+	MethodCall* parentsCreatorRef;
 
 	//* тип в выражении
 	EiffelClass* getType();

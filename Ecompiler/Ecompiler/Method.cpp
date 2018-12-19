@@ -1,4 +1,5 @@
 #include "Method.h"
+#include "MethodCall.h"
 #include "EiffelClass.h"
 #include "EiffelArray.h"
 
@@ -218,8 +219,12 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 
 	if(this->isCreator)
 	{
+		// call to parent`s constructor ...
          //0: aload_0
          //1: invokespecial #1                  // Method rtl/ANY."<init>":()V
+
+		//bc.aload_0();
+		this->metaClass->parentsCreatorRef->toByteCode(bc);
 	}
 
 	
