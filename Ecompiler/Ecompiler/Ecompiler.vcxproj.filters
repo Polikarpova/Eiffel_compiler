@@ -116,6 +116,9 @@
     <ClCompile Include="AssignStmt.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
+    <ClCompile Include="IfStmt.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -236,6 +239,9 @@
       <Filter>Header Files\CompilerClasses</Filter>
     </ClInclude>
     <ClInclude Include="AssignStmt.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="IfStmt.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>

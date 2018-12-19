@@ -131,6 +131,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_bisontest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="IfStmt.cpp" />
     <ClCompile Include="INTEGER.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StringExpr.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="EiffelNONE.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="FieldRef.h" />
+    <ClInclude Include="IfStmt.h" />
     <ClInclude Include="instructions.h" />
     <ClInclude Include="SpecialMethod.h" />
     <ClInclude Include="StatementBlock.h" />
