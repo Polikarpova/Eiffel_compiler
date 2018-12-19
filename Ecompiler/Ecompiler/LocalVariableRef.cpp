@@ -26,11 +26,17 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 	if(this->isLeftValue()) // eiffel code:   left := right
 	{
 		this->right->toByteCode(bc); // load right value to store in the field
-		bc.astore_auto(this->locVar->n);
+		if(this->type->isReference())
+			bc.astore_auto(this->locVar->n);
+		else if(this->type->isInteger())
+			bc.istore(this->locVar->n);
 	}
 	else
 	{
-		bc.aload_auto(this->locVar->n);
+		if(this->type->isReference())
+			bc.aload_auto(this->locVar->n);
+		else if(this->type->isInteger())
+			bc.iload(this->locVar->n);
 	}
 
 	return bc;

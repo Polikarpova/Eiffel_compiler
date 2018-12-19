@@ -10,5 +10,8 @@ public:
 	INTEGER(EiffelProgram* program) 
 		: RTLMetaClass(program, QString("INTEGER")) {};
 	~INTEGER(void);
+
+
+	bool isInteger() const { return true; }
 };
 

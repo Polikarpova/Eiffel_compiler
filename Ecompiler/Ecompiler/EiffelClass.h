@@ -27,6 +27,7 @@ public:
 
 	const QString& className() const;
 	//* дескриптор класса с полной квалификацией: `Lпакет.класс;`
+	virtual bool isReference() const { return true; }
 	virtual QString descriptor();
 	virtual QString toReadableString() const {return this->className();};
 

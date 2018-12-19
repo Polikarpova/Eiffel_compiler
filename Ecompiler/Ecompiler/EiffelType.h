@@ -22,6 +22,8 @@ public:
 	static EiffelType* create(struct NType* type);
 
 	virtual bool isVoid() const { return false; }
+	virtual bool isReference() const { return false; }
+	virtual bool isInteger() const { return false; }
 
 	/** Проверка на возможность приведения к более общему типу.
 		Например, выражения справа от равно к типу выражения слева.
