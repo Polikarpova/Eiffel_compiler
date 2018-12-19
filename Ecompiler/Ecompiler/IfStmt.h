@@ -1,6 +1,7 @@
 #pragma once
-#include "Statement.h"
 #include "MethodCall.h"
+#include "StatementBlock.h"
+#include "ThenList.h"
 
 class IfStmt : public Statement
 {
@@ -11,8 +12,11 @@ public:
 	/*fields*/
 	MethodCall* generalMethodCall;
 
-	/*methods*/
-	static IfStmt* create(Method* mtd, struct NIfStmt* expr);
+	ThenList* thenPartList;
+	StatementBlock* elseBody;
 
-	ByteCode& toByteCode(ByteCode &);
+	/*methods*/
+	static IfStmt* create(Method* mtd, struct NIfStmt* stmt);
+
+	virtual ByteCode& toByteCode(ByteCode &bc) {return bc.log("/!\\ ifStmt -> code not create");;};
 };

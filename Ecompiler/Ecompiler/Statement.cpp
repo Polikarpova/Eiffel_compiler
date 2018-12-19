@@ -1,8 +1,7 @@
 #include "Statement.h"
 #include "CallStmt.h"
 #include "AssignStmt.h"
-
-Statement* createAssignStmt(Method* mtd, struct NAssignStmt* s);
+#include "IfStmt.h"
 
 Statement::Statement(void)
 {
@@ -28,6 +27,7 @@ Statement::~Statement(void)
 			st = CallStmt::create(mtd, s->body.expr);
 			break;
 		case IfSt:
+			st = IfStmt::create(mtd, s->body.ifStmt);
 			break;
 		case LoopSt:
 			break;
