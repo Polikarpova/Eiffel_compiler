@@ -13,5 +13,7 @@ public:
 
 	/*methods*/
 	static AssignStmt* create(Method* mtd, struct NAssignStmt* s);
+
+	ByteCode& toByteCode(ByteCode &);
 };
 

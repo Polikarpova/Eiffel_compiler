@@ -15,20 +15,48 @@ AssignStmt::~AssignStmt(void)
 	Expression* left = Expression::create(mtd, s->left);
 	Expression* expr = Expression::create(mtd, s->expr);
 
-	if ( !left->setRightValue(expr) ) {
+	if ( left != NULL && expr != NULL ) {
 	
+		EiffelType *lType = left->expressionType();
+		EiffelType *rType = expr->expressionType();
+
+		if ( ! lType->canCastTo( rType ) ) {
+		
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Invalid assignment: cannot convert type from `%1` to `%2`.")
+					.arg(rType->toReadableString(), lType->toReadableString()),
+				expr->tree_node->loc.first_line);
+			return NULL;
+		}
+
+	} else {
+		return NULL;
+	}
+		
+	if( !left->setRightValue(expr) ) {
+
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
 			QString("Target of assignment is not writable"),
 			s->loc.first_line);
-			return NULL;
-
-	} else {
-	
-		as = new AssignStmt();
-		as->leftValue->left;
-		as->leftValue->left->right = expr;
+		return NULL;
 	}
 
+	as = new AssignStmt();
+	as->leftValue = left;
+
+	// report creation
+	qDebug("created AssignStmt: %s", QString("type `%1` := `%2`.")
+					.arg(left->type->toReadableString(), expr->type->toReadableString())
+					.toLocal8Bit().data()
+					);
+
 	return as;
+}
+
+ByteCode& AssignStmt::toByteCode(ByteCode &bc)
+{
+	// вызвать нижележащий узел: обращение к методу
+	return leftValue->toByteCode(bc);
 }
