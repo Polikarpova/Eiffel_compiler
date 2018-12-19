@@ -82,7 +82,6 @@ FieldRef::~FieldRef(void)
 	return fr;
 }
 
-
 ByteCode& FieldRef::toByteCode(ByteCode &bc)
 {
 	// load a reference to an object ...
@@ -110,25 +109,18 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 {
 	_isLeftValue = false;
 
-	//if ( ((EiffelClass*)r->expressionType())->className() != "VOID" ) {
 	if ( ! r->expressionType()->isVoid() ) {
 			
 		//если типы не совпадают, то всЄ плохо
-		QString rType = ((EiffelClass*)r->expressionType())->className();
-		QString lType = ((EiffelClass*)this->expressionType())->className();
-		
-		// ! передалать с использованием виртуального метода:
-		//   bool EiffelType::canCastTo(const EiffelType* otherType)
+		EiffelType* rType = r->expressionType();
+		EiffelType* lType = this->expressionType();
 
-		// ! ¬ыводить типы на печать при помощи:
-		//   QString EiffelType::toReadableString()
-
-		if ( rType != lType ) {
+		if ( !rType->canCastTo(lType) ) {
 		
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
 				QString("Invalid assignment: cannot convert type %1 into type %2")
-					.arg(rType, lType),
+					.arg(rType->toReadableString(), lType->toReadableString()),
 				r->tree_node->loc.first_line);
 			return false;
 		}
