@@ -305,7 +305,7 @@ ByteCode& ifne(short int s2) {
 }
 ByteCode& iflt(short int s2) {
 	this->log(QString("iflt")+CombinedPrint(s2, 2));
-	this->u1(0x55);
+	this->u1(0x9B);
 	this->u2(s2);
 	this->incStack(-1);
 
