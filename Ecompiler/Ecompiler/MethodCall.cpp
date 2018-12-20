@@ -1,10 +1,13 @@
 #include "MethodCall.h"
 
 #include "Method.h"
+#include "EiffelClass.h"
+#include "EiffelArray.h"
 
 MethodCall::MethodCall(void)
 	: Expression()
 {
+	noCreate = false;
 }
 
 
@@ -128,7 +131,7 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	// Class Constant
 	jc.type = CLASS_N;
 	jc.value.class_const = class_utf8;
-	short int class_class = currentMethod->metaClass->constantTable.put(jc);
+	class_of_called_mtd_constN = currentMethod->metaClass->constantTable.put(jc);
 
 	//-----------------Name&Type-----------------//
 	//имя метода
@@ -152,17 +155,19 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	//-----------------MethodRef-----------------//
 	//MethodRef Constant
 	jc.type = METHOD_REF;
-	jc.value.method_ref[CONST_CLASS] = class_class;
+	jc.value.method_ref[CONST_CLASS] = class_of_called_mtd_constN;
 	jc.value.method_ref[CONST_NAMEnTYPE] = method_name_and_type;
 	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
 }
 
 ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 {
+	//noQualify = noQualify && ! this->noCreate;
+
 	//bc.log("MethodCall : object ...");
 
-	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) && ! this->calledMethod->isCreator )
-	{	
+	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) /*&& ! this->calledMethod->isCreator*/ )
+	{
 		// для динамического метода с this
 		// load a reference to an object ...
 		// call qualification as this->left
@@ -172,9 +177,10 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 			bc.aload_0(); // load Current
 	}
 
-	if( !noQualify && this->calledMethod->isCreator )
+	if( !noCreate && this->calledMethod->isCreator )
 	{
-		// !! !! !!
+		// создать объект
+		this->generateCreation(bc);
 	}
 
 	//bc.log("MethodCall : arguments ...");
@@ -197,5 +203,28 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 			this->calledMethod->exactNumberOfArgs(),
 			this->calledMethod->isVoid());
 	}
+	return bc;
+}
+
+ByteCode& MethodCall::generateCreation(ByteCode &bc)
+{
+	EiffelType* base_type = this->calledMethod->metaClass->getType();
+
+	bc.log(QString("generate code for Creation (new*) of %1 ...")
+		.arg(base_type->toReadableString()));
+
+	if(base_type->isArray()) // массив
+	{
+		EiffelType* elem_type = ((EiffelArray*)base_type)->elementType;
+
+
+	}
+	else if(base_type->isReference()) // объект
+	{
+		bc.new_( this->class_of_called_mtd_constN );
+		//bc.dup();
+	}
+
+
 	return bc;
 }

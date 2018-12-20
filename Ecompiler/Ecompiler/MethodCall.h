@@ -13,7 +13,8 @@ public:
 
 	/*fields*/
 
-	short int methodref_constN;
+	short int methodref_constN, class_of_called_mtd_constN;
+	bool noCreate;
 
 	//* метод, к которому производится доступ
 	Method* calledMethod;
@@ -30,5 +31,8 @@ public:
 	// при генерации учесть, что метод м.б. конструктором: использовать invokespecial вместо invokevirtual
 	// noQualify: опустить загрузку ссылки на объект
 	ByteCode& toByteCode(ByteCode &, bool noQualify = false);
+
+
+	ByteCode& generateCreation(ByteCode &);
 
 };
