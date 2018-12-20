@@ -1,7 +1,9 @@
 #include "EiffelType.h"
 
+#include "RTLMetaClass.h"
 #include "VoidType.h"
 #include "EiffelClass.h"
+#include "EiffelArray.h"
 
 #include <typeinfo>
 
@@ -26,7 +28,7 @@ EiffelType::~EiffelType(void)
 	{
 		EiffelProgram::currentProgram->logError(
 			QString("internal"), 
-			QString("Type does not exist"),
+			QString("Type does not exist in AST."),
 			-1);
 		return NULL;
 	}
@@ -38,17 +40,17 @@ EiffelType::~EiffelType(void)
 		case ClassV:
 			return EiffelClass::create(type);
 		case ArrayV:
-			return 0;
+			return EiffelArray::create(type);
 		case IntegerV:
-			return 0;
+			return IntegerType::instance();
 		case RealV:
 			return 0;
 		case CharacterV:
 			return 0;
 		case StringV:
-			return EiffelClass::create(type);
+			return (EiffelSTRING*) EiffelProgram::currentProgram->findClass("STRING");
 		case BooleanV:
-			return 0;
+			return (EiffelBOOLEAN*) EiffelProgram::currentProgram->findClass("BOOLEAN");
 		default:
 			return 0;	//unknown
 	}
