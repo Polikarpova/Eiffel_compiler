@@ -295,21 +295,67 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 
 ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
-	//case PowerE:
-	//case MulE:
-	//case DivE:
-	//case PlusE:
-	//case MinusE:
+	//если это точно операция арифметическая
+	if ( this->tree_node->type == PowerE || this->tree_node->type == MulE || this->tree_node->type == DivE 
+		|| this->tree_node->type == PlusE || this->tree_node->type == MinusE) {
+	
+		//грузим левое и правое число
+		this->left->toByteCode(bc);
+		this->right->toByteCode(bc);
+	
+		if ( this->tree_node->type == PowerE ) {
 
-	if ( this->tree_node->type == PowerE ) {
+			//вызов функции из RTL
+
+		} else if ( this->tree_node->type == MulE ) {
+			
+			//если складываются инты
+			if ( this->left->tree_node->type == IntE ) {
+		
+				bc.imul();
+			}
+			//если это число с плавающей запятой
+			else {
+				bc.dmul();
+			}
+
+		} else if ( this->tree_node->type == DivE ) {
 	
-	} else if ( this->tree_node->type == MulE ) {
+			//если складываются инты
+			if ( this->left->tree_node->type == IntE ) {
+		
+				bc.idiv();
+			}
+			//если это число с плавающей запятой
+			else {
+				bc.ddiv();
+			}
+
+		} else if ( this->tree_node->type == PlusE ) {
 	
-	} else if ( this->tree_node->type == DivE ) {
-	
-	} else if ( this->tree_node->type == PlusE ) {
-	
-	} else if ( this->tree_node->type == MinusE ) {
+			//если складываются инты
+			if ( this->left->tree_node->type == IntE ) {
+		
+				bc.iadd();
+			}
+			//если это число с плавающей запятой
+			else {
+				bc.dadd();
+			}
+
+		} else if ( this->tree_node->type == MinusE ) {
+		
+			//если складываются инты
+			if ( this->left->tree_node->type == IntE ) {
+		
+				bc.isub();
+			}
+			//если это число с плавающей запятой
+			else {
+				bc.dsub();
+			}
+
+		} 
 	
 	} else {
 	
