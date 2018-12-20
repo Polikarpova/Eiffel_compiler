@@ -14,7 +14,8 @@ public:
 
 	bool isInteger() const { return true; }
 
-	QString toReadableString() const {return "INTEGER";};
+	virtual QString descriptor() {return "I";};
+	//QString toReadableString() const {return "INTEGER";}; // inherited so
 
 	//ByteCode& toByteCode(ByteCode &bc);
 

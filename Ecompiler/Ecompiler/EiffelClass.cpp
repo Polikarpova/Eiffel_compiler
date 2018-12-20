@@ -97,6 +97,7 @@ QString EiffelClass::descriptor()
 			mc = program->findClass("STRING");
 			break;
 		case BooleanV:
+			mc = new EiffelBOOLEAN();
 			break;
 	}
 

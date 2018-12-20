@@ -26,7 +26,9 @@ public:
 	};
 	~EiffelArray(void) {};
 
+	/*fields*/
 	EiffelType * elementType;
+
 
 	virtual bool isReference() const { return true; }
 	virtual bool isArray() const { return true; }
@@ -34,5 +36,7 @@ public:
 	QString descriptor() { return QString("[%1").arg(elementType->descriptor()); }
 	QString toReadableString() const {return QString("ARRAY[%1]").arg(elementType->toReadableString());};
 
+	/*methods*/
+	static EiffelArray* create(struct NType* type);
 
 };

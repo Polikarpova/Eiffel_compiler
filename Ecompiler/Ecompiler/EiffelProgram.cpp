@@ -194,6 +194,8 @@ void EiffelProgram::createRTL()
 	fld = new Field(mc, int_type, "count");
 	fld->javaName = "length";
 	fld->descriptor.clear(); // reset if been created
+	mc->fields[ fld->name ] = fld;
+	this->classes[ mc->name() ] = mc;
 
 
 }
