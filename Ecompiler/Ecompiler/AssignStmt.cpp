@@ -26,7 +26,7 @@ AssignStmt::~AssignStmt(void)
 				QString("semantic"), 
 				QString("Invalid assignment: cannot convert type from `%1` to `%2`.")
 					.arg(rType->toReadableString(), lType->toReadableString()),
-				expr->tree_node->loc.first_line);
+				s->expr->loc.first_line);
 			return NULL;
 		}
 

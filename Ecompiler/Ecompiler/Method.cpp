@@ -234,7 +234,6 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 	// Возврат из метода
 
 	LocalVariable* result_var = findLocalVar("result");
-	QString type_descr = this->type->descriptor();
 	
 	if(this->isVoid() && !result_var )
 	{
@@ -242,25 +241,28 @@ ByteCode& Method::generateCode4Body(ByteCode &bc)
 	}
 	else if(result_var)
 	{
-		if( type_descr.startsWith("L") || type_descr.startsWith("[") ) // class or array
+		if( this->type->isReference() ) // class or array
 		{
 			bc.aload_auto( result_var->n );
 			bc.areturn();
 		}
-		else if( type_descr == "I" )
+		else if( this->type->isInteger() )
 		{
 			bc.iload( result_var->n );
 			bc.ireturn();
 		}
 		else
 		{
-			bc.log( QString("/!\\ Unknown return type: `%1`").arg(type_descr) );
+			bc.log( QString("/!\\ Unknown (or not implemented) return type: `%1` (%2). Where: Method::generateCode4Body()")
+				.arg(this->type->descriptor())
+				.arg(this->type->toReadableString())
+				);
 		}
 		// ...
 	}
 	else
 	{
-		bc.log( QString("/!\\ Var `result` does not exist for return type (must be Void): `%1` !").arg(type_descr) );
+		bc.log( QString("/!\\ Var `result` does not exist for return type (must be Void): `%1` !").arg(type->descriptor()) );
 	}
 
 	return bc;

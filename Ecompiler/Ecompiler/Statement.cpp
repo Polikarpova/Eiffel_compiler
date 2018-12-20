@@ -21,8 +21,8 @@ Statement::~Statement(void)
 	switch(s->type) {
 	
 		case CreateSt:
-			break;
 			st = CreateStmt::create(mtd, s->body.expr);
+			break;
 		case AssignSt:
 			st = AssignStmt::create(mtd, s->body.assign);
 			break;

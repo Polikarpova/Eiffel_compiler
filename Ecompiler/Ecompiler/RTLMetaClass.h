@@ -27,4 +27,5 @@ public:
 #include "EiffelANY.h"
 #include "EiffelSTRING.h"
 #include "IntegerType.h"
+#include "BOOLEAN.h"
 
