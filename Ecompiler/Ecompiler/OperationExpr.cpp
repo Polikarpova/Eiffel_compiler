@@ -269,18 +269,22 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 
 	if ( this->tree_node->type == NotE ) {
 	
+		bc.iconst_(1);
 		this->left->toByteCode(bc);
+		bc.ifne(+3+2);
+		bc.pop().iconst_(0);
 
-		NExprList args;
-		args.first = this->left->tree_node;
-		args.last = this->left->tree_node;
-		args.loc = this->left->tree_node->loc;
+		//NExprList args;
+		//args.first = this->left->tree_node;
+		//args.last = this->left->tree_node;
+		//args.loc = this->left->tree_node->loc;
 
-		MethodCall::create(this->currentMethod, currentMethod->metaClass->findMethod("_1_NotE"), &args)->toByteCode(bc);
+		//MethodCall::create(this->currentMethod, currentMethod->metaClass->findMethod("_1_NotE"), &args)->toByteCode(bc);
 
 	} else if ( this->tree_node->type == UPlusE ) {
-	
-	} else if ( this->tree_node->type == UPlusE ) {
+		
+		this->left->toByteCode(bc);
+	} else if ( this->tree_node->type == UMinusE ) {
 	
 	} else {
 	

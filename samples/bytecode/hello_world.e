@@ -21,7 +21,7 @@ feature
 	local
 		isOk : BOOLEAN
 	do
-		meow(2+2);
+		-- cat(2+2);
 		
 		--isOk := NOT true;
 		
