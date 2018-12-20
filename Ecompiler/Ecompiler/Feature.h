@@ -49,7 +49,7 @@ public:
 	static bool isNameConflicting(MetaClass* mc, const QString& lowerName);
 
 	bool isExportedTo(const QString& upperName);
-	bool isExportedTo(const EiffelClass* clientClass);
+	bool isExportedTo(MetaClass* clientClass);
 	
 	void recordClients(const struct NIdList* List);
 	virtual QString createDescriptor() { return QString("!"); };

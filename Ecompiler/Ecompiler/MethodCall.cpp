@@ -79,8 +79,8 @@ MethodCall::~MethodCall(void)
 				QString("semantic"), 
 				QString("Signatures differ in call to routine `%4`.`%1`: cannot convert argument %5 from type `%6` to type `%7`. (In routine: %2.%3)")
 					.arg(calledMethod->name, context_mtd->metaClass->name(), context_mtd->name, calledMethod->metaClass->name())
-					.arg(i)
-					.arg("TODO...","TODO!"),
+					.arg(i+1)
+					.arg(vmc->arguments[i]->expressionType()->toReadableString(),formal_arg->type->toReadableString()),
 				source_line);
 			delete vmc;
 			return NULL;

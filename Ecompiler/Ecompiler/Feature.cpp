@@ -86,11 +86,14 @@ bool Feature::isExportedTo(const QString& upperName)
 	return 
 		mc && (
 			this->clients.contains(upperName) 
-			|| this->isExportedTo( mc->getType() )
+			|| this->isExportedTo( mc )
 		);
 }
-bool Feature::isExportedTo(const EiffelClass* clientClass)
+bool Feature::isExportedTo(MetaClass* clientMetaClass)
 {
+	// !!
+	EiffelClass* clientClass = (EiffelClass*) clientMetaClass->getType();
+
 	if( ! clientClass->metaClass )
 	{
 		EiffelProgram::currentProgram->logError(

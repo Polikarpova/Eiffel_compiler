@@ -19,6 +19,7 @@ EiffelType::~EiffelType(void)
 /*virtual*/ bool EiffelType::canCastTo(const EiffelType* otherType) const
 {
 	return (typeid(this) == typeid(otherType));
+	//return this->descriptor() == otherType->descriptor();
 }
 
 
