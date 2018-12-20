@@ -139,9 +139,9 @@ void EiffelProgram::createRTL()
 	this->classes[ mc->name() ] = mc;
 
 
-	// IntegerType class
-	mc = (MetaClass*)int_type;
-	this->classes[ mc->name() ] = mc;
+	//// IntegerType class
+	//mc = (MetaClass*)int_type;
+	//this->classes[ "INTEGER" ] = mc;
 
 	// STRING class
 	mc = new EiffelSTRING(this);

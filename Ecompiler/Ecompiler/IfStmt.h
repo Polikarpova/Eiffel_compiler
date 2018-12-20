@@ -12,7 +12,15 @@ public:
 	/*fields*/
 	MethodCall* generalMethodCall;
 
-	ThenList* thenPartList;
+	//ThenList* thenPartList;
+	
+	Expression* condition;
+	StatementBlock* ifBody;
+
+	//оба пустые -> просто if
+	//есть только elseBody -> if-else
+	//есть только elseif -> if-elseif-else (else в самой глубине см. преобразование ifStmt)
+	IfStmt* elseif;
 	StatementBlock* elseBody;
 
 	/*methods*/
