@@ -205,6 +205,14 @@ ByteCode& iadd() {
 
 	return *this;
 }
+ByteCode& dadd() {
+	this->log(QString("dadd"));
+	this->u1(0x63);
+	this->incStack(-1);
+
+	return *this;
+}
+
 ByteCode& imul() {
 	this->log(QString("imul"));
 	this->u1(0x68);
@@ -212,6 +220,14 @@ ByteCode& imul() {
 
 	return *this;
 }
+ByteCode& dmul() {
+	this->log(QString("dmul"));
+	this->u1(0x6b);
+	this->incStack(-1);
+
+	return *this;
+}
+
 ByteCode& isub() {
 	this->log(QString("isub"));
 	this->u1(0x64);
@@ -219,6 +235,14 @@ ByteCode& isub() {
 
 	return *this;
 }
+ByteCode& dsub() {
+	this->log(QString("dsub"));
+	this->u1(0x67);
+	this->incStack(-1);
+
+	return *this;
+}
+
 ByteCode& idiv() {
 	this->log(QString("idiv"));
 	this->u1(0x6C);
@@ -226,6 +250,14 @@ ByteCode& idiv() {
 
 	return *this;
 }
+ByteCode& ddiv() {
+	this->log(QString("ddiv"));
+	this->u1(0x6f);
+	this->incStack(-1);
+
+	return *this;
+}
+
 ByteCode& iinc(char u1, signed char i) {
 	this->log(QString("iinc")+CombinedPrint(u1, 1)+CombinedPrint(i, 1));
 	this->u1(0x84);
