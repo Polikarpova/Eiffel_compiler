@@ -79,6 +79,7 @@ public:
 
 	//* тип в выражении
 	EiffelType* getType();
+	void setType(EiffelType*);
 	//EiffelClass* getType();
 
 	/*methods*/
@@ -98,7 +99,7 @@ public:
 	static MetaClass* create(struct NClass* class_node);
 	static bool isNameConflicting(const QString& upperName);
 
-//protected:
+protected:
 	//* тип в выражении
 	EiffelType* _exprType;
 

@@ -138,7 +138,7 @@ void EiffelProgram::createRTL()
 
 	// BOOLEAN class
 	this->classes[ bool_type->name() ] = bool_type;
-	bool_type->_exprType = bool_type;
+	bool_type->setType(bool_type);
 	
 	// IntegerType class
 	this->classes[ int_type->name() ] = int_type;
@@ -176,7 +176,7 @@ void EiffelProgram::createRTL()
 	// ARRAY class
 	mc = new RTLMetaClass(this, QString("ARRAY"));
 	// type
-	mc->_exprType = new EiffelArray( this->findClass("ANY")->getType() );
+	mc->setType(new EiffelArray( this->findClass("ANY")->getType() ));
 	// `make`: setup auto-created constructor
 	mtd = mc->findDefaultConstructor();
 	mtd->isCreator = true; // set again to be sure

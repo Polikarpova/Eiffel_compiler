@@ -155,6 +155,21 @@ EiffelType* MetaClass::getType()
 		_exprType = new EiffelClass(this);
 	return _exprType;
 }
+void MetaClass::setType(EiffelType* newType)
+{
+	//if(this->_exprType)
+	//	delete this->_exprType;
+	this->_exprType = newType;
+	
+	//// set this type to all constructors
+	//foreach(Method* mtd, this->methods)
+	//{
+	//	if(mtd->isCreator)
+	//	{
+	//		mtd->type = this->_exprType;
+	//	}
+	//}
+}
 
 
 bool MetaClass::createFeatures() {

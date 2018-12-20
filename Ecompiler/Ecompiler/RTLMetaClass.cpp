@@ -16,8 +16,12 @@ RTLMetaClass::RTLMetaClass(EiffelProgram* program, const QString& name) {
 
 	// add method: constructor
 	Method* mtd;
+	// void
 	EiffelType *void_type = VoidType::instance();
 	mtd = new Method(this, void_type, "<init>");
+	//// type of this
+	//EiffelType *this_type = this->getType();
+	//mtd = new Method(this, this_type, "<init>");
 	mtd->isCreator = true;
 	this->methods[ mtd->name ] = mtd;
 };
