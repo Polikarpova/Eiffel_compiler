@@ -26,8 +26,9 @@ public:
 	MetaClass* metaClass;
 
 	const QString& className() const;
-	//* дескриптор класса с полной квалификацией: `Lпакет.класс;`
 	virtual bool isReference() const { return true; }
+	virtual bool isClass()     const { return true; }
+	//* дескриптор класса с полной квалификацией: `Lпакет.класс;`
 	virtual QString descriptor();
 	virtual QString toReadableString() const {return this->className();};
 

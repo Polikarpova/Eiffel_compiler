@@ -30,7 +30,6 @@ public:
 	EiffelType * elementType;
 
 
-	virtual bool isReference() const { return true; }
 	virtual bool isArray() const { return true; }
 
 	virtual bool canCastTo(const EiffelType* otherType) const;

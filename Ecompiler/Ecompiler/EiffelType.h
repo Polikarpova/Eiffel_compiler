@@ -23,9 +23,12 @@ public:
 
 	virtual bool isVoid() const { return false; }
 	virtual bool isReference() const { return false; }
+	virtual bool isClass() const { return false; }
 	virtual bool isString() const { return false; }
 	virtual bool isArray() const { return false; }
 	virtual bool isInteger() const { return false; }
+	virtual bool isReal() const { return false; }
+	virtual bool isBoolean() const { return false; }
 
 	/** Проверка на возможность приведения к более общему типу.
 		Например, выражения справа от равно к типу выражения слева.

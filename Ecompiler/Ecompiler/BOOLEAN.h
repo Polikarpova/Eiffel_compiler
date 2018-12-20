@@ -13,6 +13,8 @@ public:
 	};
 	~EiffelBOOLEAN(void);
 
+	virtual bool isBoolean() const { return true; }
+
 	QString descriptor() {return QString("Z");}
 	QString toReadableString() const {return "BOOLEAN";};
 

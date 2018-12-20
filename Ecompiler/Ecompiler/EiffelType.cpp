@@ -20,6 +20,16 @@ EiffelType::~EiffelType(void)
 {
 	return (typeid(this) == typeid(otherType));
 	//return this->descriptor() == otherType->descriptor();
+	return 
+	   this->isVoid()      == otherType->isVoid()
+	&& this->isReference() == otherType->isReference()
+	&& this->isClass()     == otherType->isClass()
+	&& this->isString()    == otherType->isString()
+	&& this->isArray()     == otherType->isArray()
+	&& this->isInteger()   == otherType->isInteger()
+	&& this->isReal()      == otherType->isReal()
+	&& this->isBoolean()   == otherType->isBoolean();
+
 }
 
 
