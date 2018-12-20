@@ -26,5 +26,5 @@ public:
 	/*methods*/
 	static IfStmt* create(Method* mtd, struct NIfStmt* stmt);
 
-	virtual ByteCode& toByteCode(ByteCode &bc) {return bc.log("/!\\ ifStmt -> code not create");;};
+	virtual ByteCode& toByteCode(ByteCode &bc);
 };
