@@ -6,6 +6,8 @@
 
 CreateStmt::CreateStmt(void)
 {
+	this->generalMethodCall = NULL;
+	this->leftOfDot = NULL;
 }
 CreateStmt::~CreateStmt(void)
 {
@@ -57,12 +59,41 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 		return NULL;
 	}
 
-	success = true;
+	Expression* leftOfDot = general_method_call->left;
+
+	if ( leftOfDot == NULL )
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Constructor `%1` must be called on object reference like `MyObj.%1`")
+				.arg(general_method_call->calledMethod->name),
+			expr->loc.first_line);
+	
+		return NULL;
+	}
+
+	success = leftOfDot->setRightValue(general_method_call);
+
+	if( ! success ) {
+
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Constructor `%1` must be called on assignable expression.")
+				.arg(general_method_call->calledMethod->name),
+			expr->loc.first_line);
+	
+		return NULL;
+	}
+
+	general_method_call->left = NULL;
 
 	CreateStmt* cs = new CreateStmt();
 
 	cs->currentMethod = mtd;
+	cs->leftOfDot = leftOfDot;
 	cs->generalMethodCall = general_method_call;
+
+	// !! prepend bytecode: creation to general_method_call !!
 
 	return success? cs : NULL;
 }
@@ -70,5 +101,5 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 ByteCode& CreateStmt::toByteCode(ByteCode &bc)
 {
 	// вызвать нижележащий узел: обращение к методу
-	return generalMethodCall->toByteCode(bc);
+	return this->leftOfDot->toByteCode(bc);
 }

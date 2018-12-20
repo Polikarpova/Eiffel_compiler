@@ -161,7 +161,7 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 {
 	//bc.log("MethodCall : object ...");
 
-	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) )
+	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) && ! this->calledMethod->isCreator )
 	{	
 		// для динамического метода с this
 		// load a reference to an object ...
@@ -170,6 +170,11 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 			this->left->toByteCode(bc); // load qualification
 		else
 			bc.aload_0(); // load Current
+	}
+
+	if( !noQualify && this->calledMethod->isCreator )
+	{
+		// !! !! !!
 	}
 
 	//bc.log("MethodCall : arguments ...");

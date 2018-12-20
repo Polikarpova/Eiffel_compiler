@@ -15,6 +15,7 @@ public:
 
 	/*fields*/
 	MethodCall* generalMethodCall;
+	Expression* leftOfDot;
 
 
 	/*methods*/
