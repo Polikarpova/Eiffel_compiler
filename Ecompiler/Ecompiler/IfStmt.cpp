@@ -120,7 +120,7 @@ IfStmt::~IfStmt(void)
 		//ошибка
 		EiffelProgram::currentProgram->logError(
 			QString("internal"), 
-			QString("IfStmt cannot has elsif and elseBody at the same time"),
+			QString("IfStmt cannot has elseif and elseBody at the same time"),
 			this->condition->tree_node->loc.first_line);
 
 	} else {

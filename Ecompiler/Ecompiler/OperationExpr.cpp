@@ -2,6 +2,8 @@
 #include "Method.h"
 #include "BOOLEAN.h"
 
+#include "MethodCall.h"
+
 OperationExpr::OperationExpr(void)
 	: Expression()
 {
@@ -260,6 +262,29 @@ void OperationExpr::getError( QString actualType, QString expectedType ) {
 }
 
 ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
+
+	if ( this->tree_node->type == NotE ) {
+	
+		this->left->toByteCode(bc);
+
+		NExprList args;
+		args.first = this->left->tree_node;
+		args.last = this->left->tree_node;
+		args.loc = this->left->tree_node->loc;
+
+		MethodCall::create(this->currentMethod, currentMethod->metaClass->findMethod("_1_NotE"), &args)->toByteCode(bc);
+
+	} else if ( this->tree_node->type == UPlusE ) {
+	
+	} else if ( this->tree_node->type == UPlusE ) {
+	
+	} else {
+	
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Unknown unary operation in code"),
+			this->tree_node->loc.first_line);
+	}
 
 	return bc;
 }
