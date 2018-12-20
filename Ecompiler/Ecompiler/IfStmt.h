@@ -1,7 +1,6 @@
 #pragma once
 #include "MethodCall.h"
 #include "StatementBlock.h"
-#include "ThenList.h"
 
 class IfStmt : public Statement
 {

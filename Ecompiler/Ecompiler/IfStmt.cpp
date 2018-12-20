@@ -118,7 +118,7 @@ IfStmt::~IfStmt(void)
 		code->goto_(0x0000); //пока мусор
 		goto_start = code->currentOffset - 2;
 
-		//вписываем байты в условие if
+		//вписываем (1) в условие if
 		int lenght = +(code->currentOffset - if_start - 1);
 		code->gotoPos(if_start)
 			.u2(lenght)

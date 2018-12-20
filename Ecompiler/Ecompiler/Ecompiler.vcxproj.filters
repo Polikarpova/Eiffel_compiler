@@ -122,12 +122,6 @@
     <ClCompile Include="IntegerType.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
-    <ClCompile Include="ThenPart.cpp">
-      <Filter>Source Files\ExprClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="ThenList.cpp">
-      <Filter>Source Files\ExprClasses</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -255,12 +249,6 @@
     </ClInclude>
     <ClInclude Include="IntegerType.h">
       <Filter>Header Files\TypeClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="ThenList.h">
-      <Filter>Header Files\ExprClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="ThenPart.h">
-      <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

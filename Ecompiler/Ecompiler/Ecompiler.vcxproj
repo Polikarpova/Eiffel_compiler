@@ -149,8 +149,6 @@
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="EiffelSTRING.cpp" />
     <ClCompile Include="MethodCall.cpp" />
-    <ClCompile Include="ThenList.cpp" />
-    <ClCompile Include="ThenPart.cpp" />
     <ClCompile Include="VoidType.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,8 +169,6 @@
     <ClInclude Include="StringExpr.h" />
     <ClInclude Include="LocalVariableRef.h" />
     <ClInclude Include="OperationExpr.h" />
-    <ClInclude Include="ThenList.h" />
-    <ClInclude Include="ThenPart.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="MethodCall.h" />
     <ClInclude Include="VoidType.h" />
