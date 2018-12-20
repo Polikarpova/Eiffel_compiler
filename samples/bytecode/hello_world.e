@@ -4,13 +4,6 @@ create
 	make
 
 feature
-	make
-	do
-		cat("Meow");
-		Io.put_string("Hello world!!");
-		-- Io.put_integer(arr[i]);
-	end
-
 	cat (str: STRING)
 	LOCAL
 		int_var: INTeger
@@ -23,7 +16,36 @@ feature
 		-- Io.put_string(str)
 		-- Io.new_line
 	end
+
+	make
+	local
+		isOk : BOOLEAN
+	do
+		meow(2+2);
+		
+		--isOk := NOT true;
+		
+		IF NOT true THEN
+			Io.put_string("isOk");
+		ELSE
+			Io.put_string("!isOk");
+		END
+		
+--		IF "a" < "b" THEN
+--			Io.put_string("a < b");
+--		ELSEIF "a" > "b" THEN
+--			Io.put_string("a > b");
+--		ELSE
+--			Io.put_string("a = b");
+--		END
+	
+		--cat("Meow");
+		--Io.put_string("Hello world!!");
+		-- Io.put_integer(arr[i]);
+	end
+
 end
+
 class ARRAY_TEST
 create
 	make
