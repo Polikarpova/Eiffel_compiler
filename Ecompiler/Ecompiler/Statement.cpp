@@ -3,6 +3,7 @@
 #include "CreateStmt.h"
 #include "AssignStmt.h"
 #include "IfStmt.h"
+#include "LoopStmt.h"
 
 Statement::Statement(void)
 {
@@ -32,6 +33,7 @@ Statement::~Statement(void)
 			st = IfStmt::create(mtd, s->body.ifStmt);
 			break;
 		case LoopSt:
+			st = LoopStmt::create(mtd, s->body.loopStmt);
 			break;
 		default:
 			break;	//unknown

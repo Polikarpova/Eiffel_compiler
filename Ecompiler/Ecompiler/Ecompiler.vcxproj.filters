@@ -122,6 +122,9 @@
     <ClCompile Include="IntegerType.cpp">
       <Filter>Source Files\TypeClasses</Filter>
     </ClCompile>
+    <ClCompile Include="LoopStmt.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -249,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="IntegerType.h">
       <Filter>Header Files\TypeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="LoopStmt.h">
+      <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
