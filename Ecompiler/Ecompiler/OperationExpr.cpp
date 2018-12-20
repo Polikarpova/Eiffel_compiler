@@ -21,8 +21,12 @@ OperationExpr::~OperationExpr(void)
 	oe->currentMethod = mtd;
 	oe->tree_node = expr;
 	oe->left = Expression::create(mtd, expr->left);
-	oe->right = Expression::create(mtd, expr->right);
-	bool success = oe->expressionType();
+
+	if ( expr->right ) {
+		oe->right = Expression::create(mtd, expr->right);
+	}
+	
+bool success = oe->expressionType();
 
 	return success ? oe : 0;
 }
@@ -290,6 +294,30 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 }
 
 ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
+
+	//case PowerE:
+	//case MulE:
+	//case DivE:
+	//case PlusE:
+	//case MinusE:
+
+	if ( this->tree_node->type == PowerE ) {
+	
+	} else if ( this->tree_node->type == MulE ) {
+	
+	} else if ( this->tree_node->type == DivE ) {
+	
+	} else if ( this->tree_node->type == PlusE ) {
+	
+	} else if ( this->tree_node->type == MinusE ) {
+	
+	} else {
+	
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Unknown arithmetic operation in code"),
+			this->tree_node->loc.first_line);
+	}
 
 	return bc;
 }

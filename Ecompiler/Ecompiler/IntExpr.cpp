@@ -41,7 +41,7 @@ IntExpr::~IntExpr(void)
 
 ByteCode& IntExpr::toByteCode(ByteCode &bc)
 {
-	// загрузить строковую константу
+	// загрузить целочисленную константу
 	if (constTableN != -1) {
 	
 		if(constTableN < 256)

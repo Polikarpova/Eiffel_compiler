@@ -2,6 +2,7 @@
 
 #include "IntExpr.h"
 #include "StringExpr.h"
+#include "BoolExpr.h"
 #include "OperationExpr.h"
 
 #include "MetaClass.h"
@@ -179,7 +180,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		case StringE:
 			return StringExpr::create(mtd, s);
 		case BoolE:
-			return 0;
+			return BoolExpr::create(mtd, s);
 		case NotE:
 		case UPlusE:
 		case UMinusE:

@@ -128,6 +128,12 @@
     <ClCompile Include="IntExpr.cpp">
       <Filter>Source Files\ExprClasses</Filter>
     </ClCompile>
+    <ClCompile Include="BoolExpr.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="RealExpr.cpp">
+      <Filter>Source Files\ExprClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enums.h">
@@ -260,6 +266,12 @@
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
     <ClInclude Include="IntExpr.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolExpr.h">
+      <Filter>Header Files\ExprClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="RealExpr.h">
       <Filter>Header Files\ExprClasses</Filter>
     </ClInclude>
   </ItemGroup>
