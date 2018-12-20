@@ -448,7 +448,7 @@ bool MetaClass::makeSpecialMethods()
 		MethodCall* specialcall = MethodCall::create(static_void_main, default_eiffel_creator);
 	
 		ByteCode &bc = static_void_main->bytecode;
-		bc.new_( this->class_constN );
+		//bc.new_( this->class_constN );
 		specialcall->toByteCode(bc, true);
 		bc.return_();
 
@@ -461,7 +461,7 @@ bool MetaClass::makeSpecialMethods()
 		// to use in constructors of this class
 		//// create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
 		this->parentsCreatorRef = MethodCall::create(default_eiffel_creator, this->parent->findVoidCreatorMethod());
-
+		this->parentsCreatorRef->noCreate = true;
 	}
 
 	return true;
@@ -469,6 +469,11 @@ bool MetaClass::makeSpecialMethods()
 
 bool MetaClass::generateCode(const QDir& code_dir)
 {
+	// сгенерировать методы заранее
+	ByteCode bc_methods_pool;
+	this->methods_to_ByteCode(bc_methods_pool);
+
+
 	// составляем байт-код и записываем в файл ...
 
 	ByteCode bc;
@@ -500,7 +505,7 @@ bool MetaClass::generateCode(const QDir& code_dir)
 
  //   u2 methods_count;
  //   method_info methods[methods_count];
-	this->methods_to_ByteCode(bc);
+	bc.append(bc_methods_pool);
 
  //   u2 attributes_count;
 	bc.u2(0x0000);
