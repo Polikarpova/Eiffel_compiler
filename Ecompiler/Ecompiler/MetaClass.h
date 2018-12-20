@@ -74,7 +74,7 @@ public:
 	Feature* findFeature(const QString& lowerName, bool lookInParents = true);
 
 	/** \return NULL if no method found */
-	Method* findVoidCreatorMethod();
+	Method* findDefaultConstructor();
 	MethodCall* parentsCreatorRef;
 
 	//* тип в выражении

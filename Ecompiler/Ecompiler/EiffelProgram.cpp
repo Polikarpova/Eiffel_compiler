@@ -178,7 +178,7 @@ void EiffelProgram::createRTL()
 	// type
 	mc->_exprType = new EiffelArray( this->findClass("ANY")->getType() );
 	// `make`: setup auto-created constructor
-	mtd = mc->findVoidCreatorMethod();
+	mtd = mc->findDefaultConstructor();
 	mtd->isCreator = true; // set again to be sure
 	mtd->localVariables["lower"] = new LocalVariable("lower", 1, int_type);
 	mtd->localVariables["upper"] = new LocalVariable("upper", 2, int_type);

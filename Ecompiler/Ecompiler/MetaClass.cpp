@@ -134,7 +134,7 @@ Feature* MetaClass::findFeature(const QString& lowerName, bool lookInParents /*=
 
 	return p;
 }
-Method* MetaClass::findVoidCreatorMethod()
+Method* MetaClass::findDefaultConstructor()
 {
 	Method* creator = NULL;
 	foreach(Method* mtd, this->methods)
@@ -430,7 +430,7 @@ bool MetaClass::makeSpecialMethods()
 	//// конструктор <init> ...
 
 	// найти конструктор по умолчанию: который первый без параметров
-	Method* default_eiffel_creator = this->findVoidCreatorMethod();
+	Method* default_eiffel_creator = this->findDefaultConstructor();
 
 	if(default_eiffel_creator)
 	{
@@ -460,7 +460,7 @@ bool MetaClass::makeSpecialMethods()
 		// create MethodRef to parent`s constructor ...
 		// to use in constructors of this class
 		//// create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
-		this->parentsCreatorRef = MethodCall::create(default_eiffel_creator, this->parent->findVoidCreatorMethod());
+		this->parentsCreatorRef = MethodCall::create(default_eiffel_creator, this->parent->findDefaultConstructor());
 		this->parentsCreatorRef->noCreate = true;
 	}
 
