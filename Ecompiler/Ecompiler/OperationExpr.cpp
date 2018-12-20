@@ -20,8 +20,9 @@ OperationExpr::~OperationExpr(void)
 	oe->tree_node = expr;
 	oe->left = Expression::create(mtd, expr->left);
 	oe->right = Expression::create(mtd, expr->right);
+	bool success = oe->expressionType();
 
-	return oe;
+	return success ? oe : 0;
 }
 
 EiffelType* OperationExpr::getReturnType( ) {
@@ -68,8 +69,6 @@ EiffelType* OperationExpr::getReturnType( ) {
 			if ( lType->toReadableString() != "INTEGER" || lType->toReadableString() != "REAL") {
 
 				//доп проверка на строки у операции +
-
-				//QString str = lType->toReadableString();
 				if ( this->tree_node->type == PlusE && ( lType->toReadableString() == "STRING" || rType->toReadableString() == "STRING") ) {
 
 					if ( rType->toReadableString() != "STRING") {
