@@ -66,7 +66,7 @@ MethodCall::~MethodCall(void)
 				QString("internal"), 
 				QString("Cannot find variable # %1 (as parameter) in routine: %2.%3")
 					.arg(i)
-					.arg(calledMethod->metaClass->name(), calledMethod->name),
+					.arg(context_mtd->metaClass->name(), context_mtd->name),
 				source_line);
 			delete vmc;
 			return NULL;
@@ -168,6 +168,7 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 	if(base_type->isArray()) // массив
 	{
 		return arrayCreation(bc);
+		// exit
 	}
 
 	//noQualify = noQualify && ! this->noCreate;
@@ -235,27 +236,70 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 {
 	EiffelType* base_type = this->calledMethod->metaClass->getType();
 
-	bc.log(QString("generate code for Array Creation (new*) of %1 ...")
-		.arg(base_type->toReadableString()));
-
 	if(base_type->isArray()) // массив
 	{
-		if(this->calledMethod->exactNumberOfArgs() == 2) // make(0,n)
-		{
-			bc.iconst_(0);
-			// expr
-			// ...
-			bc.iadd();
+		bc.log(QString("generating code for Array Creation (new*) of %1 ...")
+			.arg(base_type->toReadableString()));
+
+		int var_lower_i , var_upper_i;
+		LocalVariable *par_lower , *par_upper;
+		Expression *arg_lower , *arg_upper;
+			
+		par_lower = this->calledMethod->findLocalVar("lower");
+		par_upper = this->calledMethod->findLocalVar("upper");
+
+		bool ok = 
+			par_lower && par_upper
+			&& this->calledMethod->exactNumberOfArgs() == 2
+			&& this->calledMethod->name == "make";
+
+		if( !par_lower || !par_upper ) {
+			
+			bc.log("/!\\ Array will not be created.");
+
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Cannot find method `make(lower [= 0], upper [= n])` in routine: %1.%2")
+					.arg(currentMethod->metaClass->name(), currentMethod->name),
+				this->tree_node->loc.first_line);
+			return bc;
+			////bc.pop();
 		}
+
+		var_lower_i = par_lower->n - 1;
+		var_upper_i = par_upper->n - 1;
+
+		arg_lower = this->arguments[ var_lower_i ];
+		arg_upper = this->arguments[ var_upper_i ];
+
+		// ignore 1st argument: default is 0
+
+		// array size  =  n + 1
+		// expr for n
+		arg_upper->toByteCode(bc);
+		bc.iconst_(1);
+		bc.iadd();
+
+		// array size is loaded onto stack
 
 		EiffelType* elem_type = ((EiffelArray*)base_type)->elementType;
 		
-		if(elem_type->isInteger()) // массив целых чисел
+		if(elem_type->isArray()) // многомерный массив
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Multidimentional arrays not supported. Attempt to create an array of type: %1. In routine: %2.%3")
+					.arg(base_type->toReadableString())
+					.arg(currentMethod->metaClass->name(), currentMethod->name),
+				this->tree_node->loc.first_line);
+		}
+		else if(elem_type->isInteger()) // массив целых чисел
 		{
 			bc.newarray( 10 ); // INT constant
 		}
+		else if(elem_type->isReference()) // массив объектов (в т.ч. строк)
 		{
-			bc.anewarray( class_of_called_mtd_constN ); // CLASS constant_NB
+			bc.anewarray( class_of_called_mtd_constN ); // CLASS constant_N
 		}
 	}
 

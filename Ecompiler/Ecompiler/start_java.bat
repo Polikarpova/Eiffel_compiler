@@ -10,6 +10,7 @@ REM USAGE: java -classpath <c:\path/to/search;search/class/files>  <class name t
 REM 		!! copy rtl classes to out/ first !!
 
 java -classpath out  eiffel.HELLO_WORLD
+REM java -classpath java  eiffel.MAKE_ARRAY
 REM java -classpath java  eiffel.HELLO_WORLD
 
 REM так тоже работает:

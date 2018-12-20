@@ -18,6 +18,9 @@ public:
 	//* Полное квалифицированное имя, типа: `java/lang/String`
 	virtual QString fullJavaName() {return QString("%1/%2").arg(javaPackage(), "String");}
 
+	virtual bool isReference() const { return true; }
+	virtual bool isString() const { return true; }
+
 	//* тип в выражении
 	EiffelSTRING* getType()
 	{

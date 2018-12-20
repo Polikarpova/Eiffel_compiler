@@ -9,10 +9,13 @@ public class MAKE_ARRAY extends rtl.ANY {
 		self().a = new int[17];
 		io.new_line();
 		io.put_integer(a.length);
-		// Object[] b;
-		// b = new Object[13];
-		// io.new_line();
-		// io.put_integer(b.length);
+		String[] b;
+		b = new String[13];
+		b[4] = "my String";
+		io.new_line();
+		io.put_integer(b.length);
+		io.new_line();
+		io.put_string(b[4]);
 	}
 	
 	public MAKE_ARRAY self()

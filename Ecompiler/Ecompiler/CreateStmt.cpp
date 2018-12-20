@@ -35,7 +35,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 	
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Invalid procedure call"),
+			QString("Invalid constructor call"),
 			expr->loc.first_line);
 	
 		return NULL;
@@ -47,6 +47,9 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 
 	if( ! general_method_call )
 		return NULL;
+
+	// set tree_node : use of tree_node->loc
+	general_method_call->tree_node = expr;
 
 	if ( ! general_method_call->calledMethod->isCreator )
 	{
@@ -72,6 +75,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 		return NULL;
 	}
 
+	// make assignment
 	success = leftOfDot->setRightValue(general_method_call);
 
 	if( ! success ) {

@@ -23,6 +23,7 @@ public:
 
 	virtual bool isVoid() const { return false; }
 	virtual bool isReference() const { return false; }
+	virtual bool isString() const { return false; }
 	virtual bool isArray() const { return false; }
 	virtual bool isInteger() const { return false; }
 
