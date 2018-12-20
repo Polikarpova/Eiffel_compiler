@@ -213,3 +213,69 @@ void OperationExpr::getError( QString actualType, QString expectedType ) {
 			.arg(/*operType,*/ this->currentMethod->metaClass->name(), this->currentMethod->name, actualType, expectedType),
 			this->tree_node->loc.first_line);
 }
+
+/*virtual*/ ByteCode& OperationExpr::toByteCode(ByteCode &bc) {
+
+	ByteCode code;
+
+	switch(this->tree_node->type) {
+		
+		case NotE:
+		case UPlusE:
+		case UMinusE:
+			unaryToByteCode(code);
+			break;
+		case PowerE:
+		case MulE:
+		case DivE:
+		case PlusE:
+		case MinusE:
+			arithmeticToByteCode(code);
+			break;
+		case EqualsE:
+		case NotEqualE:
+		case LessE:
+		case GreaterE:
+		case LessOrEqualE:
+		case GreaterOrEqualE:
+			comparsionToByteCode(code);
+			break;
+		case AndE:
+		case AndThenE:
+		case OrE:
+		case OrElseE:
+		case XORE:
+		case ImpliesE:
+			logicToByteCode(code);
+			break;
+		default:
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Unknown operation in code"),
+				this->tree_node->loc.first_line);
+			break; //unknown
+	}
+
+	return bc.append(code);
+}
+
+ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
+
+	return bc;
+}
+
+ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
+
+	return bc;
+}
+
+ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
+
+	return bc;
+}
+
+ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
+
+	return bc;
+}
+
