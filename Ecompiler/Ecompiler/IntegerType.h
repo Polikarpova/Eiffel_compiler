@@ -7,14 +7,14 @@ class IntegerType : public RTLMetaClass, public EiffelType
 public:
 
 	IntegerType(void)
-		: RTLMetaClass(EiffelProgram::currentProgram, QString("IntegerType")) , EiffelType() {};
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("INTEGER")) , EiffelType() {};
 	IntegerType(EiffelProgram* program) 
-		: RTLMetaClass(program, QString("IntegerType")) , EiffelType() {};
+		: RTLMetaClass(program, QString("INTEGER")) , EiffelType() {};
 	~IntegerType(void);
 
 	bool isInteger() const { return true; }
 
-	QString toReadableString() const {return "IntegerType";};
+	QString toReadableString() const {return "INTEGER";};
 
 	//ByteCode& toByteCode(ByteCode &bc);
 

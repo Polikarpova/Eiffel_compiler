@@ -2,7 +2,7 @@
 
 LoopStmt::LoopStmt(void)
 {
-	thls->currentMethod = 0;
+	this->currentMethod = 0;
 }
 
 LoopStmt::~LoopStmt(void)

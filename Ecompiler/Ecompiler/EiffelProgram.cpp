@@ -135,9 +135,9 @@ void EiffelProgram::createRTL()
 	mc = new RTLMetaClass(this, QString("VOID"));
 	this->classes[ mc->name() ] = mc;
 
+	// BOOLEAN class
 	mc = new EiffelBOOLEAN();
 	this->classes[ mc->name() ] = mc;
-
 
 	// IntegerType class
 	this->classes[ int_type->name() ] = int_type;
