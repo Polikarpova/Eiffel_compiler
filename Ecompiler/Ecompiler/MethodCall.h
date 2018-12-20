@@ -34,5 +34,6 @@ public:
 
 
 	ByteCode& generateCreation(ByteCode &);
+	ByteCode& arrayCreation(ByteCode &);
 
 };

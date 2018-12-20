@@ -162,11 +162,19 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 
 ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 {
+	EiffelType* base_type = this->calledMethod->metaClass->getType();
+	bool isArray = base_type->isArray(); // массив
+
+	if(base_type->isArray()) // массив
+	{
+		return arrayCreation(bc);
+	}
+
 	//noQualify = noQualify && ! this->noCreate;
 
 	//bc.log("MethodCall : object ...");
 
-	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) /*&& ! this->calledMethod->isCreator*/ )
+	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) && ! isArray )
 	{
 		// для динамического метода с this
 		// load a reference to an object ...
@@ -213,16 +221,42 @@ ByteCode& MethodCall::generateCreation(ByteCode &bc)
 	bc.log(QString("generate code for Creation (new*) of %1 ...")
 		.arg(base_type->toReadableString()));
 
-	if(base_type->isArray()) // массив
-	{
-		EiffelType* elem_type = ((EiffelArray*)base_type)->elementType;
-
-
-	}
-	else if(base_type->isReference()) // объект
+	if(base_type->isReference()) // объект
 	{
 		bc.new_( this->class_of_called_mtd_constN );
 		//bc.dup();
+	}
+
+
+	return bc;
+}
+
+ByteCode& MethodCall::arrayCreation(ByteCode &bc)
+{
+	EiffelType* base_type = this->calledMethod->metaClass->getType();
+
+	bc.log(QString("generate code for Array Creation (new*) of %1 ...")
+		.arg(base_type->toReadableString()));
+
+	if(base_type->isArray()) // массив
+	{
+		if(this->calledMethod->exactNumberOfArgs() == 2) // make(0,n)
+		{
+			bc.iconst_(0);
+			// expr
+			// ...
+			bc.iadd();
+		}
+
+		EiffelType* elem_type = ((EiffelArray*)base_type)->elementType;
+		
+		if(elem_type->isInteger()) // массив целых чисел
+		{
+			bc.newarray( 10 ); // INT constant
+		}
+		{
+			bc.anewarray( class_of_called_mtd_constN ); // CLASS constant_NB
+		}
 	}
 
 
