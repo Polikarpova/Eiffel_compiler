@@ -129,7 +129,7 @@ void EiffelProgram::createRTL()
 	Field* fld;
 	EiffelClass *string_type;
 	EiffelType *void_type = VoidType::instance();
-	EiffelType *int_type = IntegerType::instance();
+	IntegerType *int_type = IntegerType::instance();
 
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));
@@ -139,9 +139,8 @@ void EiffelProgram::createRTL()
 	this->classes[ mc->name() ] = mc;
 
 
-	//// IntegerType class
-	//mc = (MetaClass*)int_type;
-	//this->classes[ "INTEGER" ] = mc;
+	// IntegerType class
+	this->classes[ int_type->name() ] = int_type;
 
 	// STRING class
 	mc = new EiffelSTRING(this);
