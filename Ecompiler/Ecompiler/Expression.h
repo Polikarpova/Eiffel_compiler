@@ -26,7 +26,7 @@ public:
 		Если Выражение не позволяет этого
 		сделать, вернётся false.
 	*/
-	virtual bool setRightValue(Expression* r) { return false; };
+	virtual bool setRightValue(Expression* r, bool force = false) { return false; };
 
 	//необходим
 	//возвращает тип возвращаемый выражением

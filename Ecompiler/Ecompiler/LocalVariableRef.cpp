@@ -42,7 +42,7 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 	return bc;
 }
 
-/*virtual*/ bool LocalVariableRef::setRightValue(Expression* r)
+/*virtual*/ bool LocalVariableRef::setRightValue(Expression* r, bool force /*= false*/)
 {
 	this->_isLeftValue = false;
 

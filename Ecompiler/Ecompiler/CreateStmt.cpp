@@ -26,7 +26,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 
 	//mtd - метод, где всё происходит
 	//m - метод, который вызван
-	MethodCall* general_method_call;
+	MethodCall* general_method_call = NULL;
 
 	bool success = false;
 
@@ -76,7 +76,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 	}
 
 	// make assignment
-	success = leftOfDot->setRightValue(general_method_call);
+	success = leftOfDot->setRightValue(general_method_call , /*force =*/ true );
 
 	if( ! success ) {
 

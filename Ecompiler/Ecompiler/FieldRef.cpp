@@ -105,17 +105,17 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 	return bc;
 }
 
-/*virtual*/ bool FieldRef::setRightValue(Expression* r)
+/*virtual*/ bool FieldRef::setRightValue(Expression* r, bool force /*= false*/)
 {
 	_isLeftValue = false;
 
-	if ( ! r->expressionType()->isVoid() ) {
+	if ( force || ! r->expressionType()->isVoid() ) {
 			
 		//если типы не совпадают, то всё плохо
 		EiffelType* rType = r->expressionType();
 		EiffelType* lType = this->expressionType();
 
-		if ( !rType->canCastTo(lType) ) {
+		if ( !force && !rType->canCastTo(lType) ) {
 		
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 

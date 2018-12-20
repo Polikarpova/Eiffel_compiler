@@ -17,7 +17,7 @@ public:
 		Если Выражение не позволяет этого
 		сделать, вернётся false.
 	*/
-	virtual bool setRightValue(Expression* r);
+	virtual bool setRightValue(Expression* r, bool force = false);
 
 	short int fieldref_constN;
 
