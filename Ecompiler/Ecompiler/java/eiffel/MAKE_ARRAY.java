@@ -8,6 +8,10 @@ public class MAKE_ARRAY extends rtl.ANY {
 		a = new int[17];
 		io.new_line();
 		io.put_integer(a.length);
+		Object[] b;
+		b = new Object[13];
+		io.new_line();
+		io.put_integer(b.length);
 	}
 	
 	public static void main(java.lang.String args[])
