@@ -204,7 +204,7 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 	{
 		bc.invokespecial(methodref_constN,
 			this->calledMethod->exactNumberOfArgs(),
-			this->calledMethod->isVoid());
+			/*this->calledMethod->isVoid()*/ false );
 	}
 	else
 	{
