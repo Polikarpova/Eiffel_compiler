@@ -134,6 +134,7 @@
     </ClCompile>
     <ClCompile Include="IfStmt.cpp" />
     <ClCompile Include="IntegerType.cpp" />
+    <ClCompile Include="IntExpr.cpp" />
     <ClCompile Include="LoopStmt.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StringExpr.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="FieldRef.h" />
     <ClInclude Include="IfStmt.h" />
     <ClInclude Include="instructions.h" />
+    <ClInclude Include="IntExpr.h" />
     <ClInclude Include="LoopStmt.h" />
     <ClInclude Include="SpecialMethod.h" />
     <ClInclude Include="StatementBlock.h" />

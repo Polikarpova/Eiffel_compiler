@@ -1,5 +1,6 @@
 #include "Expression.h"
 
+#include "IntExpr.h"
 #include "StringExpr.h"
 #include "OperationExpr.h"
 
@@ -167,7 +168,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	switch(s->type) {
 		
 		case IntE:
-			return 0;
+			return IntExpr::create(mtd, s);
 		case RealE:
 			return 0;
 		case CharE:
