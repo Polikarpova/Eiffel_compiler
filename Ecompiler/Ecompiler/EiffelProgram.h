@@ -25,12 +25,7 @@ public:
 	QList<CompilerError> errors;
 
 	/*methods*/
-	int logError(QString type, QString message,	int line)
-	{
-		CompilerError ce = {type,message,line};
-		errors.push_back(ce);
-		return errors.size();
-	}
+	int logError(QString type, QString message,	int line);
 	void printErrors();
 
 	/** \return NULL if no class found */

@@ -7,7 +7,10 @@ class EiffelBOOLEAN : public RTLMetaClass, public EiffelType
 public:
 	
 	EiffelBOOLEAN(void)
-		: RTLMetaClass(EiffelProgram::currentProgram, QString("BOOLEAN")) {};
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("BOOLEAN"))
+	{
+		this->_exprType = this;
+	};
 	~EiffelBOOLEAN(void);
 
 	QString descriptor() {return QString("Z");}

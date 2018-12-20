@@ -149,7 +149,7 @@ Method* MetaClass::findVoidCreatorMethod()
 	return creator;
 }
 
-EiffelClass* MetaClass::getType()
+EiffelType* MetaClass::getType()
 {
 	if(!_exprType)
 		_exprType = new EiffelClass(this);

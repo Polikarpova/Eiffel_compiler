@@ -11,6 +11,7 @@
 //typedef char byte;
 
 class EiffelProgram;
+class EiffelType;
 class EiffelClass;
 class Feature;
 class Method;
@@ -77,7 +78,8 @@ public:
 	MethodCall* parentsCreatorRef;
 
 	//* тип в выражении
-	EiffelClass* getType();
+	EiffelType* getType();
+	//EiffelClass* getType();
 
 	/*methods*/
 	
@@ -98,7 +100,7 @@ public:
 
 //protected:
 	//* тип в выражении
-	EiffelClass* _exprType;
+	EiffelType* _exprType;
 
 public:
 	ByteCode& fields_to_ByteCode(ByteCode &bc);

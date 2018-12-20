@@ -74,7 +74,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 		return NULL;
 	}
 
-	if( ! called_feature->isExportedTo(mtd->metaClass->getType()) ) {
+	if( ! called_feature->isExportedTo(mtd->metaClass) ) {
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
 			QString("Cannot use feature `%1` of class `%4`: it is not exported to class `%2`. (In routine: %2.%3)")
@@ -119,7 +119,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 		{
 			// create MethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
 			MethodCall* mtdc = MethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
-			mtdc->tree_node = node;
+			if(mtdc) mtdc->tree_node = node;
 			return mtdc;
 			// finish
 		}

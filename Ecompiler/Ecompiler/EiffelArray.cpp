@@ -29,3 +29,13 @@
 
 	return ea;
 }
+
+/*virtual*/ bool EiffelArray::canCastTo(const EiffelType* otherType) const
+{
+	if( ! otherType->isArray() )
+	{
+		return false;
+	}
+
+	return this->elementType->canCastTo( ((EiffelArray*)otherType)->elementType );
+}

@@ -127,19 +127,19 @@ void EiffelProgram::createRTL()
 	MetaClass *mc, *string_mc;
 	Method* mtd;
 	Field* fld;
-	EiffelClass *string_type;
+	EiffelType *string_type;
 	EiffelType *void_type = VoidType::instance();
 	IntegerType *int_type = IntegerType::instance();
-	EiffelBOOLEAN *bool_type;
-
+	EiffelBOOLEAN* bool_type = new EiffelBOOLEAN();
+	
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));
 	this->classes[ mc->name() ] = mc;
 
 	// BOOLEAN class
-	bool_type = new EiffelBOOLEAN();
 	this->classes[ bool_type->name() ] = bool_type;
-
+	bool_type->_exprType = bool_type;
+	
 	// IntegerType class
 	this->classes[ int_type->name() ] = int_type;
 
@@ -156,7 +156,7 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 	mtd = new Method(mc, void_type, "put_integer",
-		QList<LocalVariable>() << LocalVariable(string_type, "v")
+		QList<LocalVariable>() << LocalVariable(int_type, "v")
 		);
 	mc->methods[ mtd->name ] = mtd;
 	mtd = new Method(mc, void_type, "new_line");
@@ -170,11 +170,6 @@ void EiffelProgram::createRTL()
 	mc = new EiffelANY(this);
 	fld = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
 	mc->fields[ fld->name ] = fld;
-
-	mtd = new Method(mc, bool_type, "_1_NotE",
-		QList<LocalVariable>() << LocalVariable(bool_type, "left"));
-	mc->methods[ mtd->name ] = mtd;
-
 	this->classes[ mc->name() ] = mc;
 
 
@@ -190,6 +185,7 @@ void EiffelProgram::createRTL()
 	mtd->paramCount = 3; // this + 2 параметра
 	mtd->name = "make";
 	mtd->descriptor.clear(); // reset if been created
+	mc->methods[ mtd->name ] = mtd;
 	// `length`: size of array
 	fld = new Field(mc, int_type, "count");
 	fld->javaName = "length";
@@ -200,12 +196,19 @@ void EiffelProgram::createRTL()
 
 }
 
+int EiffelProgram::logError(QString type, QString message,	int line)
+{
+	CompilerError ce = {type,message,line};
+	errors.push_back(ce);
+	qDebug("%d: %s", line, message.toLocal8Bit().data());
+	return errors.size();
+}
 
 void EiffelProgram::printErrors()
 {
 	foreach(CompilerError ce, this->errors)
 	{
-		QString print_str = QString("%1 error%3: %2.")
+		QString print_str = QString("%1 error%3: %2")
 			.arg(ce.type,ce.message)
 			.arg(ce.line<0 ?
 				("") :

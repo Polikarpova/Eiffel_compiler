@@ -24,6 +24,7 @@ Field::~Field(void)
 	fd->name = name;
 	fd->metaClass = mc;
 
+	fd->tree_node = node;
 	fd->type = EiffelType::create(node->type);
 
 	if( ! fd->type )
