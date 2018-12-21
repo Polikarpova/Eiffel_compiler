@@ -7,7 +7,7 @@ class EiffelCHARACTER : public RTLMetaClass, public EiffelType
 public:
 
 	EiffelCHARACTER(void)
-		: RTLMetaClass(EiffelProgram::currentProgram, QString("CHARACTER"))
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("CHARACTER")), EiffelType()
 	{
 		this->_exprType = this;
 	};

@@ -57,7 +57,7 @@ EiffelType::~EiffelType(void)
 		case RealV:
 			return 0;
 		case CharacterV:
-			return 0;
+			return (EiffelSTRING*) EiffelProgram::currentProgram->findClass("CHARACTER");
 		case StringV:
 			return (EiffelSTRING*) EiffelProgram::currentProgram->findClass("STRING");
 		case BooleanV:
