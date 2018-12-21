@@ -4,6 +4,7 @@
 #include "StringExpr.h"
 #include "BoolExpr.h"
 #include "OperationExpr.h"
+#include "CharExpr.h"
 
 #include "MetaClass.h"
 #include "EiffelClass.h"
@@ -176,8 +177,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		case RealE:
 			return 0;
 		case CharE:
-			//можно забыть
-			return 0;
+			return CharExpr::create(mtd, s);
 		case StringE:
 			return StringExpr::create(mtd, s);
 		case BoolE:

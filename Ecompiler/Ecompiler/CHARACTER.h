@@ -1,13 +1,17 @@
 #pragma once
 #include "RTLMetaClass.h"
 
-class CHARACTER : public RTLMetaClass, public EiffelType
+class EiffelCHARACTER : public RTLMetaClass, public EiffelType
 {
 
 public:
 
-	CHARACTER(void);
-	~CHARACTER(void);
+	EiffelCHARACTER(void)
+		: RTLMetaClass(EiffelProgram::currentProgram, QString("CHARACTER"))
+	{
+		this->_exprType = this;
+	};
+	~EiffelCHARACTER(void);
 
 	QString descriptor() {return QString("C");}
 	QString toReadableString() const {return "CHARACTER";};

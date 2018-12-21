@@ -5,6 +5,7 @@
 #include "RTLMetaClass.h"
 #include "VoidType.h"
 #include "BOOLEAN.h"
+#include "CHARACTER.h"
 
 #include "Field.h"
 #include "Method.h"
@@ -131,6 +132,7 @@ void EiffelProgram::createRTL()
 	EiffelType *void_type = VoidType::instance();
 	IntegerType *int_type = IntegerType::instance();
 	EiffelBOOLEAN* bool_type = new EiffelBOOLEAN();
+	EiffelCHARACTER* char_type = new EiffelCHARACTER();
 	
 	// VOID class
 	mc = new RTLMetaClass(this, QString("VOID"));
@@ -140,6 +142,10 @@ void EiffelProgram::createRTL()
 	this->classes[ bool_type->name() ] = bool_type;
 	bool_type->setType(bool_type);
 	
+	// CHARACTER class
+	this->classes[ char_type->name() ] = char_type;
+	char_type->setType(char_type);
+
 	// IntegerType class
 	this->classes[ int_type->name() ] = int_type;
 
