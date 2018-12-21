@@ -1,12 +1,24 @@
 //включается в тело class ByteCode
 
 //Функции команд работы со стеком
-ByteCode& iconst_(signed char i) {
+
+
+ByteCode& iconst_(signed char i) { //*< [-1 .. 5] (7 значений)
 	if ( i < -1 || i > 5) {	
 		throw "Недопустимый параметр iconst_()";
 	}
 	this->log(QString("iconst_%1").arg(i));
 	this->u1(i+3);
+	this->incStack(+1);
+
+	return *this;
+}
+ByteCode& fconst_(unsigned char i) { //*< [0.0 , 1.0 , 2.0] (3 значения)
+	if ( i < 0 || i > 2) {	
+		throw "Недопустимый параметр fconst_()";
+	}
+	this->log(QString("fconst_%1").arg(i));
+	this->u1(i+11);
 	this->incStack(+1);
 
 	return *this;
@@ -48,6 +60,14 @@ ByteCode& ldc_w(short int u2) {
 ByteCode& iload(char u1) {
 	this->log(QString("iload")+CombinedPrint(u1, 1));
 	this->u1(0x15);
+	this->u1(u1);
+	this->incStack(+1);
+
+	return *this;
+}
+ByteCode& fload(char u1) {
+	this->log(QString("fload")+CombinedPrint(u1, 1));
+	this->u1(0x17);
 	this->u1(u1);
 	this->incStack(+1);
 
@@ -113,6 +133,14 @@ ByteCode& aload_auto(char u1) {
 ByteCode& istore(char u1) {
 	this->log(QString("istore")+CombinedPrint(u1, 1));
 	this->u1(0x36);
+	this->u1(u1);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& fstore(char u1) {
+	this->log(QString("fstore")+CombinedPrint(u1, 1));
+	this->u1(0x38);
 	this->u1(u1);
 	this->incStack(-1);
 
@@ -243,6 +271,21 @@ ByteCode& fsub() {
 	return *this;
 }
 
+ByteCode& ineg() { //*< [.., val]  =>  [.., -val]
+	this->log(QString("ineg"));
+	this->u1(0x74);
+	this->incStack(0);
+
+	return *this;
+}
+ByteCode& fneg() { //*< [.., val]  =>  [.., -val]
+	this->log(QString("fneg"));
+	this->u1(0x76);
+	this->incStack(0);
+
+	return *this;
+}
+
 ByteCode& idiv() {
 	this->log(QString("idiv"));
 	this->u1(0x6C);
@@ -266,6 +309,23 @@ ByteCode& iinc(char u1, signed char i) {
 
 	return *this;
 }
+
+//* Функции преобразования типов
+ByteCode& f2i() {
+	this->log(QString("f2i"));
+	this->u1(0x8b);
+	this->incStack(+0);
+
+	return *this;
+}
+ByteCode& i2f() {
+	this->log(QString("i2f"));
+	this->u1(0x86);
+	this->incStack(+0);
+
+	return *this;
+}
+
 
 //* Функции команд передачи управления
  //** Условный переход если сравнение целых чисел дает истину.
@@ -499,6 +559,13 @@ ByteCode& invokestatic(short int u2, short int argCount, bool isVoid) {
 ByteCode& ireturn() {
 	this->log(QString("ireturn"));
 	this->u1(0xAC);
+	this->incStack(-1);
+
+	return *this;
+}
+ByteCode& freturn() {
+	this->log(QString("freturn"));
+	this->u1(0xAE);
 	this->incStack(-1);
 
 	return *this;

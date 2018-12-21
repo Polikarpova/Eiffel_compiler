@@ -3,11 +3,13 @@ Java ByteCode-команды, включаемые в class-файл
 
 //Функции команд работы со стеком
 ByteCode& iconst_(signed char i)
+ByteCode& fconst_(unsigned char i)
 ByteCode& bipush(char s1)
 ByteCode& sipush(short int s2)
 ByteCode& ldc(char u1)
 ByteCode& ldc_w(short int u2)
 ByteCode& iload(char u1)
+ByteCode& fload(char u1)
 ByteCode& aload(char u1)
 ByteCode& aload_0 ()
 ByteCode& aload_1 ()
@@ -15,6 +17,7 @@ ByteCode& aload_2 ()
 ByteCode& aload_3 ()
 ByteCode& aload_auto(char u1)
 ByteCode& istore(char u1)
+ByteCode& fstore(char u1)
 ByteCode& astore(char u1)
 ByteCode& astore_0 ()
 ByteCode& astore_1 ()
@@ -27,10 +30,25 @@ ByteCode& dup2()
 
 //Функции команд, выполняющих арифметические операции
 ByteCode& iadd()
+ByteCode& fadd()
+
 ByteCode& imul()
+ByteCode& fmul()
+
 ByteCode& isub()
+ByteCode& fsub()
+
+ByteCode& ineg()
+ByteCode& fneg()
+
 ByteCode& idiv()
+ByteCode& fdiv()
+
 ByteCode& iinc(char u1, signed char i)
+
+//* Функции преобразования типов
+ByteCode& f2i()
+ByteCode& i2f()
 
 //Функции команд передачи управления
 //** Условный переход если сравнение целых чисел дает истину.
@@ -72,5 +90,6 @@ ByteCode& invokevirtual(short int u2, short int argCount, bool isVoid)
 ByteCode& invokespecial(short int u2, short int argCount, bool isVoid)
 ByteCode& invokestatic(short int u2, short int argCount, bool isVoid)
 ByteCode& ireturn()
+ByteCode& freturn()
 ByteCode& areturn()
 ByteCode& return_()
