@@ -52,18 +52,18 @@ create
 
 feature
 	a: ARRAY[INTEGER]
-
+	b: ARRAY[String]
 	make
 	do
 		-- io.put_string("Make array!");
 		CREATE self.a.make(0,17);
 		-- io.new_line;
 		io.put_integer(a.count);
-		-- String[] b;
-		-- b = new String[13];
+		-- 
+		CREATE Current.b.make(0,13);
 		-- b[4] = "my String";
-		-- io.new_line();
-		-- io.put_integer(b.length);
+		io.new_line;
+		io.put_integer(b.count);
 		-- io.new_line();
 		-- io.put_string(b[4]);
 	end
