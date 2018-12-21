@@ -59,7 +59,12 @@ feature
 	make
 	local
 		i0: INTEGER
+		s: BUBBLE
 	do
+		CREATE s -- `make` is called
+--		if s.ascending then    end
+		s.init
+		
 		-- io.put_string("Make array!");
 		CREATE self.a.make(0,17);
 			io.put_integer(a.count);
@@ -85,27 +90,66 @@ feature
 	end
 end
 
-class SORT_ALG
+class
+	SORT_ALG
+
 feature {NONE}
-	bubble(arr : ARRAY[INTEGER], ascending: BOOLEAN) : ARRAY[INTEGER]
+	init
+	do
+
+	end
+feature {}
+	bubble(arr : ARRAY[INTEGER] ; ascending: BOOLEAN) : ARRAY[INTEGER]
 	do
 			Result := arr
 	end
-	
 end
 
-class SORTER
+class
+	SORTER
 
-feature {NONE}
+ inherit
+ 	SORT_ALG redefine init end
+
+feature {ANY}
+	init
+	do
+
+	end
+
+feature {none}
 	ascending: BOOLEAN
+
 feature
-	
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	local
 		i, buf: INTEGER
 	do
 		IF ascending THEN
 			Result := arr
+		ELSE
+			Result := arr
+		END
+	end
+end
+
+class
+	BUBBLE
+
+inherit
+	SORTER  redefine
+		sort --, init
+		 end
+
+feature {NONE}
+	--init	do	end
+feature
+	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
+	local
+		i, buf: INTEGER
+	do
+		IF ascending THEN
+			Result := bubble(arr, false)
 		ELSE
 			Result := arr
 		END
