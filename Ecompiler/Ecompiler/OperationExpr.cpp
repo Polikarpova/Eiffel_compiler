@@ -72,7 +72,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 		//арифметические операции
 		if ( this->tree_node->type == PlusE || this->tree_node->type == MinusE || this->tree_node->type == MulE || this->tree_node->type == DivE || this->tree_node->type == PowerE ) {
 
-			if ( lType->toReadableString() != "INTEGER" || lType->toReadableString() != "REAL") {
+			if ( lType->toReadableString() != "INTEGER" && lType->toReadableString() != "REAL") {
 
 				//доп проверка на строки у операции +
 				if ( this->tree_node->type == PlusE && ( lType->toReadableString() == "STRING" || rType->toReadableString() == "STRING") ) {
@@ -117,7 +117,12 @@ EiffelType* OperationExpr::getReturnType( ) {
 						//преобразование int в real
 						//здесь надо узнать кто int, перевести его в real и возвразаем мы real в итоге
 						
-						this->type = EiffelProgram::currentProgram->findClass("REAL")->getType();
+						//this->type = EiffelProgram::currentProgram->findClass("REAL")->getType();
+
+						getError( rType->toReadableString(), lType->toReadableString() );
+						delete rType;
+						delete lType;
+						return NULL;
 					}
 				} else {
 				
