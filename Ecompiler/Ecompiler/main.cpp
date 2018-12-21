@@ -42,8 +42,8 @@ int main(int argc, char *argv[])
 		printf("Running a test for ByteCode...\n");
 
 		ByteCode bc;
-	//	bc.log("Begin writing Java-signature \\o/");
-//		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
+		bc.log("Begin writing Java-signature \\o/");
+		bc.s1(0xCA).s1(0xFE).u1(0xBA).u1(0xBE);
 		/*
 		bc.iconst_(-1).iconst_(5);
 		 ByteCode bc_1;
@@ -75,6 +75,11 @@ int main(int argc, char *argv[])
 		jc.value.utf8 = new QString("Constant_1");
 		ConstTable.put(jc);
 		
+		// FLOAT Constant
+		jc.type = FLOAT_VALUE;
+		jc.value.real = 2.5;
+		ConstTable.put(jc);
+
 		// NAME_AND_TYPE Constant
 		jc.type = NAME_AND_TYPE;
 		jc.value.name_and_type[UTF8_NAME] = 7;
@@ -84,11 +89,6 @@ int main(int argc, char *argv[])
 		// INT4 Constant
 		jc.type = INT4_VALUE;
 		jc.value.int4 = 0x404;
-		ConstTable.put(jc);
-
-		// FLOAT Constant
-		jc.type = FLOAT_VALUE;
-		jc.value.real = 2.5;
 		ConstTable.put(jc);
 
 		ConstTable.to_ByteCode(bc);

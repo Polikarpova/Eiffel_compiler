@@ -230,10 +230,10 @@ ByteCode& ByteCode::f4(float v)
 	} data;
 
 	data.f4 = v;
-	this->u1(data.b[0]);	//в float порядок байт не инвертируем
-	this->u1(data.b[1]);
+	this->u1(data.b[3]);	//в float порядок байт тоже инвертируем
 	this->u1(data.b[2]);
-	this->u1(data.b[3]);
+	this->u1(data.b[1]);
+	this->u1(data.b[0]);
 	return *this;
 }
 
