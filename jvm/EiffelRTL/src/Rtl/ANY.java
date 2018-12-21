@@ -1,4 +1,4 @@
-package rtl;
+package Rtl;
 
 /**
  *
@@ -9,11 +9,9 @@ public class ANY extends java.lang.Object {
     public ANY()
 	{
 		io = new CONSOLEIO();
+                $helper = new Helper();
 	}
 	
     public CONSOLEIO io;
-    
-    public boolean _1_NotE(boolean left) {
-        return !left;
-    }
+    public Helper $helper;
 }
