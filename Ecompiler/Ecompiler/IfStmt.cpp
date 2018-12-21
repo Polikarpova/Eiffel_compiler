@@ -142,7 +142,7 @@ IfStmt::~IfStmt(void)
 
 		if ( elseif && !elseBody ) {
 		
-			code.log("Write else-block to byte-code");
+			code.log("Write interanl IfStmt to byte-code");
 			this->elseif->toByteCode(code);
 		}
 

@@ -55,5 +55,31 @@ LoopStmt::~LoopStmt(void)
 
 /*virtual*/ ByteCode& LoopStmt::toByteCode(ByteCode &bc) {
 
-	return bc.log("/!\\ loopStmt not implemented yet");
+
+	int goto_start = 0, body_start = 0, until_start = 0, if_start = 0;
+
+	ByteCode code;
+
+	//загружаем блок стоящий между FROM и UNTIL
+	this->fromStmts->toByteCode(code);
+
+	goto_start = code.currentOffset;	//запоминаем место где у нас goto
+	code.goto_(0x0000);					//goto на проверку условия
+
+	body_start = code.currentOffset;	//запоминаем начало тела
+	this->body->toByteCode(code);		//тело
+
+	//перезаписываем goto
+	until_start = code.currentOffset;	//запоминаем начало проверки условия
+	int len = +(until_start - goto_start); 
+	code.gotoPos(goto_start + 1)
+		.u2( len )
+		.gotoEnd();
+	
+	this->condition->toByteCode(code);	//высчитываем условие
+	
+	if_start = code.currentOffset;
+	code.ifne( body_start - if_start );				//ifeq на тело
+
+	return bc.append(code);
 }

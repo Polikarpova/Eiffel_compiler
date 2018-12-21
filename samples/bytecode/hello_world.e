@@ -20,24 +20,26 @@ feature
 	make
 	local
 		isOk : BOOLEAN
+		i: INTEGER
 	do
+	
 		-- cat(2+2);
 		
-		--isOk := NOT true;
-		
-		IF NOT true THEN
-			Io.put_string("isOk");
-		ELSE
-			Io.put_string("!isOk");
+		FROM
+			--i := 0
+		UNTIL
+			not true
+		LOOP
+			--i := i+1;
 		END
 		
---		IF "a" < "b" THEN
---			Io.put_string("a < b");
---		ELSEIF "a" > "b" THEN
---			Io.put_string("a > b");
---		ELSE
---			Io.put_string("a = b");
---		END
+		IF "a" < "b" THEN
+			Io.put_string("a < b");
+		ELSEIF "a" > "b" THEN
+			Io.put_string("a > b");
+		ELSE
+			Io.put_string("a = b");
+		END
 	
 		--cat("Meow");
 		--Io.put_string("Hello world!!");
