@@ -8,6 +8,8 @@ MethodCall::MethodCall(void)
 	: Expression()
 {
 	noCreate = false;
+	class_of_arr_elem_constN = -1;
+	arrayElemType = NULL;
 }
 
 
@@ -104,7 +106,6 @@ MethodCall::~MethodCall(void)
 	return vmc;
 }
 
-
 void MethodCall::createMethodRef(Method* calledMethod) {
 
 	/*
@@ -158,6 +159,38 @@ void MethodCall::createMethodRef(Method* calledMethod) {
 	jc.value.method_ref[CONST_CLASS] = class_of_called_mtd_constN;
 	jc.value.method_ref[CONST_NAMEnTYPE] = method_name_and_type;
 	this->methodref_constN = currentMethod->metaClass->constantTable.put(jc);
+}
+
+void MethodCall::createArrayElemConstants(EiffelType* elemType) {
+	
+	this->arrayElemType = elemType;
+
+	// Make a constant for Element
+	JvmConstant jc = { UTF8_VALUE, 0, false };
+	QString buffer;
+
+	if(elemType->isArray()) // многомерный массив
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Multidimentional arrays are not supported. Attempt init element of array of type: %1. In MethodCall::createArrayElemConstants()")
+				.arg(elemType->toReadableString()),
+			this->tree_node->loc.first_line);
+		return;
+	}
+	else if(elemType->isReference()) // массив объектов (в т.ч. строк)
+	{
+		//-----------------Class-----------------//
+		//имя класса
+		jc.type = UTF8_VALUE;
+		buffer = ((EiffelClass*)elemType)->metaClass->fullJavaName(); // ->descriptor(); // 
+		jc.value.utf8 = & buffer;
+		short int class_utf8 = currentMethod->metaClass->constantTable.put(jc);
+		// Class Constant
+		jc.type = CLASS_N;
+		jc.value.class_const = class_utf8;
+		this->class_of_arr_elem_constN = currentMethod->metaClass->constantTable.put(jc);
+	}
 }
 
 ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
@@ -238,8 +271,8 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 
 	if(base_type->isArray()) // массив
 	{
-		bc.log(QString("generating code for Array Creation (new*) of %1 ...")
-			.arg(base_type->toReadableString()));
+		bc.log(QString("generating code for Array Creation (new*) of [%1] ...")
+			.arg(this->arrayElemType->toReadableString()));
 
 		int var_lower_i , var_upper_i;
 		LocalVariable *par_lower , *par_upper;
@@ -282,7 +315,7 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 
 		// array size is loaded onto stack
 
-		EiffelType* elem_type = ((EiffelArray*)base_type)->elementType;
+		EiffelType* elem_type = this->arrayElemType;
 		
 		if(elem_type->isArray()) // многомерный массив
 		{
@@ -299,7 +332,16 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 		}
 		else if(elem_type->isReference()) // массив объектов (в т.ч. строк)
 		{
-			bc.anewarray( class_of_called_mtd_constN ); // CLASS constant_N
+			// Check a constant for Element
+			if(class_of_arr_elem_constN < 1)
+			{
+				EiffelProgram::currentProgram->logError(
+					QString("internal"), 
+					QString("class_of_arr_elem_constN variable is not set. In MethodCall::arrayCreation()"),
+					this->tree_node->loc.first_line);
+			}
+
+			bc.anewarray( class_of_arr_elem_constN ); // Element CLASS constant_N
 		}
 	}
 

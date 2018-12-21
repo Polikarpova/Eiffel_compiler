@@ -84,6 +84,17 @@ FieldRef::~FieldRef(void)
 
 ByteCode& FieldRef::toByteCode(ByteCode &bc)
 {
+	// если  обращение к <arr>.count (<arr>.length)
+	if(this->left && this->left->expressionType()->isArray() && this->field->isReadOnly)
+	{
+		// только для массивов
+		this->left->toByteCode(bc); // load qualification
+		bc.arraylength();
+		
+		return bc;
+	}
+
+
 	// load a reference to an object ...
 	// call qualification as this->left
 	if(this->left)
@@ -108,6 +119,17 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 /*virtual*/ bool FieldRef::setRightValue(Expression* r, bool force /*= false*/)
 {
 	_isLeftValue = false;
+
+	if(this->field->isReadOnly)
+	{
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Invalid assignment: cannot assign to read-only field `%1`")
+				.arg(this->field->name),
+			r->tree_node->loc.first_line);
+		return false;
+		
+	}
 
 	if ( force || ! r->expressionType()->isVoid() ) {
 			

@@ -5,6 +5,7 @@
 Field::Field(void) 
 	: Feature()
 {
+	this->isReadOnly = false;
 }
 
 Field::~Field(void)

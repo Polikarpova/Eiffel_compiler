@@ -3,6 +3,7 @@
 #include "Method.h"
 #include "Expression.h"
 #include "EiffelClass.h"
+#include "EiffelArray.h"
 
 CreateStmt::CreateStmt(void)
 {
@@ -87,6 +88,13 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 			expr->loc.first_line);
 	
 		return NULL;
+	}
+
+	if(leftOfDot->type->isArray())
+	{
+		// init constants for array creation
+		EiffelType* elem_type = ((EiffelArray*)leftOfDot->type)->elementType;
+		general_method_call->createArrayElemConstants(elem_type);
 	}
 
 	general_method_call->left = NULL;

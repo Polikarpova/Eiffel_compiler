@@ -17,6 +17,8 @@ public:
 	virtual bool isMethod() { return false;}
 	virtual bool isField()  { return true; }
 
+	bool isReadOnly;
+
 	/*methods*/
 	static Field* create(MetaClass* mc, struct NFeature* node);
 

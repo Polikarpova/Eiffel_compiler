@@ -15,7 +15,7 @@ Feature::Feature(MetaClass* mc, EiffelType* type, const QString& name)
 	this->name = name;
 	this->type = type;
 	this->recordClients(NULL); // set ANY as client
-	addFlags = 0;
+	this->addFlags = 0;
 	// javaName
 	this->initJavaName();
 }

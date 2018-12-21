@@ -13,7 +13,7 @@ public:
 
 	/*fields*/
 
-	short int methodref_constN, class_of_called_mtd_constN;
+	short int methodref_constN, class_of_called_mtd_constN, class_of_arr_elem_constN;
 	bool noCreate;
 
 	//* метод, к которому производится доступ
@@ -21,12 +21,16 @@ public:
 
 	//* список аргументов метода
 	QList<Expression*> arguments;
+	
+	//* тип элемента массива
+	EiffelType* arrayElemType;
 
 
 	/*methods*/
 	static MethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
 
 	void createMethodRef(Method* calledMethod);
+	void createArrayElemConstants(EiffelType* elemType);
 
 	// при генерации учесть, что метод м.б. конструктором: использовать invokespecial вместо invokevirtual
 	// noQualify: опустить загрузку ссылки на объект

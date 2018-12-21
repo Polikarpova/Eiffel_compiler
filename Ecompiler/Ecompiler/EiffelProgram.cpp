@@ -188,6 +188,7 @@ void EiffelProgram::createRTL()
 	mc->methods[ mtd->name ] = mtd;
 	// `length`: size of array
 	fld = new Field(mc, int_type, "count");
+	fld->isReadOnly = true;
 	fld->javaName = "length";
 	fld->descriptor.clear(); // reset if been created
 	mc->fields[ fld->name ] = fld;

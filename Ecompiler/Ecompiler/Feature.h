@@ -36,7 +36,6 @@ public:
 	EiffelType* type;
 	bool isVoid() { return this->type->isVoid(); }
 
-
 	/**getters*/
 	virtual bool isMethod() = 0;
 	virtual bool isField() = 0;
