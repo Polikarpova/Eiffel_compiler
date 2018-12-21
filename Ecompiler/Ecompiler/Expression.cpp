@@ -254,12 +254,6 @@ EiffelType* Expression::getReturnType() {
 				type = oe->getReturnType();
 				}
 				break;
-			case RefnCallE:
-				break;
-			case PrecursorE:
-				break;
-			case SubscriptE:
-				break;
 			default:
 				type = NULL;
 				break; //unknown
