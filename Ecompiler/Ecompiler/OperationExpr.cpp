@@ -291,8 +291,19 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 
 	} else if ( this->tree_node->type == UPlusE ) {
 
+		this->left->toByteCode(bc);
+
 	} else if ( this->tree_node->type == UMinusE ) {
-	
+
+		this->left->toByteCode(bc);
+
+		if(this->left->expressionType()->isInteger()) {
+			bc.ineg();
+		}
+		if(this->left->expressionType()->isReal()) {
+			bc.fneg();
+		}
+
 	} else {
 	
 		EiffelProgram::currentProgram->logError(

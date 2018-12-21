@@ -31,7 +31,7 @@ CharExpr::~CharExpr(void)
 
 ByteCode& CharExpr::toByteCode(ByteCode &bc)
 {
-	//загрузить символльную константу
+	//загрузить символьную константу
 	bc.bipush(this->Char);
 
 	return bc;

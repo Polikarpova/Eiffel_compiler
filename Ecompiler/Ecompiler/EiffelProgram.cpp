@@ -182,7 +182,7 @@ void EiffelProgram::createRTL()
 	// ARRAY class
 	mc = new RTLMetaClass(this, QString("ARRAY"));
 	// type
-	mc->setType(new EiffelArray( this->findClass("ANY")->getType() ));
+	mc->setType(new EiffelArray( /*element=*/ this->findClass("ANY")->getType() ));
 	// `make`: setup auto-created constructor
 	mtd = mc->findDefaultConstructor();
 	mtd->isCreator = true; // set again to be sure
