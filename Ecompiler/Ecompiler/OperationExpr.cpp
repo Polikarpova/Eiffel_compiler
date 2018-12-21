@@ -269,10 +269,10 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 
 	if ( this->tree_node->type == NotE ) {
 	
-		bc.iconst_(1);
+		bc.iconst_(0);
 		this->left->toByteCode(bc);
 		bc.ifne(+3+2);
-		bc.pop().iconst_(0);
+		bc.pop().iconst_(1);
 
 		//NExprList args;
 		//args.first = this->left->tree_node;

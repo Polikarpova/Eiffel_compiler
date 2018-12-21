@@ -30,7 +30,8 @@ public:
 
 	// при генерации учесть, что метод м.б. конструктором: использовать invokespecial вместо invokevirtual
 	// noQualify: опустить загрузку ссылки на объект
-	ByteCode& toByteCode(ByteCode &, bool noQualify = false);
+	ByteCode& toByteCode(ByteCode &, bool noQualify);
+	ByteCode& toByteCode(ByteCode &bc) {return toByteCode(bc, false); };
 
 
 	ByteCode& generateCreation(ByteCode &);

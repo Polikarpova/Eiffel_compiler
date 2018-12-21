@@ -51,7 +51,7 @@ ByteCode& IntExpr::toByteCode(ByteCode &bc)
 	} else if ( this->Int >= -1 && this->Int <= 5) {
 	
 		bc.iconst_(this->Int);
-	} else if ( this->Int >= 0x80-1 || this->Int <= -0x80 ) {
+	} else if ( this->Int < 0x80-1 || this->Int > -0x80 ) {
 			
 		bc.bipush(this->Int);
 	} else {
