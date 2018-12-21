@@ -327,7 +327,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			}
 			//если это число с плавающей запятой
 			else {
-				bc.dmul();
+				bc.fmul();
 			}
 
 		} else if ( this->tree_node->type == DivE ) {
@@ -339,7 +339,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			}
 			//если это число с плавающей запятой
 			else {
-				bc.ddiv();
+				bc.fdiv();
 			}
 
 		} else if ( this->tree_node->type == PlusE ) {
@@ -349,9 +349,13 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		
 				bc.iadd();
 			}
+			else if ( this->left->tree_node->type == StringE ) {
+			
+				//печатаем строку
+			}
 			//если это число с плавающей запятой
 			else {
-				bc.dadd();
+				bc.fadd();
 			}
 
 		} else if ( this->tree_node->type == MinusE ) {
@@ -363,7 +367,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			}
 			//если это число с плавающей запятой
 			else {
-				bc.dsub();
+				bc.fsub();
 			}
 
 		} 

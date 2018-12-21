@@ -205,9 +205,9 @@ ByteCode& iadd() {
 
 	return *this;
 }
-ByteCode& dadd() {
-	this->log(QString("dadd"));
-	this->u1(0x63);
+ByteCode& fadd() {
+	this->log(QString("fadd"));
+	this->u1(0x62);
 	this->incStack(-1);
 
 	return *this;
@@ -220,9 +220,9 @@ ByteCode& imul() {
 
 	return *this;
 }
-ByteCode& dmul() {
-	this->log(QString("dmul"));
-	this->u1(0x6b);
+ByteCode& fmul() {
+	this->log(QString("fmul"));
+	this->u1(0x6a);
 	this->incStack(-1);
 
 	return *this;
@@ -235,9 +235,9 @@ ByteCode& isub() {
 
 	return *this;
 }
-ByteCode& dsub() {
-	this->log(QString("dsub"));
-	this->u1(0x67);
+ByteCode& fsub() {
+	this->log(QString("fsub"));
+	this->u1(0x66);
 	this->incStack(-1);
 
 	return *this;
@@ -250,9 +250,9 @@ ByteCode& idiv() {
 
 	return *this;
 }
-ByteCode& ddiv() {
-	this->log(QString("ddiv"));
-	this->u1(0x6f);
+ByteCode& fdiv() {
+	this->log(QString("fdiv"));
+	this->u1(0x6e);
 	this->incStack(-1);
 
 	return *this;
