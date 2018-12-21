@@ -26,7 +26,7 @@ OperationExpr::~OperationExpr(void)
 		oe->right = Expression::create(mtd, expr->right);
 	}
 	
-	oe->type = oe->getReturnType()
+	oe->type = oe->getReturnType();
 	bool success = oe->type != NULL; // oe->expressionType();
 	if(!success)
 		delete oe;
