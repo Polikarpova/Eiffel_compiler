@@ -114,6 +114,7 @@
     <ClCompile Include="ByteCode.cpp" />
     <ClCompile Include="CallStmt.cpp" />
     <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="CharExpr.cpp" />
     <ClCompile Include="ConstantTable.cpp" />
     <ClCompile Include="CreateStmt.cpp" />
     <ClCompile Include="EiffelANY.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="BoolExpr.h" />
     <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CallStmt.h" />
+    <ClInclude Include="CharExpr.h" />
     <ClInclude Include="CreateStmt.h" />
     <ClInclude Include="EiffelANY.h" />
     <ClInclude Include="EiffelNONE.h" />
