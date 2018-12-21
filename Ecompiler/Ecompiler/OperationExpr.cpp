@@ -282,8 +282,7 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 		//MethodCall::create(this->currentMethod, currentMethod->metaClass->findMethod("_1_NotE"), &args)->toByteCode(bc);
 
 	} else if ( this->tree_node->type == UPlusE ) {
-		
-		this->left->toByteCode(bc);
+
 	} else if ( this->tree_node->type == UMinusE ) {
 	
 	} else {
