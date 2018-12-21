@@ -84,3 +84,30 @@ feature
 		Result := Current
 	end
 end
+
+class SORT_ALG
+feature {NONE}
+	bubble(arr : ARRAY[INTEGER], ascending: BOOLEAN) : ARRAY[INTEGER]
+	do
+			Result := arr
+	end
+	
+end
+
+class SORTER
+
+feature {NONE}
+	ascending: BOOLEAN
+feature
+	
+	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
+	local
+		i, buf: INTEGER
+	do
+		IF ascending THEN
+			Result := arr
+		ELSE
+			Result := arr
+		END
+	end
+end
