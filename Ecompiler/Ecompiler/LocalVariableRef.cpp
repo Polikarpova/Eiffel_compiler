@@ -6,6 +6,7 @@ LocalVariableRef::LocalVariableRef(void)
 	: Expression()
 {
 	this->locVar = 0;
+	this->type = 0;
 }
 
 
