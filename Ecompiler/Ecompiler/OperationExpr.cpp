@@ -26,14 +26,17 @@ OperationExpr::~OperationExpr(void)
 		oe->right = Expression::create(mtd, expr->right);
 	}
 	
-bool success = oe->expressionType();
+	oe->type = oe->getReturnType()
+	bool success = oe->type != NULL; // oe->expressionType();
+	if(!success)
+		delete oe;
 
 	return success ? oe : 0;
 }
 
 EiffelType* OperationExpr::getReturnType( ) {
 
-	//только слева
+	//только слева (унарная операция)
 	if ( this->left && !this->right ) {
 	
 		if ( this->tree_node->type == NotE) {
