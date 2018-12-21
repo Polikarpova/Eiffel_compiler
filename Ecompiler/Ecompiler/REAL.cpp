@@ -1,11 +1,13 @@
 #include "REAL.h"
 
+/*static*/ EiffelREAL* EiffelREAL::singleton = NULL;
 
-REAL::REAL(void)
+
+EiffelREAL::~EiffelREAL(void)
 {
 }
 
-
-REAL::~REAL(void)
+/*virtual*/ bool EiffelREAL::canCastTo(const EiffelType* otherType) const
 {
+	return otherType->isReal();
 }

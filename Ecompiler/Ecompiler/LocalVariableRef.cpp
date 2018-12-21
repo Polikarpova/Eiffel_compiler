@@ -31,6 +31,8 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 			bc.astore_auto(this->locVar->n);
 		else if(this->type->isInteger())
 			bc.istore(this->locVar->n);
+		else if(this->type->isReal())
+			bc.fstore(this->locVar->n);
 	}
 	else
 	{
@@ -38,6 +40,8 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 			bc.aload_auto(this->locVar->n);
 		else if(this->type->isInteger())
 			bc.iload(this->locVar->n);
+		else if(this->type->isReal())
+			bc.fload(this->locVar->n);
 	}
 
 	return bc;

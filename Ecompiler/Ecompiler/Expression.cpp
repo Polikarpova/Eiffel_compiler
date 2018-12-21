@@ -5,6 +5,7 @@
 #include "BoolExpr.h"
 #include "OperationExpr.h"
 #include "CharExpr.h"
+#include "RealExpr.h"
 
 #include "MetaClass.h"
 #include "EiffelClass.h"
@@ -175,7 +176,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		case IntE:
 			return IntExpr::create(mtd, s);
 		case RealE:
-			return 0;
+			return RealExpr::create(mtd, s);
 		case CharE:
 			return CharExpr::create(mtd, s);
 		case StringE:

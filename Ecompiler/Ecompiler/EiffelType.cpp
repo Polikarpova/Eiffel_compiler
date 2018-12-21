@@ -5,6 +5,9 @@
 #include "EiffelClass.h"
 #include "EiffelArray.h"
 
+#include "CHARACTER.h"
+#include "REAL.h"
+
 #include <typeinfo>
 
 EiffelType::EiffelType(void)
@@ -55,9 +58,9 @@ EiffelType::~EiffelType(void)
 		case IntegerV:
 			return IntegerType::instance();
 		case RealV:
-			return 0;
+			return EiffelREAL::instance();
 		case CharacterV:
-			return (EiffelSTRING*) EiffelProgram::currentProgram->findClass("CHARACTER");
+			return (EiffelCHARACTER*) EiffelProgram::currentProgram->findClass("CHARACTER");
 		case StringV:
 			return (EiffelSTRING*) EiffelProgram::currentProgram->findClass("STRING");
 		case BooleanV:

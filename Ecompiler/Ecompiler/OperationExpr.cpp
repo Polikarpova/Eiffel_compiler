@@ -332,7 +332,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		} else if ( this->tree_node->type == MulE ) {
 			
 			//если складываются инты
-			if ( this->left->tree_node->type == IntE ) {
+			if ( this->left->type->isInteger() ) {
 		
 				bc.imul();
 			}
@@ -344,7 +344,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		} else if ( this->tree_node->type == DivE ) {
 	
 			//если складываются инты
-			if ( this->left->tree_node->type == IntE ) {
+			if ( this->left->type->isInteger() ) {
 		
 				bc.idiv();
 			}
@@ -356,11 +356,11 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		} else if ( this->tree_node->type == PlusE ) {
 	
 			//если складываются инты
-			if ( this->left->tree_node->type == IntE ) {
-		
+			if ( this->left->type->isInteger() ) {
+
 				bc.iadd();
 			}
-			else if ( this->left->tree_node->type == StringE ) {
+			else if ( this->left->type->isString() ) {
 			
 				//печатаем строку
 			}
@@ -372,7 +372,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		} else if ( this->tree_node->type == MinusE ) {
 		
 			//если складываются инты
-			if ( this->left->tree_node->type == IntE ) {
+			if ( this->left->type->isInteger() ) {
 		
 				bc.isub();
 			}

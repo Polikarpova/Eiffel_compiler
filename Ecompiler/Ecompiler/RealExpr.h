@@ -2,11 +2,6 @@
 #include "Expression.h"
 #include <qstring.h>
 
-//всегда записывается в таблицу констант
-//у неё свой тип
-//называется DOUBLE:
-// #2 = Double             0.01d
-
 class RealExpr : public Expression
 {
 
@@ -16,7 +11,7 @@ public:
 
 	/*fields*/
 	short int constTableN;
-	double Real;
+	float Real;
 
 	/*methods*/
 	static RealExpr* create(Method* mtd, struct NExpr* expr);
