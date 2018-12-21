@@ -188,6 +188,7 @@ ByteCode& Method::generateCodeAttribute(ByteCode &bc) {
 	bc.u2( body_bc.maxStackSize + 0 ); // прибавить на всякий случай ?
 
 	// кол-во локальных переменных
+	bc.log(QString("Count of local variables: %1.").arg(this->localVariables.size()));
 	bc.u2( this->localVariables.size() );
 
 	// Длина собственно байт-кода

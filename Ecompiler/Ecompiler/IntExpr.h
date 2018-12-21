@@ -12,7 +12,7 @@ public:
 
 	/*fields*/
 	short int constTableN;
-	int Int;
+	signed long int Int;
 
 	/*methods*/
 	static IntExpr* create(Method* mtd, struct NExpr* expr);
