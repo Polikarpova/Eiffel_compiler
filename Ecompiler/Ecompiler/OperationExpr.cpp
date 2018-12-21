@@ -378,6 +378,8 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 
+	// iadd ior ixor
+
 	return bc;
 }
 

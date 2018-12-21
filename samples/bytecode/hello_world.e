@@ -53,21 +53,29 @@ create
 	make
 
 feature
+	i: INTEGER
 	a: ARRAY[INTEGER]
 	b: ARRAY[String]
 	make
 	do
 		-- io.put_string("Make array!");
 		CREATE self.a.make(0,17);
-		-- io.new_line;
-		io.put_integer(a.count);
-		-- 
-		CREATE Current.b.make(0,13);
-		-- b[4] = "my String";
-		io.new_line;
-		io.put_integer(b.count);
-		-- io.new_line();
-		-- io.put_string(b[4]);
+			io.put_integer(a.count);
+			io.new_line;
+		i := 1
+		a[i] := 123;
+		i := 0
+		a[i] := 456;
+			Io.put_integer(a[i]);
+		i := 1
+			Io.put_integer(a[i]);
+			io.new_line;
+		CREATE Current.b.make(0,13)
+		b[4] := "my String"
+		io.new_line
+		io.put_integer(b.count)
+		io.new_line
+		io.put_string(b[4])
 	end
 	
 	self: ARRAY_TEST

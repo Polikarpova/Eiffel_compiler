@@ -10,6 +10,7 @@
 #include "Method.h"
 #include "LocalVariableRef.h"
 #include "FieldRef.h"
+#include "ArrayElemRef.h"
 #include "MethodCall.h"
 
 Expression::Expression(void)
@@ -207,7 +208,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		case PrecursorE:
 			return 0;
 		case SubscriptE:
-			return 0;
+			return ArrayElemRef::create(mtd, s);
 		default:
 			return 0; //unknown
 	}
