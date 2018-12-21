@@ -208,6 +208,7 @@ feature_clauses:  FEATURE clients_opt feature_declaration_list  {$$=$3;}
 ;
 
 clients_opt: /*empty*/	{$$=registerClients(createIdList(createId("ANY")));}
+| '{'  '}'				{$$=registerClients(createIdList(createId("NONE")));}
 | '{' ID '}'			{$$=registerClients(createIdList(createId($2)));}
 | '{' id_list_2_or_more '}'	{$$=registerClients($2);}
 ;
