@@ -317,6 +317,8 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 
 ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
+	EiffelType* t = this->left->type;
+
 	//если это точно операция арифметическая
 	if ( this->tree_node->type == PowerE || this->tree_node->type == MulE || this->tree_node->type == DivE 
 		|| this->tree_node->type == PlusE || this->tree_node->type == MinusE) {
@@ -379,7 +381,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
 				bc.iadd();
 			}
-			else if ( this->left->type->isString() ) {
+			else if ( this->left->type->toReadableString() == "STRING" ) {
 			
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"addS", 
@@ -453,7 +455,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"equalS", 
 					QList<Expression*>()
@@ -493,7 +495,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"notEqualS", 
 					QList<Expression*>()
@@ -533,7 +535,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"lessS", 
 					QList<Expression*>()
@@ -573,7 +575,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"greaterS", 
 					QList<Expression*>()
@@ -613,7 +615,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"lessOrEqualS", 
 					QList<Expression*>()
@@ -653,7 +655,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isString() ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"greaterOrEqualS", 
 					QList<Expression*>()
