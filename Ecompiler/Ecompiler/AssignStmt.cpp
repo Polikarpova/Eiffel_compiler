@@ -47,7 +47,7 @@ AssignStmt::~AssignStmt(void)
 	as->leftValue = left;
 
 	// report creation
-	qDebug("created AssignStmt: %s", QString("type `%1` := `%2`.")
+	qDebug("created AssignStmt: %s", QString("`%1` := `%2`.")
 					.arg(left->type->toReadableString(), expr->type->toReadableString())
 					.toLocal8Bit().data()
 					);

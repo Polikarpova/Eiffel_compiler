@@ -28,7 +28,7 @@ feature {NONE}
 	do
 
 	end
-feature {}
+feature {NONE}
 	bubble(arr : ARRAY[INTEGER] ; ascending: BOOLEAN) : ARRAY[INTEGER]
 	do
 			Result := arr
@@ -70,9 +70,9 @@ class
 		-- sort --, init
 		 -- end
 
-feature {NONE}
+feature {START}
 	--init	do	end
-feature
+-- feature
 	sort2(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	local
 		i, buf: INTEGER

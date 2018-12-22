@@ -101,11 +101,19 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	Feature* called_feature = qualification_class->findFeature(id);
 
 	if(called_feature == NULL) {
-		EiffelProgram::currentProgram->logError(
-			QString("semantic"), 
-			QString("Using undefined feature `%1` of class `%4`. (In routine: %2.%3)")
-				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
-			node->loc.first_line);
+		if(node->left == NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Using undefined local variable or feature `%1`. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name),
+				node->loc.first_line);
+		} else {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Using undefined feature `%1` of class `%4`. (In routine: %2.%3)")
+					.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+				node->loc.first_line);
+		}
 		return NULL;
 	}
 

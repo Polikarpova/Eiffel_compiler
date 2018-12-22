@@ -93,10 +93,10 @@ bool Feature::isExportedTo(MetaClass* clientMetaClass)
 {
 	EiffelClass* clientClass = (EiffelClass*) clientMetaClass->getType();
 
-	qDebug("TESTING export of `%s.%s` to `%s` ...", 
+	/*qDebug("TESTING export of `%s.%s` to `%s` ...", 
 		this->metaClass->name().toLocal8Bit().data(),
 		this->name.toLocal8Bit().data(),
-		clientMetaClass->name().toLocal8Bit().data());
+		clientMetaClass->name().toLocal8Bit().data());*/
 
 	if( ! clientClass->metaClass )
 	{
@@ -108,9 +108,9 @@ bool Feature::isExportedTo(MetaClass* clientMetaClass)
 	}
 
 	// явл€етс€ ли клиент потомком этого класса (видимость protected)
-	bool b = clientClass->canCastTo(this->metaClass->getType());
+	if (clientClass->canCastTo(this->metaClass->getType()))
 	{
-		qDebug(" ... YES: direct child");
+		//qDebug(" ... YES: direct child");
 		return true;
 	}
 		
@@ -129,11 +129,11 @@ bool Feature::isExportedTo(MetaClass* clientMetaClass)
 		bool b = clientClass->canCastTo(metaclass_client->getType());
 		if( b )
 		{
-			qDebug(" ... YES: child of declared client `%s`.", metaclass_client->name().toLocal8Bit().data());
+			//qDebug(" ... YES: child of declared client `%s`.", metaclass_client->name().toLocal8Bit().data());
 			return true;
 		}
 	}
-	qDebug(" ... NO: no common children.");
+	//qDebug(" ... NO: no common children.");
 	return false;
 }
 
