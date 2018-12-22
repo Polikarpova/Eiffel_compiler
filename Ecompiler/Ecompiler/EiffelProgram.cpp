@@ -177,7 +177,7 @@ void EiffelProgram::createRTL()
 	// IntegerType class
 	this->classes[ int_type->name() ] = int_type;
 
-	// EiffelREAL class
+	// REAL class
 	this->classes[ real_type->name() ] = real_type;
 
 	// STRING class
@@ -211,10 +211,12 @@ void EiffelProgram::createRTL()
 	mc->methods[ mtd->name ] = mtd;
 	this->classes[ mc->name() ] = mc;
 
-
+	// NONE
 	mc = new EiffelNONE(this);
 	this->classes[ mc->name() ] = mc;
 
+
+	// ANY
 	mc = new EiffelANY(this);
 	fld = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
 	mc->fields[ fld->name ] = fld;

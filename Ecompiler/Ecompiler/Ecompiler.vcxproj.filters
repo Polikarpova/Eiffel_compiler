@@ -26,19 +26,10 @@
     <ClCompile Include="print2dot.cpp">
       <Filter>Source Files\flex+bison</Filter>
     </ClCompile>
-    <ClCompile Include="bisontest.cpp">
-      <Filter>Source Files\flex+bison</Filter>
-    </ClCompile>
     <ClCompile Include="eiffel_bison.tab.cpp">
       <Filter>Source Files\flex+bison</Filter>
     </ClCompile>
     <ClCompile Include="eiffel_flex.cpp">
-      <Filter>Source Files\flex+bison</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_bisontest.cpp">
-      <Filter>Source Files\flex+bison</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_bisontest.cpp">
       <Filter>Source Files\flex+bison</Filter>
     </ClCompile>
     <ClCompile Include="REAL.cpp">
@@ -322,10 +313,5 @@
     <Filter Include="Source Files\ExprClasses">
       <UniqueIdentifier>{39ebc258-eea0-491b-967c-144371fbc069}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="bisontest.h">
-      <Filter>Header Files\flex+bison</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

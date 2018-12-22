@@ -332,7 +332,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	if(name.compare("NONE") == 0) {
 		program->logError(
 			QString("semantic"), 
-			QString("Inheritance form special frozen class `NONE` is not allowed; (inheritance clause in class `%1`)")
+			QString("Inheritance form special frozen class `NONE` is not allowed (inheritance clause in class `%1`)")
 				.arg(this->name()),
 			node->loc.first_line);
 				
@@ -433,6 +433,9 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 			if(i == List->last) break;
 		}
 	}
+
+	// ... проверить конфликты имён с наследуемыми членами
+
 	return true;
 }
 

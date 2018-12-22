@@ -20,8 +20,6 @@ extern int syntax_errors_logged;
 #include "Field.h"
 #include "Method.h"
 
-// tests
-#include "bisontest.h"
 
 /**
 arg[0]: -
@@ -117,12 +115,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	if(false)
-	{
-		BisonTest testClass(0);
-		QTest::qExec(&testClass);
-		return 0;
-	}
+	// запуск компилятора ...
 
 	char in_fnm[100];
 	char file_name[100];
@@ -142,6 +135,7 @@ int main(int argc, char *argv[])
 
 		//char infile[] = "../../samples/syntax/class_copy";
 		char infile[] = "../../samples/bytecode/hello_world";
+		//char infile[] = "../../samples/bytecode/sort";
 		strcpy(in_fnm, infile);
 	}
 		
@@ -167,7 +161,8 @@ int main(int argc, char *argv[])
 		printf("check out tree in %s\n",file_name);
 
 		// run dot
-		/// для отладки /// QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
+		/// для отладки /// 
+		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
 
 
 		// make semantic classes
