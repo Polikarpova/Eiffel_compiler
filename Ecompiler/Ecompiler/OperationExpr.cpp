@@ -348,9 +348,8 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			if ( this->left->type->isInteger() ) {
 		
 				bc.imul();
-			}
-			//если это число с плавающей запятой
-			else {
+			} else if ( this->left->type->isReal() ) {
+
 				bc.fmul();
 			}
 
@@ -364,9 +363,8 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			if ( this->left->type->isInteger() ) {
 		
 				bc.idiv();
-			}
-			//если это число с плавающей запятой
-			else {
+			} else if ( this->left->type->isReal() ) {
+				
 				bc.fdiv();
 			}
 
@@ -380,8 +378,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 				this->right->toByteCode(bc);
 
 				bc.iadd();
-			}
-			else if ( this->left->type->toReadableString() == "STRING" ) {
+			} else if ( this->left->type->toReadableString() == "STRING" ) {
 			
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"addS", 
@@ -391,9 +388,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			}
-			//если это число с плавающей запятой
-			else {
+			} else if ( this->left->type->isReal() ) {
 				
 				//грузим левое и правое число
 				this->left->toByteCode(bc);
@@ -412,9 +407,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			if ( this->left->type->isInteger() ) {
 		
 				bc.isub();
-			}
-			//если это число с плавающей запятой
-			else {
+			} else if ( this->left->type->isReal() ) {
 				bc.fsub();
 			}
 		} 
