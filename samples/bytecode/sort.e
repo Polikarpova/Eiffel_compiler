@@ -3,15 +3,18 @@ create
 	make
 
 feature
-	b: ARRAY[String]
+	sa: ARRAY[String]
 	make
 	local
-		i0: INTEGER
-		s: BUBBLE
+		ia: ARRAY[Integer]
+		i0: INTEGER 
+		s: BUBBLE_SORTER
 	do
-		CREATE s -- `make` is called
+		-- CREATE s -- `make` is called
 --		if s.ascending then    end
-		s.init
+		ia := s.sort2(ia) -- BUBBLE_SORTER
+		ia := s.sort(ia)  -- SORTER
+		ia := s.bubble(ia, true)-- SORT_ALG
 
 	end
 end
@@ -35,8 +38,8 @@ end
 class
 	SORTER
 
- inherit
- 	SORT_ALG 
+	inherit
+		SORT_ALG 
 		-- redefine init end
 
 feature {ANY}
@@ -59,10 +62,10 @@ feature
 end
 
 class
-	BUBBLE
+	BUBBLE_SORTER
 
-inherit
-	SORTER  
+	inherit
+		SORTER  
 		-- redefine
 		-- sort --, init
 		 -- end
@@ -70,7 +73,7 @@ inherit
 feature {NONE}
 	--init	do	end
 feature
-	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
+	sort2(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	local
 		i, buf: INTEGER
 	do
