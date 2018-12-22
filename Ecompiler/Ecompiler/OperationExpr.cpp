@@ -328,6 +328,17 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		if ( this->tree_node->type == PowerE ) {
 
 			//вызов функции из RTL
+			if ( this->left->type->isInteger() ) {
+		
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"powerI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			}
 
 		} else if ( this->tree_node->type == MulE ) {
 			
@@ -362,7 +373,14 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			}
 			else if ( this->left->type->isString() ) {
 			
-				//печатаем строку
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"addS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
 			}
 			//если это число с плавающей запятой
 			else {
@@ -380,7 +398,6 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			else {
 				bc.fsub();
 			}
-
 		} 
 	
 	} else {
@@ -405,17 +422,39 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 	
 		if ( this->tree_node->type == EqualsE ) {
 
+			if ( this->left->type->isInteger() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"equalI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isReal() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"equalF", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			}
+
 		} else if ( this->tree_node->type == NotEqualE ) {
 
-			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-				"notEqualI", 
-				QList<Expression*>()
-				<< this->left
-				<< this->right
-			);
+			if ( this->left->type->isInteger() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"notEqualI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
 
-			call_helper->toByteCode(bc);
-			
+				call_helper->toByteCode(bc);
+			}
+
 		} else if ( this->tree_node->type == LessE ) {
 
 		} else if ( this->tree_node->type == GreaterE ) {

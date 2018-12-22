@@ -23,7 +23,7 @@ public:
 
 	virtual bool canCastTo(const EiffelType* otherType) const;
 
-	QString descriptor() {return QString("D");}
+	QString descriptor() {return QString("F");}
 	QString toReadableString() const {return "REAL";};
 
 	static EiffelREAL* singleton;

@@ -20,6 +20,11 @@ public class Helper {
         return (float)Math.pow(left, right);
     }
     
+    //cкладывание строк
+    public String addS(String left, String right) {
+        return left+right;
+    }
+    
     //==
     public boolean equalI(int left, int right) {
         return left == right;

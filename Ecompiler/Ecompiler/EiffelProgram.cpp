@@ -203,12 +203,41 @@ void EiffelProgram::createRTL()
 
 	// Helper class
 	mc = new RTLMetaClass(this, QString("Helper"));
+	mtd = new Method(mc, int_type, "powerI",
+		QList<LocalVariable>() 
+		<< LocalVariable(int_type, "left") 
+		<< LocalVariable(int_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+	
+	mtd = new Method(mc, string_type, "addS",
+		QList<LocalVariable>() 
+		<< LocalVariable(string_type, "left") 
+		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "equalI",
+		QList<LocalVariable>() 
+		<< LocalVariable(int_type, "left") 
+		<< LocalVariable(int_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "equalF",
+		QList<LocalVariable>() 
+		<< LocalVariable(real_type, "left") 
+		<< LocalVariable(real_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	mtd = new Method(mc, bool_type, "notEqualI",
 		QList<LocalVariable>() 
 		<< LocalVariable(int_type, "left") 
 		<< LocalVariable(int_type, "right")
 		);
 	mc->methods[ mtd->name ] = mtd;
+
 	this->classes[ mc->name() ] = mc;
 
 	// NONE
