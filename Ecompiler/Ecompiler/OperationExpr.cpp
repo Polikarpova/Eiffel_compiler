@@ -396,20 +396,100 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
 ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
-	MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-		"notEqualI", 
-		QList<Expression*>()
-		<< this->left
-		<< this->right
-		);
+	if ( this->tree_node->type == EqualsE || this->tree_node->type == NotEqualE || this->tree_node->type == LessE 
+		|| this->tree_node->type == GreaterE || this->tree_node->type == LessOrEqualE || this->tree_node->type == GreaterOrEqualE ) {
+	
+		//грузим левое и правое число
+		this->left->toByteCode(bc);
+		this->right->toByteCode(bc);
+	
+		if ( this->tree_node->type == EqualsE ) {
 
-	return call_helper->toByteCode(bc);
+		} else if ( this->tree_node->type == NotEqualE ) {
+
+			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+				"notEqualI", 
+				QList<Expression*>()
+				<< this->left
+				<< this->right
+			);
+
+			call_helper->toByteCode(bc);
+			
+		} else if ( this->tree_node->type == LessE ) {
+
+		} else if ( this->tree_node->type == GreaterE ) {
+
+		} else if ( this->tree_node->type == LessOrEqualE ) {
+
+		} else if ( this->tree_node->type == GreaterOrEqualE ) {
+
+		}
+	} else {
+	
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Unknown comparsion operation in code"),
+			this->tree_node->loc.first_line);
+	}
+
+	return bc;
 }
 
 ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 
-	// iadd ior ixor
+	if ( this->tree_node->type == AndE || this->tree_node->type == AndThenE || this->tree_node->type == OrE 
+		|| this->tree_node->type == OrElseE || this->tree_node->type == XORE || this->tree_node->type == ImpliesE ) {
 
+	
+		if ( this->tree_node->type == AndE ) {
+
+		} else if ( this->tree_node->type == AndThenE ) {
+			
+			//грузим левое
+			this->left->toByteCode(bc);
+			bc.dup();
+
+			int if_start = bc.currentOffset;
+			bc.ifeq(0x0000);
+
+			bc.pop();
+			this->right->toByteCode(bc);
+
+			bc.gotoPos(if_start + 1)
+				.u2(bc.size() - if_start)
+				.gotoEnd();
+
+		} else if ( this->tree_node->type == OrE ) {
+
+		} else if ( this->tree_node->type == OrElseE ) {
+
+			//грузим левое
+			this->left->toByteCode(bc);
+			bc.dup();
+
+			int if_start = bc.currentOffset;
+			bc.ifne(0x0000);
+
+			bc.pop();
+			this->right->toByteCode(bc);
+
+			bc.gotoPos(if_start + 1)
+				.u2(bc.size() - if_start)
+				.gotoEnd();
+
+		} else if ( this->tree_node->type == XORE ) {
+
+		} else if ( this->tree_node->type == ImpliesE ) {
+
+		}
+	} else {
+	
+		EiffelProgram::currentProgram->logError(
+			QString("internal"), 
+			QString("Unknown logic operation in code"),
+			this->tree_node->loc.first_line);
+	}
 
 	return bc;
 }
