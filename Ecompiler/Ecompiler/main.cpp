@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		printf("tree was not viewed.\n");
+		printf("tree was not exported to dot.\n");
 	}
 
 	if(argc <= 1) // debug mode
