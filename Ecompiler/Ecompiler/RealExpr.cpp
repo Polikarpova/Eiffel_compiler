@@ -39,7 +39,10 @@ RealExpr::~RealExpr(void)
 ByteCode& RealExpr::toByteCode(ByteCode &bc)
 {
 	// загрузить число с плавающей запятой
-	bc.ldc(this->constTableN);
+	if(constTableN < 256)
+		bc.ldc(constTableN);
+	else
+		bc.ldc_w(constTableN);
 
 	return bc;
 }
