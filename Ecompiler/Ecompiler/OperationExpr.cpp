@@ -396,12 +396,20 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
 ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
-	return bc;
+	MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+		"notEqualI", 
+		QList<Expression*>()
+		<< this->left
+		<< this->right
+		);
+
+	return call_helper->toByteCode(bc);
 }
 
 ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 
 	// iadd ior ixor
+
 
 	return bc;
 }

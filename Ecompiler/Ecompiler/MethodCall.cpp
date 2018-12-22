@@ -23,7 +23,7 @@ MethodCall::~MethodCall(void)
 {
 	int source_line = -1;
 
-	MethodCall* vmc = new MethodCall();
+	QList<Expression*> arguments;
 
 	//Заполнить массив аргументов выражениями
 	//arguments << <Expr>*
@@ -34,11 +34,37 @@ MethodCall::~MethodCall(void)
 			// add expr
 			Expression* arg_expr = Expression::create(context_mtd, i);
 			if(arg_expr)
-				vmc->arguments << arg_expr;
+				arguments << arg_expr;
 
 			if(i == List->last) break;
 		}
 	}
+
+	return MethodCall::create(context_mtd, calledMethod, arguments, qualification, source_line);
+}
+
+/*static*/ MethodCall* MethodCall::create(Method* context_mtd, Method* calledMethod, QList<Expression*> arguments /*= QList<Expression*>()*/, Expression* qualification /*= NULL*/, int source_line )
+{
+	////int source_line = -1;
+
+	MethodCall* vmc = new MethodCall();
+
+	////Заполнить массив аргументов выражениями
+	////arguments << <Expr>*
+	//struct NExprList* List = argList;
+	//if(List) {
+	//	for(struct NExpr* i = List->first; i != NULL ; i = i->next) {
+	//		source_line = i->loc.first_line;
+	//		// add expr
+	//		Expression* arg_expr = Expression::create(context_mtd, i);
+	//		if(arg_expr)
+	//			vmc->arguments << arg_expr;
+
+	//		if(i == List->last) break;
+	//	}
+	//}
+
+	vmc->arguments = arguments;
 
 	// проверка соответствия количества аргументов
 

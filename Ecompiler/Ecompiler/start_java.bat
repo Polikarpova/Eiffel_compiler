@@ -11,7 +11,7 @@ REM 		!! copy rtl classes to out/ first !!
 
 REM java -noverify -classpath out  eiffel.HELLO_WORLD
 
-java -classpath out  eiffel.ARRAY_TEST
+java -noverify -classpath out  eiffel.ARRAY_TEST
 
 
 REM java -classpath java  eiffel.MAKE_ARRAY

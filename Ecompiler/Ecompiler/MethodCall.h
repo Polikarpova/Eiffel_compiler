@@ -29,6 +29,8 @@ public:
 	/*methods*/
 	static MethodCall* create(Method* context_mtd, Method* calledMethod, struct NExprList* argList = NULL, Expression* qualification = NULL );
 
+	static MethodCall* create(Method* context_mtd, Method* calledMethod, QList<Expression*> arguments/* = QList<Expression*>() */, Expression* qualification = NULL, int source_line = -1 );
+
 	void createMethodRef(Method* calledMethod);
 	void createArrayElemConstants(EiffelType* elemType);
 

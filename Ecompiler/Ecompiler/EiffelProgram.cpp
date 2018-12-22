@@ -9,7 +9,9 @@
 #include "REAL.h"
 
 #include "Field.h"
+#include "FieldRef.h"
 #include "Method.h"
+#include "MethodCall.h"
 
 /*static*/ EiffelProgram* EiffelProgram::currentProgram = NULL;
 
@@ -76,6 +78,30 @@ MetaClass* EiffelProgram::findClass(const QString& upperName)
 	return classes.value(upperName, NULL);
 }
 
+MethodCall* EiffelProgram::callHelper(Method* context_mtd, QString helperName, QList<Expression*> arguments/* = QList<Expression*>() */)
+{
+	MetaClass *any = this->findClass("ANY");
+	MetaClass *mc = this->findClass("Helper");
+
+	// find $helper
+	Field* helper_field = any->findField("$helper");
+
+	FieldRef* helper_ref = FieldRef::create(context_mtd, helper_field);
+
+	// find $helper
+	Method* helper_mtd = mc->findMethod(helperName);
+
+	if( ! helper_mtd ) {
+		helper_mtd = 0; // !!!
+	}
+
+	// make call
+	MethodCall* helper_call = MethodCall::create(context_mtd, helper_mtd, arguments, helper_ref);
+
+	return helper_call;
+}
+
+	
 bool EiffelProgram::round2()
 {
 	// QMap<QString, MetaClass*> classes;
@@ -175,11 +201,24 @@ void EiffelProgram::createRTL()
 	this->classes[ mc->name() ] = mc;
 
 
+	// Helper class
+	mc = new RTLMetaClass(this, QString("Helper"));
+	mtd = new Method(mc, bool_type, "notEqualI",
+		QList<LocalVariable>() 
+		<< LocalVariable(int_type, "left") 
+		<< LocalVariable(int_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+	this->classes[ mc->name() ] = mc;
+
+
 	mc = new EiffelNONE(this);
 	this->classes[ mc->name() ] = mc;
 
 	mc = new EiffelANY(this);
 	fld = new Field(mc, this->findClass("CONSOLEIO")->getType(), "io");
+	mc->fields[ fld->name ] = fld;
+	fld = new Field(mc, this->findClass("Helper")->getType(), "$helper");
 	mc->fields[ fld->name ] = fld;
 	this->classes[ mc->name() ] = mc;
 

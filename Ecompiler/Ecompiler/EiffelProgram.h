@@ -7,6 +7,9 @@
 
 //#include "MetaClass.h"
 class MetaClass;
+class Method;
+class MethodCall;
+class Expression;
 
 struct CompilerError
 {
@@ -30,6 +33,9 @@ public:
 
 	/** \return NULL if no class found */
 	MetaClass* findClass(const QString& upperName);
+
+	//* Вызов метода-хелпера
+	MethodCall* callHelper(Method* context_mtd, QString helperName, QList<Expression*> arguments = QList<Expression*>() );
 
 	/** Проход 2 */
 	bool round2();
