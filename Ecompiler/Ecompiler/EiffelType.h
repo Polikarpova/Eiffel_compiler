@@ -29,6 +29,7 @@ public:
 	virtual bool isInteger() const { return false; }
 	virtual bool isReal() const { return false; }
 	virtual bool isBoolean() const { return false; }
+	virtual bool isCharacter() const { return false; }
 
 	/** Проверка на возможность приведения к более общему типу.
 		Например, выражения справа от равно к типу выражения слева.

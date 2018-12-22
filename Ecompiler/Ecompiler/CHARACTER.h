@@ -16,4 +16,5 @@ public:
 	QString descriptor() {return QString("C");}
 	QString toReadableString() const {return "CHARACTER";};
 
+	bool isCharacter() const { return true; }
 };

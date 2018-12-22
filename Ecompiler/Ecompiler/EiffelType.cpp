@@ -31,7 +31,8 @@ EiffelType::~EiffelType(void)
 	&& this->isArray()     == otherType->isArray()
 	&& this->isInteger()   == otherType->isInteger()
 	&& this->isReal()      == otherType->isReal()
-	&& this->isBoolean()   == otherType->isBoolean();
+	&& this->isBoolean()   == otherType->isBoolean()
+	&& this->isCharacter() == otherType->isCharacter();
 
 }
 
