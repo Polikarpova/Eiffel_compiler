@@ -204,7 +204,9 @@ feature_clauses_opt: /*empty*/	{$$=0;}
 | feature_clauses				{$$=$1;}
 ;
 feature_clauses:  FEATURE clients_opt feature_declaration_list  {$$=$3;}
+| FEATURE clients_opt /*no features!*/ FEATURE clients_opt feature_declaration_list {$$=$5;}
 | feature_clauses FEATURE clients_opt feature_declaration_list {$$=joinFeatureLists($1,$4);}
+| feature_clauses FEATURE clients_opt /*no features!*/ {$$=$1;}
 ;
 
 clients_opt: /*empty*/	{$$=registerClients(createIdList(createId("ANY")));}
