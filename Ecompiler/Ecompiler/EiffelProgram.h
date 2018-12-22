@@ -42,6 +42,8 @@ public:
 	/** Проход 3 */
 	bool round3();
 	/** Проход 4 */
+	bool round4();
+	/** Компиляция */
 	bool compile();
 
 	void createRTL();

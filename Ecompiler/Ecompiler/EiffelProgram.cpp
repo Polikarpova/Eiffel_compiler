@@ -62,13 +62,16 @@ EiffelProgram::~EiffelProgram(void)
 	// ÏÐÎÕÎÄ 3
 	program->round3();
 
+	// ÏÐÎÕÎÄ 4
+	program->round4();
+
 	if(program->errors.size() > 0) {
 		// stop compilation
 		return program;
 	}
 
-	// ÏÐÎÕÎÄ 4
-	program->compile(); // çäåñü èëè íåò?
+	// Êîìïèëÿöèÿ
+	program->compile();
 
 	return program;
 }
@@ -126,8 +129,20 @@ bool EiffelProgram::round3()
 		mc->round3();
 	}
 
-	// set class `NONE` as child of all `leaf`-classes
+	return true;
+}
 
+bool EiffelProgram::round4()
+{
+	foreach(MetaClass* mc, this->classes)
+	{
+		if(mc->tree_node == NULL)
+			continue; // RTL class
+
+		mc->round4();
+	}
+
+	// set class `NONE` as child of all `leaf`-classes
 
 	return true;
 }

@@ -308,14 +308,23 @@ bool MetaClass::round3()
 		}
 	}
 	// ... */
+	
+	qDebug("class `%s` inherit from class `%s`", this->name().toLocal8Bit().data(), this->parent->name().toLocal8Bit().data());
 		
 
 	// после заполнения предка
 	this->initConstants();
  
+	return success;
+}
+bool MetaClass::round4()
+{
+	bool success = false;
+
 	foreach(Method* mtd, this->methods)
 	{
-		mtd->createBody();
+		bool b = mtd->createBody();
+		success = success && b;
 	}
 
 	// подготовить специальные методы (конструкторы и геттеры)
