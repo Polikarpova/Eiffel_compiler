@@ -125,9 +125,14 @@ Method::~Method(void)
 
 bool Method::createBody()
 {
+	qDebug("creating body for `%s.%s()` ... {", 
+		this->metaClass->name().toLocal8Bit().data(), 
+		this->name.toLocal8Bit().data());
+
 	this->body.currentMethod = this;
-	return 
-		this->body.createBody(this->tree_node->routineBody);
+	bool b = this->body.createBody(this->tree_node->routineBody);
+	qDebug("}");
+	return b;
 }
 
 LocalVariable* Method::findLocalVar(const QString& lowerName)

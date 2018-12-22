@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 
 	if(root)
 	{
-		printf("first_line: %d, last_line: %d \n",root->loc.first_line, root->loc.last_line);
+		//printf("first_line: %d, last_line: %d \n",root->loc.first_line, root->loc.last_line);
 		strcpy(file_name, in_fnm);
 		strcat(file_name, ".dot");
 	
@@ -161,8 +161,7 @@ int main(int argc, char *argv[])
 		printf("check out tree in %s\n",file_name);
 
 		// run dot
-		/// для отладки /// 
-		QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
+		/// для отладки /// QProcess::startDetached(QString("cmd /C run_dot.bat %1 ../../samples/test").arg(in_fnm));
 
 
 		// make semantic classes
