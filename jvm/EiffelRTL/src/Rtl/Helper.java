@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Rtl;
+package rtl;
  
 /**
  *
@@ -12,91 +12,83 @@ package Rtl;
 public class Helper {
     
     //возведение в степень
-    public int power(int left, int right) {
+    public int powerI(int left, int right) {
         return (int)Math.pow(left, right);
     }    
-    public float power(float left, float right) {
+    public float powerF(float left, float right) {
     
         return (float)Math.pow(left, right);
     }
     
     //==
-    public boolean equal(int left, int right) {
+    public boolean equalI(int left, int right) {
         return left == right;
     }
-    public boolean equal(float left, float right) {
+    public boolean equalF(float left, float right) {
         return left == right;
     }   
-    public boolean equal(String left, String right) {
+    public boolean equalS(String left, String right) {
         
         return left.compareTo(right) == 0;
     }
     
     //!=
-    public boolean notEqual(int left, int right) {
+    public boolean notEqualI(int left, int right) {
         return left != right;
     }
-    public boolean notEqual(float left, float right) {
+    public boolean notEqualF(float left, float right) {
         return left != right;
     }   
-    public boolean notEqual(String left, String right) {
+    public boolean notEqualS(String left, String right) {
         return left.compareTo(right) != 0;
     }
     
     //<
-    public boolean less(int left, int right) {
+    public boolean lessI(int left, int right) {
         return left < right;
     }
-    public boolean less(float left, float right) {
+    public boolean lessF(float left, float right) {
         return left < right;
     }   
-    public boolean less(String left, String right) {      
+    public boolean lessS(String left, String right) {      
         return left.compareTo(right) < 0;
     }
     
     //>
-    public boolean greater(int left, int right) {
+    public boolean greaterI(int left, int right) {
         return left > right;
     }
-    public boolean greater(float left, float right) {
+    public boolean greaterF(float left, float right) {
         return left > right;
     }   
-    public boolean greater(String left, String right) {      
+    public boolean greaterS(String left, String right) {      
         return left.compareTo(right) > 0;
     }
     
     //<=
-    public boolean lessOrEqual(int left, int right) {
+    public boolean lessOrEqualI(int left, int right) {
         return left <= right;
     }
-    public boolean lessOrEqual(float left, float right) {
+    public boolean lessOrEqualF(float left, float right) {
         return left <= right;
     }   
-    public boolean lessOrEqual(String left, String right) {              
-        return less(left, right) || equal(left, right);
+    public boolean lessOrEqualS(String left, String right) {              
+        return lessS(left, right) || equalS(left, right);
     }
     
     //>=
-    public boolean greaterOrEqual(int left, int right) {
+    public boolean greaterOrEqualI(int left, int right) {
         return left >= right;
     }
-    public boolean greaterOrEqual(float left, float right) {
+    public boolean greaterOrEqualF(float left, float right) {
         return left >= right;
     }   
-    public boolean greaterOrEqual(String left, String right) {              
-        return greater(left, right) || equal(left, right);
+    public boolean greaterOrEqualS(String left, String right) {              
+        return greaterS(left, right) || equalS(left, right);
     }
     
     public boolean or(boolean left, boolean right) {
         return left || right;
-    }
-    
-    public boolean orElse(boolean left, boolean right) {
-        
-        if (left)
-            return true;
-        else 
-            return or(left, right);       
     }
     
     public boolean xor(boolean left, boolean right) {
@@ -106,20 +98,8 @@ public class Helper {
     public boolean and(boolean left, boolean right) {
         return left && right;
     }
-    
-    public boolean andThen(boolean left, boolean right) {
-        
-        if (left)
-            return true;
-        else 
-            return and(left, right);       
-    }
  
     public boolean implies(boolean left, boolean right) {
-        
-        if (!left)
-            return true;
-        else 
-            return right;       
+        return (!left) || right;             
     }
 }
