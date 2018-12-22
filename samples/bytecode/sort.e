@@ -36,13 +36,11 @@ class
 	SORTER
 
  inherit
- 	SORT_ALG redefine init end
+ 	SORT_ALG 
+		-- redefine init end
 
 feature {ANY}
-	init
-	do
-
-	end
+	-- init do  end
 
 feature {none}
 	ascending: BOOLEAN
@@ -64,9 +62,10 @@ class
 	BUBBLE
 
 inherit
-	SORTER  redefine
-		sort --, init
-		 end
+	SORTER  
+		-- redefine
+		-- sort --, init
+		 -- end
 
 feature {NONE}
 	--init	do	end
