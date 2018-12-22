@@ -343,6 +343,34 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "or",
+		QList<LocalVariable>() 
+		<< LocalVariable(bool_type, "left") 
+		<< LocalVariable(bool_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "xor",
+		QList<LocalVariable>() 
+		<< LocalVariable(bool_type, "left") 
+		<< LocalVariable(bool_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "and",
+		QList<LocalVariable>() 
+		<< LocalVariable(bool_type, "left") 
+		<< LocalVariable(bool_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "implies",
+		QList<LocalVariable>() 
+		<< LocalVariable(bool_type, "left") 
+		<< LocalVariable(bool_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	this->classes[ mc->name() ] = mc;
 
 	// NONE

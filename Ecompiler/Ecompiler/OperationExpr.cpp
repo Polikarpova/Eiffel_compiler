@@ -692,6 +692,15 @@ ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 	
 		if ( this->tree_node->type == AndE ) {
 
+			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+				"and", 
+				QList<Expression*>()
+				<< this->left
+				<< this->right
+			);
+
+			call_helper->toByteCode(bc);
+
 		} else if ( this->tree_node->type == AndThenE ) {
 			
 			//грузим левое
@@ -709,6 +718,15 @@ ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 				.gotoEnd();
 
 		} else if ( this->tree_node->type == OrE ) {
+
+			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+				"or", 
+				QList<Expression*>()
+				<< this->left
+				<< this->right
+			);
+
+			call_helper->toByteCode(bc);
 
 		} else if ( this->tree_node->type == OrElseE ) {
 
@@ -728,7 +746,25 @@ ByteCode& OperationExpr::logicToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == XORE ) {
 
+			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+				"xor", 
+				QList<Expression*>()
+				<< this->left
+				<< this->right
+			);
+
+			call_helper->toByteCode(bc);
+
 		} else if ( this->tree_node->type == ImpliesE ) {
+
+			MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+				"implies", 
+				QList<Expression*>()
+				<< this->left
+				<< this->right
+			);
+
+			call_helper->toByteCode(bc);
 
 		}
 	} else {
