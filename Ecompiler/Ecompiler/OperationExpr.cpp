@@ -449,6 +449,15 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isCharacter() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"equalI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
 			}
 
 		} else if ( this->tree_node->type == NotEqualE ) {
@@ -474,6 +483,15 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 			} else if ( this->left->type->isString() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"notEqualS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isCharacter() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"notEqualI", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -511,9 +529,56 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isCharacter() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
 			}
 
 		} else if ( this->tree_node->type == GreaterE ) {
+
+			if ( this->left->type->isInteger() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"greaterI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isReal() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"greaterF", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isString() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"greaterS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isCharacter() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"greaterI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			}
 
 		} else if ( this->tree_node->type == LessOrEqualE ) {
 
