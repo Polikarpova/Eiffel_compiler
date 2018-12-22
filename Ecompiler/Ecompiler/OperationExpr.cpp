@@ -440,6 +440,15 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isString() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"equalS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
 			}
 
 		} else if ( this->tree_node->type == NotEqualE ) {

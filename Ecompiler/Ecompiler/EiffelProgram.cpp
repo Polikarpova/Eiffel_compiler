@@ -231,6 +231,13 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "equalS",
+		QList<LocalVariable>() 
+		<< LocalVariable(string_type, "left") 
+		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	mtd = new Method(mc, bool_type, "notEqualI",
 		QList<LocalVariable>() 
 		<< LocalVariable(int_type, "left") 
