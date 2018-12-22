@@ -321,10 +321,6 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 	if ( this->tree_node->type == PowerE || this->tree_node->type == MulE || this->tree_node->type == DivE 
 		|| this->tree_node->type == PlusE || this->tree_node->type == MinusE) {
 	
-		//грузим левое и правое число
-		this->left->toByteCode(bc);
-		this->right->toByteCode(bc);
-	
 		if ( this->tree_node->type == PowerE ) {
 
 			//вызов функции из RTL
@@ -342,6 +338,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == MulE ) {
 			
+			//грузим левое и правое число
+			this->left->toByteCode(bc);
+			this->right->toByteCode(bc);
+
 			//если складываются инты
 			if ( this->left->type->isInteger() ) {
 		
@@ -354,6 +354,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == DivE ) {
 	
+			//грузим левое и правое число
+			this->left->toByteCode(bc);
+			this->right->toByteCode(bc);
+
 			//если складываются инты
 			if ( this->left->type->isInteger() ) {
 		
@@ -368,6 +372,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 	
 			//если складываются инты
 			if ( this->left->type->isInteger() ) {
+
+				//грузим левое и правое число
+				this->left->toByteCode(bc);
+				this->right->toByteCode(bc);
 
 				bc.iadd();
 			}
@@ -384,11 +392,20 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			}
 			//если это число с плавающей запятой
 			else {
+				
+				//грузим левое и правое число
+				this->left->toByteCode(bc);
+				this->right->toByteCode(bc);
+
 				bc.fadd();
 			}
 
 		} else if ( this->tree_node->type == MinusE ) {
 		
+			//грузим левое и правое число
+			this->left->toByteCode(bc);
+			this->right->toByteCode(bc);
+
 			//если складываются инты
 			if ( this->left->type->isInteger() ) {
 		
@@ -415,10 +432,6 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 	if ( this->tree_node->type == EqualsE || this->tree_node->type == NotEqualE || this->tree_node->type == LessE 
 		|| this->tree_node->type == GreaterE || this->tree_node->type == LessOrEqualE || this->tree_node->type == GreaterOrEqualE ) {
-	
-		//грузим левое и правое число
-		this->left->toByteCode(bc);
-		this->right->toByteCode(bc);
 	
 		if ( this->tree_node->type == EqualsE ) {
 
@@ -581,6 +594,44 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 			}
 
 		} else if ( this->tree_node->type == LessOrEqualE ) {
+
+			if ( this->left->type->isInteger() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessOrEqualI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isReal() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessOrEqualF", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isString() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessOrEqualS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isCharacter() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessOrEqualI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			}
 
 		} else if ( this->tree_node->type == GreaterOrEqualE ) {
 
