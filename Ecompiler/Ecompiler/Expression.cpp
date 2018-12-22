@@ -120,8 +120,8 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	if( ! called_feature->isExportedTo(mtd->metaClass) ) {
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Cannot use feature `%1` of class `%4`: it is not exported to class `%2`. (In routine: %2.%3)")
-				.arg(id, mtd->metaClass->name(), mtd->name, qualification_class->name()),
+			QString("Cannot use feature `%1` declared in class `%4`: it is not exported to class `%2`. (In routine: %2.%3)")
+				.arg(id, mtd->metaClass->name(), mtd->name, called_feature->metaClass->name()),
 			node->loc.first_line);
 		return NULL;
 	}

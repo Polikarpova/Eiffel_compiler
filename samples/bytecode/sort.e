@@ -72,7 +72,7 @@ class
 
 feature {START}
 	--init	do	end
--- feature
+feature {} -- `{}` equivalent to `{NONE}`
 	sort2(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	local
 		i, buf: INTEGER
