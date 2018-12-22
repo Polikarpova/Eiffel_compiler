@@ -259,6 +259,27 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "lessI",
+		QList<LocalVariable>() 
+		<< LocalVariable(int_type, "left") 
+		<< LocalVariable(int_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "lessF",
+		QList<LocalVariable>() 
+		<< LocalVariable(real_type, "left") 
+		<< LocalVariable(real_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "lessS",
+		QList<LocalVariable>() 
+		<< LocalVariable(string_type, "left") 
+		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	this->classes[ mc->name() ] = mc;
 
 	// NONE

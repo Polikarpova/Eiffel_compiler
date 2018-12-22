@@ -484,6 +484,35 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == LessE ) {
 
+			if ( this->left->type->isInteger() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessI", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isReal() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessF", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			} else if ( this->left->type->isString() ) {
+				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+					"lessS", 
+					QList<Expression*>()
+					<< this->left
+					<< this->right
+				);
+
+				call_helper->toByteCode(bc);
+			}
+
 		} else if ( this->tree_node->type == GreaterE ) {
 
 		} else if ( this->tree_node->type == LessOrEqualE ) {
