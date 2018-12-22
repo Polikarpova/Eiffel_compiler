@@ -151,7 +151,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		{
 			// create MethodCall. Parameters: (Method* context_mtd, Method* calledMethod, struct NExprList* argList, Expression* qualification /*= NULL*/ )
 			MethodCall* mtdc = MethodCall::create(mtd, (Method*)called_feature, node->ExprList, qualification_expr);
-			mtdc->tree_node = node;
+			if(mtdc)  mtdc->tree_node = node;
 			return mtdc;
 			// finish
 		}
