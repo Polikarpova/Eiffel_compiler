@@ -283,7 +283,7 @@ bool MetaClass::round3()
 
 			if( !createInheritance(i) )
 			{
-				continue;
+				//continue;
 			}
 
 			if(i == List->last) break;
@@ -321,6 +321,18 @@ bool MetaClass::round4()
 {
 	bool success = false;
 
+	// проверить переопределения
+	struct NInheritFromClassList* List =  tree_node->inheritance;
+	// iterate
+	if(List) {
+		for(struct NInheritFromClass* i = List->first ; i ; i = i->next ) {
+			verifyRedifinition(i);
+
+			if(i == List->last) break;
+		}
+	}
+
+	// создать тела методов
 	foreach(Method* mtd, this->methods)
 	{
 		bool b = mtd->createBody();
@@ -332,6 +344,8 @@ bool MetaClass::round4()
 
 	return success;
 }
+
+
 
 bool MetaClass::createInheritance(struct NInheritFromClass* node)
 {
@@ -363,7 +377,14 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 	
 	this->parent = ancestor;
 	// ^ set parent successfully !
-	
+
+	return true;
+}
+
+bool MetaClass::verifyRedifinition(struct NInheritFromClass* node)
+{
+	QStringList explicit_redefines;
+
 	struct NIdList* List =  node->redefineList;
 	// iterate
 	if(List) {
@@ -396,6 +417,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 
 			if( parent_feature && this_feature )
 			{
+				explicit_redefines << name;
 				/*if( parent_feature->isField() && this_feature->isField() )
 				{
 					program->logError(
@@ -408,7 +430,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 				{
 					program->logError(
 						QString("semantic"), 
-						QString("Redefined feature `%3.%2` has base type is incompatible with the base type of inherited feature `%1.%2`.\nType of current feature: \t%4\nType of parent`s feature:\t%5")
+						QString("Redefined feature `%2` from `%3` has base type incompatible with the base type of inherited feature `%1.%2`.\n Type of current feature: \t%4\n Type of parent`s feature:\t%5")
 							.arg(parent_feature->metaClass->name(), name, this->name(),
 							this_feature->type->toReadableString(), parent_feature->type->toReadableString()),
 						i->loc.first_line);
@@ -423,19 +445,65 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 					//Field*  field_fe  = (Field*)  ( parent_feature->isField() ? parent_feature : this_feature );
 					Method* method_fe = (Method*) ( parent_feature->isMethod()? parent_feature : this_feature );
 
-					if(method_fe->paramCount != 0) {
+					if(method_fe->exactNumberOfArgs() != 0) {
 						program->logError(
 							QString("semantic"), 
 							  (method_fe == this_feature
 							   ?
-							   QString("Redefining an attribute `%2` of class %1 with a function with parameters in class %3 (no arguments are required in order to provide the same usage of a feature)")
+							   QString("Redefining an attribute `%2` of class `%1` with a function with %4 parameters in class `%3` (no arguments are required in order to provide the same way of usage of the feature).")
 							   :
-							  QString("Redefining a function with parameters of class %1 with an attribute `%2` in class %3 (you can redefine it with a routine only)")
-							  ).arg(this->parent->name(), name, this->name()),
+							  QString("Redefining a function `%2` with %4 parameters of class `%1` with an attribute in class `%3` (the function can redefined with a function only).")
+							  ).arg(parent_feature->metaClass->name(), name, this->name()).arg(method_fe->exactNumberOfArgs()),
 							i->loc.first_line);
 					}
+				}
 
-					// ... проверки не дописаны
+				if( parent_feature->isMethod() == this_feature->isMethod() ) // both are methods
+				{
+					/*
+						проверка количества параметров
+					*/
+					Method*	  this_method = (Method*) this_feature;
+					Method* parent_method = (Method*) parent_feature;
+
+					if(this_method->exactNumberOfArgs() != parent_method->exactNumberOfArgs()) {
+						program->logError(
+							QString("semantic"), 
+							QString("Redefined routine `%2` from `%3` and inherited feature `%1.%2` are differ in signature:\n Parameters count of current routine: \t%4\n Parameters count of parent`s routine:\t%5")
+								.arg(this->parent->name(), name, this->name())
+								.arg(this_method->exactNumberOfArgs())
+								.arg(parent_method->exactNumberOfArgs()),
+							i->loc.first_line);
+					}
+					else {
+						/*                                            `
+						проверка параметров: переопределённые типы НЕ УЖЕ переопределяемых
+						*/
+						QString wrong_params_info;
+
+						for(int p=1 /*0=Current*/ ; p <= this_method->exactNumberOfArgs() ; ++p)
+						{
+							LocalVariable *this_param, *parent_param;
+							this_param   =   this_method->findLocalVar(p);
+							parent_param = parent_method->findLocalVar(p);
+
+							if( ! parent_param->type->canCastTo(this_param->type) )
+							{
+								wrong_params_info += QString("\n Param #%1 `%2` (current): \t%4\n Param #%1 `%3` (parent`s):\t%5")
+									.arg(p).arg(this_param->name, parent_param->name,
+										this_param->type->toReadableString(), parent_param->type->toReadableString());
+							}
+						}
+
+						if( ! wrong_params_info.isEmpty() )
+						{
+							program->logError(
+								QString("semantic"), 
+								QString("Redefined routine `%2` from `%3` and inherited feature `%1.%2` are differ in signature:%4")
+									.arg(parent_feature->metaClass->name(), name, this->name(), wrong_params_info),
+								i->loc.first_line);
+						}
+					}
 				}
 			}
 
@@ -444,7 +512,23 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 		}
 	}
 
-	// ... проверить конфликты имён с наследуемыми членами
+	// ... проверить конфликты имён с наследуемыми, но не переопределёнными членами
+	foreach(QString this_name , this->methods.keys() + this->fields.keys())
+	{
+		if( explicit_redefines.contains(this_name) )
+			continue;
+
+		Feature* parent_feature = this->parent->findFeature(this_name, true);
+
+		if( parent_feature != NULL )
+		{
+			program->logError(
+				QString("semantic"), 
+				QString("Duplicate names: feature `%1` of class `%2` uses the same name as inherited feature `%3.%1` but does not redefine it.")
+					.arg(this_name, this->name(), parent_feature->metaClass->name()),
+				this->findFeature(this_name, false)->tree_node->loc.first_line);
+		}
+	}
 
 	return true;
 }

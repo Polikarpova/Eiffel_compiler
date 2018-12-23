@@ -88,9 +88,10 @@ public:
 	bool createFeatures();
 	/** Проход 3 */
 	bool round3();
-	/** Проход 3 */
-	bool round4();
 	bool createInheritance(struct NInheritFromClass* inheritance);
+	/** Проход 4 */
+	bool verifyRedifinition(struct NInheritFromClass* inheritance);
+	bool round4();
 	//* подготовить специальные методы (конструкторы и геттеры)
 	bool makeSpecialMethods();
 	/** Проход 4 */

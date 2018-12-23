@@ -46,7 +46,11 @@ feature {ANY}
 	-- init do  end
 
 feature {none}
-	ascending: BOOLEAN
+	-- ascending: BOOLEAN
+	ascending : BOOLEAN
+	do
+		Result := true
+	end
 
 feature
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
@@ -67,11 +71,15 @@ class
 	inherit
 		SORTER  
 		redefine
-			ascending --, init
+			-- ascending --, 
+			init
 		end
 
 feature 
-	ascending : INTEGER
+	init
+	do
+	end
+	-- ascending: BOOLEAN
 	
 	--init	do	end
 feature {} -- `{}` equivalent to `{NONE}`

@@ -14,9 +14,9 @@ public:
 
 	bool isVoid() const; // { return true; } -- see .cpp
 
-	bool canCastTo(const EiffelType* otherType) const {
-		return false; // Void нельзя ни к чему приводить
-	}
+	//bool canCastTo(const EiffelType* otherType) const {
+	//	return false; // Void нельзя ни к чему приводить
+	//}
 
 	QString descriptor() {return QString("V");}
 	QString toReadableString() const {return "VOID";};
