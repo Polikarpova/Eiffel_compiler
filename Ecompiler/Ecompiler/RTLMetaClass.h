@@ -16,6 +16,7 @@ public:
 	virtual const QString& name() { return _name; }
 	QString javaPackage() {return QString("rtl");}
 
+	virtual EiffelType* getType() { return MetaClass::getType(); };
 
 	/*fields*/
 };

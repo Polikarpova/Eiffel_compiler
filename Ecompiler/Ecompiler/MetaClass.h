@@ -78,7 +78,7 @@ public:
 	MethodCall* parentsCreatorRef;
 
 	//* тип в выражении
-	EiffelType* getType();
+	virtual EiffelType* getType();
 	void setType(EiffelType*);
 	//EiffelClass* getType();
 

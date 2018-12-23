@@ -22,7 +22,7 @@ public:
 	virtual bool isString() const { return true; }
 
 	//* тип в выражении
-	EiffelSTRING* getType()
+	virtual EiffelSTRING* getType()
 	{
 		return this;	// EiffelSTRING выступает также в роли EiffelClass
 	}
