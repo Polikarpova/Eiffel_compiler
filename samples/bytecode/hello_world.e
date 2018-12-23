@@ -3,7 +3,7 @@ create
 	make
 
 feature
-	worker : BUBBLE_SORTER
+	worker : QUICK_SORTER
 	
 	make
 	local
@@ -14,7 +14,7 @@ feature
 		-- Io.put_string("CREATE worker.init ... %N");
 		CREATE worker.init
 
-		arr[0] := 44;
+		arr[0] := 55;
 		arr[1] := 6^2;
 		arr[2] := 24;
 		arr[3] := 37;
@@ -81,7 +81,6 @@ feature {EIFFEL_TEST}
 feature {none}
 	init -- creator
 	do
-		Io.put_string("%N > call to SORTER.init()");
 		forwarded
 	end
 	
@@ -92,6 +91,7 @@ feature
 	local
 		worker: SORT_ALG
 	do
+		Io.put_string("%N > call to SORTER.sort()");
 		CREATE worker.make
 		worker.bubble_sort(arr, ascending)
 		Result := arr
@@ -106,12 +106,31 @@ create
 feature {none}
 	init -- creator
 	do
-		Io.put_string("%N > call to BUBBLE_SORTER.init()");
 	end
 feature
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	do
-		PRECURSOR(arr)
+		Io.put_string("%N > call to BUBBLE_SORTER.sort()");
+		-- PRECURSOR(arr)
+		Result := arr
+	end
+
+end
+
+class QUICK_SORTER inherit SORTER
+		redefine init, sort end
+create
+	init
+	
+feature {none}
+	init -- creator
+	do
+	end
+feature
+	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
+	do
+		Io.put_string("%N > call to QUICK_SORTER.sort()");
+		PRECURSOR {SORTER} (arr)
 		Result := arr
 	end
 

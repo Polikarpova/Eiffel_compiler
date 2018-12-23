@@ -202,7 +202,7 @@ MethodCall* fromPrecursor(Method* mtd, struct NExpr* node)
 	if(node->value.id) {
 
 		QString className(node->value.id);
-		className = className.toLower();
+		className = className.toUpper();
 
 		base_class = EiffelProgram::currentProgram->findClass(className);
 
@@ -243,10 +243,20 @@ MethodCall* fromPrecursor(Method* mtd, struct NExpr* node)
 	// поиск наследуемого метода
 	Feature* base_feature = base_class->findFeature(mtd->name);
 
+	if( ! base_feature ) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Feature `%1` pointed by `PRECURSOR` structure does not exist in class `%3`. (In routine %2.%1)")
+				.arg(mtd->name, mtd->metaClass->name(), base_class->name()),
+			node->loc.first_line);
+				
+		return NULL;
+	}
+
 	if( ! base_feature->isMethod() ) {
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Feature of class `$3` accessed by `PRECURSOR` structure is not a routine. (In routine %2.%1)")
+			QString("Feature of class `%3` accessed by `PRECURSOR` structure is not a routine. (In routine %2.%1)")
 				.arg(mtd->name, mtd->metaClass->name(), base_class->name()),
 			node->loc.first_line);
 				
