@@ -138,6 +138,8 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 }
 
 
+// Объявлено в Expression.cpp
+extern MethodCall* fromPrecursor(Method* mtd, struct NExpr* node);
 
 /*static*/ CallStmt* CallStmt::create(Method* mtd, struct NExpr* expr) {
 
@@ -148,7 +150,15 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 	bool success = false;
 
 	//проверка на ошибулечки
-	if ( expr->type != RefnCallE ) {
+	if ( expr->type == PrecursorE ) {
+
+		general_method_call = fromPrecursor(mtd, expr);
+
+	} else if ( expr->type == RefnCallE ) {
+	
+		general_method_call = fromRefnCall(mtd, expr);
+
+	} else {
 	
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
@@ -156,16 +166,12 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 			expr->loc.first_line);
 	
 		return NULL;
-
-	} else {
-	
-		general_method_call = fromRefnCall(mtd, expr);
 	}
 
 	if( ! general_method_call )
 		return NULL;
 
-	if ( general_method_call->calledMethod->isCreator ) {
+	/*if ( general_method_call->calledMethod->isCreator ) {
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
 			QString("Call to constructor `%1`: `CREATE` mark not specified. Creating type: %2.")
@@ -173,7 +179,10 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node)
 			expr->loc.first_line);
 	
 		return NULL;
-	}
+	}*/
+
+	// disable costructors` creation skill
+	general_method_call->noCreate = true;
 
 	success = true;
 

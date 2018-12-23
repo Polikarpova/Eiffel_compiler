@@ -15,6 +15,7 @@ public:
 
 	short int methodref_constN, class_of_called_mtd_constN, class_of_arr_elem_constN;
 	bool noCreate;
+	bool keepNewReferenceOnStack; // нужно ли делать `dup` после `new`
 
 	//* метод, к которому производится доступ
 	Method* calledMethod;

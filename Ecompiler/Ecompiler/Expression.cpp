@@ -181,6 +181,84 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 	return NULL;
 }
 
+MethodCall* fromPrecursor(Method* mtd, struct NExpr* node)
+{
+	if(!node)
+		return 0;
+	
+	if(node->left != NULL) {	//  квалификация не нужна для PRECURSOR
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Extra qualification for `PRECURSOR` structure. (In routine %2.%1)")
+				.arg(mtd->name, mtd->metaClass->name()),
+			node->loc.first_line);
+				
+		return NULL;
+	}
+
+
+	MetaClass* base_class = 0;
+
+	if(node->value.id) {
+
+		QString className(node->value.id);
+		className = className.toLower();
+
+		base_class = EiffelProgram::currentProgram->findClass(className);
+
+		if(base_class == NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Undefined class `%1` in `PRECURSOR{ %1 }` (In routine %3.%2)")
+					.arg(node->value.id, mtd->name, mtd->metaClass->name()),
+				node->loc.first_line);
+				
+			return NULL;
+		}
+
+		if( ! mtd->metaClass->getType()->canCastTo( base_class->getType() ) ) {
+			EiffelProgram::currentProgram->logError(
+				QString("semantic"), 
+				QString("Cannot use class `%1` in `PRECURSOR{ %1 }` within routine `%3.%2`: `%1` is not an ancestor of `%3`.")
+					.arg(node->value.id, mtd->name, mtd->metaClass->name()),
+				node->loc.first_line);
+				
+			return NULL;
+		}
+	} else { // (empty id) PRECURSOR without { }
+		
+		base_class = mtd->metaClass->parent;
+
+		if(base_class == NULL) {
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Class `%2` does`nt have direct parent! ( `PRECURSOR{ %1 }` in routine %2.%1)")
+					.arg(mtd->name, mtd->metaClass->name()),
+				node->loc.first_line);
+				
+			return NULL;
+		}
+	}
+
+	// поиск наследуемого метода
+	Feature* base_feature = base_class->findFeature(mtd->name);
+
+	if( ! base_feature->isMethod() ) {
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Feature of class `$3` accessed by `PRECURSOR` structure is not a routine. (In routine %2.%1)")
+				.arg(mtd->name, mtd->metaClass->name(), base_class->name()),
+			node->loc.first_line);
+				
+		return NULL;
+	}
+
+	// create & finish
+	MethodCall* mtdc = MethodCall::create(mtd, (Method*)base_feature, node->ExprList, NULL/*qualification*/);
+	if(mtdc)  mtdc->tree_node = node;
+	return mtdc;
+}
+
 /*static*/ Expression* Expression::create(Method* mtd, struct NExpr* s) {
 
 	switch(s->type) {
@@ -219,7 +297,7 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		case RefnCallE:
 			return fromRefnCall(mtd, s);
 		case PrecursorE:
-			return 0;
+			return fromPrecursor(mtd, s);
 		case SubscriptE:
 			return ArrayElemRef::create(mtd, s);
 		default:

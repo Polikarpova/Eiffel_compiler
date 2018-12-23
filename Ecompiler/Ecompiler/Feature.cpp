@@ -91,6 +91,11 @@ bool Feature::isExportedTo(const QString& upperName)
 }
 bool Feature::isExportedTo(MetaClass* clientMetaClass)
 {
+	if(this->isMethod() && ((Method*)this)->isCreator) // конструктор виден всем
+	{
+		return true;
+	}
+
 	EiffelClass* clientClass = (EiffelClass*) clientMetaClass->getType();
 
 	/*qDebug("TESTING export of `%s.%s` to `%s` ...", 

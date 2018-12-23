@@ -8,6 +8,7 @@ MethodCall::MethodCall(void)
 	: Expression()
 {
 	noCreate = false;
+	keepNewReferenceOnStack = true;
 	class_of_arr_elem_constN = -1;
 	arrayElemType = NULL;
 }
@@ -234,7 +235,15 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 
 	//bc.log("MethodCall : object ...");
 
-	if( !noQualify && ! (this->calledMethod->addFlags & ACC_STATIC) && ! isArray )
+	bool omitQualification = 
+		//this->calledMethod->isCreator ||
+		isArray ||
+		noQualify ||
+		(this->calledMethod->addFlags & ACC_STATIC)
+		;
+
+
+	if( !omitQualification )
 	{
 		// для динамического метода с this
 		// load a reference to an object ...
@@ -245,7 +254,7 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 			bc.aload_0(); // load Current
 	}
 
-	if( !noCreate && this->calledMethod->isCreator )
+	if( !this->noCreate && this->calledMethod->isCreator )
 	{
 		// создать объект
 		this->generateCreation(bc);
@@ -278,13 +287,17 @@ ByteCode& MethodCall::generateCreation(ByteCode &bc)
 {
 	EiffelType* base_type = this->calledMethod->metaClass->getType();
 
-	bc.log(QString("generate code for Creation (new*) of %1 ...")
-		.arg(base_type->toReadableString()));
-
 	if(base_type->isReference()) // объект
 	{
+		bc.log(QString("generate code for Creation (new*) of %1 ...")
+			.arg(base_type->toReadableString()));
+
 		bc.new_( this->class_of_called_mtd_constN );
-		//bc.dup();
+		
+		if(this->keepNewReferenceOnStack)
+		{
+			bc.dup();
+		}
 	}
 
 

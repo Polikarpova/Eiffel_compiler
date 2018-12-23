@@ -561,6 +561,7 @@ bool MetaClass::makeSpecialMethods()
 	
 		ByteCode &bc = static_void_main->bytecode;
 		//bc.new_( this->class_constN );
+		specialcall->keepNewReferenceOnStack = false;
 		specialcall->toByteCode(bc, true);
 		bc.return_();
 
