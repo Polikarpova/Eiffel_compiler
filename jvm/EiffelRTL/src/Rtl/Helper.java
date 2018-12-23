@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rtl;
  
 /**
@@ -107,4 +102,19 @@ public class Helper {
     public boolean implies(boolean left, boolean right) {
         return (!left) || right;             
     }
+	
+	public int verifyArrayMake(int lower, int upper) {
+		String error_info = "";
+		if(lower != 0) {
+			error_info += "\n ignoring `lower` = " + lower + ". Values other than zero are not supported.";
+		}
+		if(upper < 0) {
+			error_info += "\n ignoring negative `upper` = " + upper + ". Defaulting to 0.";
+			upper = 0;
+		}
+		if( ! error_info.isEmpty() )
+			System.out.println("/!\\ Warning: Invalid prerands passed to `ARRAY.make(lower, upper)` :" + error_info);
+		
+		return upper + 1;
+	}
 }

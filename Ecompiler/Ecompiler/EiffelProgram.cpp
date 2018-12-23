@@ -199,6 +199,12 @@ void EiffelProgram::createRTL()
 	mc = new EiffelSTRING(this);
 	this->classes[ mc->name() ] = mc;
 	string_mc = mc;
+	// `length`: size of string (the same as for ARRAY)
+	fld = new Field(mc, int_type, "count");
+	fld->isReadOnly = true;
+	fld->javaName = "length";
+	fld->descriptor.clear(); // reset if been created
+	mc->fields[ fld->name ] = fld;
 	string_type = string_mc->getType();
 
 	// IO class
@@ -395,6 +401,13 @@ void EiffelProgram::createRTL()
 		QList<LocalVariable>() 
 		<< LocalVariable(bool_type, "left") 
 		<< LocalVariable(bool_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, int_type, "verifyArrayMake",
+		QList<LocalVariable>() 
+		<< LocalVariable(int_type, "lower") 
+		<< LocalVariable(int_type, "upper")
 		);
 	mc->methods[ mtd->name ] = mtd;
 

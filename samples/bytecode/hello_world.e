@@ -8,7 +8,7 @@ feature
 		arr: ARRAY[INTEGER]
 	do
 		
-		CREATE arr.make(0, 5)
+		CREATE arr.make(1, 5)
 
 		arr[0] := 44;
 		arr[1] := 53;

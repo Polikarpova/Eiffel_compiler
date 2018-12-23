@@ -282,13 +282,6 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 		bc.ifne(+3+2);
 		bc.pop().iconst_(1);
 
-		//NExprList args;
-		//args.first = this->left->tree_node;
-		//args.last = this->left->tree_node;
-		//args.loc = this->left->tree_node->loc;
-
-		//MethodCall::create(this->currentMethod, currentMethod->metaClass->findMethod("_1_NotE"), &args)->toByteCode(bc);
-
 	} else if ( this->tree_node->type == UPlusE ) {
 
 		this->left->toByteCode(bc);

@@ -333,11 +333,20 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 
 		// ignore 1st argument: default is 0
 
-		// array size  =  n + 1
-		// expr for n
-		arg_upper->toByteCode(bc);
-		bc.iconst_(1);
-		bc.iadd();
+		//// array size  =  n + 1
+		//// expr for n
+		//arg_upper->toByteCode(bc);
+		//bc.iconst_(1);
+		//bc.iadd();
+
+		// : verify indices, add 1 to arg_upper and put it onto stack
+		MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
+			"verifyArrayMake", 
+			QList<Expression*>()
+			<< arg_lower
+			<< arg_upper
+		);
+		call_helper->toByteCode(bc);
 
 		// array size is loaded onto stack
 
