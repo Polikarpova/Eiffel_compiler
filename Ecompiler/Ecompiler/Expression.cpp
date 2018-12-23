@@ -59,7 +59,9 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 			else	// единственный вариант для локальной переменой: без аргументов
 			{
 				// create LocalVariableRef
-				return LocalVariableRef::create(mtd, loc_var);
+				LocalVariableRef* lvr = LocalVariableRef::create(mtd, loc_var);
+				if(lvr)  lvr->tree_node = node;
+				return lvr;
 				// finish
 			}
 		}
@@ -139,7 +141,9 @@ Expression* fromRefnCall(Method* mtd, struct NExpr* node)
 		else	// единственный вариант для поля: без аргументов
 		{
 			// create FieldRef. Parameters: (Method* mtd, Field* field, Expression* qualification = NULL );
-			return FieldRef::create(mtd, (Field*)called_feature, qualification_expr);
+			FieldRef* fr = FieldRef::create(mtd, (Field*)called_feature, qualification_expr);
+			if(fr)  fr->tree_node = node;
+			return fr;
 			// finish
 		}
 	}
