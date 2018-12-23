@@ -14,11 +14,11 @@ feature
 		-- Io.put_string("CREATE worker.init ... %N");
 		CREATE worker.init
 
-		arr[0] := 55;
+		arr[0] := -+55;
 		arr[1] := 6^2;
-		arr[2] := 24;
-		arr[3] := 37;
-		arr[4] := 5;
+		arr[2] := +24;
+		arr[3] := +-37;
+		arr[4] := -5;
 		arr[5] := 0;
 		
 		Io.put_string("%NStart array: ");

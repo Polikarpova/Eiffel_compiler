@@ -58,7 +58,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 			//получаем тип
 			this->type = this->left->expressionType();
 
-			if ( this->type->toReadableString() != "INTEGER" || this->type->toReadableString() != "REAL") {
+			if ( this->type->toReadableString() != "INTEGER" && this->type->toReadableString() != "REAL") {
 				
 				getError( this->type->toReadableString(), "INTEGER or REAL");
 				return NULL;
@@ -220,7 +220,7 @@ EiffelType* OperationExpr::getReturnType( ) {
 
 void OperationExpr::getError( QString actualType, QString expectedType ) {
 
-	type = 0;
+	this->type = 0;
 	EiffelProgram::currentProgram->logError(
 		QString("semantic"), 
 		QString("Invalid operands in routine %1.%2. Type %3 cannot be converted into %4")
