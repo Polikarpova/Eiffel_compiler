@@ -12,9 +12,9 @@ feature
 	do
 		-- CREATE s -- `make` is called
 --		if s.ascending then    end
-		ia := s.sort2(ia) -- BUBBLE_SORTER
-		ia := s.sort(ia)  -- SORTER
-		ia := s.bubble(ia, true)-- SORT_ALG
+		-- ia := s.sort2(ia) -- BUBBLE_SORTER
+		-- ia := s.sort(ia)  -- SORTER
+		-- ia := s.bubble(ia, true)-- SORT_ALG
 
 	end
 end
@@ -66,11 +66,13 @@ class
 
 	inherit
 		SORTER  
-		-- redefine
-		-- sort --, init
-		 -- end
+		redefine
+			ascending --, init
+		end
 
-feature {START}
+feature 
+	ascending : INTEGER
+	
 	--init	do	end
 feature {} -- `{}` equivalent to `{NONE}`
 	sort2(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]

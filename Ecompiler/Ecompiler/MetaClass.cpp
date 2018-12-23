@@ -278,7 +278,7 @@ bool MetaClass::round3()
 						.arg(this->name()),
 					i->loc.first_line);
 				
-				continue;
+				break;
 			}
 
 			if( !createInheritance(i) )
@@ -378,7 +378,7 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 			{
 				program->logError(
 					QString("semantic"), 
-					QString("Redefine subclause `%1` does not denote redefined feature of class %2; parent %3 does not have such feature")
+					QString("Redefine subclause `%1` does not denote redefined feature of class `%2`; parent `%3` does not have such feature.")
 						.arg(name, this->name(), this->parent->name()),
 					i->loc.first_line);
 			}
@@ -389,27 +389,28 @@ bool MetaClass::createInheritance(struct NInheritFromClass* node)
 			{
 				program->logError(
 					QString("semantic"), 
-					QString("Redefine subclause lists feature `%1`, but class %2 does not redefined it")
-						.arg(name, this->name(), this->parent->name()),
+					QString("Redefine subclause lists feature `%1` of class `%3`, but class `%2` does not redefine it.")
+						.arg(name, this->name(), parent_feature->metaClass->name()),
 					i->loc.first_line);
 			}
 
 			if( parent_feature && this_feature )
 			{
-				if( parent_feature->isField() && this_feature->isField() )
+				/*if( parent_feature->isField() && this_feature->isField() )
 				{
 					program->logError(
 						QString("semantic"), 
-						QString("Redefine attribute of class %1 with attribute `%2` in class %3 (you may redefine it with function instead)")
-							.arg(this->parent->name(), name, this->name()),
+						QString("Redefining attribute `%2` of class `%1` again with attribute in class `%3` (you may redefine it with function instead).")
+							.arg(parent_feature->metaClass->name(), name, this->name()),
 						i->loc.first_line);
 				}
-				else if( ! this_feature->type->canCastTo(parent_feature->type) )
+				else*/ if( ! this_feature->type->canCastTo(parent_feature->type) )
 				{
 					program->logError(
 						QString("semantic"), 
-						QString("Redefined feature`s base type is incompatible with the base type of a feature in parent class %1 (feature `%2` in class %3)")
-							.arg(this->parent->name(), name, this->name()),
+						QString("Redefined feature `%3.%2` has base type is incompatible with the base type of inherited feature `%1.%2`.\nType of current feature: \t%4\nType of parent`s feature:\t%5")
+							.arg(parent_feature->metaClass->name(), name, this->name(),
+							this_feature->type->toReadableString(), parent_feature->type->toReadableString()),
 						i->loc.first_line);
 				}
 				else if( parent_feature->isField() == this_feature->isMethod() ) // one is field, another is method
