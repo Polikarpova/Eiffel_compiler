@@ -9,6 +9,7 @@ MethodCall::MethodCall(void)
 {
 	noCreate = false;
 	keepNewReferenceOnStack = true;
+	specialCall = false;
 	class_of_arr_elem_constN = -1;
 	arrayElemType = NULL;
 }
@@ -268,11 +269,20 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 		arg->toByteCode(bc); // load argument
 	}
 
-	if(this->calledMethod->isCreator)
+	if(this->calledMethod->isCreator || this->specialCall)
 	{
+		bool is_void = ! 
+				( // возвращает значение, если:
+				this->calledMethod->isCreator && // конструктор
+				this->keepNewReferenceOnStack &&
+				!this->noCreate )
+			||
+			this->calledMethod->isVoid()
+			;
+
 		bc.invokespecial(methodref_constN,
 			this->calledMethod->exactNumberOfArgs(),
-			/*this->calledMethod->isVoid()*/ false );
+			is_void);
 	}
 	else
 	{

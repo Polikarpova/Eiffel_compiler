@@ -255,7 +255,10 @@ MethodCall* fromPrecursor(Method* mtd, struct NExpr* node)
 
 	// create & finish
 	MethodCall* mtdc = MethodCall::create(mtd, (Method*)base_feature, node->ExprList, NULL/*qualification*/);
-	if(mtdc)  mtdc->tree_node = node;
+	if(mtdc) {
+		mtdc->specialCall = true;
+		mtdc->tree_node = node;
+	}
 	return mtdc;
 }
 

@@ -3,7 +3,7 @@ create
 	make
 
 feature
-	worker : SORTER
+	worker : BUBBLE_SORTER
 	
 	make
 	local
@@ -21,7 +21,7 @@ feature
 		arr[4] := 5;
 		arr[5] := 0;
 		
-		Io.put_string("Start array: %N");
+		Io.put_string("%NStart array: ");
 		Io.put_string("%TElements count: ");
 		Io.put_integer(arr.count);
 		
@@ -79,8 +79,9 @@ feature {EIFFEL_TEST}
 	end
 
 feature {none}
-	init
+	init -- creator
 	do
+		Io.put_string("%N > call to SORTER.init()");
 		forwarded
 	end
 	
@@ -97,11 +98,30 @@ feature
 	end
 end
 
+class BUBBLE_SORTER inherit SORTER
+		redefine init, sort end
+create
+	init
+	
+feature {none}
+	init -- creator
+	do
+		Io.put_string("%N > call to BUBBLE_SORTER.init()");
+	end
+feature
+	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
+	do
+		PRECURSOR(arr)
+		Result := arr
+	end
+
+end
+
 class SORT_ALG
 create
 	make
 
-feature {ANY}
+feature {SORTER}
 	make
 	do end
 	

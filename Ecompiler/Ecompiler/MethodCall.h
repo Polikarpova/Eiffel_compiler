@@ -14,8 +14,9 @@ public:
 	/*fields*/
 
 	short int methodref_constN, class_of_called_mtd_constN, class_of_arr_elem_constN;
-	bool noCreate;
+	bool noCreate; // пропускать создание (например, объекта с помощью `new`)
 	bool keepNewReferenceOnStack; // нужно ли делать `dup` после `new`
+	bool specialCall; // использовать `invokespecial` вместо `invokevirtual`
 
 	//* метод, к которому производится доступ
 	Method* calledMethod;
