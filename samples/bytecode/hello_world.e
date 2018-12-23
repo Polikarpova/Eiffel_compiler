@@ -99,7 +99,7 @@ feature
 end
 
 class BUBBLE_SORTER inherit SORTER
-		redefine init, sort end
+		redefine sort end
 create
 	init
 	
@@ -111,14 +111,14 @@ feature
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	do
 		Io.put_string("%N > call to BUBBLE_SORTER.sort()");
-		-- PRECURSOR(arr)
+		PRECURSOR(arr)
 		Result := arr
 	end
 
 end
 
-class QUICK_SORTER inherit SORTER
-		redefine init, sort end
+class QUICK_SORTER inherit BUBBLE_SORTER
+		redefine sort end
 create
 	init
 	

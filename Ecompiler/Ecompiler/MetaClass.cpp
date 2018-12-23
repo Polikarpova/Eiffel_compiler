@@ -515,7 +515,12 @@ bool MetaClass::verifyRedifinition(struct NInheritFromClass* node)
 	// ... проверить конфликты имён с наследуемыми, но не переопределёнными членами
 	foreach(QString this_name , this->methods.keys() + this->fields.keys())
 	{
-		if( explicit_redefines.contains(this_name) )
+		if( explicit_redefines.contains(this_name) ) // было явно переопределено
+			continue;
+
+		Feature* this_feature = this->findFeature(this_name, true);
+
+		if( this_feature->isMethod() && ((Method*)this_feature)->isCreator ) // является конструктором и не нуждается в переопределении
 			continue;
 
 		Feature* parent_feature = this->parent->findFeature(this_name, true);
