@@ -13,14 +13,29 @@ feature
 		b: BOOLEAN
 	do
 	
-		b:= 2.5 < 5;
+		b:= 2.5 < 5 and 2.5 <= 5;
 		Io.put_boolean(b);
 		Io.new_line;
+		b:= 2.5 > 5 or 2.5 >= 5
+		Io.put_boolean(b);
+		Io.new_line
+		b:= 25 < 50.5 and 25 <= 50.5;
+		Io.put_boolean(b);
+		Io.new_line;
+		b:= 25 > 50.5 or 25 >= 50.5
+		Io.put_boolean(b);
 		Io.new_line
 		
 		n:= 5;
 		r := 2.5;
 
+		Io.put_real(n);
+		Io.new_line
+		
+		r:= n+n/r;
+		Io.put_real(r);
+		Io.new_line
+		
 		r:= n+r;
 		Io.put_real(r);
 		Io.new_line
@@ -36,8 +51,8 @@ feature
 		
 --		Io.put_boolean( NOT true OR ELSE true implies NOT NOT false );
 --		Io.new_line
-		-- Io.put_string("CREATE arr.make(0, N) ... %N");
-		Io.put_string("Write array size: ");
+
+		Io.put_string("Input array size: ");
 		Io.read_integer;
 		CREATE arr.make(0, Io.last_integer-1)
 		
@@ -95,7 +110,7 @@ feature
 	local
 		i:INTEGER
 	do
-		Io.put_string("Write array elements (one per line):%N")
+		Io.put_string("Input array elements (one per line):%N")
 		FROM
 			i := 0
 		UNTIL
