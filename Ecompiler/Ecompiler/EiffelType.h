@@ -34,8 +34,11 @@ public:
 	/** ѕроверка на возможность приведени€ к более общему типу.
 		Ќапример, выражени€ справа от равно к типу выражени€ слева.
 		ѕо умолчанию тип не может быть приведЄн ни к чему, кроме себ€ -- подклассы могут расширить это поведение.
+		@param[out] convertTo - указатель на [указатель на тип] -
+			- Ѕудет установлен в тип, к которому нужно преобразовать текущий тип дл€ совместимости с провер€емым.
+			- ≈сли €вное преобразование (INT -> FLOAT или наоборот) не требуетс€, будет установлен в 0.
 	*/
-	virtual bool canCastTo(const EiffelType* otherType) const;
+	virtual bool canCastTo(const EiffelType* otherType, EiffelType* *convertTo = 0) const;
 
 	virtual QString descriptor() {return QString("<!Type!>");}
 	

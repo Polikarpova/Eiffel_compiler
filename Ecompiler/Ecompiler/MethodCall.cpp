@@ -103,7 +103,10 @@ MethodCall::~MethodCall(void)
 			return NULL;
 		}
 
-		bool types_ok = vmc->arguments[i]->expressionType()->canCastTo( formal_arg->type );
+		EiffelType* convertType = 0;
+
+		bool types_ok = vmc->arguments[i]->expressionType()->canCastTo( formal_arg->type, &convertType );
+
 		if(!types_ok)
 		{
 			EiffelProgram::currentProgram->logError(
@@ -115,6 +118,12 @@ MethodCall::~MethodCall(void)
 				source_line);
 			delete vmc;
 			return NULL;
+		}
+
+		// установить узлу преобразование
+		if(convertType != 0)
+		{
+			vmc->arguments[i]->setConversionTo(convertType);
 		}
 	}
 

@@ -19,10 +19,11 @@ EiffelType::~EiffelType(void)
 {
 }
 
-/*virtual*/ bool EiffelType::canCastTo(const EiffelType* otherType) const
+/*virtual*/ bool EiffelType::canCastTo(const EiffelType* otherType, EiffelType* *convertTo /*= 0*/) const
 {
-	//return (typeid(this) == typeid(otherType));
-	//return this->descriptor() == otherType->descriptor();
+	// преобразование не требуется
+	convertTo = 0;
+
 	return 
 	   this->isVoid()      == otherType->isVoid()
 	&& this->isReference() == otherType->isReference()

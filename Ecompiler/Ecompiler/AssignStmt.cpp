@@ -20,7 +20,9 @@ AssignStmt::~AssignStmt(void)
 		EiffelType *lType = left->expressionType();
 		EiffelType *rType = expr->expressionType();
 
-		if ( ! lType->canCastTo( rType ) ) {
+		EiffelType* convertType = 0;
+
+		if ( ! rType->canCastTo( lType, &convertType ) ) {
 		
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
@@ -28,6 +30,12 @@ AssignStmt::~AssignStmt(void)
 					.arg(rType->toReadableString(), lType->toReadableString()),
 				s->expr->loc.first_line);
 			return NULL;
+		}
+
+		// установить узлу преобразование
+		if(convertType != 0)
+		{
+			expr->setConversionTo(convertType);
 		}
 
 	} else {

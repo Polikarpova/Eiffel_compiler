@@ -19,7 +19,7 @@ public:
 		Проверка на возможность приведения текущего КЛАССА к более общему КЛАССУ.
 		Приведение возможно, если otherType - класс, классы одинаковые или текущий тип является наследником otherType.
 	*/
-	bool canCastTo(const EiffelType* otherType) const;
+	bool canCastTo(const EiffelType* otherType, EiffelType* *convertTo = 0) const;
 
 
 	/*fields*/

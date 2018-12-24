@@ -21,11 +21,9 @@ EiffelClass::~EiffelClass(void)
 {
 }
 
-/*virtual*/ bool EiffelClass::canCastTo(const EiffelType* otherType) const
+/*virtual*/ bool EiffelClass::canCastTo(const EiffelType* otherType, EiffelType* *convertTo /*= 0*/) const
 {
-	// проверить, если участвуют массивы ... -> эту проверку поместить в MetaArray::canCastTo()
-
-	if( ! EiffelType::canCastTo(otherType) ) // объект не класс
+	if( ! EiffelType::canCastTo(otherType, convertTo) ) // объект не класс
 	{
 		return false;
 	}

@@ -28,6 +28,11 @@ public:
 	*/
 	virtual bool setRightValue(Expression* r, bool force = false) { return false; };
 
+	/** Задать явное преобразование в тип.
+		Пока допускается преобразовывать только: INT к FLOAT.
+	*/
+	virtual void setConversionTo(EiffelType* newType);
+
 	//необходим
 	//возвращает тип возвращаемый выражением
 	//2+2 вернет INTEGER
@@ -37,7 +42,7 @@ public:
 	struct NExpr* tree_node;
 
 	bool _isLeftValue;
-	bool castI2F;
+	bool castI2F; // выполнить преобразование: INT к FLOAT.
 
 	Expression* left;
 	Expression* right;

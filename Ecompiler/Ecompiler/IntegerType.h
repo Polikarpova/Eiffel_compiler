@@ -21,7 +21,7 @@ public:
 
 	bool isInteger() const { return true; }
 
-	virtual bool canCastTo(const EiffelType* otherType) const;
+	virtual bool canCastTo(const EiffelType* otherType, EiffelType* *convertTo = 0) const;
 
 	virtual QString descriptor() {return "I";};
 	QString toReadableString() const {return "INTEGER";};

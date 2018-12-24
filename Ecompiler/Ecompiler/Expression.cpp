@@ -321,6 +321,29 @@ MethodCall* fromPrecursor(Method* mtd, struct NExpr* node)
 	return 0;
 }
 
+/*virtual*/ void Expression::setConversionTo(EiffelType* newType)
+{
+	/** Задать явное преобразование в тип.
+		Пока допускается преобразовывать только: INT к FLOAT.
+	*/
+
+	if(this->expressionType()->isInteger())
+	{
+		////this->type = NULL; // сбросить, чтобы пересчитать тип выражения заново (не надо)
+		this->castI2F = false; // сбросить (преобразование: INT к FLOAT)
+
+		if(newType->isReal())
+		{
+			// установить новый тип выражения
+			////this->type = newType; // ??
+			// установить преобразование
+			this->castI2F = true; 
+		}
+	}
+
+	return;
+}
+
 EiffelType* Expression::expressionType()
 {
 	return getReturnType();

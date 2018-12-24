@@ -32,7 +32,7 @@ public:
 
 	virtual bool isArray() const { return true; }
 
-	virtual bool canCastTo(const EiffelType* otherType) const;
+	virtual bool canCastTo(const EiffelType* otherType, EiffelType* *convertTo = 0) const;
 	QString descriptor() { return QString("[%1").arg(elementType->descriptor()); }
 	QString toReadableString() const {return QString("ARRAY[%1]").arg(elementType->toReadableString());};
 

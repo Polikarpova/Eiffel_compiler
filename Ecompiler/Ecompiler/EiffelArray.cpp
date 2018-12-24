@@ -30,8 +30,11 @@
 	return ea;
 }
 
-/*virtual*/ bool EiffelArray::canCastTo(const EiffelType* otherType) const
+/*virtual*/ bool EiffelArray::canCastTo(const EiffelType* otherType, EiffelType* *convertTo /*= 0*/) const
 {
+	// преобразование не требуется
+	convertTo = 0;
+
 	if( ! otherType->isArray() )
 	{
 		return false;
