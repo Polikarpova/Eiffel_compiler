@@ -151,11 +151,12 @@ struct NInheritFromClassList* inherit_class_list_struct;
 %left IMPLIES
 %left OR OR_ELSE XOR
 %left AND AND_THEN
+%left NOT
 %left EQUALS NOT_EQUALS LESS GREATER LESS_OR_EQUAL GREATER_OR_EQUAL
 %left '+' '-'
 %left '*' '/'
 %left '^'
-%left NOT UPLUS UMINUS
+%left UPLUS UMINUS
 %nonassoc '(' ')'
 %left '[' ']'
 %left '.'

@@ -9,17 +9,24 @@ feature
 	local
 		arr: ARRAY[INTEGER]
 	do
-		-- Io.put_string("CREATE arr.make(0, 5) ... %N");
-		CREATE arr.make(0, 5)
+
+--		Io.put_boolean( NOT true OR ELSE true implies NOT NOT false );
+--		Io.new_line
+		-- Io.put_string("CREATE arr.make(0, N) ... %N");
+		Io.put_string("Write array size: ");
+		Io.read_integer;
+		CREATE arr.make(0, Io.last_integer-1)
+		
 		-- Io.put_string("CREATE worker.init ... %N");
 		CREATE worker.init
 
-		arr[0] := -+55;
-		arr[1] := 6^2;
-		arr[2] := +24;
-		arr[3] := +-37;
-		arr[4] := -5;
-		arr[5] := 0;
+		read_arr(arr);
+--		arr[0] := -+55;
+--		arr[1] := 6^2;
+--		arr[2] := +24;
+--		arr[3] := +-37;
+--		arr[4] := -5;
+--		arr[5] := 0;
 		
 		Io.put_string("%NStart array: ");
 		Io.put_string("%TElements count: ");
@@ -27,7 +34,7 @@ feature
 		
 		print_arr(arr);
 		
-		Io.put_string("%N%NSorting...%N%N");
+		Io.put_string("%N%NSorting...%N");
 		worker.reversed
 		arr := worker.sort(arr);
 		
@@ -60,6 +67,24 @@ feature
 		end
 	end
 	
+	read_arr(arr:ARRAY[INTEGER])
+	local
+		i:INTEGER
+	do
+		Io.put_string("Write array elements (each with new line):%N")
+		FROM
+			i := 0
+		UNTIL
+			i < arr.count
+		LOOP
+			
+			Io.read_integer
+			
+			arr[i] := Io.last_integer
+			
+			i := i + 1;
+		end
+	end
 end
 
 class SORTER
@@ -143,7 +168,7 @@ create
 feature {SORTER}
 	make
 	do end
-	
+
 	bubble_sort(arr:ARRAY[INTEGER] ; ascending: BOOLEAN)
 	local
 		buf, i, j: INTEGER
@@ -159,7 +184,7 @@ feature {SORTER}
 			UNTIL
 				j < (arr.count - i - 1)
 			LOOP
-				IF arr[j] < arr[j+1] xor ascending
+				IF ascending xor arr[j] < arr[j+1]
 				THEN
 					buf := arr[j];
 					arr[j] := arr[j+1];
