@@ -436,7 +436,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 	
 		if ( this->tree_node->type == EqualsE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"equalI", 
 					QList<Expression*>()
@@ -476,7 +476,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == NotEqualE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"notEqualI", 
 					QList<Expression*>()
@@ -516,7 +516,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == LessE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"lessI", 
 					QList<Expression*>()
@@ -556,7 +556,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == GreaterE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"greaterI", 
 					QList<Expression*>()
@@ -596,7 +596,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == LessOrEqualE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"lessOrEqualI", 
 					QList<Expression*>()
@@ -636,7 +636,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 
 		} else if ( this->tree_node->type == GreaterOrEqualE ) {
 
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"greaterOrEqualI", 
 					QList<Expression*>()
