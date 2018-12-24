@@ -79,7 +79,7 @@ LoopStmt::~LoopStmt(void)
 	this->condition->toByteCode(code);	//высчитываем условие
 	
 	if_start = code.currentOffset;
-	code.ifne( body_start - if_start );				//ifeq на тело
+	code.ifeq( body_start - if_start );				//ifeq на тело
 
 	return bc.append(code);
 }
