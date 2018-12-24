@@ -312,6 +312,13 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "equalC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	mtd = new Method(mc, bool_type, "notEqualI",
 		QList<LocalVariable>() 
 		<< LocalVariable(int_type, "left") 
@@ -330,6 +337,13 @@ void EiffelProgram::createRTL()
 		QList<LocalVariable>() 
 		<< LocalVariable(string_type, "left") 
 		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "notEqualC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
 		);
 	mc->methods[ mtd->name ] = mtd;
 
@@ -354,6 +368,13 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "lessC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	mtd = new Method(mc, bool_type, "greaterI",
 		QList<LocalVariable>() 
 		<< LocalVariable(int_type, "left") 
@@ -372,6 +393,13 @@ void EiffelProgram::createRTL()
 		QList<LocalVariable>() 
 		<< LocalVariable(string_type, "left") 
 		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, bool_type, "greaterC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
 		);
 	mc->methods[ mtd->name ] = mtd;
 
@@ -396,6 +424,13 @@ void EiffelProgram::createRTL()
 		);
 	mc->methods[ mtd->name ] = mtd;
 
+	mtd = new Method(mc, bool_type, "lessOrEqualC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
 	mtd = new Method(mc, bool_type, "greaterOrEqualI",
 		QList<LocalVariable>() 
 		<< LocalVariable(int_type, "left") 
@@ -414,6 +449,14 @@ void EiffelProgram::createRTL()
 		QList<LocalVariable>() 
 		<< LocalVariable(string_type, "left") 
 		<< LocalVariable(string_type, "right")
+		);
+	mc->methods[ mtd->name ] = mtd;
+
+	
+	mtd = new Method(mc, bool_type, "greaterOrEqualC",
+		QList<LocalVariable>() 
+		<< LocalVariable(char_type, "left") 
+		<< LocalVariable(char_type, "right")
 		);
 	mc->methods[ mtd->name ] = mtd;
 

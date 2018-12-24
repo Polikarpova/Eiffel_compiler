@@ -31,6 +31,10 @@ public class Helper {
         
         return left.compareTo(right) == 0;
     }
+    public boolean equalC(char left, char right) {
+        
+        return left == right;
+    }
     
     //!=
     public boolean notEqualI(int left, int right) {
@@ -41,6 +45,10 @@ public class Helper {
     }   
     public boolean notEqualS(String left, String right) {
         return left.compareTo(right) != 0;
+    }
+    public boolean notEqualC(char left, char right) {
+        
+        return left != right;
     }
     
     //<
@@ -53,6 +61,10 @@ public class Helper {
     public boolean lessS(String left, String right) {      
         return left.compareTo(right) < 0;
     }
+    public boolean lessC(char left, char right) {
+        
+        return left < right;
+    }
     
     //>
     public boolean greaterI(int left, int right) {
@@ -63,6 +75,10 @@ public class Helper {
     }   
     public boolean greaterS(String left, String right) {      
         return left.compareTo(right) > 0;
+    }
+    public boolean greaterC(char left, char right) {
+        
+        return left > right;
     }
     
     //<=
@@ -75,6 +91,10 @@ public class Helper {
     public boolean lessOrEqualS(String left, String right) {              
         return lessS(left, right) || equalS(left, right);
     }
+    public boolean lessOrEqualC(char left, char right) {
+        
+        return left <= right;
+    }
     
     //>=
     public boolean greaterOrEqualI(int left, int right) {
@@ -85,6 +105,10 @@ public class Helper {
     }   
     public boolean greaterOrEqualS(String left, String right) {              
         return greaterS(left, right) || equalS(left, right);
+    }
+    public boolean greaterOrEqualC(char left, char right) {
+        
+        return left >= right;
     }
     
     public boolean or(boolean left, boolean right) {

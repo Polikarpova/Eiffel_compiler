@@ -449,7 +449,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"equalI", 
+					"equalC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -489,7 +489,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"notEqualI", 
+					"notEqualC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -529,7 +529,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"lessI", 
+					"lessC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -569,7 +569,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"greaterI", 
+					"greaterC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -609,7 +609,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"lessOrEqualI", 
+					"lessOrEqualC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
@@ -649,7 +649,7 @@ ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
 				call_helper->toByteCode(bc);
 			} else if ( this->left->type->isCharacter() ) {
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
-					"greaterOrEqualI", 
+					"greaterOrEqualC", 
 					QList<Expression*>()
 					<< this->left
 					<< this->right
