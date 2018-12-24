@@ -10,8 +10,14 @@ feature
 		arr: ARRAY[INTEGER]
 		r: REAL
 		n: INTEGER
+		b: BOOLEAN
 	do
-
+	
+		b:= 2.5 < 5;
+		Io.put_boolean(b);
+		Io.new_line;
+		Io.new_line
+		
 		n:= 5;
 		r := 2.5;
 
