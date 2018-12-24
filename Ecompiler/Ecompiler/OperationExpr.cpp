@@ -176,12 +176,16 @@ EiffelType* OperationExpr::getReturnType( ) {
 				return NULL;
 			}
 
-			//признак i2f
-			if ( rType->isInteger() )
-				this->right->castI2F = true;
+			//инт и флоат ИЛИ флоат и инт
+			if ( ( (lType->isInteger() && rType->isReal()) || (lType->isReal() && rType->isInteger()) ) ) {
+			
+				//признак i2f
+				if ( rType->isInteger() )
+					this->right->castI2F = true;
 
-			if ( lType->isInteger() )
-				this->left->castI2F = true;
+				if ( lType->isInteger() )
+					this->left->castI2F = true;
+			}
 
 			//возвращает bool
 			this->type = EiffelProgram::currentProgram->findClass("BOOLEAN")->getType();
