@@ -379,8 +379,8 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 				//грузим левое и правое число
 				this->left->toByteCode(bc);
 				this->right->toByteCode(bc);
-
 				bc.iadd();
+
 			} else if ( this->left->type->toReadableString() == "STRING" ) {
 			
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 

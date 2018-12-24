@@ -85,12 +85,12 @@ ArrayElemRef::~ArrayElemRef(void)
 
 	if ( force || ! r->expressionType()->isVoid() ) {
 			
-		//если типы не совпадают, то всё плохо
 		EiffelType* rType = r->expressionType();
 		EiffelType* lType = this->expressionType();
 
 		if ( !force && !rType->canCastTo(lType) ) {
 		
+		//если типы не совпадают, то всё плохо
 			EiffelProgram::currentProgram->logError(
 				QString("semantic"), 
 				QString("Invalid assignment: cannot convert type %1 into type %2")

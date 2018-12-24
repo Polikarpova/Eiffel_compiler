@@ -21,7 +21,8 @@ public:
 
 	virtual bool isReal() const { return true; }
 
-	virtual bool canCastTo(const EiffelType* otherType) const;
+	// перепределение тривиально ( повторяет EiffelType::canCastTo() )
+	//virtual bool canCastTo(const EiffelType* otherType, EiffelType* *convertTo = 0) const;
 
 	QString descriptor() {return QString("F");}
 	QString toReadableString() const {return "REAL";};
