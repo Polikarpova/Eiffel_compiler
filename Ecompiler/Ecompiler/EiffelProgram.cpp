@@ -231,6 +231,12 @@ void EiffelProgram::createRTL()
 	mc->methods[ mtd->name ] = mtd;
 	mtd = new Method(mc, void_type, "new_line");
 	mc->methods[ mtd->name ] = mtd;
+
+	// `last_string`: stores result of Io.read_string
+	fld = new Field(mc, string_type, "last_string");
+	fld->isReadOnly = true;
+	mc->fields[ fld->name ] = fld;
+
 	this->classes[ mc->name() ] = mc;
 
 
