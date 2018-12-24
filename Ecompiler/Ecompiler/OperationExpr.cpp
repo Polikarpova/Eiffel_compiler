@@ -180,11 +180,14 @@ EiffelType* OperationExpr::getReturnType( ) {
 			if ( ( (lType->isInteger() && rType->isReal()) || (lType->isReal() && rType->isInteger()) ) ) {
 			
 				//признак i2f
-				if ( rType->isInteger() )
-					this->right->castI2F = true;
-
-				if ( lType->isInteger() )
-					this->left->castI2F = true;
+				if ( rType->isInteger() ) {
+					//this->right->castI2F = true;
+					this->right->setConversionTo(lType);
+				}
+				if ( lType->isInteger() ) {
+					//this->left->castI2F = true;
+					this->left->setConversionTo(rType);
+				}
 			}
 
 			//возвращает bool
