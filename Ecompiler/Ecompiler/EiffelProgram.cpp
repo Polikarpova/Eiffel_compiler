@@ -232,13 +232,48 @@ void EiffelProgram::createRTL()
 	mtd = new Method(mc, void_type, "new_line");
 	mc->methods[ mtd->name ] = mtd;
 
-	// `last_string`: stores result of Io.read_string
+	// `last_string`: stores result of Io.read_line
 	fld = new Field(mc, string_type, "last_string");
 	fld->isReadOnly = true;
 	mc->fields[ fld->name ] = fld;
 
-	this->classes[ mc->name() ] = mc;
+	// `last_integer`: stores result of Io.read_integer
+	fld = new Field(mc, int_type, "last_integer");
+	fld->isReadOnly = true;
+	mc->fields[ fld->name ] = fld;
 
+	// `last_real`: stores result of Io.read_real
+	fld = new Field(mc, real_type, "last_real");
+	fld->isReadOnly = true;
+	mc->fields[ fld->name ] = fld;
+
+	// `last_boolean`: stores result of Io.read_boolean
+	fld = new Field(mc, bool_type, "last_boolean");
+	fld->isReadOnly = true;
+	mc->fields[ fld->name ] = fld;
+
+	// `last_character`: stores result of Io.read_character
+	fld = new Field(mc, char_type, "last_character");
+	fld->isReadOnly = true;
+	mc->fields[ fld->name ] = fld;
+
+	//read_<what> methods
+	mtd = new Method(mc, void_type, "read_line");
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, void_type, "read_integer");
+	mc->methods[ mtd->name ] = mtd;
+	
+	mtd = new Method(mc, void_type, "read_real");
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, void_type, "read_boolean");
+	mc->methods[ mtd->name ] = mtd;
+
+	mtd = new Method(mc, void_type, "read_character");
+	mc->methods[ mtd->name ] = mtd;
+
+	this->classes[ mc->name() ] = mc;
 
 	// Helper class
 	mc = new RTLMetaClass(this, QString("Helper"));
