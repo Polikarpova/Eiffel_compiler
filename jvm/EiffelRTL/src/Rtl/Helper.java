@@ -130,14 +130,14 @@ public class Helper {
 	public int verifyArrayMake(int lower, int upper) {
 		String error_info = "";
 		if(lower != 0) {
-			error_info += "\n ignoring `lower` = " + lower + ". Values other than zero are not supported.";
+			error_info += "\n - ignoring `lower` = " + lower + ". Values other than zero are not supported.";
 		}
 		if(upper < 0) {
-			error_info += "\n ignoring negative `upper` = " + upper + ". Defaulting to 0.";
+			error_info += "\n - ignoring negative `upper` = " + upper + ". Defaulting to 0.";
 			upper = 0;
 		}
 		if( ! error_info.isEmpty() )
-			System.out.println("/!\\ Warning: Invalid prerands passed to `ARRAY.make(lower, upper)` :" + error_info);
+			System.out.println("/!\\ Warning: Invalid arguments were passed to `ARRAY.make(lower, upper)` :" + error_info);
 		
 		return upper + 1;
 	}
