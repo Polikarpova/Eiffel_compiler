@@ -7,11 +7,11 @@ import java.util.Scanner;
  */
 public class CONSOLEIO {
 
-    String last_string;
-    int last_integer;
-    float last_real;
-    boolean last_boolean;
-    char last_character;
+    public String last_string;
+    public int last_integer;
+    public float last_real;
+    public boolean last_boolean;
+    public char last_character;
     Scanner in;
     
     public CONSOLEIO() {
