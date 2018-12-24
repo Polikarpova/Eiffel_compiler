@@ -15,6 +15,7 @@ public:
 
 	short int methodref_constN, class_of_called_mtd_constN, class_of_arr_elem_constN;
 	bool noCreate; // пропускать создание (например, объекта с помощью `new`)
+	bool noQualify; // пропускать загрузку квалификации
 	bool keepNewReferenceOnStack; // нужно ли делать `dup` после `new`
 	bool specialCall; // использовать `invokespecial` вместо `invokevirtual`
 

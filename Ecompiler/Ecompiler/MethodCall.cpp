@@ -8,6 +8,7 @@ MethodCall::MethodCall(void)
 	: Expression()
 {
 	noCreate = false;
+	noQualify = false;
 	keepNewReferenceOnStack = true;
 	specialCall = false;
 	class_of_arr_elem_constN = -1;
@@ -240,12 +241,16 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 		//this->calledMethod->isCreator ||
 		isArray ||
 		noQualify ||
+		this->noQualify ||
 		(this->calledMethod->addFlags & ACC_STATIC)
 		;
 
 
 	if( !omitQualification )
 	{
+		bc.log(QString("load qualification for method %1 ...")
+			.arg(this->calledMethod->name));
+
 		// для динамического метода с this
 		// load a reference to an object ...
 		// call qualification as this->left

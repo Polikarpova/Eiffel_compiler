@@ -98,6 +98,7 @@ MethodCall* fromRefnCall(Method* mtd, struct NExpr* node);
 	}
 
 	general_method_call->left = NULL;
+	general_method_call->noQualify = true;
 
 	CreateStmt* cs = new CreateStmt();
 
