@@ -412,7 +412,10 @@ struct NStmtList* addToStmtList(struct NStmtList* list, struct NStmt* elem)
 		return createStmtList(elem);
 	if(elem) // drop error stmt
 	{
-		list->last->next = elem;
+		if(!list->first)
+			list->first = elem;
+		else
+			list->last->next = elem;
 		list->last = elem;
 	}
 	return list;
