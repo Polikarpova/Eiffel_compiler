@@ -80,7 +80,7 @@ feature
 		FROM
 			i := 0
 		UNTIL
-			i < arr.count
+			i >= arr.count
 		LOOP
 			Io.put_string("%N%TElement ");
 			Io.put_integer(i);
@@ -95,11 +95,11 @@ feature
 	local
 		i:INTEGER
 	do
-		Io.put_string("Write array elements (each with new line):%N")
+		Io.put_string("Write array elements (one per line):%N")
 		FROM
 			i := 0
 		UNTIL
-			i < arr.count
+			i >= arr.count
 		LOOP
 			
 			Io.read_integer
@@ -201,12 +201,12 @@ feature {SORTER}
 		FROM
 			i := 0
 		UNTIL
-			i < arr.count
+			i >= arr.count
 		LOOP
 			FROM
 				j := 0
 			UNTIL
-				j < (arr.count - i - 1)
+				j >= (arr.count - i - 1)
 			LOOP
 				IF ascending xor arr[j] < arr[j+1]
 				THEN
