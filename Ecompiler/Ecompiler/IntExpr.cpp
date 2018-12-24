@@ -59,5 +59,5 @@ ByteCode& IntExpr::toByteCode(ByteCode &bc)
 		bc.sipush(this->Int);
 	}
 
-	return bc;
+	return applyI2F(bc);
 }

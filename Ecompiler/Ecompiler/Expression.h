@@ -37,12 +37,15 @@ public:
 	struct NExpr* tree_node;
 
 	bool _isLeftValue;
+	bool castI2F;
 
 	Expression* left;
 	Expression* right;
 	EiffelType* type;	//тип возвращаемого значения
 
 	virtual ByteCode& toByteCode(ByteCode &bc) {return bc.log("/!\\ expr -> code not implemented!.."); };
+
+	ByteCode& applyI2F(ByteCode &bc);
 
 
 private:

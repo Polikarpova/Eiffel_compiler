@@ -290,6 +290,10 @@ ByteCode& MethodCall::toByteCode(ByteCode &bc, bool noQualify)
 			this->calledMethod->exactNumberOfArgs(),
 			this->calledMethod->isVoid());
 	}
+
+	if ( !this->calledMethod->isVoid() )
+		applyI2F(bc);
+	
 	return bc;
 }
 

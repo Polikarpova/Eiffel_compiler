@@ -113,7 +113,7 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 		bc.getfield(this->fieldref_constN);
 	}
 
-	return bc;
+	return applyI2F(bc);
 }
 
 /*virtual*/ bool FieldRef::setRightValue(Expression* r, bool force /*= false*/)

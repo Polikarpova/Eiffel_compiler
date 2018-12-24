@@ -8,8 +8,26 @@ feature
 	make
 	local
 		arr: ARRAY[INTEGER]
+		r: REAL
+		n: INTEGER
 	do
 
+		n:= 5;
+		r := 2.5;
+
+		r:= n+r;
+		Io.put_real(r);
+		Io.new_line
+		
+		r:= n-r;
+		Io.put_real(r);
+		Io.new_line
+		
+		r:= n/r;
+		Io.put_real(r);
+		Io.new_line
+		
+		
 --		Io.put_boolean( NOT true OR ELSE true implies NOT NOT false );
 --		Io.new_line
 		-- Io.put_string("CREATE arr.make(0, N) ... %N");

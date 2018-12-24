@@ -20,6 +20,7 @@ Expression::Expression(void)
 	this->currentMethod = 0;
 	this->tree_node = 0;
 	this->_isLeftValue = false;
+	this->castI2F = false;
 	this->left = 0;
 	this->right = 0;
 	this->type = 0;
@@ -365,4 +366,13 @@ EiffelType* Expression::getReturnType() {
 	}
 	
 	return type;
+}
+
+ByteCode& Expression::applyI2F(ByteCode &bc) {
+
+	if (this->castI2F) {
+		bc.i2f();
+	}
+
+	return bc;
 }

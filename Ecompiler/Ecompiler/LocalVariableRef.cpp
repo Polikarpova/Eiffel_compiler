@@ -52,7 +52,7 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 			bc.iload(this->locVar->n);
 	}
 
-	return bc;
+	return applyI2F(bc);
 }
 
 /*virtual*/ bool LocalVariableRef::setRightValue(Expression* r, bool force /*= false*/)

@@ -117,15 +117,13 @@ EiffelType* OperationExpr::getReturnType( ) {
 
 					} else {
 					
-						//преобразование int в real
-						//здесь надо узнать кто int, перевести его в real и возвразаем мы real в итоге
-						
-						//this->type = EiffelProgram::currentProgram->findClass("REAL")->getType();
+						if ( rType->isInteger() )
+							this->right->castI2F = true;
 
-						getError( rType->toReadableString(), lType->toReadableString() );
-						delete rType;
-						delete lType;
-						return NULL;
+						if ( lType->isInteger() )
+							this->left->castI2F = true;
+
+						this->type = EiffelProgram::currentProgram->findClass("REAL")->getType();
 					}
 				} else {
 				
@@ -176,6 +174,8 @@ EiffelType* OperationExpr::getReturnType( ) {
 				delete lType;
 				return NULL;
 			}
+
+			//признак i2f
 
 			//возвращает bool
 			this->type = EiffelProgram::currentProgram->findClass("BOOLEAN")->getType();
@@ -305,7 +305,7 @@ ByteCode& OperationExpr::unaryToByteCode(ByteCode &bc) {
 			this->tree_node->loc.first_line);
 	}
 
-	return bc;
+	return applyI2F(bc);
 }
 
 ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
@@ -319,7 +319,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		if ( this->tree_node->type == PowerE ) {
 
 			//вызов функции из RTL
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 		
 				MethodCall* call_helper = EiffelProgram::currentProgram->callHelper(currentMethod, 
 					"powerI", 
@@ -338,10 +338,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			this->right->toByteCode(bc);
 
 			//если складываются инты
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 		
 				bc.imul();
-			} else if ( this->left->type->isReal() ) {
+			} else {
 
 				bc.fmul();
 			}
@@ -353,10 +353,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			this->right->toByteCode(bc);
 
 			//если складываются инты
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 		
 				bc.idiv();
-			} else if ( this->left->type->isReal() ) {
+			} else {
 				
 				bc.fdiv();
 			}
@@ -364,7 +364,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 		} else if ( this->tree_node->type == PlusE ) {
 	
 			//если складываются инты
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 
 				//грузим левое и правое число
 				this->left->toByteCode(bc);
@@ -381,7 +381,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 				);
 
 				call_helper->toByteCode(bc);
-			} else if ( this->left->type->isReal() ) {
+			} else {
 				
 				//грузим левое и правое число
 				this->left->toByteCode(bc);
@@ -397,10 +397,10 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			this->right->toByteCode(bc);
 
 			//если складываются инты
-			if ( this->left->type->isInteger() ) {
+			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
 		
 				bc.isub();
-			} else if ( this->left->type->isReal() ) {
+			} else {
 				bc.fsub();
 			}
 		} 
@@ -413,7 +413,7 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			this->tree_node->loc.first_line);
 	}
 
-	return bc;
+	return applyI2F(bc);
 }
 
 ByteCode& OperationExpr::comparsionToByteCode(ByteCode &bc) {
