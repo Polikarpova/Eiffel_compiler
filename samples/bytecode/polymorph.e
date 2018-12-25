@@ -3,43 +3,51 @@ create
 	make
 
 feature
-	worker : QUICK_SORTER
+	workers : ARRAY[SORTER]
 	
 	make
 	local
+		sorter1 : SORTER
+		bubble : BUBBLE_SORTER
+		quick : QUICK_SORTER
+		empty : EMPTY_SORTER
+		
 		arr: ARRAY[INTEGER]
+		
+		i : INTEGER
 	do
-
-		Io.put_string("Input array size: ");
-		Io.read_integer;
-		CREATE arr.make(0, Io.last_integer-1)
+		CREATE arr.make(0, 5)
+		arr[0] := 9*3;
+		arr[1] := 90/2;
+		arr[2] := 7^2;
+		arr[3] := 8-18;
+		arr[4] := 1+5;
 		
-		-- Io.put_string("CREATE worker.init ... %N");
-		CREATE worker.init
-
-		read_arr(arr);
+		CREATE workers.make(0, 3)
+		CREATE sorter1.init
+		CREATE bubble.init
+		CREATE quick.init
+		quick.use_bubble := true;
+		CREATE empty.init
 		
-		Io.put_string("%NStart array: ");
-		Io.put_string("%TElements count: ");
-		Io.put_integer(arr.count);
+		workers[0] := sorter1;
+		workers[1] := bubble;
+		workers[2] := quick;
+		workers[3] := empty;
 		
+		FROM
+			I := 0
+		UNTIL
+			i = workers.count
+		LOOP
+			Io.put_string("%N i: "); Io.put_integer(i);
+			arr := workers[i].sort(arr)
+			
+			i := i + 1;
+		END
+		
+		Io.put_string("%N%NSorted array:");
 		print_arr(arr);
-		
-		Io.put_string("%N%NSorting...%N");
-		
-		--worker.reversed
-		--arr := worker.sort(arr);
-		
-		--Io.put_string("%NDescend-sorted array: ");
-		--print_arr(arr);
-		
-		worker.init
-		worker.use_bubble := true
-		arr := worker.sort(arr);
-		
-		Io.put_string("%NSorted array: ");
-		print_arr(arr);
-		
 	end
 	
 	print_arr(arr:ARRAY[INTEGER])
@@ -60,24 +68,6 @@ feature
 		end
 	end
 	
-	read_arr(arr:ARRAY[INTEGER])
-	local
-		i:INTEGER
-	do
-		Io.put_string("Input array elements (one per line):%N")
-		FROM
-			i := 0
-		UNTIL
-			i >= arr.count
-		LOOP
-			
-			Io.read_integer
-			
-			arr[i] := Io.last_integer
-			
-			i := i + 1;
-		end
-	end
 end
 
 class SORTER
@@ -135,6 +125,18 @@ feature
 
 end
 
+class EMPTY_SORTER inherit SORTER
+create
+	init
+	
+feature {none}
+	init -- creator
+	do
+	end
+feature
+
+end
+
 class QUICK_SORTER inherit BUBBLE_SORTER
 		redefine sort end
 create
@@ -171,10 +173,11 @@ class SORT_ALG
 create
 	make
 
-feature {SORTER}
+feature
 	make
 	do end
 
+feature {SORTER}
 	bubble_sort(arr:ARRAY[INTEGER] ; ascending: BOOLEAN)
 	local
 		buf, i, j: INTEGER
