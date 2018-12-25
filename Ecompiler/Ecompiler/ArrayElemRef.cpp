@@ -144,6 +144,8 @@ ByteCode& ArrayElemRef::toByteCode(ByteCode &bc)
 			bc.aastore();
 		else if(this->type->isInteger())
 			bc.iastore();
+		else if(this->type->isReal())
+			bc.fastore();
 	}
 	else
 	{
@@ -151,8 +153,10 @@ ByteCode& ArrayElemRef::toByteCode(ByteCode &bc)
 			bc.aaload();
 		else if(this->type->isInteger())
 			bc.iaload();
+		else if(this->type->isReal())
+			bc.faload();
 	}
 
-	return bc;
+	return applyI2F(bc);
 }
 

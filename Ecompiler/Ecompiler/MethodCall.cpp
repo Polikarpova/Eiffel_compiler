@@ -404,8 +404,20 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 		}
 		else if(elem_type->isInteger()) // массив целых чисел
 		{
-			bc.newarray( 10 ); // INT constant
+			bc.newarray( 10 ); // T_INT constant
 		}
+		else if(elem_type->isReal()) // массив вещественных чисел
+		{
+			bc.newarray( 6 ); // T_FLOAT constant
+		}
+		//else if(elem_type->isCharacter()) // массив символов
+		//{
+		//	bc.newarray( 5 ); // T_CHAR constant
+		//}
+		//else if(elem_type->isBoolean()) // массив флагов
+		//{
+		//	bc.newarray( 4 ); // T_BOOLEAN constant
+		//}
 		else if(elem_type->isReference()) // массив объектов (в т.ч. строк)
 		{
 			// Check a constant for Element
@@ -418,6 +430,13 @@ ByteCode& MethodCall::arrayCreation(ByteCode &bc)
 			}
 
 			bc.anewarray( class_of_arr_elem_constN ); // Element CLASS constant_N
+		}
+		else // массив неизвестного типа
+		{
+			EiffelProgram::currentProgram->logError(
+				QString("internal"), 
+				QString("Cannot create array of unknown of unsupported type."),
+				this->tree_node->loc.first_line);
 		}
 	}
 

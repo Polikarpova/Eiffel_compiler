@@ -70,7 +70,8 @@ feature
 --		arr[5] := 0;
 		
 		-- conversion test
-		arrF := arr; -- should fail
+		-- arrF := arr; -- should fail
+		Io.put_string(">_ arrF[0] := arr[0] : ");
 		arrF[0] := arr[0]; -- should work OK
 		Io.put_real(arrF[0]);
 		Io.new_line

@@ -481,6 +481,13 @@ ByteCode& iaload() {
 
 	return *this;
 }
+ByteCode& faload() {
+	this->log(QString("faload"));
+	this->u1(0x30);
+	this->incStack(-1);
+
+	return *this;
+}
 ByteCode& aaload() {
 	this->log(QString("aaload"));
 	this->u1(0x32);
@@ -491,6 +498,13 @@ ByteCode& aaload() {
 ByteCode& iastore() {
 	this->log(QString("iastore"));
 	this->u1(0x4F);
+	this->incStack(-3);
+
+	return *this;
+}
+ByteCode& fastore() {
+	this->log(QString("fastore"));
+	this->u1(0x51);
 	this->incStack(-3);
 
 	return *this;
