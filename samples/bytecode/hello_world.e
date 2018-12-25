@@ -8,73 +8,16 @@ feature
 	make
 	local
 		arr: ARRAY[INTEGER]
-		arrF: ARRAY[REAL]
-		r: REAL
-		n: INTEGER
-		b: BOOLEAN
 	do
-	
-		b:= 2.5 < 5 and 2.5 <= 5;
-		Io.put_boolean(b);
-		Io.new_line;
-		b:= 2.5 > 5 or 2.5 >= 5
-		Io.put_boolean(b);
-		Io.new_line
-		b:= 25 < 50.5 and 25 <= 50.5;
-		Io.put_boolean(b);
-		Io.new_line;
-		b:= 25 > 50.5 or 25 >= 50.5
-		Io.put_boolean(b);
-		Io.new_line
-		
-		n:= 5;
-		r := 2.5;
-
-		Io.put_real(n);
-		Io.new_line
-		
-		r:= n+n/r;
-		Io.put_real(r);
-		Io.new_line
-		
-		r:= n+r;
-		Io.put_real(r);
-		Io.new_line
-		
-		r:= n-r;
-		Io.put_real(r);
-		Io.new_line
-		
-		r:= n/r;
-		Io.put_real(r);
-		Io.new_line
-		
-		
---		Io.put_boolean( NOT true OR ELSE true implies NOT NOT false );
---		Io.new_line
 
 		Io.put_string("Input array size: ");
 		Io.read_integer;
 		CREATE arr.make(0, Io.last_integer-1)
-		CREATE arrF.make(0, Io.last_integer-1)
 		
 		-- Io.put_string("CREATE worker.init ... %N");
 		CREATE worker.init
 
 		read_arr(arr);
---		arr[0] := -+55;
---		arr[1] := 6^2;
---		arr[2] := +24;
---		arr[3] := +-37;
---		arr[4] := -5;
---		arr[5] := 0;
-		
-		-- conversion test
-		-- arrF := arr; -- should fail
-		Io.put_string(">_ arrF[0] := arr[0] : ");
-		arrF[0] := arr[0]; -- should work OK
-		Io.put_real(arrF[0]);
-		Io.new_line
 		
 		Io.put_string("%NStart array: ");
 		Io.put_string("%TElements count: ");
@@ -83,11 +26,12 @@ feature
 		print_arr(arr);
 		
 		Io.put_string("%N%NSorting...%N");
-		worker.reversed
-		arr := worker.sort(arr);
 		
-		Io.put_string("%NDescend-sorted array: ");
-		print_arr(arr);
+		--worker.reversed
+		--arr := worker.sort(arr);
+		
+		--Io.put_string("%NDescend-sorted array: ");
+		--print_arr(arr);
 		
 		worker.init
 		arr := worker.sort(arr);
@@ -200,34 +144,35 @@ feature {none}
 	do
 	end
 	
-	qsort(a : ARRAY[INTEGER]; start: INTEGER; end:INTEGER)
+	qsort(a : ARRAY[INTEGER]; start: INTEGER; endd:INTEGER)
 	local
 		buf,p:INTEGER
 		i, j : iNTEGER
 	do
-		--указатели на исходные места есть: start и end
-		--получаем элемент посередине куска [start;end]
-		p := start + (end-start)/2;
+		
+		--указатели на исходные места есть: start и endd
+		--получаем элемент посередине куска [start;endd]
+		p := start + (endd-start)/2;
 		p := a[p];
 		
 		--перераспределяем элементы в массиве
 		FROM
 			i := start
-			j := end
+			j := endd
 		UNTIL
-			i > j
+			NOT ( i <= j)
 		LOOP
 			
 			FROM
 			UNTIL
-				a[i] >= p
+				NOT (a[i] < p)
 			LOOP
 				i := i + 1;
 			END
 			
 			FROM
 			UNTIL
-				a[j] <= p
+				NOT (a[j] > p)
 			LOOP
 				j := j - 1;
 			END
@@ -242,18 +187,20 @@ feature {none}
 			
 		end
 		
-		IF j > 0 THEN
+		IF j > start THEN
 			qsort(a, start, start+j);
 		END
 		
-		IF (end - start) > i THEN
-			qsort(a, start+i, end - start-i);
+		IF i < endd THEN
+			qsort(a, i, endd);
 		END
 	end
+	
 feature
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	do
 		Io.put_string("%N > call to QUICK_SORTER.sort()");
+		-- PRECURSOR(arr)
 		qsort(arr, 0, arr.count-1);
 		Result := arr
 	end
