@@ -199,11 +199,62 @@ feature {none}
 	init -- creator
 	do
 	end
+	
+	qsort(a : ARRAY[INTEGER]; start: INTEGER; end:INTEGER)
+	local
+		buf,p:INTEGER
+		i, j : iNTEGER
+	do
+		--указатели на исходные места есть: start и end
+		--получаем элемент посередине куска [start;end]
+		p := start + (end-start)/2;
+		p := a[p];
+		
+		--перераспределяем элементы в массиве
+		FROM
+			i := start
+			j := end
+		UNTIL
+			i > j
+		LOOP
+			
+			FROM
+			UNTIL
+				a[i] >= p
+			LOOP
+				i := i + 1;
+			END
+			
+			FROM
+			UNTIL
+				a[j] <= p
+			LOOP
+				j := j - 1;
+			END
+			
+			IF i <= j THEN
+			  buf := a[i];
+			  a[i] := a[j];
+			  a[j] := buf;
+			  i := i + 1;
+			  j := j - 1;
+			END
+			
+		end
+		
+		IF j > 0 THEN
+			qsort(a, start, start+j);
+		END
+		
+		IF (end - start) > i THEN
+			qsort(a, start+i, end - start-i);
+		END
+	end
 feature
 	sort(arr : ARRAY[INTEGER]) : ARRAY[INTEGER]
 	do
 		Io.put_string("%N > call to QUICK_SORTER.sort()");
-		PRECURSOR {SORTER} (arr)
+		qsort(arr, 0, arr.count-1);
 		Result := arr
 	end
 
