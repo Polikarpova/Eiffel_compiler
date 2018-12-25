@@ -8,6 +8,7 @@ feature
 	make
 	local
 		arr: ARRAY[INTEGER]
+		arrF: ARRAY[REAL]
 		r: REAL
 		n: INTEGER
 		b: BOOLEAN
@@ -55,6 +56,7 @@ feature
 		Io.put_string("Input array size: ");
 		Io.read_integer;
 		CREATE arr.make(0, Io.last_integer-1)
+		CREATE arrF.make(0, Io.last_integer-1)
 		
 		-- Io.put_string("CREATE worker.init ... %N");
 		CREATE worker.init
@@ -66,6 +68,12 @@ feature
 --		arr[3] := +-37;
 --		arr[4] := -5;
 --		arr[5] := 0;
+		
+		-- conversion test
+		arrF := arr; -- should fail
+		arrF[0] := arr[0]; -- should work OK
+		Io.put_real(arrF[0]);
+		Io.new_line
 		
 		Io.put_string("%NStart array: ");
 		Io.put_string("%TElements count: ");

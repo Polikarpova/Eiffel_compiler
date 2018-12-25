@@ -40,5 +40,16 @@
 		return false;
 	}
 
-	return this->elementType->canCastTo( ((EiffelArray*)otherType)->elementType );
+
+	EiffelType* convertType = 0;
+
+	bool b = this->elementType->canCastTo( ((EiffelArray*)otherType)->elementType, &convertType );
+	
+	// требуется явное преобразование (нет прямой [ссылочной] совместимости)
+	if(convertType != 0)
+	{
+		return false;
+	}
+
+	return b;
 }
