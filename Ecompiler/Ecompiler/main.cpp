@@ -134,9 +134,10 @@ int main(int argc, char *argv[])
 		//char infile[] = "../../samples/chain.e";
 
 		//char infile[] = "../../samples/syntax/class_copy";
-		char infile[] = "../../samples/bytecode/polymorph";
+		//char infile[] = "../../samples/bytecode/polymorph";
 		//char infile[] = "../../samples/bytecode/hello_world";
 		//char infile[] = "../../samples/bytecode/sort";
+		char infile[] = "../../samples/bytecode/before_after_2";
 		strcpy(in_fnm, infile);
 	}
 		

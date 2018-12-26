@@ -59,18 +59,15 @@ ByteCode& LocalVariableRef::toByteCode(ByteCode &bc)
 {
 	this->_isLeftValue = false;
 
-	//EiffelType *lType = this->type;
-	//EiffelType *rType = r->expressionType();
-
-	//if ( ! lType->canCastTo( rType ) ) {
-	//	
-	////	EiffelProgram::currentProgram->logError(
-	////		QString("semantic"), 
-	////		QString("Invalid assignment: cannot convert type from `%1` to `%2`.")
-	////			.arg(rType->toReadableString(), lType->toReadableString()),
-	////		r->tree_node->loc.first_line);
-	//	return false;
-	//}
+	if ( locVar->isReadOnly ) {
+		
+		EiffelProgram::currentProgram->logError(
+			QString("semantic"), 
+			QString("Cannot assign to read-only variable `%1`.")
+				.arg(locVar->name),
+			r->tree_node->loc.first_line);
+		return false;
+	}
 
 	this->right = r;
 	this->_isLeftValue = true;

@@ -66,6 +66,7 @@ Method::~Method(void)
 
 	// 1 (Current)
 	LocalVariable* lvr = new LocalVariable("current", loc_i, mc->getType() );
+	lvr->isReadOnly = true;
 	mtd->localVariables[lvr->name] = lvr;
 	++loc_i;
 
@@ -76,6 +77,7 @@ Method::~Method(void)
 		for(struct NNameAndType* i = List->first; ; i = i->next) {
 			// add var
 			LocalVariable* lvr = LocalVariable::create(i, loc_i);
+			lvr->isReadOnly = true;
 			mtd->localVariables[lvr->name] = lvr;
 			++loc_i;
 

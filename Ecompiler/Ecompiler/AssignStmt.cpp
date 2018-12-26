@@ -46,7 +46,7 @@ AssignStmt::~AssignStmt(void)
 
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Target of assignment is not writable"),
+			QString("Target of assignment is not writable."),
 			s->loc.first_line);
 		return NULL;
 	}

@@ -37,11 +37,14 @@ feature
 	func(aa:A; i:INTEGER; arr: ARRAY[INTEGER])
 	do
 		aa.setBool( true );
-		--i := 666;
 		arr[0] := 10;
 		arr[1] := 10;
---		CREATE arr.make(0,1);
---		arr.count := 123;
+		-- ошибочные присваивания:
+		i := 666;
+		CREATE arr.make(0,1); 
+		arr.count := 123;
+		aa.getBool := true;
+		true := aa.getBool;
 	end
 
 	print_arr(arr:ARRAY[INTEGER])
@@ -75,8 +78,12 @@ feature {ANY}
 	do
 		isBool := false;
 	end
-	setBool(b: BOOLEAN) -- creator
+	setBool(b: BOOLEAN) 
 	do
 		isBool := b;
+	end
+	getBool : BOOLEAN
+	do
+		Result := isBool;
 	end
 end

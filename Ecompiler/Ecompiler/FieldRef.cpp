@@ -124,7 +124,7 @@ ByteCode& FieldRef::toByteCode(ByteCode &bc)
 	{
 		EiffelProgram::currentProgram->logError(
 			QString("semantic"), 
-			QString("Invalid assignment: cannot assign to read-only field `%1`")
+			QString("Cannot assign to read-only field `%1`")
 				.arg(this->field->name),
 			r->tree_node->loc.first_line);
 		return false;

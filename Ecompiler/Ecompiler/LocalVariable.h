@@ -19,6 +19,7 @@ public:
 	QString name;
 	int n;
 	EiffelType* type;
+	bool isReadOnly; // для указания константных параметров методов (в Eiffel параметры всегда константны)
 
 	static LocalVariable* create(struct NNameAndType* node, int n);
 };
