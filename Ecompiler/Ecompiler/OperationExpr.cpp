@@ -127,7 +127,20 @@ EiffelType* OperationExpr::getReturnType( ) {
 					}
 				} else {
 				
-					this->type = lType;
+					if ( this->tree_node->type == DivE ) {
+
+						if ( rType->isInteger() )
+							this->right->castI2F = true;
+
+						if ( lType->isInteger() )
+							this->left->castI2F = true;
+
+						this->type = EiffelProgram::currentProgram->findClass("REAL")->getType();
+
+					} else {
+
+						this->type = lType;
+					}
 				}
 			}
 		}
@@ -365,14 +378,8 @@ ByteCode& OperationExpr::arithmeticToByteCode(ByteCode &bc) {
 			this->left->toByteCode(bc);
 			this->right->toByteCode(bc);
 
-			//если складываются инты
-			if ( this->left->type->isInteger() && this->right->type->isInteger() ) {
-		
-				bc.idiv();
-			} else {
-				
-				bc.fdiv();
-			}
+			//всегда делятся только REAL, даже если справа или слева тип INTEGER, т.к. происходит конверация i2f
+			bc.fdiv();
 
 		} else if ( this->tree_node->type == PlusE ) {
 	
