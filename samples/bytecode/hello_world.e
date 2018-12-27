@@ -12,6 +12,11 @@ feature
 
 		Io.put_string("Input array size: ");
 		Io.read_integer;
+		
+		IF Io.last_integer > 2 AND THEN Io.last_integer > getFive THEN 
+			Io.put_string("%NSize is greater than 5.");
+		END
+		
 		CREATE arr.make(0, Io.last_integer-1)
 		
 		-- Io.put_string("CREATE worker.init ... %N");
@@ -42,6 +47,13 @@ feature
 		
 	end
 	
+	getFive : INTEGER
+	do
+		Io.put_string("%N% >_ called `getFive()` ");
+		Result := 5
+	end
+
+
 	print_arr(arr:ARRAY[INTEGER])
 	local
 		i: INTEGER
